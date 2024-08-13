@@ -11,8 +11,8 @@ public class Prototipo_Protoboard extends Pane {
 
     public Prototipo_Protoboard() {
 
-        double anchoEscena = 1400;
-        double altoEscena = 1000;
+        double anchoEscena = 1280;
+        double altoEscena = 920;
 
         double origenX = anchoEscena / 2;
         double origenY = altoEscena / 2;
@@ -162,7 +162,7 @@ public class Prototipo_Protoboard extends Pane {
         lineaInterna2.setStroke(Color.BLACK);
         lineaInterna3.setStroke(Color.BLACK);
         lineaInterna4.setStroke(Color.BLACK);
-        nodo.getChildren().addAll(lineaInterna1,lineaInterna2,lineaInterna3);
+        nodo.getChildren().addAll(lineaInterna1,lineaInterna2,lineaInterna3, lineaInterna4);
 
         //Lineas Externas
         lineaExterior.setStroke(Color.BLACK);
