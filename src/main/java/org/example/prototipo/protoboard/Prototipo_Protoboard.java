@@ -9,13 +9,10 @@ public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
 
+    double origenX = Main.origenX;
+    double origenY = Main.origenY;
+
     public Prototipo_Protoboard() {
-
-        double anchoEscena = 1280;
-        double altoEscena = 920;
-
-        double origenX = anchoEscena / 2;
-        double origenY = altoEscena / 2;
 
         // Cuadrado Principal
         Line lineaArriba = new Line(origenX - 220,origenY - 280, origenX + 580, origenY - 280);
