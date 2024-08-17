@@ -1,22 +1,18 @@
 package org.example.prototipo.protoboard;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
+import javafx.scene.Group;
 
-public class BosquejoPrototipo extends Application {
+public class Prototipo_Protoboard extends Pane {
 
-    public void start(Stage primaryStage) {
-        Pane pane = new Pane();
+    private Group nodo = new Group();
 
-        double anchoEscena = 1280;
-        double altoEscena = 920;
+    double origenX = Main.origenX;
+    double origenY = Main.origenY;
 
-        double origenX = anchoEscena / 2;
-        double origenY = altoEscena / 2;
+    public Prototipo_Protoboard() {
 
         // Cuadrado Principal
         Line lineaArriba = new Line(origenX - 220,origenY - 280, origenX + 580, origenY - 280);
@@ -31,11 +27,12 @@ public class BosquejoPrototipo extends Application {
         Line lineaInterna4 = new Line(origenX - 220, origenY + 210, origenX + 580, origenY + 210);
 
         // Celdas 1
-        int tamanioCeldas = 13;
-        int espacioCeldas = 12;
+        float tamanioCeldas = 13;
+        float espacioCeldas = 12;
 
         double desplazamientoX = origenX - 190;
         double desplazamientoY = origenY - 175;
+
 
         for(int i = 0; i < 30 ; i++) {
             for(int j = 0; j < 5; j++) {
@@ -54,7 +51,8 @@ public class BosquejoPrototipo extends Application {
                 Line left = new Line(x, y, x, y + tamanioCeldas);
                 left.setStroke(Color.BLACK);
 
-                pane.getChildren().addAll(top, right, bottom, left);
+                nodo.getChildren().addAll(top, right, bottom, left);
+
             }
         }
 
@@ -78,7 +76,8 @@ public class BosquejoPrototipo extends Application {
                 Line left1 = new Line(x1, y1, x1, y1 + tamanioCeldas);
                 left1.setStroke(Color.BLACK);
 
-                pane.getChildren().addAll(top1, right1, bottom1, left1);
+                nodo.getChildren().addAll(top1, right1, bottom1, left1);
+
             }
         }
 
@@ -103,7 +102,8 @@ public class BosquejoPrototipo extends Application {
                 Line left2 = new Line(x2, y2, x2, y2 + tamanioCeldas);
                 left2.setStroke(Color.BLACK);
 
-                pane.getChildren().addAll(top2, right2, bottom2, left2);
+                nodo.getChildren().addAll(top2, right2, bottom2, left2);
+
             }
         }
 
@@ -127,7 +127,8 @@ public class BosquejoPrototipo extends Application {
                 Line left3 = new Line(x3, y3, x3, y3 + tamanioCeldas);
                 left3.setStroke(Color.BLACK);
 
-                pane.getChildren().addAll(top3, right3, bottom3, left3);
+                nodo.getChildren().addAll(top3, right3, bottom3, left3);
+
             }
         }
 
@@ -142,17 +143,23 @@ public class BosquejoPrototipo extends Application {
         Line lineaExterior7 = new Line(origenX + 580, origenY + 210, origenX + 590, origenY + 200);
         Line lineaExterior8 = new Line(origenX + 580, origenY + 280, origenX + 590, origenY + 270);
 
+
+
+
         // Cuadrado Principal
         lineaArriba.setStroke(Color.BLACK);
         lineaAbajo.setStroke(Color.BLACK);
         lineaIzquierda.setStroke(Color.BLACK);
         lineaDerecha.setStroke(Color.BLACK);
 
+        nodo.getChildren().addAll(lineaArriba,lineaAbajo,lineaDerecha,lineaIzquierda);
+
         //Lineas Internas
         lineaInterna1.setStroke(Color.BLACK);
         lineaInterna2.setStroke(Color.BLACK);
         lineaInterna3.setStroke(Color.BLACK);
         lineaInterna4.setStroke(Color.BLACK);
+        nodo.getChildren().addAll(lineaInterna1,lineaInterna2,lineaInterna3, lineaInterna4);
 
         //Lineas Externas
         lineaExterior.setStroke(Color.BLACK);
@@ -165,17 +172,14 @@ public class BosquejoPrototipo extends Application {
         lineaExterior7.setStroke(Color.BLACK);
         lineaExterior8.setStroke(Color.BLACK);
 
-        pane.getChildren().addAll(lineaArriba, lineaAbajo, lineaIzquierda, lineaDerecha, lineaInterna1, lineaInterna2,
-                lineaInterna3, lineaInterna4, lineaExterior, lineaExterior1, lineaExterior2, lineaExterior3, lineaExterior4,
-                lineaExterior5, lineaExterior6, lineaExterior7, lineaExterior8);
+        nodo.getChildren().addAll(
+                lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3,
+                lineaExterior4, lineaExterior5, lineaExterior6, lineaExterior7,
+                lineaExterior8
+        );
 
-        Scene escena = new Scene(pane, 1280, 920, Color.WHITE);
-        primaryStage.setTitle("Prototipo Protoboard");
-        primaryStage.setScene(escena);
-        primaryStage.show();
+        getChildren().add(nodo);
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 }
