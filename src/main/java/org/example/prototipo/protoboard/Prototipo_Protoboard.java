@@ -27,8 +27,8 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaInterna4 = new Line(origenX - 220, origenY + 210, origenX + 580, origenY + 210);
 
         // Celdas 1
-        int tamanioCeldas = 13;
-        int espacioCeldas = 12;
+        float tamanioCeldas = 13;
+        float espacioCeldas = 12;
 
         double desplazamientoX = origenX - 190;
         double desplazamientoY = origenY - 175;
@@ -172,7 +172,11 @@ public class Prototipo_Protoboard extends Pane {
         lineaExterior7.setStroke(Color.BLACK);
         lineaExterior8.setStroke(Color.BLACK);
 
-        nodo.getChildren().addAll(lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3, lineaExterior4, lineaExterior5, lineaExterior6, lineaExterior7, lineaExterior8);
+        nodo.getChildren().addAll(
+                lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3,
+                lineaExterior4, lineaExterior5, lineaExterior6, lineaExterior7,
+                lineaExterior8
+        );
 
         getChildren().add(nodo);
     }

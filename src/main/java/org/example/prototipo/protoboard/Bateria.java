@@ -46,8 +46,11 @@ public class Bateria extends Pane {
         curvaSuperior.setFill(Color.TRANSPARENT);
         curvaSuperior2.setFill(Color.TRANSPARENT);
 
-        nodo.getChildren().addAll(lineaIzquierda, lineaDerecha, curvaInferior, curvaMedia,
-                curvaSuperior, curvaSuperior2, lineaSuperiorI, lineaSuperiorD, lineaSuperiorS);
+        nodo.getChildren().addAll(
+                lineaIzquierda, lineaDerecha, curvaInferior, curvaMedia,
+                curvaSuperior, curvaSuperior2, lineaSuperiorI, lineaSuperiorD,
+                lineaSuperiorS
+        );
 
         this.getChildren().add(nodo);
 

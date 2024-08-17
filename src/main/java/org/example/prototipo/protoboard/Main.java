@@ -23,9 +23,10 @@ public class Main extends Application {
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
         Bateria bateria = new Bateria();
+        Swich swich = new Swich();
 
         Pane root = new Pane();
-        root.getChildren().addAll(proto, bateria);
+        root.getChildren().addAll(proto, bateria, swich);
 
         Scene scene= new Scene(root, 1280, 840);
 
