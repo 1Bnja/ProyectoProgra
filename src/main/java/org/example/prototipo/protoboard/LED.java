@@ -25,7 +25,7 @@ public class LED extends Pane{
         pata1.setStroke(Color.BLACK);
         pata2.setStroke(Color.BLACK);
 
-        curva1.setFill(Color.BLUE);
+        curva1.setFill(Color.LIGHTBLUE);
 
         nodo.getChildren().addAll(
                 led1, curva1, pata1, pata2
