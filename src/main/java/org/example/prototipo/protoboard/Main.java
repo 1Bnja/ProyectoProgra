@@ -6,7 +6,6 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import  java.io.IOException;
-
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 

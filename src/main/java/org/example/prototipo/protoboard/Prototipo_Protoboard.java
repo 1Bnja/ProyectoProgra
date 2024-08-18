@@ -28,6 +28,11 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaInterna3 = new Line(origenX - 220, origenY + 20, origenX + 580, origenY + 20);
         Line lineaInterna4 = new Line(origenX - 220, origenY + 210, origenX + 580, origenY + 210);
 
+        Line lineaGuia1 = new Line(origenX - 175,origenY - 273, origenX + 539, origenY - 273);
+        Line lineaGuia2 = new Line(origenX - 175, origenY - 217, origenX + 539, origenY - 217);
+        Line lineaGuia3 = new Line(origenX - 175, origenY + 217, origenX + 539, origenY + 217);
+        Line lineaGuia4 = new Line(origenX - 175, origenY + 273, origenX + 539, origenY + 273);
+
         //Pintar
 
         Polygon fondoTotal = new Polygon();
@@ -39,6 +44,16 @@ public class Prototipo_Protoboard extends Pane {
         );
         fondoTotal.setFill(Color.LIGHTGRAY);
         nodo.getChildren().add(fondoTotal);
+
+        Polygon fondoCarrilCentral = new Polygon();
+        fondoCarrilCentral.getPoints().addAll(
+                origenX - 220, origenY - 20,
+                origenX + 580, origenY - 20,
+                origenX + 580, origenY + 20,
+                origenX - 220, origenY + 20
+        );
+        fondoCarrilCentral.setFill(Color.GRAY);
+        nodo.getChildren().add(fondoCarrilCentral);
 
         // Celdas 1
         float tamanioCeldas = 13;
@@ -76,7 +91,7 @@ public class Prototipo_Protoboard extends Pane {
 
                 for (int k = 0; k < tamanioCeldas; k++) {
                     Line relleno = new Line(x, y + k, x + tamanioCeldas, y + k);
-                    relleno.setFill(Color.BLACK);
+                    relleno.setFill(Color.GRAY);
                     nodo.getChildren().add(relleno);
                 }
 
@@ -109,6 +124,7 @@ public class Prototipo_Protoboard extends Pane {
             letra2Izquierda.setRotate(270);
             nodo.getChildren().add(letra2Izquierda);
         }
+
         for (int j = 0; j < letras2.length; j++){
             Text letra2Derecha = new Text(desplazamientoX1 + 747, desplazamientoY1 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras2[j]));
             letra2Derecha.setStroke(Color.BLACK);
@@ -127,7 +143,7 @@ public class Prototipo_Protoboard extends Pane {
 
                 for (int k = 0; k < tamanioCeldas; k++) {
                     Line relleno1 = new Line(x1, y1 + k, x1 + tamanioCeldas, y1 + k);
-                    relleno1.setFill(Color.BLACK);
+                    relleno1.setFill(Color.GRAY);
                     nodo.getChildren().add(relleno1);
                 }
 
@@ -161,6 +177,13 @@ public class Prototipo_Protoboard extends Pane {
             nodo.getChildren().add(simbolo);
         }
 
+        for (int j = 0; j < simbolos.length; j++){
+            Text simboloDerecha = new Text(desplazamientoX2 + 722, desplazamientoY2 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simboloDerecha.setStroke(Color.BLACK);
+            simboloDerecha.setRotate(270);
+            nodo.getChildren().add(simboloDerecha);
+        }
+
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
                 double x2 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX2;
@@ -168,7 +191,7 @@ public class Prototipo_Protoboard extends Pane {
 
                 for (int k = 0; k < tamanioCeldas; k++) {
                     Line relleno2 = new Line(x2, y2 + k, x2 + tamanioCeldas, y2 + k);
-                    relleno2.setFill(Color.BLACK);
+                    relleno2.setFill(Color.GRAY);
                     nodo.getChildren().add(relleno2);
                 }
 
@@ -200,6 +223,14 @@ public class Prototipo_Protoboard extends Pane {
             nodo.getChildren().add(simbolo1);
         }
 
+        for (int j = 0; j < simbolos.length; j++){
+            Text simbolo1Derecha = new Text(desplazamientoX3 + 722, desplazamientoY3 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simbolo1Derecha.setStroke(Color.BLACK);
+            simbolo1Derecha.setRotate(270);
+
+            nodo.getChildren().add(simbolo1Derecha);
+        }
+
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
                 double x3 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX3;
@@ -207,7 +238,7 @@ public class Prototipo_Protoboard extends Pane {
 
                 for (int k = 0; k < tamanioCeldas; k++) {
                     Line relleno3 = new Line(x3, y3 + k, x3 + tamanioCeldas, y3 + k);
-                    relleno3.setFill(Color.BLACK);
+                    relleno3.setFill(Color.GRAY);
                     nodo.getChildren().add(relleno3);
                 }
 
@@ -239,16 +270,25 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaExterior7 = new Line(origenX + 580, origenY + 210, origenX + 590, origenY + 200);
         Line lineaExterior8 = new Line(origenX + 580, origenY + 280, origenX + 590, origenY + 270);
 
-        Polygon fondo1exterior = new Polygon();
-        fondo1exterior.getPoints().addAll(
+        Polygon fondo1Exterior = new Polygon();
+        fondo1Exterior.getPoints().addAll(
                 origenX - 210, origenY - 290,
                 origenX + 590, origenY - 290,
                 origenX + 580, origenY - 280,
                 origenX - 220, origenY - 280
         );
-        fondo1exterior.setFill(Color.LIGHTGRAY);
-        nodo.getChildren().add(fondo1exterior);
+        fondo1Exterior.setFill(Color.GRAY);
+        nodo.getChildren().add(fondo1Exterior);
 
+        Polygon fondo2Exterior = new Polygon();
+        fondo2Exterior.getPoints().addAll(
+                origenX + 580, origenY - 280,
+                origenX + 590, origenY - 290,
+                origenX + 590, origenY + 270,
+                origenX + 580, origenY + 280
+        );
+        fondo2Exterior.setFill(Color.GRAY);
+        nodo.getChildren().add(fondo2Exterior);
 
         // Cuadrado Principal
         lineaArriba.setStroke(Color.BLACK);
@@ -263,6 +303,7 @@ public class Prototipo_Protoboard extends Pane {
         lineaInterna2.setStroke(Color.BLACK);
         lineaInterna3.setStroke(Color.BLACK);
         lineaInterna4.setStroke(Color.BLACK);
+
         nodo.getChildren().addAll(lineaInterna1,lineaInterna2,lineaInterna3, lineaInterna4);
 
         //Lineas Externas
@@ -275,6 +316,14 @@ public class Prototipo_Protoboard extends Pane {
         lineaExterior6.setStroke(Color.BLACK);
         lineaExterior7.setStroke(Color.BLACK);
         lineaExterior8.setStroke(Color.BLACK);
+
+        // Lineas Guia
+        lineaGuia1.setStroke(Color.BLUE);
+        lineaGuia2.setStroke(Color.RED);
+        lineaGuia3.setStroke(Color.BLUE);
+        lineaGuia4.setStroke(Color.RED);
+
+        nodo.getChildren().addAll(lineaGuia1, lineaGuia2, lineaGuia3, lineaGuia4);
 
         nodo.getChildren().addAll(
                 lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3,
