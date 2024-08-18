@@ -13,23 +13,23 @@ public class Bateria extends Pane {
 
     private Group nodo = new Group();
 
-    double origenX = Main.origenX - 400;  // Desplazado 200 píxeles a la izquierda
-    double origenY = Main.origenY + 150;  // Desplazado 100 píxeles hacia abajo
+    double origenX = Main.origenX - 400;
+    double origenY = Main.origenY + 150;
 
     public Bateria() {
-        // Parte superior de la batería (color cobre)
+        // Parte superior de la batería
         Line lineaSuperiorIzquierda = new Line(origenX - 60, origenY - 120, origenX - 60, origenY - 70);
         Line lineaSuperiorDerecha = new Line(origenX + 60, origenY - 120, origenX + 60, origenY - 70);
         Line lineaSuperior = new Line(origenX - 60, origenY - 120, origenX + 60, origenY - 120);
         Line lineaInferior = new Line(origenX - 60, origenY - 70, origenX + 60, origenY - 70);
 
-        // Fondo sólido en la parte superior (color cobre)
+        // Fondo en la parte superior
         for (int i = 0; i < 50; i++) {
             CubicCurve curvaCobre = new CubicCurve(
-                    origenX - 60, origenY - 120 + i, // Inicio
-                    origenX - 40, origenY - 120 + i + 5, // Control 1
-                    origenX + 40, origenY - 120 + i + 5, // Control 2
-                    origenX + 60, origenY - 120 + i  // Fin
+                    origenX - 60, origenY - 120 + i,
+                    origenX - 40, origenY - 120 + i + 5,
+                    origenX + 40, origenY - 120 + i + 5,
+                    origenX + 60, origenY - 120 + i
             );
             curvaCobre.setFill(Color.DARKGOLDENROD);
             curvaCobre.setStroke(Color.DARKGOLDENROD);
@@ -53,10 +53,10 @@ public class Bateria extends Pane {
         // Fondo sólido en la parte inferior (color negro)
         for (int i = 0; i < 150; i++) {
             CubicCurve curvaNegra = new CubicCurve(
-                    origenX - 60, origenY - 70 + i, // Inicio
-                    origenX - 40, origenY - 70 + i + 5, // Control 1
-                    origenX + 40, origenY - 70 + i + 5, // Control 2
-                    origenX + 60, origenY - 70 + i  // Fin
+                    origenX - 60, origenY - 70 + i,
+                    origenX - 40, origenY - 70 + i + 5,
+                    origenX + 40, origenY - 70 + i + 5,
+                    origenX + 60, origenY - 70 + i
             );
             curvaNegra.setFill(Color.BLACK);
             curvaNegra.setStroke(Color.BLACK);

@@ -21,6 +21,9 @@ public class Controller_Builder {
     private Button Boton_Switch;
 
     @FXML
+    private Button Bateria;
+
+    @FXML
     private Label Lebel_Agregar;
 
     @FXML
@@ -45,5 +48,4 @@ public class Controller_Builder {
         Anchor_PanelFondo.getChildren().add(swich);
 
     }
-
 }

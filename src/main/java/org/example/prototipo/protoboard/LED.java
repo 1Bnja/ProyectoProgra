@@ -23,7 +23,7 @@ public class LED extends Pane {
     double origenY = Main.origenY;
 
     public LED() {
-        // LED 1
+        // LED
         Line led1 = new Line(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
         CubicCurve curva1 = new CubicCurve(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
         pata1 = new Line(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
