@@ -4,6 +4,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.Group;
+import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
 
 public class Prototipo_Protoboard extends Pane {
 
@@ -26,6 +28,18 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaInterna3 = new Line(origenX - 220, origenY + 20, origenX + 580, origenY + 20);
         Line lineaInterna4 = new Line(origenX - 220, origenY + 210, origenX + 580, origenY + 210);
 
+        //Pintar
+
+        Polygon fondoTotal = new Polygon();
+        fondoTotal.getPoints().addAll(
+                origenX - 220, origenY - 280,
+                origenX + 580, origenY - 280,
+                origenX + 580, origenY + 280,
+                origenX - 220, origenY + 280
+        );
+        fondoTotal.setFill(Color.LIGHTGRAY);
+        nodo.getChildren().add(fondoTotal);
+
         // Celdas 1
         float tamanioCeldas = 13;
         float espacioCeldas = 12;
@@ -33,11 +47,38 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX = origenX - 190;
         double desplazamientoY = origenY - 175;
 
+        char[] letras1 = {'j', 'i', 'h', 'g', 'f'};
+
+        // Implementacion letras Parte Superior
+        for (int j = 0; j < letras1.length; j++){
+            Text letra1Izquierda = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
+            letra1Izquierda.setStroke(Color.BLACK);
+            letra1Izquierda.setRotate(270);
+            nodo.getChildren().add(letra1Izquierda);
+        }
+
+        for (int j = 0; j < letras1.length; j++){
+            Text letra1Derecha = new Text(desplazamientoX + 747, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
+            letra1Derecha.setStroke(Color.BLACK);
+            letra1Derecha.setRotate(270);
+            nodo.getChildren().add(letra1Derecha);
+        }
 
         for(int i = 0; i < 30 ; i++) {
+            Text numero1 = new Text(desplazamientoX + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY - 10, String.valueOf(i + 1));
+            numero1.setStroke(Color.BLACK);
+            numero1.setRotate(270);
+            nodo.getChildren().add(numero1);
+
             for(int j = 0; j < 5; j++) {
                 double x = i * (tamanioCeldas + espacioCeldas) + desplazamientoX;
                 double y = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
+
+                for (int k = 0; k < tamanioCeldas; k++) {
+                    Line relleno = new Line(x, y + k, x + tamanioCeldas, y + k);
+                    relleno.setFill(Color.BLACK);
+                    nodo.getChildren().add(relleno);
+                }
 
                 Line top = new Line(x, y, x + tamanioCeldas, y);
                 top.setStroke(Color.BLACK);
@@ -59,10 +100,36 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX1 = origenX - 190;
         double desplazamientoY1 = origenY + 60;
 
+        char[] letras2 = {'e', 'd', 'c', 'b', 'a'};
+
+        // Implementacion letras Parte Inferior
+        for (int j = 0; j < letras2.length; j++){
+            Text letra2Izquierda = new Text(desplazamientoX1 - 20, desplazamientoY1 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras2[j]));
+            letra2Izquierda.setStroke(Color.BLACK);
+            letra2Izquierda.setRotate(270);
+            nodo.getChildren().add(letra2Izquierda);
+        }
+        for (int j = 0; j < letras2.length; j++){
+            Text letra2Derecha = new Text(desplazamientoX1 + 747, desplazamientoY1 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras2[j]));
+            letra2Derecha.setStroke(Color.BLACK);
+            letra2Derecha.setRotate(270);
+            nodo.getChildren().add(letra2Derecha);
+        }
+
         for(int i = 0; i < 30 ; i++) {
+            Text numero2 = new Text(desplazamientoX1 + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY1 + 135, String.valueOf(i + 1));
+            numero2.setStroke(Color.BLACK);
+            numero2.setRotate(270);
+            nodo.getChildren().add(numero2);
             for(int j = 0; j < 5; j++) {
                 double x1 = i * (tamanioCeldas + espacioCeldas) + desplazamientoX1;
                 double y1 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY1;
+
+                for (int k = 0; k < tamanioCeldas; k++) {
+                    Line relleno1 = new Line(x1, y1 + k, x1 + tamanioCeldas, y1 + k);
+                    relleno1.setFill(Color.BLACK);
+                    nodo.getChildren().add(relleno1);
+                }
 
                 Line top1 = new Line(x1, y1, x1 + tamanioCeldas, y1);
                 top1.setStroke(Color.BLACK);
@@ -85,10 +152,25 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX2 = origenX - 175;
         double desplazamientoY2 = origenY - 265;
 
+        char[] simbolos = {'-', '+'};
+
+        for (int j = 0; j < simbolos.length; j++){
+            Text simbolo = new Text(desplazamientoX2 - 20, desplazamientoY2 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simbolo.setStroke(Color.BLACK);
+            simbolo.setRotate(270);
+            nodo.getChildren().add(simbolo);
+        }
+
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
                 double x2 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX2;
                 double y2 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY2;
+
+                for (int k = 0; k < tamanioCeldas; k++) {
+                    Line relleno2 = new Line(x2, y2 + k, x2 + tamanioCeldas, y2 + k);
+                    relleno2.setFill(Color.BLACK);
+                    nodo.getChildren().add(relleno2);
+                }
 
                 Line top2 = new Line(x2, y2, x2 + tamanioCeldas, y2);
                 top2.setStroke(Color.BLACK);
@@ -110,10 +192,24 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX3 = origenX - 175;
         double desplazamientoY3 = origenY + 225;
 
+        for (int j = 0; j < simbolos.length; j++){
+            Text simbolo1 = new Text(desplazamientoX3 - 20, desplazamientoY3 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simbolo1.setStroke(Color.BLACK);
+            simbolo1.setRotate(270);
+
+            nodo.getChildren().add(simbolo1);
+        }
+
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
                 double x3 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX3;
                 double y3 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY3;
+
+                for (int k = 0; k < tamanioCeldas; k++) {
+                    Line relleno3 = new Line(x3, y3 + k, x3 + tamanioCeldas, y3 + k);
+                    relleno3.setFill(Color.BLACK);
+                    nodo.getChildren().add(relleno3);
+                }
 
                 Line top3 = new Line(x3, y3, x3 + tamanioCeldas, y3);
                 top3.setStroke(Color.BLACK);
@@ -143,7 +239,15 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaExterior7 = new Line(origenX + 580, origenY + 210, origenX + 590, origenY + 200);
         Line lineaExterior8 = new Line(origenX + 580, origenY + 280, origenX + 590, origenY + 270);
 
-
+        Polygon fondo1exterior = new Polygon();
+        fondo1exterior.getPoints().addAll(
+                origenX - 210, origenY - 290,
+                origenX + 590, origenY - 290,
+                origenX + 580, origenY - 280,
+                origenX - 220, origenY - 280
+        );
+        fondo1exterior.setFill(Color.LIGHTGRAY);
+        nodo.getChildren().add(fondo1exterior);
 
 
         // Cuadrado Principal
