@@ -13,11 +13,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    static double anchoEscena= 1280;
-    static double altoEscena= 920;
+    static double anchoEscena = 1280;
+    static double altoEscena = 920;
 
-    static double origenX= anchoEscena/2;
-    static double origenY= altoEscena/2;
+    static double origenX = anchoEscena/2;
+    static double origenY = altoEscena/2;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -32,15 +32,7 @@ public class Main extends Application {
         Swich swich = new Swich();
         LED led = new LED();
 
-        Pane root = new Pane();
-        root.getChildren().addAll(proto, bateria, swich, led);
-
-        Scene scene= new Scene(root, 1280, 840);
-
-        grupo.getChildren().addAll(proto);
-        grupo.getChildren().add(fxmlContent);
-
-
+        grupo.getChildren().addAll(proto, fxmlContent, bateria, swich, led);
 
         Scene scene= new Scene(grupo, 1280, 840);
 
