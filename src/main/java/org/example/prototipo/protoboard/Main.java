@@ -11,33 +11,30 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    static double anchoEscena= 1280;
+    static double altoEscena= 920;
+
+    static double origenX= anchoEscena/2;
+    static double origenY= altoEscena/2;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-<<<<<<< Updated upstream
-
-        Prototipo_Protoboard proto = new Prototipo_Protoboard();
-
-
-
-        Scene scene= new Scene(proto, 1280, 840);
-=======
-        Group grupo=new Group();
+        Group grupo = new Group();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/prototipo/Fondo_builder.fxml"));
         Parent fxmlContent = fxmlLoader.load();
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
-        Bateria bateria = new Bateria();
 
 
-        grupo.getChildren().addAll(proto,bateria );
+
+        grupo.getChildren().addAll(proto);
         grupo.getChildren().add(fxmlContent);
 
 
 
         Scene scene= new Scene(grupo, 1280, 840);
->>>>>>> Stashed changes
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");
