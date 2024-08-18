@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import  java.io.IOException;
+
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -26,8 +28,14 @@ public class Main extends Application {
         Parent fxmlContent = fxmlLoader.load();
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
+        Bateria bateria = new Bateria();
+        Swich swich = new Swich();
+        LED led = new LED();
 
+        Pane root = new Pane();
+        root.getChildren().addAll(proto, bateria, swich, led);
 
+        Scene scene= new Scene(root, 1280, 840);
 
         grupo.getChildren().addAll(proto);
         grupo.getChildren().add(fxmlContent);

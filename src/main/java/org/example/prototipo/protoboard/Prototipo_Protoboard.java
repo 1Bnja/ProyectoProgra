@@ -4,24 +4,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.Group;
+import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
 
 public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
 
+    double origenX = Main.origenX;
+    double origenY = Main.origenY;
+
     public Prototipo_Protoboard() {
-
-        double anchoEscena = 1280;
-        double altoEscena = 920;
-
-        double origenX = anchoEscena / 2;
-        double origenY = altoEscena / 2;
 
         // Cuadrado Principal
         Line lineaArriba = new Line(origenX - 220,origenY - 280, origenX + 580, origenY - 280);
         Line lineaAbajo = new Line(origenX - 220, origenY + 280, origenX + 580, origenY + 280);
         Line lineaIzquierda = new Line(origenX + 580, origenY - 280, origenX + 580, origenY + 280);
         Line lineaDerecha = new Line(origenX - 220, origenY - 280, origenX - 220, origenY + 280);
+
+        // Pintar
 
         // Lineas Internas
         Line lineaInterna1 = new Line(origenX - 220, origenY - 210, origenX + 580, origenY - 210);
@@ -30,14 +31,35 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaInterna4 = new Line(origenX - 220, origenY + 210, origenX + 580, origenY + 210);
 
         // Celdas 1
-        int tamanioCeldas = 13;
-        int espacioCeldas = 12;
+        float tamanioCeldas = 13;
+        float espacioCeldas = 12;
 
         double desplazamientoX = origenX - 190;
         double desplazamientoY = origenY - 175;
 
+        char[] letras1 = {'j', 'i', 'h', 'g', 'f'};
+
+        // Implementacion letras Parte Superior
+        for (int j = 0; j < letras1.length; j++){
+            Text letra1Izquierda = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
+            letra1Izquierda.setFill(Color.BLACK);
+            letra1Izquierda.setRotate(270);
+            nodo.getChildren().add(letra1Izquierda);
+        }
+
+        for (int j = 0; j < letras1.length; j++){
+            Text letra1Derecha = new Text(desplazamientoX + 747, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
+            letra1Derecha.setFill(Color.BLACK);
+            letra1Derecha.setRotate(270);
+            nodo.getChildren().add(letra1Derecha);
+        }
 
         for(int i = 0; i < 30 ; i++) {
+            Text numero1 = new Text(desplazamientoX + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY - 10, String.valueOf(i + 1));
+            numero1.setFill(Color.BLACK);
+            numero1.setRotate(270);
+            nodo.getChildren().add(numero1);
+
             for(int j = 0; j < 5; j++) {
                 double x = i * (tamanioCeldas + espacioCeldas) + desplazamientoX;
                 double y = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
@@ -62,7 +84,27 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX1 = origenX - 190;
         double desplazamientoY1 = origenY + 60;
 
+        char[] letras2 = {'e', 'd', 'c', 'b', 'a'};
+
+        // Implementacion letras Parte Inferior
+        for (int j = 0; j < letras2.length; j++){
+            Text letra2Izquierda = new Text(desplazamientoX1 - 20, desplazamientoY1 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras2[j]));
+            letra2Izquierda.setFill(Color.BLACK);
+            letra2Izquierda.setRotate(270);
+            nodo.getChildren().add(letra2Izquierda);
+        }
+        for (int j = 0; j < letras2.length; j++){
+            Text letra2Derecha = new Text(desplazamientoX1 + 747, desplazamientoY1 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras2[j]));
+            letra2Derecha.setFill(Color.BLACK);
+            letra2Derecha.setRotate(270);
+            nodo.getChildren().add(letra2Derecha);
+        }
+
         for(int i = 0; i < 30 ; i++) {
+            Text numero2 = new Text(desplazamientoX1 + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY1 + 135, String.valueOf(i + 1));
+            numero2.setFill(Color.BLACK);
+            numero2.setRotate(270);
+            nodo.getChildren().add(numero2);
             for(int j = 0; j < 5; j++) {
                 double x1 = i * (tamanioCeldas + espacioCeldas) + desplazamientoX1;
                 double y1 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY1;
@@ -88,6 +130,15 @@ public class Prototipo_Protoboard extends Pane {
         double desplazamientoX2 = origenX - 175;
         double desplazamientoY2 = origenY - 265;
 
+        char[] simbolos = {'-', '+'};
+
+        for (int j = 0; j < simbolos.length; j++){
+            Text simbolo = new Text(desplazamientoX2 - 20, desplazamientoY2 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simbolo.setFill(Color.BLACK);
+            simbolo.setRotate(270);
+            nodo.getChildren().add(simbolo);
+        }
+
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
                 double x2 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX2;
@@ -112,6 +163,13 @@ public class Prototipo_Protoboard extends Pane {
 
         double desplazamientoX3 = origenX - 175;
         double desplazamientoY3 = origenY + 225;
+
+        for (int j = 0; j < simbolos.length; j++){
+            Text simbolo1 = new Text(desplazamientoX3 - 20, desplazamientoY3 + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+            simbolo1.setFill(Color.BLACK);
+            simbolo1.setRotate(270);
+            nodo.getChildren().add(simbolo1);
+        }
 
         for(int i = 0; i < 25 ; i++) {
             for(int j = 0; j < 2; j++) {
@@ -175,7 +233,11 @@ public class Prototipo_Protoboard extends Pane {
         lineaExterior7.setStroke(Color.BLACK);
         lineaExterior8.setStroke(Color.BLACK);
 
-        nodo.getChildren().addAll(lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3, lineaExterior4, lineaExterior5, lineaExterior6, lineaExterior7, lineaExterior8);
+        nodo.getChildren().addAll(
+                lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3,
+                lineaExterior4, lineaExterior5, lineaExterior6, lineaExterior7,
+                lineaExterior8
+        );
 
         getChildren().add(nodo);
     }
