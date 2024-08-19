@@ -27,13 +27,10 @@ public class Main extends Application {
         Parent fxmlContent = fxmlLoader.load();
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
-        Bateria bateria = new Bateria();
-        Swich swich = new Swich();
-        LED led = new LED();
 
-        grupo.getChildren().addAll(proto, fxmlContent, bateria, swich, led);
+        grupo.getChildren().addAll(proto, fxmlContent);
 
-        Scene scene= new Scene(grupo, 1280, 840);
+        Scene scene = new Scene(grupo,1280, 840);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");

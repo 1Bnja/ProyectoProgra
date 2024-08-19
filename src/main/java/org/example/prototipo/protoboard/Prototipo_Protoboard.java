@@ -333,6 +333,4 @@ public class Prototipo_Protoboard extends Pane {
 
         getChildren().add(nodo);
     }
-
-
 }

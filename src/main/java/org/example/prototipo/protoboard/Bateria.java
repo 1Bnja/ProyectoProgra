@@ -13,6 +13,9 @@ public class Bateria extends Pane {
 
     private Group nodo = new Group();
 
+    private double mouseX;
+    private double mouseY;
+
     double origenX = Main.origenX - 400;
     double origenY = Main.origenY + 150;
 
@@ -78,7 +81,7 @@ public class Bateria extends Pane {
         simboloNegativo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Texto 9V
-        Text texto9V = new Text(origenX - 20, origenY + 30, "9V");
+        Text texto9V = new Text(origenX - 20, origenY + 30, "5V");
         texto9V.setFill(Color.WHITE);
         texto9V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
@@ -88,6 +91,16 @@ public class Bateria extends Pane {
                 lineaInferiorIzquierda, lineaInferiorDerecha, lineaBase, divisionColor,
                 simboloPositivo, simboloNegativo, texto9V
         );
+
+        nodo.setOnMousePressed(e -> {
+            mouseX = e.getSceneX() - nodo.getLayoutX();
+            mouseY = e.getSceneY() - nodo.getLayoutY();
+        });
+
+        nodo.setOnMouseDragged(e -> {
+            nodo.setLayoutX(e.getSceneX() - mouseX);
+            nodo.setLayoutY(e.getSceneY() - mouseY);
+        });
 
         this.getChildren().add(nodo);
     }

@@ -21,7 +21,7 @@ public class Controller_Builder {
     private Button Boton_Switch;
 
     @FXML
-    private Button Bateria;
+    private Button Boton_Bateria;
 
     @FXML
     private Label Lebel_Agregar;
@@ -47,5 +47,12 @@ public class Controller_Builder {
         Swich swich = new Swich();
         Anchor_PanelFondo.getChildren().add(swich);
 
+    }
+
+    @FXML
+    void Click_Bateria(ActionEvent event) {
+        System.out.println("Se ha agregado un bateria");
+        Bateria bateria = new Bateria();
+        Anchor_PanelFondo.getChildren().add(bateria);
     }
 }
