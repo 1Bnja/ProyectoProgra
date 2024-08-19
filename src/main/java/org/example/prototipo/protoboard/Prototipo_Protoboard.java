@@ -7,14 +7,20 @@ import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
+    private List<List<Celda>> conexionesHorizontales = new ArrayList<>();
 
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
     public Prototipo_Protoboard() {
+
+        inicializarConexiones();
 
         // Cuadrado Principal
         Line lineaArriba = new Line(origenX - 220,origenY - 280, origenX + 580, origenY - 280);
@@ -331,8 +337,33 @@ public class Prototipo_Protoboard extends Pane {
                 lineaExterior8
         );
 
+        for (List<Celda> columna : conexionesHorizontales) {
+            for (int j = 0; j < columna.size() - 1; j++) {
+                //Dibuja una linea entre las celdas conectadas
+                Line conexionInterna = new Line(
+                        desplazamientoX + columna.get(j).columna * (tamanioCeldas + espacioCeldas),
+                        desplazamientoY + columna.get(j).fila * (tamanioCeldas + espacioCeldas),
+                        desplazamientoX + columna.get(j + 1).columna * (tamanioCeldas + espacioCeldas),
+                        desplazamientoY + columna.get(j + 1).fila * (tamanioCeldas + espacioCeldas)
+                );
+                conexionInterna.setStroke(Color.RED);
+                nodo.getChildren().add(conexionInterna);
+            }
+        }
+
         getChildren().add(nodo);
     }
 
+    private void inicializarConexiones() {
+        //Inicializa 30 columnas
+        for (int i = 0; i < 30; i++) {
+            List<Celda> columna = new ArrayList<>();
+            //Agrega 5 celdas a cada columna
+            for (int j = 0; j < 5; j++) {
+                columna.add(new Celda(i, j));
+            }
+            conexionesHorizontales.add(columna);
+        }
+    }
 
 }
