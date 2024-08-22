@@ -21,6 +21,9 @@ public class Controller_Builder {
     private Button Boton_Switch;
 
     @FXML
+    private Button Boton_Bateria;
+
+    @FXML
     private Label Lebel_Agregar;
 
     @FXML
@@ -46,4 +49,10 @@ public class Controller_Builder {
 
     }
 
+    @FXML
+    void Click_Bateria(ActionEvent event) {
+        System.out.println("Se ha agregado un bateria");
+        Bateria bateria = new Bateria();
+        Anchor_PanelFondo.getChildren().add(bateria);
+    }
 }

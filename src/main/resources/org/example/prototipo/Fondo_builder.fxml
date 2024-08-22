@@ -5,25 +5,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="Anchor_PanelFondo" prefHeight="768.0" prefWidth="942.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
    <children>
-      <Label fx:id="Lebel_Agregar" layoutX="35.0" layoutY="30.0" prefHeight="60.0" prefWidth="139.0" text="AGREGAR:">
+      <Label fx:id="Lebel_Agregar" layoutX="35.0" layoutY="40.0" prefHeight="60.0" prefWidth="139.0" text="AGREGAR:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="Boton_Cable" layoutX="174.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Cable" text="CABLE">
+      <Button fx:id="Boton_Cable" layoutX="160.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Cable" text="CABLE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="Boton_Led" layoutX="297.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Led" text="LED">
+      <Button fx:id="Boton_Led" layoutX="250.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Led" text="LED">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="Boton_Switch" layoutX="382.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Switch" text="SWITCH">
+      <Button fx:id="Boton_Switch" layoutX="320.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Switch" text="SWITCH">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="Boton_Bateria" layoutX="425.0" layoutY="40.0" mnemonicParsing="false" onAction="#Click_Bateria" text="BATERIA">
          <font>
             <Font size="18.0" />
          </font>
