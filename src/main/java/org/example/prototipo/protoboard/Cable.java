@@ -1,24 +1,22 @@
 package org.example.prototipo.protoboard;
 
+import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public class Cable {
+public class Cable extends Pane {
 
     Line line;
     Line inicio, fin;
+    private Group nodo = new Group();
 
-    public Cable(Pane root) {
-        Crear_linea(root);
-    }
-
-    public void Crear_linea(Pane root) {
+    public void Crear_linea() {
 
         // Crear línea
         line = new Line(50, 50, 100, 100);
-        line.setStroke(Color.BLUE);
+        line.setStroke(Color.BURLYWOOD);
         line.setStrokeWidth(7);
 
         // Crear puntos de arrastre
@@ -30,7 +28,8 @@ public class Cable {
         fin.setOnMouseDragged(e -> Arrastre(e, line, false));
 
         // Añadir línea y puntos al panel
-        root.getChildren().addAll(line, inicio, fin);
+        nodo.getChildren().addAll(line, inicio, fin);
+        getChildren().add(nodo);
     }
 
     private void Arrastre(MouseEvent event, Line line, boolean isStartPoint) {
@@ -52,7 +51,7 @@ public class Cable {
     private Line Esquina_Estirable(double x, double y) {
         // Crear un "punto" usando una línea
         Line point = new Line(x , y, x , y); // Horizontal
-        point.setStroke(Color.RED);
+        point.setStroke(Color.BROWN);
         point.setStrokeWidth(8);
         return point;
     }

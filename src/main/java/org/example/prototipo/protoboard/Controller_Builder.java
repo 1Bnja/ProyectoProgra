@@ -52,7 +52,9 @@ public class Controller_Builder {
     @FXML
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
-        Cable cable= new Cable(Anchor_PanelFondo);
+        Cable cable= new Cable();
+        cable.Crear_linea();
+        agregar(cable);
 
     }
 
@@ -60,7 +62,7 @@ public class Controller_Builder {
     void Click_Led(ActionEvent event) {
         System.out.println("Se ha agregado un led");
         LED led = new LED();
-        Anchor_PanelFondo.getChildren().add(led);
+        agregar(led);
 
     }
 
