@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
@@ -33,8 +34,10 @@ public class Controller_Builder {
     @FXML
     private Button Boton_Eliminar;
 
+
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
+
 
 
     private void agregar(Node elemento) {
