@@ -26,6 +26,7 @@ public class Controller_Builder {
     @FXML
     private Label Lebel_Agregar;
 
+
     @FXML
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
@@ -55,4 +56,10 @@ public class Controller_Builder {
         Bateria bateria = new Bateria();
         Anchor_PanelFondo.getChildren().add(bateria);
     }
+
+    @FXML
+    void Click_Eliminar(ActionEvent event) {
+        System.out.println("listop");
+    }
+
 }
