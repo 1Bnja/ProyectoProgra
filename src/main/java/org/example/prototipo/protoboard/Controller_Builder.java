@@ -2,9 +2,13 @@ package org.example.prototipo.protoboard;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.Node;
 
 public class Controller_Builder {
 
@@ -26,6 +30,24 @@ public class Controller_Builder {
     @FXML
     private Label Lebel_Agregar;
 
+    @FXML
+    private Button Boton_Eliminar;
+
+    private List<Node> elementos = new ArrayList<>();
+    private Node elemento_seleccionado;
+
+
+    private void agregar(Node elemento) {
+        elementos.add(elemento);
+        Anchor_PanelFondo.getChildren().add(elemento);
+        seleccionar(elemento);
+    }
+
+    private void seleccionar(Node elemento) {
+        elemento.setOnMouseClicked(mouseEvent -> {
+            elemento_seleccionado = elemento;
+        });
+    }
 
     @FXML
     void Click_Cable(ActionEvent event) {
@@ -46,7 +68,7 @@ public class Controller_Builder {
     void Click_Switch(ActionEvent event) {
         System.out.println("Se ha agregado un switch");
         Swich swich = new Swich();
-        Anchor_PanelFondo.getChildren().add(swich);
+        agregar(swich);
 
     }
 
@@ -54,12 +76,17 @@ public class Controller_Builder {
     void Click_Bateria(ActionEvent event) {
         System.out.println("Se ha agregado un bateria");
         Bateria bateria = new Bateria();
-        Anchor_PanelFondo.getChildren().add(bateria);
+        agregar(bateria);
     }
 
     @FXML
     void Click_Eliminar(ActionEvent event) {
-        System.out.println("listop");
+        System.out.println("se ha eliminado "+elemento_seleccionado);
+        if(elemento_seleccionado != null) {
+            Anchor_PanelFondo.getChildren().remove(elemento_seleccionado);
+            elementos.remove(elemento_seleccionado);
+            elemento_seleccionado = null;
+        }
     }
 
 }
