@@ -8,7 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
+import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -367,6 +367,11 @@ public class Prototipo_Protoboard extends Pane {
                 Rectangle c = new Rectangle(15, 15);
                 c.setStroke(javafx.scene.paint.Color.BLACK);
                 c.setFill(javafx.scene.paint.Color.WHITE);
+
+                int fil = i;
+                int col = j;
+                c.setOnMouseClicked(event -> handleRectangleClick(event, fil, col));
+
                 gridPane.add(c, j, cont);
 
                 // Conectar bus de alimentación negativo
@@ -687,15 +692,7 @@ public class Prototipo_Protoboard extends Pane {
         return gridPane;
     }
 
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
-    }
-
-    public List<Rectangle> getCeldasConectadas() {
-        return celdasConectadas;
-    }
-
-    public void setCeldasConectadas(List<Rectangle> celdasConectadas) {
-        this.celdasConectadas = celdasConectadas;
+    private void handleRectangleClick(MouseEvent event, int fila, int columna) {
+        System.out.println("(" + fila + ", " + columna + ")");
     }
 }
