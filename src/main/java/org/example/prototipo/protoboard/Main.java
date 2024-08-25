@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import  java.io.IOException;
+
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -31,7 +33,15 @@ public class Main extends Application {
         Swich swich = new Swich();
         LED led = new LED();
 
-        grupo.getChildren().addAll(proto, fxmlContent, bateria, swich, led);
+        GridPane gridPane = proto.getGridPane();
+        Pane pane = new Pane();
+        pane.getChildren().add(gridPane);
+        gridPane.setVgap(9);
+        gridPane.setHgap(9);
+        gridPane.setLayoutX(450);//450
+        gridPane.setLayoutY(195);//195
+
+        grupo.getChildren().addAll(proto.getGridPane(), proto, fxmlContent, bateria, swich, led);
 
         Scene scene= new Scene(grupo, 1280, 840);
 
