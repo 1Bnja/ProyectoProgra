@@ -9,14 +9,10 @@ import javafx.scene.shape.Line;
 
 public class LED extends Pane {
     private Group nodo = new Group();
-    private Line fin1;
-    private Line fin2;
-    private Line pata1;
-    private Line pata2;
+    private Line fin1, fin2, pata1, pata2;
 
     // Variables para la posición del mouse
-    private double mouseX;
-    private double mouseY;
+    private double mouseX, mouseY;
     private boolean line_en_arrastre = false;
 
     double origenX = Main.origenX;
@@ -31,13 +27,6 @@ public class LED extends Pane {
 
         fin1 = crearEstirable(pata1);
         fin2 = crearEstirable(pata2);
-
-        // Eventos de arrastre para las líneas rojas
-        fin1.setOnMousePressed(e -> empezarArrastre(e, pata1));
-        fin1.setOnMouseDragged(e -> arrastrePata(e, pata1, fin1));
-
-        fin2.setOnMousePressed(e -> empezarArrastre(e, pata2));
-        fin2.setOnMouseDragged(e -> arrastrePata(e, pata2, fin2));
 
         configurarArrastre(fin1, pata1);
         configurarArrastre(fin2, pata2);
