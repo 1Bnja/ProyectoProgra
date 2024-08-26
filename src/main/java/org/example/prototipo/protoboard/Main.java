@@ -5,7 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import  java.io.IOException;
+import java.io.IOException;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -29,8 +30,15 @@ public class Main extends Application {
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
 
         grupo.getChildren().addAll(proto, fxmlContent);
+        GridPane gridPane = proto.getGridPane();
 
         Scene scene = new Scene(grupo,1280, 840);
+        //Tamaño cuadrados
+        gridPane.setVgap(9);
+        gridPane.setHgap(9);
+
+        gridPane.setLayoutX(450);//450
+        gridPane.setLayoutY(195);//195
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");
