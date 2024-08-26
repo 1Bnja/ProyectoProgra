@@ -6,7 +6,6 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import  java.io.IOException;
-
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -28,13 +27,10 @@ public class Main extends Application {
         Parent fxmlContent = fxmlLoader.load();
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
-        Bateria bateria = new Bateria();
-        Swich swich = new Swich();
-        LED led = new LED();
 
-        grupo.getChildren().addAll(proto, fxmlContent, bateria, swich, led);
+        grupo.getChildren().addAll(proto, fxmlContent);
 
-        Scene scene= new Scene(grupo, 1280, 840);
+        Scene scene = new Scene(grupo,1280, 840);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");
@@ -44,5 +40,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }}
+    }
+}
 
