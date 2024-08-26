@@ -21,6 +21,11 @@ public class Prototipo_Protoboard extends Pane {
 
         nodo.getChildren().addAll(fondoTotal, fondoCarrilCentral);
 
+        Polygon fondo1Exterior = crearFondo2(new double[]{origenX - 210, origenY - 290,origenX + 590, origenY - 290,origenX + 580, origenY - 280,origenX - 220, origenY - 280}, Color.GRAY);
+        Polygon fondo2Exterior = crearFondo2(new double[]{origenX + 580, origenY - 280,origenX + 590, origenY - 290,origenX + 590, origenY + 270, origenX + 580, origenY + 280}, Color.GRAY);
+
+        nodo.getChildren().addAll(fondo1Exterior, fondo2Exterior);
+
         // Cuadrado Principal
         Line lineaArriba = crearLinea(origenX - 220,origenY - 280, origenX + 580, origenY - 280, Color.BLACK);
         Line lineaAbajo = crearLinea(origenX - 220, origenY + 280, origenX + 580, origenY + 280, Color.BLACK);
@@ -58,12 +63,9 @@ public class Prototipo_Protoboard extends Pane {
         Line lineaExterior7 = crearLinea(origenX + 580, origenY + 210, origenX + 590, origenY + 200, Color.BLACK);
         Line lineaExterior8 = crearLinea(origenX + 580, origenY + 280, origenX + 590, origenY + 270, Color.BLACK);
 
-        Polygon fondo1Exterior = crearFondo2(new double[]{origenX - 210, origenY - 290,origenX + 590, origenY - 290,origenX + 580, origenY - 280,origenX - 220, origenY - 280}, Color.GRAY);
-        Polygon fondo2Exterior = crearFondo2(new double[]{origenX + 580, origenY - 280,origenX + 590, origenY - 290,origenX + 590, origenY + 270, origenX + 580, origenY + 280}, Color.GRAY);
-
         nodo.getChildren().addAll(
                 lineaExterior,lineaExterior1, lineaExterior2, lineaExterior3, lineaExterior4, lineaExterior5,
-                lineaExterior6, lineaExterior7, lineaExterior8, fondo1Exterior, fondo2Exterior
+                lineaExterior6, lineaExterior7, lineaExterior8
         );
 
         this.getChildren().add(nodo);
