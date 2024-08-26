@@ -29,17 +29,17 @@ public class Main extends Application {
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
 
-        grupo.getChildren().addAll(proto, fxmlContent);
         GridPane gridPane = proto.getGridPane();
 
-        Scene scene = new Scene(grupo,1280, 840);
         //Tamaño cuadrados
         gridPane.setVgap(9);
         gridPane.setHgap(9);
-
         gridPane.setLayoutX(450);//450
         gridPane.setLayoutY(195);//195
 
+        grupo.getChildren().addAll(gridPane, proto, fxmlContent);
+
+        Scene scene= new Scene(grupo, 1280, 840);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");
         primaryStage.show();
@@ -48,6 +48,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-}
+    }}
 

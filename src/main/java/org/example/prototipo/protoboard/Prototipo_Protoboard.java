@@ -1,15 +1,22 @@
 package org.example.prototipo.protoboard;
 
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.input.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
+    private GridPane gridPane;
+    private List<Rectangle> celdasConectadas = new ArrayList<>();
 
     double origenX = Main.origenX;
     double origenY = Main.origenY;
