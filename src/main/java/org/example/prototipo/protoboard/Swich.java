@@ -67,6 +67,8 @@ public class Swich extends Pane {
         );
 
         this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
     }
 
     private Line crearLinea(double startX, double startY, double endX, double endY) {
@@ -98,13 +100,17 @@ public class Swich extends Pane {
     }
 
     private void configurarArrastre(Line estirable, Line pata) {
-        estirable.setOnMousePressed(e -> empezarArrastre(e, pata));
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e, pata);
+            nodo.toFront();
+        });
         estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
     }
 
     private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
+                nodo.toFront();
                 mouseX = e.getSceneX();
                 mouseY = e.getSceneY();
             }

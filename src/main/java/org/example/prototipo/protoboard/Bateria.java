@@ -93,6 +93,7 @@ public class Bateria extends Pane {
         );
 
         nodo.setOnMousePressed(e -> {
+            nodo.toFront();
             mouseX = e.getSceneX() - nodo.getLayoutX();
             mouseY = e.getSceneY() - nodo.getLayoutY();
         });
@@ -103,5 +104,7 @@ public class Bateria extends Pane {
         });
 
         this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
     }
 }

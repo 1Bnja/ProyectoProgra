@@ -34,6 +34,7 @@ public class Controller_Builder {
     private void seleccionar(Node elemento) {
         elemento.setOnMouseClicked(mouseEvent -> {
             elemento_seleccionado = elemento;
+            elemento.toFront();
         });
     }
 

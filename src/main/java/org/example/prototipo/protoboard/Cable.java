@@ -33,9 +33,16 @@ public class Cable extends Pane {
         line.setOnMousePressed(this::IniciarMovimientoLinea);
         line.setOnMouseDragged(this::MoverLineaCompleta);
 
+        line.setOnMousePressed(e -> {
+            nodo.toFront(); // Mover al frente al iniciar el movimiento
+            IniciarMovimientoLinea(e);
+        });
+
         // Añadir línea y puntos al panel
         nodo.getChildren().addAll(line, inicio, fin);
-        getChildren().add(nodo);
+        this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
     }
 
     private void IniciarMovimientoLinea(MouseEvent event) {
@@ -74,12 +81,14 @@ public class Cable extends Pane {
     }
 
     private Line Esquina_Estirable(double x, double y) {
-        Line point = new Line(x , y, x , y);
+        Line point = new Line(x, y, x, y);
         point.setStroke(Color.BROWN);
         point.setStrokeWidth(8);
+        point.setOnMousePressed(e -> {
+            nodo.toFront();
+        });
         return point;
     }
-
 
     private void Actual_arrastrePuntos() {
         // Actualizar la posición de los puntos de arrastre

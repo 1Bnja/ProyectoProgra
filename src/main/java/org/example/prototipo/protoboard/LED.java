@@ -35,6 +35,8 @@ public class LED extends Pane {
 
         nodo.getChildren().addAll(led1, curva, pata1, pata2, fin1, fin2);
         this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
     }
 
     private Line crearLinea(double startX, double startY, double endX, double endY) {
@@ -58,13 +60,17 @@ public class LED extends Pane {
     }
 
     private void configurarArrastre(Line estirable, Line pata) {
-        estirable.setOnMousePressed(e -> empezarArrastre(e, pata));
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e, pata);
+            estirable.toFront();
+        });
         estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
     }
 
     private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
+                nodo.toFront();
                 mouseX = e.getSceneX();
                 mouseY = e.getSceneY();
             }
