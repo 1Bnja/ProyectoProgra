@@ -17,28 +17,13 @@ public class Controller_Builder {
     private AnchorPane Anchor_PanelFondo;
 
     @FXML
-    private Button Boton_Cable;
-
-    @FXML
-    private Button Boton_Led;
-
-    @FXML
-    private Button Boton_Switch;
-
-    @FXML
-    private Button Boton_Bateria;
+    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar;
 
     @FXML
     private Label Lebel_Agregar;
 
-    @FXML
-    private Button Boton_Eliminar;
-
-
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
-
-
 
     private void agregar(Node elemento) {
         elementos.add(elemento);
@@ -49,16 +34,16 @@ public class Controller_Builder {
     private void seleccionar(Node elemento) {
         elemento.setOnMouseClicked(mouseEvent -> {
             elemento_seleccionado = elemento;
+            elemento.toFront();
         });
     }
 
     @FXML
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
-        Cable cable= new Cable();
+        Cable cable = new Cable();
         cable.Crear_linea();
         agregar(cable);
-
     }
 
     @FXML
@@ -66,7 +51,6 @@ public class Controller_Builder {
         System.out.println("Se ha agregado un led");
         LED led = new LED();
         agregar(led);
-
     }
 
     @FXML
@@ -74,7 +58,6 @@ public class Controller_Builder {
         System.out.println("Se ha agregado un switch");
         Swich swich = new Swich();
         agregar(swich);
-
     }
 
     @FXML

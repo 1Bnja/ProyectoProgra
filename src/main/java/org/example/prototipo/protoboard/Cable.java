@@ -12,6 +12,8 @@ public class Cable extends Pane {
     Line inicio, fin;
     private Group nodo = new Group();
 
+    private double mouseX, mouseY;
+
     public void Crear_linea() {
 
         // Crear línea
@@ -27,9 +29,40 @@ public class Cable extends Pane {
         inicio.setOnMouseDragged(e -> Arrastre(e, line, true));
         fin.setOnMouseDragged(e -> Arrastre(e, line, false));
 
+        // Mover linea completa
+        line.setOnMousePressed(this::IniciarMovimientoLinea);
+        line.setOnMouseDragged(this::MoverLineaCompleta);
+
+        line.setOnMousePressed(e -> {
+            nodo.toFront(); // Mover al frente al iniciar el movimiento
+            IniciarMovimientoLinea(e);
+        });
+
         // Añadir línea y puntos al panel
         nodo.getChildren().addAll(line, inicio, fin);
-        getChildren().add(nodo);
+        this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
+    }
+
+    private void IniciarMovimientoLinea(MouseEvent event) {
+        mouseX = event.getX();
+        mouseY = event.getY();
+    }
+
+    private void MoverLineaCompleta(MouseEvent event) {
+        double offsetX = event.getX() - mouseX;
+        double offsetY = event.getY() - mouseY;
+
+        line.setStartX(line.getStartX() + offsetX);
+        line.setStartY(line.getStartY() + offsetY);
+        line.setEndX(line.getEndX() + offsetX);
+        line.setEndY(line.getEndY() + offsetY);
+
+        Actual_arrastrePuntos();
+
+        mouseX = event.getX();
+        mouseY = event.getY();
     }
 
     private void Arrastre(MouseEvent event, Line line, boolean isStartPoint) {
@@ -44,15 +77,16 @@ public class Cable extends Pane {
             line.setEndY(offsetY);
         }
 
-        // Actualizar la posición de los puntos de arrastre
         Actual_arrastrePuntos();
     }
 
     private Line Esquina_Estirable(double x, double y) {
-        // Crear un "punto" usando una línea
-        Line point = new Line(x , y, x , y); // Horizontal
+        Line point = new Line(x, y, x, y);
         point.setStroke(Color.BROWN);
         point.setStrokeWidth(8);
+        point.setOnMousePressed(e -> {
+            nodo.toFront();
+        });
         return point;
     }
 
