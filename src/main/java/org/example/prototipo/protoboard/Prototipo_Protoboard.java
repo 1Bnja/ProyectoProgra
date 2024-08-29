@@ -47,10 +47,14 @@ public class Prototipo_Protoboard extends Pane {
 
         nodo.getChildren().addAll(lineaGuia1, lineaGuia2, lineaGuia3, lineaGuia4);
 
-        crearCeldas1(origenX - 190, origenY - 175, new char[]{'j', 'i', 'h', 'g', 'f'});
-        crearCeldas1(origenX - 190, origenY + 60, new char[]{'e', 'd', 'c', 'b', 'a'});
-        crearCeldas2(origenX - 175, origenY - 265, new char[]{'-', '+'});
-        crearCeldas2(origenX - 175, origenY + 225, new char[]{'-', '+'});
+        Celdas celdas1 = new Celdas(origenX - 190, origenY - 175, new char[]{'j', 'i', 'h', 'g', 'f'});
+        nodo.getChildren().add(celdas1);
+        Celdas celdas2 = new Celdas(origenX - 190, origenY + 60, new char[]{'e', 'd', 'c', 'b', 'a'});
+        nodo.getChildren().add(celdas2);
+        BusesAlimentacion bus1 = new BusesAlimentacion(origenX - 175, origenY - 265, new char[]{'-', '+'});
+        nodo.getChildren().add(bus1);
+        BusesAlimentacion bus2 = new BusesAlimentacion(origenX - 175, origenY + 225, new char[]{'-', '+'});
+        nodo.getChildren().add(bus2);
 
         // Lineas Exteriores
         Line lineaExterior = crearLinea(origenX - 220, origenY - 280, origenX - 210, origenY - 290, Color.BLACK);
