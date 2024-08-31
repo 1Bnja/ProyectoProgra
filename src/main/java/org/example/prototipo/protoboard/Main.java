@@ -28,7 +28,7 @@ public class Main extends Application {
 
         Prototipo_Protoboard proto = new Prototipo_Protoboard();
 
-        grupo.getChildren().addAll(proto, fxmlContent);
+        grupo.getChildren().addAll(fxmlContent, proto);
 
         Scene scene = new Scene(grupo,1280, 840);
 
