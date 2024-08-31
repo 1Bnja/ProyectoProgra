@@ -21,16 +21,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Group grupo = new Group();
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/prototipo/Fondo_builder.fxml"));
         Parent fxmlContent = fxmlLoader.load();
 
-        Prototipo_Protoboard proto = new Prototipo_Protoboard();
+        Pane fondo= new Pane();
+        fondo.getChildren().add(fxmlContent);
 
-        grupo.getChildren().addAll(fxmlContent, proto);
-
-        Scene scene = new Scene(grupo,1280, 840);
+        Scene scene = new Scene(fondo,1280, 840);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");

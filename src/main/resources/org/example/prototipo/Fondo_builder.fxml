@@ -5,11 +5,9 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="Anchor_PanelFondo" prefHeight="920.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
@@ -54,24 +52,15 @@
             <Image url="@../../Imagen/PROTOTITOS-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="151.0" layoutX="696.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Imagen/LINEAS-removebg-preview.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="54.0" fitWidth="48.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Imagen/flecha-derecha%20(1).png" />
          </image>
       </ImageView>
-      <Button fx:id="Uno_j" layoutX="450.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="12.0" prefWidth="13.0">
-         <effect>
-            <Shadow blurType="ONE_PASS_BOX" height="0.0" radius="0.0" width="0.0">
-               <color>
-                  <Color red="0.07894736528396606" green="0.07309941202402115" blue="0.07309941202402115" />
-               </color>
-            </Shadow>
-         </effect>
+      <Button fx:id="Proto" layoutX="694.0" layoutY="18.0" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="118.0" text="PROTOBOARD">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
       </Button>
    </children>
    <effect>
