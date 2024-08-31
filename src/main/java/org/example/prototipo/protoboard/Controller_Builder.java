@@ -58,6 +58,7 @@ public class Controller_Builder {
         System.out.println("Se ha agregado un switch");
         Swich swich = new Swich();
         agregar(swich);
+
     }
 
     @FXML

@@ -24,27 +24,29 @@ public class Swich extends Pane {
     double origenY = Main.origenY;
 
     public Swich() {
+        double achicar = 0.7; // Factor para achicar la figura
+
         // Cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 500, origenY - 100, origenX - 560, origenY - 100);
-        Line lineaInferiorCE = crearLinea(origenX - 500, origenY - 40, origenX - 560, origenY - 40);
-        Line lineaIzquierdaCE = crearLinea(origenX - 500, origenY - 100, origenX - 500, origenY - 40);
-        Line lineaDerechaCE = crearLinea(origenX - 560, origenY - 100, origenX - 560, origenY - 40);
+        Line lineaSuperiorCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 100 * achicar);
+        Line lineaInferiorCE = crearLinea(origenX - 500 * achicar, origenY - 40 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
+        Line lineaIzquierdaCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 500 * achicar, origenY - 40 * achicar);
+        Line lineaDerechaCE = crearLinea(origenX - 560 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
 
         // Cuadrado Interno
-        Line lineaSuperiorCI = crearLinea(origenX - 510, origenY - 90, origenX - 550, origenY - 90);
-        Line lineaInferiorCI = crearLinea(origenX - 510, origenY - 50, origenX - 550, origenY - 50);
-        Line lineaIzquierdaCI = crearLinea(origenX - 510, origenY - 90, origenX - 510, origenY - 50);
-        Line lineaDerechaCI = crearLinea(origenX - 550, origenY - 90, origenX - 550, origenY - 50);
+        Line lineaSuperiorCI = crearLinea(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 90 * achicar);
+        Line lineaInferiorCI = crearLinea(origenX - 510 * achicar, origenY - 50 * achicar, origenX - 550 * achicar, origenY - 50 * achicar);
+        Line lineaIzquierdaCI = crearLinea(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 510 * achicar, origenY - 50 * achicar);
+        Line lineaDerechaCI = crearLinea(origenX - 550 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 50 * achicar);
 
         // Patas
-        pata1 = crearLinea(origenX - 505, origenY - 100, origenX - 505, origenY - 107.5);
-        pata2 = crearLinea(origenX - 555, origenY - 100, origenX - 555, origenY - 107.5);
-        pata3 = crearLinea(origenX - 505, origenY - 40, origenX - 505, origenY - 32.5);
-        pata4 = crearLinea(origenX - 555, origenY - 40, origenX - 555, origenY - 32.5);
+        pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
+        pata2 = crearLinea(origenX - 555 * achicar, origenY - 100 * achicar, origenX - 555 * achicar, origenY - 107.5 * achicar);
+        pata3 = crearLinea(origenX - 505 * achicar, origenY - 40 * achicar, origenX - 505 * achicar, origenY - 32.5 * achicar);
+        pata4 = crearLinea(origenX - 555 * achicar, origenY - 40 * achicar, origenX - 555 * achicar, origenY - 32.5 * achicar);
 
         // Fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 500, origenY - 100, origenX - 560, origenY - 40, Color.LIGHTGRAY);
-        Polygon fondoCuadradoI = crearFondo(origenX - 510, origenY - 90, origenX - 550, origenY - 50, Color.BLACK);
+        Polygon fondoCuadradoE = crearFondo(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
+        Polygon fondoCuadradoI = crearFondo(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 50 * achicar, Color.BLACK);
 
         fin1 = Esquina_Estirable(pata1);
         fin2 = Esquina_Estirable(pata2);
