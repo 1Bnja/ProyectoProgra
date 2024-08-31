@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 
 public class Prototipo_Protoboard extends Pane {
 
@@ -40,20 +39,20 @@ public class Prototipo_Protoboard extends Pane {
 
         nodo.getChildren().addAll(lineaArriba, lineaAbajo, lineaIzquierda, lineaDerecha, lineaInterna1, lineaInterna2, lineaInterna3, lineaInterna4);
 
-        Line lineaGuia1 = crearLinea(origenX - 175,origenY - 273, origenX + 539, origenY - 273, Color.BLUE);
-        Line lineaGuia2 = crearLinea(origenX - 175, origenY - 217, origenX + 539, origenY - 217, Color.RED);
-        Line lineaGuia3 = crearLinea(origenX - 175, origenY + 217, origenX + 539, origenY + 217, Color.BLUE);
-        Line lineaGuia4 = crearLinea(origenX - 175, origenY + 273, origenX + 539, origenY + 273, Color.RED);
+        Line lineaGuia1 = crearLinea(origenX - 170,origenY - 273, origenX + 534, origenY - 273, Color.BLUE);
+        Line lineaGuia2 = crearLinea(origenX - 170, origenY - 217, origenX + 534, origenY - 217, Color.RED);
+        Line lineaGuia3 = crearLinea(origenX - 170, origenY + 217, origenX + 534, origenY + 217, Color.BLUE);
+        Line lineaGuia4 = crearLinea(origenX - 170, origenY + 273, origenX + 534, origenY + 273, Color.RED);
 
         nodo.getChildren().addAll(lineaGuia1, lineaGuia2, lineaGuia3, lineaGuia4);
 
-        Celdas celdas1 = new Celdas(origenX - 190, origenY - 175, new char[]{'j', 'i', 'h', 'g', 'f'});
+        Celdas celdas1 = new Celdas(origenX - 210, origenY - 190, new char[]{'j', 'i', 'h', 'g', 'f'}, false);
         nodo.getChildren().add(celdas1);
-        Celdas celdas2 = new Celdas(origenX - 190, origenY + 60, new char[]{'e', 'd', 'c', 'b', 'a'});
+        Celdas celdas2 = new Celdas(origenX - 210, origenY + 30, new char[]{'e', 'd', 'c', 'b', 'a'}, true);
         nodo.getChildren().add(celdas2);
-        BusesAlimentacion bus1 = new BusesAlimentacion(origenX - 175, origenY - 265, new char[]{'-', '+'});
+        BusesAlimentacion bus1 = new BusesAlimentacion(origenX - 190, origenY - 265, new char[]{'-', '+'});
         nodo.getChildren().add(bus1);
-        BusesAlimentacion bus2 = new BusesAlimentacion(origenX - 175, origenY + 225, new char[]{'-', '+'});
+        BusesAlimentacion bus2 = new BusesAlimentacion(origenX - 190, origenY + 225, new char[]{'-', '+'});
         nodo.getChildren().add(bus2);
 
         // Lineas Exteriores
@@ -73,108 +72,6 @@ public class Prototipo_Protoboard extends Pane {
         );
 
         this.getChildren().add(nodo);
-    }
-
-    private void crearCeldas1(double desplazamientoX, double desplazamientoY, char[] letras1){
-
-        double tamanioCeldas = 13;
-        double espacioCeldas = 12;
-
-        for (int j = 0; j < letras1.length; j++){
-            Text letra1Izquierda = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
-            letra1Izquierda.setStroke(Color.BLACK);
-            letra1Izquierda.setRotate(270);
-            nodo.getChildren().add(letra1Izquierda);
-        }
-
-        for (int j = 0; j < letras1.length; j++){
-            Text letra1Derecha = new Text(desplazamientoX + 747, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
-            letra1Derecha.setStroke(Color.BLACK);
-            letra1Derecha.setRotate(270);
-            nodo.getChildren().add(letra1Derecha);
-        }
-
-        for(int i = 0; i < 30 ; i++) {
-
-            Text numero1 = new Text(desplazamientoX + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY - 10, String.valueOf(i + 1));
-            numero1.setStroke(Color.BLACK);
-            numero1.setRotate(270);
-            nodo.getChildren().add(numero1);
-
-            for(int j = 0; j < 5; j++) {
-                double x = i * (tamanioCeldas + espacioCeldas) + desplazamientoX;
-                double y = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
-
-                for (int k = 0; k < tamanioCeldas; k++) {
-                    Line relleno = new Line(x, y + k, x + tamanioCeldas, y + k);
-                    relleno.setFill(Color.GRAY);
-                    nodo.getChildren().add(relleno);
-                }
-
-                Line top = new Line(x, y, x + tamanioCeldas, y);
-                top.setStroke(Color.BLACK);
-
-                Line right = new Line(x + tamanioCeldas, y, x + tamanioCeldas, y + tamanioCeldas);
-                right.setStroke(Color.BLACK);
-
-                Line bottom = new Line(x, y + tamanioCeldas, x + tamanioCeldas, y + tamanioCeldas);
-                bottom.setStroke(Color.BLACK);
-
-                Line left = new Line(x, y, x, y + tamanioCeldas);
-                left.setStroke(Color.BLACK);
-
-                nodo.getChildren().addAll(top, right, bottom, left);
-
-            }
-        }
-    }
-
-    private void crearCeldas2(double desplazamientoX, double desplazamientoY, char[] simbolos){
-        double tamanioCeldas = 13;
-        double espacioCeldas = 12;
-        int espacioExtra = 25;
-
-        for (int j = 0; j < simbolos.length; j++){
-            Text simbolo = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
-            simbolo.setStroke(Color.BLACK);
-            simbolo.setRotate(270);
-            nodo.getChildren().add(simbolo);
-        }
-
-        for (int j = 0; j < simbolos.length; j++){
-            Text simboloDerecha = new Text(desplazamientoX + 722, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
-            simboloDerecha.setStroke(Color.BLACK);
-            simboloDerecha.setRotate(270);
-            nodo.getChildren().add(simboloDerecha);
-        }
-
-        for(int i = 0; i < 25 ; i++) {
-            for(int j = 0; j < 2; j++) {
-                double x2 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX;
-                double y2 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
-
-                for (int k = 0; k < tamanioCeldas; k++) {
-                    Line relleno2 = new Line(x2, y2 + k, x2 + tamanioCeldas, y2 + k);
-                    relleno2.setFill(Color.GRAY);
-                    nodo.getChildren().add(relleno2);
-                }
-
-                Line top2 = new Line(x2, y2, x2 + tamanioCeldas, y2);
-                top2.setStroke(Color.BLACK);
-
-                Line right2 = new Line(x2 + tamanioCeldas, y2, x2 + tamanioCeldas, y2 + tamanioCeldas);
-                right2.setStroke(Color.BLACK);
-
-                Line bottom2 = new Line(x2, y2 + tamanioCeldas, x2 + tamanioCeldas, y2 + tamanioCeldas);
-                bottom2.setStroke(Color.BLACK);
-
-                Line left2 = new Line(x2, y2, x2, y2 + tamanioCeldas);
-                left2.setStroke(Color.BLACK);
-
-                nodo.getChildren().addAll(top2, right2, bottom2, left2);
-
-            }
-        }
     }
 
     private Line crearLinea(double startX, double startY, double endX, double endY, Color color) {

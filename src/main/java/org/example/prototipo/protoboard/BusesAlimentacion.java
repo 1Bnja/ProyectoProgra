@@ -1,57 +1,83 @@
 package org.example.prototipo.protoboard;
 
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BusesAlimentacion extends Group {
+
+    private List<List<Cuadrados>> buses;
+    private int espacioExtra = 2;
 
     public BusesAlimentacion(double desplazamientoX, double desplazamientoY, char[] simbolos) {
 
         double tamanioCeldas = 13;
-        double espacioCeldas = 12;
-        int espacioExtra = 25;
+        double espacioCeldas = 11;
+        buses = new ArrayList<>();
 
-        for (int j = 0; j < simbolos.length; j++){
-            Text simbolo = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
-            simbolo.setStroke(Color.BLACK);
-            simbolo.setRotate(270);
-            this.getChildren().add(simbolo);
-        }
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(espacioCeldas);
+        gridPane.setVgap(espacioCeldas);
 
-        for (int j = 0; j < simbolos.length; j++){
-            Text simboloDerecha = new Text(desplazamientoX + 722, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(simbolos[j]));
+        for (int j = 0; j < simbolos.length; j++) {
+            // Agregar símbolo para el lado izquierdo
+            Text simboloIzquierda = new Text(String.valueOf(simbolos[j]));
+            simboloIzquierda.setStroke(Color.BLACK);
+            simboloIzquierda.setRotate(270);
+            GridPane.setConstraints(simboloIzquierda, 0, j);
+            gridPane.getChildren().add(simboloIzquierda);
+
+
+            Text simboloDerecha = new Text(String.valueOf(simbolos[j]));
             simboloDerecha.setStroke(Color.BLACK);
             simboloDerecha.setRotate(270);
-            this.getChildren().add(simboloDerecha);
+            GridPane.setConstraints(simboloDerecha, 34, j);
+            gridPane.getChildren().add(simboloDerecha);
         }
 
-        for(int i = 0; i < 25 ; i++) {
-            for(int j = 0; j < 2; j++) {
-                double x2 = i * (tamanioCeldas + espacioCeldas) + (i / 5) * espacioExtra + desplazamientoX;
-                double y2 = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
 
-                for (int k = 0; k < tamanioCeldas; k++) {
-                    Line relleno2 = new Line(x2, y2 + k, x2 + tamanioCeldas, y2 + k);
-                    relleno2.setFill(Color.GRAY);
-                    this.getChildren().add(relleno2);
+        for (int j = 0; j < 2; j++) {
+            List<Cuadrados> filaBus = new ArrayList<>();
+            int columnaIndex = 1;
+
+            for (int i = 0; i < 25; i++) {
+
+                if (i > 0 && i % 5 == 0) {
+                    columnaIndex += espacioExtra;
                 }
 
-                Line top2 = new Line(x2, y2, x2 + tamanioCeldas, y2);
-                top2.setStroke(Color.BLACK);
+                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                cuadrado.setStroke(Color.BLACK);
+                cuadrado.setFill(Color.WHITE);
 
-                Line right2 = new Line(x2 + tamanioCeldas, y2, x2 + tamanioCeldas, y2 + tamanioCeldas);
-                right2.setStroke(Color.BLACK);
+                final int filaIndex = j;
+                cuadrado.setOnMouseClicked(event -> alternarFila(filaIndex));
 
-                Line bottom2 = new Line(x2, y2 + tamanioCeldas, x2 + tamanioCeldas, y2 + tamanioCeldas);
-                bottom2.setStroke(Color.BLACK);
+                GridPane.setConstraints(cuadrado, columnaIndex, j);
+                gridPane.getChildren().add(cuadrado);
 
-                Line left2 = new Line(x2, y2, x2, y2 + tamanioCeldas);
-                left2.setStroke(Color.BLACK);
+                filaBus.add(cuadrado);
+                columnaIndex++;
+            }
+            buses.add(filaBus);
+        }
 
-                this.getChildren().addAll(top2, right2, bottom2, left2);
+        gridPane.setLayoutX(desplazamientoX);
+        gridPane.setLayoutY(desplazamientoY);
+        this.getChildren().add(gridPane);
+    }
 
+    private void alternarFila(int filaIndex) {
+        boolean filaEncendida = buses.get(filaIndex).get(0).getFill() == Color.RED;
+
+        for (Cuadrados cuadrado : buses.get(filaIndex)) {
+            if (filaEncendida) {
+                cuadrado.setFill(Color.WHITE);
+            } else {
+                cuadrado.setFill(Color.RED);
             }
         }
     }

@@ -1,65 +1,87 @@
 package org.example.prototipo.protoboard;
 
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Celdas extends Group {
 
-    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras1) {
+    private List<List<Cuadrados>> grid;
 
+    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
         double tamanioCeldas = 13;
-        double espacioCeldas = 12;
+        double espacioCeldas = 11;
+        grid = new ArrayList<>();
 
-        for (int j = 0; j < letras1.length; j++){
-            Text letra1Izquierda = new Text(desplazamientoX - 20, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
-            letra1Izquierda.setStroke(Color.BLACK);
-            letra1Izquierda.setRotate(270);
-            this.getChildren().add(letra1Izquierda);
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(espacioCeldas);
+        gridPane.setVgap(espacioCeldas);
+        
+        for (int j = 0; j < letras.length; j++) {
+            Text letraIzquierda = new Text(String.valueOf(letras[j]));
+            letraIzquierda.setStroke(Color.BLACK);
+            letraIzquierda.setRotate(270);
+            GridPane.setConstraints(letraIzquierda, 0, j + 1);
+            gridPane.getChildren().add(letraIzquierda);
+
+            Text letraDerecha = new Text(String.valueOf(letras[j]));
+            letraDerecha.setStroke(Color.BLACK);
+            letraDerecha.setRotate(270);
+            GridPane.setConstraints(letraDerecha, 31, j + 1);
+            gridPane.getChildren().add(letraDerecha);
         }
 
-        for (int j = 0; j < letras1.length; j++){
-            Text letra1Derecha = new Text(desplazamientoX + 747, desplazamientoY + j * (tamanioCeldas + espacioCeldas) + 10, String.valueOf(letras1[j]));
-            letra1Derecha.setStroke(Color.BLACK);
-            letra1Derecha.setRotate(270);
-            this.getChildren().add(letra1Derecha);
+        // Crear la cuadrícula
+        for (int i = 0; i < 30; i++) {
+            List<Cuadrados> columna = new ArrayList<>();
+
+            Text numero = new Text(String.valueOf(i + 1));
+            numero.setStroke(Color.BLACK);
+            numero.setRotate(270);
+
+            if (esParteInferior) {
+                GridPane.setConstraints(numero, i + 1, 6);
+            } else {
+                GridPane.setConstraints(numero, i + 1, 0);
+            }
+
+            gridPane.getChildren().add(numero);
+
+            for (int j = 0; j < 5; j++) {
+                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                cuadrado.setStroke(Color.BLACK);
+                cuadrado.setFill(Color.WHITE);
+
+                final int columnaIndex = i;
+                cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
+
+                GridPane.setConstraints(cuadrado, i + 1, j + 1);
+                gridPane.getChildren().add(cuadrado);
+
+                columna.add(cuadrado);
+            }
+
+            grid.add(columna);
         }
 
-        for(int i = 0; i < 30 ; i++) {
+        gridPane.setLayoutX(desplazamientoX);
+        gridPane.setLayoutY(desplazamientoY);
+        this.getChildren().add(gridPane);
+    }
 
-            Text numero1 = new Text(desplazamientoX + i * (tamanioCeldas + espacioCeldas) + 2, desplazamientoY - 10, String.valueOf(i + 1));
-            numero1.setStroke(Color.BLACK);
-            numero1.setRotate(270);
-            this.getChildren().add(numero1);
+    private void alternarColumna(int columnaIndex) {
+        List<Cuadrados> columna = grid.get(columnaIndex);
+        boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
 
-            for(int j = 0; j < 5; j++) {
-                double x = i * (tamanioCeldas + espacioCeldas) + desplazamientoX;
-                double y = j * (tamanioCeldas + espacioCeldas) + desplazamientoY;
-
-                for (int k = 0; k < tamanioCeldas; k++) {
-                    Line relleno = new Line(x, y + k, x + tamanioCeldas, y + k);
-                    relleno.setFill(Color.GRAY);
-                    this.getChildren().add(relleno);
-                }
-
-                Line top = new Line(x, y, x + tamanioCeldas, y);
-                top.setStroke(Color.BLACK);
-
-                Line right = new Line(x + tamanioCeldas, y, x + tamanioCeldas, y + tamanioCeldas);
-                right.setStroke(Color.BLACK);
-
-                Line bottom = new Line(x, y + tamanioCeldas, x + tamanioCeldas, y + tamanioCeldas);
-                bottom.setStroke(Color.BLACK);
-
-                Line left = new Line(x, y, x, y + tamanioCeldas);
-                left.setStroke(Color.BLACK);
-
-                this.getChildren().addAll(top, right, bottom, left);
+        for (Cuadrados cuadrado : columna) {
+            if (columnaEncendida) {
+                cuadrado.setFill(Color.WHITE);
+            } else {
+                cuadrado.setFill(Color.RED);
             }
         }
     }
 }
-
-
-
