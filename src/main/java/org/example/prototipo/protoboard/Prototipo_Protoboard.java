@@ -14,6 +14,7 @@ public class Prototipo_Protoboard extends Pane {
     double origenY = Main.origenY;
 
     public Prototipo_Protoboard() {
+        this.setPickOnBounds(false);
 
         Polygon fondoTotal = crearFondo(origenX - 220, origenY - 280, origenX + 580, origenY + 280, Color.LIGHTGRAY);
         Polygon fondoCarrilCentral = crearFondo(origenX - 220, origenY - 20, origenX + 580, origenY + 20, Color.GRAY);

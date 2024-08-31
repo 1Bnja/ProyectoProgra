@@ -35,6 +35,7 @@ public class Controller_Builder {
     private void agregarProto(Node elemento) {
         elementos.add(elemento);
         Anchor_PanelFondo.getChildren().add(elemento);
+        elemento.toBack();
     }
 
     private void seleccionar(Node elemento) {
@@ -99,6 +100,7 @@ public class Controller_Builder {
             alert.showAndWait();
         } else {
             Prototipo_Protoboard proto = new Prototipo_Protoboard();
+            proto.toFront();
             System.out.println("Se ha agregado un protoboard");
             agregarProto(proto);
         }
