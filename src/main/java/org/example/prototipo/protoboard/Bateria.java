@@ -98,6 +98,7 @@ public class Bateria extends Pane {
             mouseY = e.getSceneY() - nodo.getLayoutY();
         });
 
+
         nodo.setOnMouseDragged(e -> {
             nodo.setLayoutX(e.getSceneX() - mouseX);
             nodo.setLayoutY(e.getSceneY() - mouseY);

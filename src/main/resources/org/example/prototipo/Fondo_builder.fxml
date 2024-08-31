@@ -52,16 +52,16 @@
             <Image url="@../../Imagen/PROTOTITOS-removebg-preview.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="26.0" fitWidth="151.0" layoutX="696.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Imagen/LINEAS-removebg-preview.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="54.0" fitWidth="48.0" layoutX="28.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Imagen/flecha-derecha%20(1).png" />
          </image>
       </ImageView>
+      <Button fx:id="Proto" layoutX="694.0" layoutY="18.0" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="118.0" text="PROTOBOARD">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
    <effect>
       <Blend />
