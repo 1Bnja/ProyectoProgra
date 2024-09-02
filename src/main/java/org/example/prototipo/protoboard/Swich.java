@@ -12,6 +12,7 @@ public class Swich extends Pane {
 
     private Group nodo = new Group();
 
+
     private Line fin1, fin2, fin3, fin4;
     private Line pata1, pata2, pata3, pata4;
 
@@ -20,11 +21,17 @@ public class Swich extends Pane {
     private double mouseY;
     private boolean line_en_arrastre = false;
 
+
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
+    boolean encendido;
+
     public Swich() {
-        double achicar = 0.7; // Factor para achicar la figura
+        double achicar = 0.7;
+        double achicar2= 0.5;
+        int tamanioCuadradoInterno = (int) (37 * achicar2); // Tamaño del cuadrado interno
+       this.encendido = false;
 
         // Cuadrado exterior usando líneas
         Line lineaSuperiorCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 100 * achicar);
@@ -33,10 +40,22 @@ public class Swich extends Pane {
         Line lineaDerechaCE = crearLinea(origenX - 560 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
 
         // Cuadrado Interno
-        Line lineaSuperiorCI = crearLinea(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 90 * achicar);
-        Line lineaInferiorCI = crearLinea(origenX - 510 * achicar, origenY - 50 * achicar, origenX - 550 * achicar, origenY - 50 * achicar);
-        Line lineaIzquierdaCI = crearLinea(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 510 * achicar, origenY - 50 * achicar);
-        Line lineaDerechaCI = crearLinea(origenX - 550 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 50 * achicar);
+        Cuadrados cuadradoInterno = new Cuadrados(tamanioCuadradoInterno, 0);
+        cuadradoInterno.setTranslateX(origenX - 543 * achicar);
+        cuadradoInterno.setTranslateY(origenY - 84 * achicar);
+        cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
+
+        cuadradoInterno.setOnMouseClicked(event -> {
+            if (encendido) {
+                cuadradoInterno.setFill(Color.BLACK); // Apagado
+            } else {
+                cuadradoInterno.setFill(Color.YELLOW); // Encendido
+            }
+            encendido = !encendido; // Cambiar estado
+        });
+
+
+
 
         // Patas
         pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
@@ -63,9 +82,8 @@ public class Swich extends Pane {
 
         // Agregar los elementos al grupo
         nodo.getChildren().addAll(
-                fondoCuadradoE, fondoCuadradoI, lineaSuperiorCE, lineaInferiorCE,
-                lineaIzquierdaCE, lineaDerechaCE, lineaSuperiorCI, lineaInferiorCI,
-                lineaIzquierdaCI, lineaDerechaCI, pata1, pata2, pata3, pata4, fin1, fin2, fin3, fin4
+                fondoCuadradoE, cuadradoInterno, lineaSuperiorCE, lineaInferiorCE,
+                lineaIzquierdaCE, lineaDerechaCE, pata1, pata2, pata3, pata4, fin1, fin2, fin3, fin4
         );
 
         this.getChildren().add(nodo);
