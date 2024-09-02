@@ -22,8 +22,8 @@ public class Swich extends Pane {
     private boolean line_en_arrastre = false;
 
 
-    double origenX = Main.origenX;
-    double origenY = Main.origenY;
+    double origenX = Main.origenX + 40;
+    double origenY = Main.origenY - 235;
 
     boolean encendido;
 
@@ -141,8 +141,30 @@ public class Swich extends Pane {
                 double dX = e.getSceneX() - mouseX;
                 double dY = e.getSceneY() - mouseY;
 
-                nodo.setLayoutX(nodo.getLayoutX() + dX);
-                nodo.setLayoutY(nodo.getLayoutY() + dY);
+                double nuevoX = nodo.getLayoutX() + dX;
+                double nuevoY = nodo.getLayoutY() + dY;
+
+                double minX = origenX - 965;
+                double minY = origenY - 215;
+                double maxX = origenX + 264;
+                double maxY = origenY + 490;
+
+                if (nuevoX < minX) {
+                    nuevoX = minX;
+                } else if (nuevoX > maxX) {
+                    nuevoX = maxX;
+                }
+
+                if (nuevoY < minY) {
+                    nuevoY = minY;
+                } else if (nuevoY > maxY) {
+                    nuevoY = maxY;
+                }
+
+
+                nodo.setLayoutX(nuevoX);
+                nodo.setLayoutY(nuevoY);
+
 
                 mouseX = e.getSceneX();
                 mouseY = e.getSceneY();
