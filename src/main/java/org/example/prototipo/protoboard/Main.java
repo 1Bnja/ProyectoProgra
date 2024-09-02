@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static double anchoEscena = 1280;
-    static double altoEscena = 920;
+    static double altoEscena = 840;
 
     static double origenX = anchoEscena/2;
     static double origenY = altoEscena/2;
@@ -22,24 +22,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Group grupo = new Group();
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/prototipo/Fondo_builder.fxml"));
         Parent fxmlContent = fxmlLoader.load();
 
-        Prototipo_Protoboard proto = new Prototipo_Protoboard();
+        Pane fondo= new Pane();
+        fondo.getChildren().add(fxmlContent);
 
-        GridPane gridPane = proto.getGridPane();
+        Scene scene = new Scene(fondo,1280, 840);
 
-        //Tamaño cuadrados
-        gridPane.setVgap(9);
-        gridPane.setHgap(9);
-        gridPane.setLayoutX(450);//450
-        gridPane.setLayoutY(195);//195
-
-        grupo.getChildren().addAll(gridPane, proto, fxmlContent);
-
-        Scene scene= new Scene(grupo, 1280, 840);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");
         primaryStage.show();

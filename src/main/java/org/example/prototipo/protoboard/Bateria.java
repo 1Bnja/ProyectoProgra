@@ -19,6 +19,12 @@ public class Bateria extends Pane {
     double origenX = Main.origenX - 400;
     double origenY = Main.origenY + 150;
 
+
+    boolean positivo= true;
+    boolean negativo= false;
+    Cuadrados conectorPositivo;
+    Cuadrados conectorNegativo;
+
     public Bateria() {
         // Parte superior de la batería
         Line lineaSuperiorIzquierda = new Line(origenX - 60, origenY - 120, origenX - 60, origenY - 70);
@@ -39,14 +45,20 @@ public class Bateria extends Pane {
             nodo.getChildren().add(curvaCobre);
         }
 
-        // Conectores (líneas para los terminales)
-        Line conectorPositivo = new Line(origenX - 30, origenY - 130, origenX - 30, origenY - 120);
-        conectorPositivo.setStroke(Color.DARKRED);
-        conectorPositivo.setStrokeWidth(3);
+        // Conectores (para los terminales)
 
-        Line conectorNegativo = new Line(origenX + 35, origenY - 130, origenX + 35, origenY - 120);
-        conectorNegativo.setStroke(Color.BLACK);
-        conectorNegativo.setStrokeWidth(3);
+        conectorPositivo = new Cuadrados(20, 10);
+        conectorPositivo.setX(origenX - 33);
+        conectorPositivo.setY(origenY - 140);
+        conectorPositivo.setFill(Color.DARKRED);
+        conectorPositivo.tipo_carga(positivo);
+
+
+        conectorNegativo = new Cuadrados(20, 10);
+        conectorNegativo.setX(origenX + 18);
+        conectorNegativo.setY(origenY - 140);
+        conectorNegativo.setFill(Color.DARKBLUE);
+        conectorNegativo.tipo_carga(negativo);
 
         // Parte inferior de la batería (zona negra)
         Line lineaInferiorIzquierda = new Line(origenX - 60, origenY - 70, origenX - 60, origenY + 80);
@@ -93,18 +105,43 @@ public class Bateria extends Pane {
         );
 
         nodo.setOnMousePressed(e -> {
-            nodo.toFront();
+            nodo.toFront();  // Asegura que el nodo esté al frente cuando se presiona
             mouseX = e.getSceneX() - nodo.getLayoutX();
             mouseY = e.getSceneY() - nodo.getLayoutY();
         });
 
         nodo.setOnMouseDragged(e -> {
-            nodo.setLayoutX(e.getSceneX() - mouseX);
-            nodo.setLayoutY(e.getSceneY() - mouseY);
+            // Calcular las nuevas posiciones propuestas
+            double nuevoX = e.getSceneX() - mouseX;
+            double nuevoY = e.getSceneY() - mouseY;
+
+            double minXLimit = origenX - 420;
+            double minYLimit = origenY - 925;
+            double maxXLimit = origenX + 739;
+            double maxYLimit = origenY - 384;
+
+            // Verificar que el nuevoX y nuevoY estén dentro de los límites establecidos por ti
+            if (nuevoX < minXLimit) {
+                nuevoX = minXLimit;
+            } else if (nuevoX > maxXLimit) {
+                nuevoX = maxXLimit;
+            }
+
+            if (nuevoY < minYLimit) {
+                nuevoY = minYLimit;
+            } else if (nuevoY > maxYLimit) {
+                nuevoY = maxYLimit;
+            }
+
+            // Aplicar las nuevas coordenadas ajustadas
+            nodo.setLayoutX(nuevoX);
+            nodo.setLayoutY(nuevoY);
         });
 
         this.getChildren().add(nodo);
-
         this.setPickOnBounds(false);
     }
+
+
+
 }
