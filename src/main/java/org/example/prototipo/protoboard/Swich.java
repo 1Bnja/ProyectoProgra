@@ -12,6 +12,7 @@ public class Swich extends Pane {
 
     private Group nodo = new Group();
 
+
     private Line fin1, fin2, fin3, fin4;
     private Line pata1, pata2, pata3, pata4;
 
@@ -20,147 +21,191 @@ public class Swich extends Pane {
     private double mouseY;
     private boolean line_en_arrastre = false;
 
-    double origenX = Main.origenX;
-    double origenY = Main.origenY;
+
+    double origenX = Main.origenX + 40;
+    double origenY = Main.origenY - 235;
+
+    boolean encendido;
 
     public Swich() {
+        double achicar = 0.7;
+        double achicar2= 0.5;
+        int tamanioCuadradoInterno = (int) (37 * achicar2); // Tamaño del cuadrado interno
+       this.encendido = false;
+
         // Cuadrado exterior usando líneas
-        Line lineaSuperiorCE = new Line(origenX - 500, origenY - 100, origenX - 560, origenY - 100);
-        Line lineaInferiorCE = new Line(origenX - 500, origenY - 40, origenX - 560, origenY - 40);
-        Line lineaIzquierdaCE = new Line(origenX - 500, origenY - 100, origenX - 500, origenY - 40);
-        Line lineaDerechaCE = new Line(origenX - 560, origenY - 100, origenX - 560, origenY - 40);
+        Line lineaSuperiorCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 100 * achicar);
+        Line lineaInferiorCE = crearLinea(origenX - 500 * achicar, origenY - 40 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
+        Line lineaIzquierdaCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 500 * achicar, origenY - 40 * achicar);
+        Line lineaDerechaCE = crearLinea(origenX - 560 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
 
         // Cuadrado Interno
-        Line lineaSuperiorCI = new Line(origenX - 510, origenY - 90, origenX - 550, origenY - 90);
-        Line lineaInferiorCI = new Line(origenX - 510, origenY - 50, origenX - 550, origenY - 50);
-        Line lineaIzquierdaCI = new Line(origenX - 510, origenY - 90, origenX - 510, origenY - 50);
-        Line lineaDerechaCI = new Line(origenX - 550, origenY - 90, origenX - 550, origenY - 50);
+        Cuadrados cuadradoInterno = new Cuadrados(tamanioCuadradoInterno, 0);
+        cuadradoInterno.setTranslateX(origenX - 543 * achicar);
+        cuadradoInterno.setTranslateY(origenY - 84 * achicar);
+        cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
+
+        cuadradoInterno.setOnMouseClicked(event -> {
+            if (encendido) {
+                cuadradoInterno.setFill(Color.BLACK); // Apagado
+            } else {
+                cuadradoInterno.setFill(Color.YELLOW); // Encendido
+            }
+            encendido = !encendido; // Cambiar estado
+        });
+
+
+
 
         // Patas
-        pata1 = new Line(origenX - 505, origenY - 100, origenX - 505, origenY - 107.5);
-        pata2 = new Line(origenX - 555, origenY - 100, origenX - 555, origenY - 107.5);
-        pata3 = new Line(origenX - 505, origenY - 40, origenX - 505, origenY - 32.5);
-        pata4 = new Line(origenX - 555, origenY - 40, origenX - 555, origenY - 32.5);
+        pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
+        pata2 = crearLinea(origenX - 555 * achicar, origenY - 100 * achicar, origenX - 555 * achicar, origenY - 107.5 * achicar);
+        pata3 = crearLinea(origenX - 505 * achicar, origenY - 40 * achicar, origenX - 505 * achicar, origenY - 32.5 * achicar);
+        pata4 = crearLinea(origenX - 555 * achicar, origenY - 40 * achicar, origenX - 555 * achicar, origenY - 32.5 * achicar);
 
         // Fondo del cuadrado exterior
-        Polygon fondoCuadradoE = new Polygon();
-        fondoCuadradoE.getPoints().addAll(
-                origenX - 500, origenY - 100,
-                origenX - 560, origenY - 100,
-                origenX - 560, origenY - 40,
-                origenX - 500, origenY - 40
-        );
-        fondoCuadradoE.setFill(Color.LIGHTGRAY);
+        Polygon fondoCuadradoE = crearFondo(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
+        Polygon fondoCuadradoI = crearFondo(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 50 * achicar, Color.BLACK);
 
-        // Fondo del cuadrado interno
-        Polygon fondoCuadradoI = new Polygon();
-        fondoCuadradoI.getPoints().addAll(
-                origenX - 510, origenY - 90,
-                origenX - 550, origenY - 90,
-                origenX - 550, origenY - 50,
-                origenX - 510, origenY - 50
-        );
-        fondoCuadradoI.setFill(Color.BLACK);
+        fin1 = Esquina_Estirable(pata1);
+        fin2 = Esquina_Estirable(pata2);
+        fin3 = Esquina_Estirable(pata3);
+        fin4 = Esquina_Estirable(pata4);
 
-        lineaSuperiorCE.setStroke(Color.BLACK);
-        lineaInferiorCE.setStroke(Color.BLACK);
-        lineaIzquierdaCE.setStroke(Color.BLACK);
-        lineaDerechaCE.setStroke(Color.BLACK);
-
-        lineaSuperiorCI.setStroke(Color.BLACK);
-        lineaInferiorCI.setStroke(Color.BLACK);
-        lineaIzquierdaCI.setStroke(Color.BLACK);
-        lineaDerechaCI.setStroke(Color.BLACK);
-
-        fin1 = Esquina_Estirable(pata1.getEndX(), pata1.getEndY());
-        fin2 = Esquina_Estirable(pata2.getEndX(), pata2.getEndY());
-        fin3 = Esquina_Estirable(pata3.getEndX(), pata3.getEndY());
-        fin4 = Esquina_Estirable(pata4.getEndX(), pata4.getEndY());
-
-        // Eventos de arrastre para las líneas rojas
-        fin1.setOnMousePressed(e -> Empezar_arrastre(e, pata1));
-        fin1.setOnMouseDragged(e -> Arrastre(e, pata1));
-
-        fin2.setOnMousePressed(e -> Empezar_arrastre(e, pata2));
-        fin2.setOnMouseDragged(e -> Arrastre(e, pata2));
-
-        fin3.setOnMousePressed(e -> Empezar_arrastre(e, pata3));
-        fin3.setOnMouseDragged(e -> Arrastre(e, pata3));
-
-        fin4.setOnMousePressed(e -> Empezar_arrastre(e, pata4));
-        fin4.setOnMouseDragged(e -> Arrastre(e, pata4));
+        configurarArrastre(fin1, pata1);
+        configurarArrastre(fin2, pata2);
+        configurarArrastre(fin3, pata3);
+        configurarArrastre(fin4, pata4);
 
         // Mover el nodo completo
+        configurarArrastreNodo();
+
+        // Agregar los elementos al grupo
+        nodo.getChildren().addAll(
+                fondoCuadradoE, cuadradoInterno, lineaSuperiorCE, lineaInferiorCE,
+                lineaIzquierdaCE, lineaDerechaCE, pata1, pata2, pata3, pata4, fin1, fin2, fin3, fin4
+        );
+
+        this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
+    }
+
+    private Line crearLinea(double startX, double startY, double endX, double endY) {
+        Line linea = new Line(startX, startY, endX, endY);
+        linea.setStroke(Color.BLACK);
+        return linea;
+    }
+
+    private Polygon crearFondo(double startX, double startY, double endX, double endY, Color color) {
+        Polygon fondo = new Polygon();
+        fondo.getPoints().addAll(
+                startX, startY,
+                endX, startY,
+                endX, endY,
+                startX, endY
+        );
+        fondo.setFill(color);
+        return fondo;
+    }
+
+    private Line Esquina_Estirable(Line pata) {
+        Line point = new Line(
+                pata.getEndX() - 5, pata.getEndY(),
+                pata.getEndX() + 5, pata.getEndY()
+        );
+        point.setStroke(Color.RED);
+        point.setStrokeWidth(8);
+        return point;
+    }
+
+    private void configurarArrastre(Line estirable, Line pata) {
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e, pata);
+            nodo.toFront();
+        });
+        estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
+    }
+
+    private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
-                mouseX = e.getSceneX() - nodo.getLayoutX();
-                mouseY = e.getSceneY() - nodo.getLayoutY();
+                nodo.toFront();
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
             }
         });
 
         nodo.setOnMouseDragged(e -> {
             if (!line_en_arrastre) {
-                nodo.setLayoutX(e.getSceneX() - mouseX);
-                nodo.setLayoutY(e.getSceneY() - mouseY);
+                double dX = e.getSceneX() - mouseX;
+                double dY = e.getSceneY() - mouseY;
+
+                double nuevoX = nodo.getLayoutX() + dX;
+                double nuevoY = nodo.getLayoutY() + dY;
+
+                double minX = origenX - 965;
+                double minY = origenY - 215;
+                double maxX = origenX + 264;
+                double maxY = origenY + 490;
+
+                if (nuevoX < minX) {
+                    nuevoX = minX;
+                } else if (nuevoX > maxX) {
+                    nuevoX = maxX;
+                }
+
+                if (nuevoY < minY) {
+                    nuevoY = minY;
+                } else if (nuevoY > maxY) {
+                    nuevoY = maxY;
+                }
+
+
+                nodo.setLayoutX(nuevoX);
+                nodo.setLayoutY(nuevoY);
+
+
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
+
+                actualizarPosiciones();
             }
         });
-
-        // Agregar los elementos al grupo
-        nodo.getChildren().addAll(
-                fondoCuadradoE, fondoCuadradoI, lineaSuperiorCE, lineaInferiorCE,
-                lineaIzquierdaCE, lineaDerechaCE, lineaSuperiorCI, lineaInferiorCI,
-                lineaIzquierdaCI, lineaDerechaCI, pata1, pata2, pata3, pata4, fin1, fin2, fin3, fin4
-        );
-
-        this.getChildren().add(nodo);
     }
 
-    private void Empezar_arrastre(MouseEvent event, Line line) {
-        // Indicar que estamos arrastrando una línea
+    private void empezarArrastre(MouseEvent event, Line pata) {
         line_en_arrastre = true;
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
     }
 
-    private void Arrastre(MouseEvent event, Line line) {
+    private void Arrastre(MouseEvent event, Line line, Line estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
         line.setEndX(line.getEndX() + offsetX);
         line.setEndY(line.getEndY() + offsetY);
 
+        actualizarEstirable(estirable, line);
+
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
 
-        Actual_arrastrePuntos(); // Actualizar los puntos de arrastre
+        line_en_arrastre = false;
     }
 
-    private Line Esquina_Estirable(double x, double y) {
-        Line point = new Line(x, y, x, y);
-        point.setStroke(Color.RED);
-        point.setStrokeWidth(8);
-        return point;
+    private void actualizarEstirable(Line estirable, Line pata) {
+        estirable.setStartX(pata.getEndX() - 5);
+        estirable.setStartY(pata.getEndY());
+        estirable.setEndX(pata.getEndX() + 5);
+        estirable.setEndY(pata.getEndY());
     }
 
-    private void Actual_arrastrePuntos() {
-        fin1.setStartX(pata1.getEndX() - 5);
-        fin1.setStartY(pata1.getEndY());
-        fin1.setEndX(pata1.getEndX() + 5);
-        fin1.setEndY(pata1.getEndY());
-
-        fin2.setStartX(pata2.getEndX() - 5);
-        fin2.setStartY(pata2.getEndY());
-        fin2.setEndX(pata2.getEndX() + 5);
-        fin2.setEndY(pata2.getEndY());
-
-        fin3.setStartX(pata3.getEndX() - 5);
-        fin3.setStartY(pata3.getEndY());
-        fin3.setEndX(pata3.getEndX() + 5);
-        fin3.setEndY(pata3.getEndY());
-
-        fin4.setStartX(pata4.getEndX() - 5);
-        fin4.setStartY(pata4.getEndY());
-        fin4.setEndX(pata4.getEndX() + 5);
-        fin4.setEndY(pata4.getEndY());
+    private void actualizarPosiciones(){
+        actualizarEstirable(fin1, pata1);
+        actualizarEstirable(fin2, pata2);
+        actualizarEstirable(fin3, pata3);
+        actualizarEstirable(fin4, pata4);
     }
 }

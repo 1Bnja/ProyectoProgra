@@ -13,37 +13,52 @@ public class Bateria extends Pane {
 
     private Group nodo = new Group();
 
-    double origenX = Main.origenX - 400;  // Desplazado 200 píxeles a la izquierda
-    double origenY = Main.origenY + 150;  // Desplazado 100 píxeles hacia abajo
+    private double mouseX;
+    private double mouseY;
+
+    double origenX = Main.origenX - 400;
+    double origenY = Main.origenY + 150;
+
+
+    boolean positivo= true;
+    boolean negativo= false;
+    Cuadrados conectorPositivo;
+    Cuadrados conectorNegativo;
 
     public Bateria() {
-        // Parte superior de la batería (color cobre)
+        // Parte superior de la batería
         Line lineaSuperiorIzquierda = new Line(origenX - 60, origenY - 120, origenX - 60, origenY - 70);
         Line lineaSuperiorDerecha = new Line(origenX + 60, origenY - 120, origenX + 60, origenY - 70);
         Line lineaSuperior = new Line(origenX - 60, origenY - 120, origenX + 60, origenY - 120);
         Line lineaInferior = new Line(origenX - 60, origenY - 70, origenX + 60, origenY - 70);
 
-        // Fondo sólido en la parte superior (color cobre)
+        // Fondo en la parte superior
         for (int i = 0; i < 50; i++) {
             CubicCurve curvaCobre = new CubicCurve(
-                    origenX - 60, origenY - 120 + i, // Inicio
-                    origenX - 40, origenY - 120 + i + 5, // Control 1
-                    origenX + 40, origenY - 120 + i + 5, // Control 2
-                    origenX + 60, origenY - 120 + i  // Fin
+                    origenX - 60, origenY - 120 + i,
+                    origenX - 40, origenY - 120 + i + 5,
+                    origenX + 40, origenY - 120 + i + 5,
+                    origenX + 60, origenY - 120 + i
             );
             curvaCobre.setFill(Color.DARKGOLDENROD);
             curvaCobre.setStroke(Color.DARKGOLDENROD);
             nodo.getChildren().add(curvaCobre);
         }
 
-        // Conectores (líneas para los terminales)
-        Line conectorPositivo = new Line(origenX - 30, origenY - 130, origenX - 30, origenY - 120);
-        conectorPositivo.setStroke(Color.DARKRED);
-        conectorPositivo.setStrokeWidth(3);
+        // Conectores (para los terminales)
 
-        Line conectorNegativo = new Line(origenX + 35, origenY - 130, origenX + 35, origenY - 120);
-        conectorNegativo.setStroke(Color.BLACK);
-        conectorNegativo.setStrokeWidth(3);
+        conectorPositivo = new Cuadrados(20, 10);
+        conectorPositivo.setX(origenX - 33);
+        conectorPositivo.setY(origenY - 140);
+        conectorPositivo.setFill(Color.DARKRED);
+        conectorPositivo.tipo_carga(positivo);
+
+
+        conectorNegativo = new Cuadrados(20, 10);
+        conectorNegativo.setX(origenX + 18);
+        conectorNegativo.setY(origenY - 140);
+        conectorNegativo.setFill(Color.DARKBLUE);
+        conectorNegativo.tipo_carga(negativo);
 
         // Parte inferior de la batería (zona negra)
         Line lineaInferiorIzquierda = new Line(origenX - 60, origenY - 70, origenX - 60, origenY + 80);
@@ -53,10 +68,10 @@ public class Bateria extends Pane {
         // Fondo sólido en la parte inferior (color negro)
         for (int i = 0; i < 150; i++) {
             CubicCurve curvaNegra = new CubicCurve(
-                    origenX - 60, origenY - 70 + i, // Inicio
-                    origenX - 40, origenY - 70 + i + 5, // Control 1
-                    origenX + 40, origenY - 70 + i + 5, // Control 2
-                    origenX + 60, origenY - 70 + i  // Fin
+                    origenX - 60, origenY - 70 + i,
+                    origenX - 40, origenY - 70 + i + 5,
+                    origenX + 40, origenY - 70 + i + 5,
+                    origenX + 60, origenY - 70 + i
             );
             curvaNegra.setFill(Color.BLACK);
             curvaNegra.setStroke(Color.BLACK);
@@ -78,7 +93,7 @@ public class Bateria extends Pane {
         simboloNegativo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Texto 9V
-        Text texto9V = new Text(origenX - 20, origenY + 30, "9V");
+        Text texto9V = new Text(origenX - 20, origenY + 30, "5V");
         texto9V.setFill(Color.WHITE);
         texto9V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
@@ -89,6 +104,44 @@ public class Bateria extends Pane {
                 simboloPositivo, simboloNegativo, texto9V
         );
 
+        nodo.setOnMousePressed(e -> {
+            nodo.toFront();  // Asegura que el nodo esté al frente cuando se presiona
+            mouseX = e.getSceneX() - nodo.getLayoutX();
+            mouseY = e.getSceneY() - nodo.getLayoutY();
+        });
+
+        nodo.setOnMouseDragged(e -> {
+            // Calcular las nuevas posiciones propuestas
+            double nuevoX = e.getSceneX() - mouseX;
+            double nuevoY = e.getSceneY() - mouseY;
+
+            double minXLimit = origenX - 420;
+            double minYLimit = origenY - 925;
+            double maxXLimit = origenX + 739;
+            double maxYLimit = origenY - 384;
+
+            // Verificar que el nuevoX y nuevoY estén dentro de los límites establecidos por ti
+            if (nuevoX < minXLimit) {
+                nuevoX = minXLimit;
+            } else if (nuevoX > maxXLimit) {
+                nuevoX = maxXLimit;
+            }
+
+            if (nuevoY < minYLimit) {
+                nuevoY = minYLimit;
+            } else if (nuevoY > maxYLimit) {
+                nuevoY = maxYLimit;
+            }
+
+            // Aplicar las nuevas coordenadas ajustadas
+            nodo.setLayoutX(nuevoX);
+            nodo.setLayoutY(nuevoY);
+        });
+
         this.getChildren().add(nodo);
+        this.setPickOnBounds(false);
     }
+
+
+
 }

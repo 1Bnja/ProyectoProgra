@@ -9,106 +9,145 @@ import javafx.scene.shape.Line;
 
 public class LED extends Pane {
     private Group nodo = new Group();
-    private Line fin1 = new Line();
-    private Line fin2 = new Line();
-    private Line pata1;
-    private Line pata2;
+    private Line fin1, fin2, pata1, pata2;
 
     // Variables para la posición del mouse
-    private double mouseX;
-    private double mouseY;
+    private double mouseX, mouseY;
     private boolean line_en_arrastre = false;
 
-    double origenX = Main.origenX;
-    double origenY = Main.origenY;
+    double origenX = Main.origenX + 115;
+    double origenY = Main.origenY - 125;
 
     public LED() {
-        // LED 1
-        Line led1 = new Line(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
-        CubicCurve curva1 = new CubicCurve(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
-        pata1 = new Line(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
-        pata2 = new Line(origenX - 520, origenY - 150, origenX - 520, origenY - 135);
+        // LED
+        Line led1 = crearLinea(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
+        CubicCurve curva = crearCurva(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
+        pata1 = crearLinea(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
+        pata2 = crearLinea(origenX - 520, origenY - 150, origenX - 520, origenY - 135);
 
-        fin1 = Esquina_Estirable(pata1.getEndX(), pata1.getEndY());
-        fin2 = Esquina_Estirable(pata2.getEndX(), pata2.getEndY());
+        fin1 = crearEstirable(pata1);
+        fin2 = crearEstirable(pata2);
 
-        // Eventos de arrastre para las líneas rojas
-        fin1.setOnMousePressed(e -> Empezar_arrastre(e, pata1));
-        fin1.setOnMouseDragged(e -> Arrastre(e, pata1));
+        configurarArrastre(fin1, pata1);
+        configurarArrastre(fin2, pata2);
 
-        fin2.setOnMousePressed(e -> Empezar_arrastre(e, pata2));
-        fin2.setOnMouseDragged(e -> Arrastre(e, pata2));
+        configurarArrastreNodo();
 
-        // mover
-        nodo.setOnMousePressed(e -> {
-            if (!line_en_arrastre) {
-                mouseX = e.getSceneX() - nodo.getLayoutX();
-                mouseY = e.getSceneY() - nodo.getLayoutY();
-            }
-        });
-
-        nodo.setOnMouseDragged(e -> {
-            if (!line_en_arrastre) {
-                nodo.setLayoutX(e.getSceneX() - mouseX);
-                nodo.setLayoutY(e.getSceneY() - mouseY);
-            }
-        });
-
-        led1.setStroke(Color.BLACK);
-        curva1.setStroke(Color.BLACK);
-        pata1.setStroke(Color.BLACK);
-        pata2.setStroke(Color.BLACK);
-        curva1.setFill(Color.LIGHTBLUE);
-
-        nodo.getChildren().addAll(led1, curva1, pata1, pata2, fin1, fin2);
+        nodo.getChildren().addAll(led1, curva, pata1, pata2, fin1, fin2);
         this.getChildren().add(nodo);
+
+        this.setPickOnBounds(false);
     }
 
-    private void Empezar_arrastre(MouseEvent event, Line line) {
+    private Line crearLinea(double startX, double startY, double endX, double endY) {
+        Line linea = new Line(startX, startY, endX, endY);
+        linea.setStroke(Color.BLACK);
+        return linea;
+    }
+
+    private CubicCurve crearCurva(double startX, double startY, double controlX1, double controlY1, double controlX2, double controlY2, double endX, double endY) {
+        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY);
+        curva.setStroke(Color.BLACK);
+        curva.setFill(Color.LIGHTBLUE);
+        return curva;
+    }
+
+    private void empezarArrastre(MouseEvent event, Line pata) {
         // Indicar que estamos arrastrando una línea
         line_en_arrastre = true;
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
     }
 
-    private void Arrastre(MouseEvent event, Line line) {
+    private void configurarArrastre(Line estirable, Line pata) {
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e, pata);
+            estirable.toFront();
+        });
+        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
+    }
+
+    private void configurarArrastreNodo() {
+        nodo.setOnMousePressed(e -> {
+            if (!line_en_arrastre) {
+                nodo.toFront();
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
+            }
+        });
+
+        nodo.setOnMouseDragged(e -> {
+            if (!line_en_arrastre) {
+                double dX = e.getSceneX() - mouseX;
+                double dY = e.getSceneY() - mouseY;
+
+                double nuevoX = nodo.getLayoutX() + dX;
+                double nuevoY = nodo.getLayoutY() + dY;
+
+                double minX = origenX - 955;
+                double minY = origenY - 325;
+                double maxX = origenX + 278;
+                double maxY = origenY + 378;
+
+                if (nuevoX < minX) {
+                    nuevoX = minX;
+                } else if (nuevoX > maxX) {
+                    nuevoX = maxX;
+                }
+
+                if (nuevoY < minY) {
+                    nuevoY = minY;
+                } else if (nuevoY > maxY) {
+                    nuevoY = maxY;
+                }
+
+                nodo.setLayoutX(nuevoX);
+                nodo.setLayoutY(nuevoY);
+
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
+
+                actualizarPosiciones();
+            }
+        });
+    }
+
+    private void arrastrePata(MouseEvent event, Line pata, Line estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
-        if (line.equals(pata1)) {
-            line.setEndX(line.getEndX() + offsetX);
-            line.setEndY(line.getEndY() + offsetY);
-            fin1.setEndX(fin1.getEndX() + offsetX);
-            fin1.setEndY(fin1.getEndY() + offsetY);
-        } else if (line.equals(pata2)) {
-            line.setEndX(line.getEndX() + offsetX);
-            line.setEndY(line.getEndY() + offsetY);
-            fin2.setEndX(fin2.getEndX() + offsetX);
-            fin2.setEndY(fin2.getEndY() + offsetY);
-        }
+        pata.setEndX(pata.getEndX() + offsetX);
+        pata.setEndY(pata.getEndY() + offsetY);
+
+        actualizarEstirable(estirable, pata);
 
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
 
-        Actual_arrastrePuntos(); // Actualizar los puntos de arrastre
+        line_en_arrastre = false;
     }
 
-    private Line Esquina_Estirable(double x, double y) {
-        Line point = new Line(x, y, x, y);
-        point.setStroke(Color.RED);
-        point.setStrokeWidth(8);
-        return point;
+    private Line crearEstirable(Line pata) {
+        Line esquina = new Line(
+                pata.getEndX() - 5, pata.getEndY(),
+                pata.getEndX() + 5, pata.getEndY()
+        );
+        esquina.setStroke(Color.RED);
+        esquina.setStrokeWidth(8);
+        return esquina;
     }
 
-    private void Actual_arrastrePuntos() {
-        fin1.setStartX(pata1.getEndX() - 5);
-        fin1.setStartY(pata1.getEndY());
-        fin1.setEndX(pata1.getEndX() + 5);
-        fin1.setEndY(pata1.getEndY());
+    private void actualizarEstirable(Line esquina, Line pata){
+        esquina.setStartX(pata.getEndX() - 5);
+        esquina.setStartY(pata.getEndY());
+        esquina.setEndX(pata.getEndX() + 5);
+        esquina.setEndY(pata.getEndY());
+    }
 
-        fin2.setStartX(pata2.getEndX() - 5);
-        fin2.setStartY(pata2.getEndY());
-        fin2.setEndX(pata2.getEndX() + 5);
-        fin2.setEndY(pata2.getEndY());
+    private void actualizarPosiciones(){
+        actualizarEstirable(fin1, pata1);
+        actualizarEstirable(fin2, pata2);
     }
 }
+
+
