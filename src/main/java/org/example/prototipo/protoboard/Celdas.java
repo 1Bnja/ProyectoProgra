@@ -1,5 +1,6 @@
 package org.example.prototipo.protoboard;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -9,12 +10,15 @@ import java.util.List;
 
 public class Celdas extends Group {
 
-    private List<List<Cuadrados>> grid;
+    public List<List<Cuadrados>> grid;
+    private Cable cable;
 
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
+
+        cable = new Cable(this);
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(espacioCeldas);
@@ -55,6 +59,7 @@ public class Celdas extends Group {
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
 
+
                 final int columnaIndex = i;
                 cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
 
@@ -70,18 +75,31 @@ public class Celdas extends Group {
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
+
     }
 
-    private void alternarColumna(int columnaIndex) {
+    public void alternarColumna(int columnaIndex) {
         List<Cuadrados> columna = grid.get(columnaIndex);
+
         boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
 
-        for (Cuadrados cuadrado : columna) {
-            if (columnaEncendida) {
-                cuadrado.setFill(Color.WHITE);
-            } else {
-                cuadrado.setFill(Color.RED);
+
+        for(Cuadrados c: columna){
+            if(columnaEncendida){
+                c.setFill(Color.WHITE);
+
+
+            }else {
+                c.setFill(Color.RED);
+
             }
+
         }
+
+
     }
+
+
+
+
 }

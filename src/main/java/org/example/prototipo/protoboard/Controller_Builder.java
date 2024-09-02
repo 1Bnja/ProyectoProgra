@@ -26,6 +26,8 @@ public class Controller_Builder {
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
 
+
+
     private void agregar(Node elemento) {
         elementos.add(elemento);
         Anchor_PanelFondo.getChildren().add(elemento);
