@@ -11,7 +11,7 @@ import java.util.List;
 public class Cable extends Pane {
 
     Line line;
-    static Cuadrados inicio;
+    public Cuadrados inicio;
     Cuadrados fin;
     private Group nodo = new Group();
     private Bateria bateria= new Bateria();
@@ -44,6 +44,10 @@ public class Cable extends Pane {
 
         // Añadir manejadores de eventos de arrastre
         inicio.setOnMouseDragged(e -> Arrastre(e, line, true));
+
+        inicio.setOnDragDetected(e -> Arrastre(e, line, true));//SI ESTA EN FALSE, LA LINEA SE MUEVE DESDE DONDE SE MOVIO LA ULTIMA VEZ??
+        //ONDA SI MUEVES EL INICIO Y DEPUES QUIERES MOVER EL FIN, EL FIN PARTE DESDE DONDE DEJASTE EL INICIO
+
         inicio.setFill(Color.RED);
         fin.setOnMouseDragged(e -> Arrastre(e, line, false));
 
@@ -115,6 +119,8 @@ public class Cable extends Pane {
         }
 
         Actual_arrastrePuntos();
+
+
     }
 
     private Cuadrados Esquina_Estirable(double x, double y) {
