@@ -6,14 +6,31 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+import java.util.List;
+
 public class Cable extends Pane {
 
     Line line;
-    Line inicio, fin;
+    public Cuadrados inicio;
+    Cuadrados fin;
     private Group nodo = new Group();
+    private Bateria bateria= new Bateria();
+    private Color positivo= bateria.conectorPositivo.getFillColor();
+    private Color negativo= bateria.conectorNegativo.getFillColor();
+    private Celdas celdas;
+
 
     private double mouseX, mouseY;
 
+
+
+    public Cable(Celdas celdas) {
+        this.celdas = celdas; // Inicializa la referencia
+    }
+
+    public Cable() {
+        // Constructor vacío, no realiza ninguna inicialización específica
+    }
     public void Crear_linea() {
 
         // Crear línea
@@ -27,20 +44,44 @@ public class Cable extends Pane {
 
         // Añadir manejadores de eventos de arrastre
         inicio.setOnMouseDragged(e -> Arrastre(e, line, true));
+
+        inicio.setOnDragDetected(e -> Arrastre(e, line, true));//SI ESTA EN FALSE, LA LINEA SE MUEVE DESDE DONDE SE MOVIO LA ULTIMA VEZ??
+        //ONDA SI MUEVES EL INICIO Y DEPUES QUIERES MOVER EL FIN, EL FIN PARTE DESDE DONDE DEJASTE EL INICIO
+
+        inicio.setFill(Color.RED);
         fin.setOnMouseDragged(e -> Arrastre(e, line, false));
 
         // Mover linea completa
         line.setOnMousePressed(this::IniciarMovimientoLinea);
         line.setOnMouseDragged(this::MoverLineaCompleta);
 
+
         line.setOnMousePressed(e -> {
             nodo.toFront(); // Mover al frente al iniciar el movimiento
             IniciarMovimientoLinea(e);
         });
 
+
+        inicio.setOnMouseReleased(event ->{
+            if(inicio !=null){
+                if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                } else if (bateria.conectorNegativo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                }else{
+                    System.out.println("no se pudo :p");}
+                }});
+
+
+
         // Añadir línea y puntos al panel
         nodo.getChildren().addAll(line, inicio, fin);
         this.getChildren().add(nodo);
+
 
         this.setPickOnBounds(false);
     }
@@ -78,28 +119,31 @@ public class Cable extends Pane {
         }
 
         Actual_arrastrePuntos();
+
+
     }
 
-    private Line Esquina_Estirable(double x, double y) {
-        Line point = new Line(x, y, x, y);
-        point.setStroke(Color.BROWN);
-        point.setStrokeWidth(8);
-        point.setOnMousePressed(e -> {
-            nodo.toFront();
-        });
-        return point;
+    private Cuadrados Esquina_Estirable(double x, double y) {
+        Cuadrados square = new Cuadrados(12, 2); // Tamaño del cuadrado
+        square.setX(x - square.getWidth() / 2);  // Centrar el cuadrado en la posición x
+        square.setY(y - square.getHeight() / 2); // Centrar el cuadrado en la posición y
+        square.setFill(Color.BROWN);  // Color del cuadrado
+
+        square.setOnMousePressed(e -> nodo.toFront());
+        return square;
     }
 
     private void Actual_arrastrePuntos() {
-        // Actualizar la posición de los puntos de arrastre
-        inicio.setStartX(line.getStartX() - 5);
-        inicio.setStartY(line.getStartY());
-        inicio.setEndX(line.getStartX() + 5);
-        inicio.setEndY(line.getStartY());
+        inicio.setX(line.getStartX() - inicio.getWidth() / 2); // Centrar en X
+        inicio.setY(line.getStartY() - inicio.getHeight() / 2); // Centrar en Y
 
-        fin.setStartX(line.getEndX() - 5);
-        fin.setStartY(line.getEndY());
-        fin.setEndX(line.getEndX() + 5);
-        fin.setEndY(line.getEndY());
+        fin.setX(line.getEndX() - fin.getWidth() / 2); // Centrar en X
+        fin.setY(line.getEndY() - fin.getHeight() / 2);
     }
+
+
+
+
+
+
 }

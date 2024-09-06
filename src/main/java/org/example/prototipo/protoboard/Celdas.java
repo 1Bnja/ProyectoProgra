@@ -1,20 +1,28 @@
 package org.example.prototipo.protoboard;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Celdas extends Group {
 
-    private List<List<Cuadrados>> grid;
+    public List<List<Cuadrados>> grid;
+    private Cable cable = new Cable();
+    public Cuadrados cuadradoSeleccionado;
+    public Cuadrados cuadradoSeleccionado2;
 
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
+
+        cable.Crear_linea();
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(espacioCeldas);
@@ -56,7 +64,25 @@ public class Celdas extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 final int columnaIndex = i;
-                cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
+//aqui
+                cuadrado.setOnDragOver(event ->{
+                    if(event.getGestureSource() instanceof Cuadrados) {
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    event.consume();
+                });
+
+                cuadrado.setOnDragDropped(event -> {
+                    if(event.getGestureSource() instanceof Cuadrados) {
+                        cable.inicio= (Cuadrados) event.getGestureSource();
+                        cuadrado.setFill(cable.inicio.getFill());
+                        event.setDropCompleted(true);
+                    }
+                    event.consume();
+                });
+//hasta aqui
+
+
 
                 GridPane.setConstraints(cuadrado, i + 1, j + 1);
                 gridPane.getChildren().add(cuadrado);
@@ -70,18 +96,31 @@ public class Celdas extends Group {
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
+
     }
 
-    private void alternarColumna(int columnaIndex) {
+    public void alternarColumna(int columnaIndex) {
         List<Cuadrados> columna = grid.get(columnaIndex);
+
         boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
 
-        for (Cuadrados cuadrado : columna) {
-            if (columnaEncendida) {
-                cuadrado.setFill(Color.WHITE);
-            } else {
-                cuadrado.setFill(Color.RED);
+
+        for(Cuadrados c: columna){
+            if(columnaEncendida){
+                c.setFill(Color.WHITE);
+
+
+            }else {
+                c.setFill(Color.RED);
+
             }
+
         }
+
+
     }
+
+
+
+
 }
