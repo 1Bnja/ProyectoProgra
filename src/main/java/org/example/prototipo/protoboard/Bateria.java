@@ -105,40 +105,19 @@ public class Bateria extends Pane {
         );
 
         nodo.setOnMousePressed(e -> {
-            nodo.toFront();  // Asegura que el nodo esté al frente cuando se presiona
+            nodo.toFront();
             mouseX = e.getSceneX() - nodo.getLayoutX();
             mouseY = e.getSceneY() - nodo.getLayoutY();
         });
 
+
         nodo.setOnMouseDragged(e -> {
-            // Calcular las nuevas posiciones propuestas
-            double nuevoX = e.getSceneX() - mouseX;
-            double nuevoY = e.getSceneY() - mouseY;
-
-            double minXLimit = origenX - 420;
-            double minYLimit = origenY - 925;
-            double maxXLimit = origenX + 739;
-            double maxYLimit = origenY - 384;
-
-            // Verificar que el nuevoX y nuevoY estén dentro de los límites establecidos por ti
-            if (nuevoX < minXLimit) {
-                nuevoX = minXLimit;
-            } else if (nuevoX > maxXLimit) {
-                nuevoX = maxXLimit;
-            }
-
-            if (nuevoY < minYLimit) {
-                nuevoY = minYLimit;
-            } else if (nuevoY > maxYLimit) {
-                nuevoY = maxYLimit;
-            }
-
-            // Aplicar las nuevas coordenadas ajustadas
-            nodo.setLayoutX(nuevoX);
-            nodo.setLayoutY(nuevoY);
+            nodo.setLayoutX(e.getSceneX() - mouseX);
+            nodo.setLayoutY(e.getSceneY() - mouseY);
         });
 
         this.getChildren().add(nodo);
+
         this.setPickOnBounds(false);
     }
 

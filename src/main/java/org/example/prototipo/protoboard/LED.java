@@ -15,8 +15,8 @@ public class LED extends Pane {
     private double mouseX, mouseY;
     private boolean line_en_arrastre = false;
 
-    double origenX = Main.origenX + 115;
-    double origenY = Main.origenY - 125;
+    double origenX = Main.origenX;
+    double origenY = Main.origenY;
 
     public LED() {
         // LED
@@ -81,28 +81,8 @@ public class LED extends Pane {
                 double dX = e.getSceneX() - mouseX;
                 double dY = e.getSceneY() - mouseY;
 
-                double nuevoX = nodo.getLayoutX() + dX;
-                double nuevoY = nodo.getLayoutY() + dY;
-
-                double minX = origenX - 955;
-                double minY = origenY - 325;
-                double maxX = origenX + 278;
-                double maxY = origenY + 378;
-
-                if (nuevoX < minX) {
-                    nuevoX = minX;
-                } else if (nuevoX > maxX) {
-                    nuevoX = maxX;
-                }
-
-                if (nuevoY < minY) {
-                    nuevoY = minY;
-                } else if (nuevoY > maxY) {
-                    nuevoY = maxY;
-                }
-
-                nodo.setLayoutX(nuevoX);
-                nodo.setLayoutY(nuevoY);
+                nodo.setLayoutX(nodo.getLayoutX() + dX);
+                nodo.setLayoutY(nodo.getLayoutY() + dY);
 
                 mouseX = e.getSceneX();
                 mouseY = e.getSceneY();
