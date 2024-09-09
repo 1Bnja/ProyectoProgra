@@ -12,8 +12,8 @@ public class BusesAlimentacion extends Group {
     private List<List<Cuadrados>> buses;
     private int espacioExtra = 2;
 
+    // Constructor
     public BusesAlimentacion(double desplazamientoX, double desplazamientoY, char[] simbolos) {
-
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         buses = new ArrayList<>();
@@ -22,14 +22,13 @@ public class BusesAlimentacion extends Group {
         gridPane.setHgap(espacioCeldas);
         gridPane.setVgap(espacioCeldas);
 
+
         for (int j = 0; j < simbolos.length; j++) {
-            // Agregar símbolo para el lado izquierdo
             Text simboloIzquierda = new Text(String.valueOf(simbolos[j]));
             simboloIzquierda.setStroke(Color.BLACK);
             simboloIzquierda.setRotate(270);
             GridPane.setConstraints(simboloIzquierda, 0, j);
             gridPane.getChildren().add(simboloIzquierda);
-
 
             Text simboloDerecha = new Text(String.valueOf(simbolos[j]));
             simboloDerecha.setStroke(Color.BLACK);
@@ -44,7 +43,6 @@ public class BusesAlimentacion extends Group {
             int columnaIndex = 1;
 
             for (int i = 0; i < 25; i++) {
-
                 if (i > 0 && i % 5 == 0) {
                     columnaIndex += espacioExtra;
                 }
@@ -53,8 +51,8 @@ public class BusesAlimentacion extends Group {
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
 
-                final int filaIndex = j;
-                cuadrado.setOnMouseClicked(event -> alternarFila(filaIndex));
+                int finalJ = j;
+                cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
 
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
                 gridPane.getChildren().add(cuadrado);
@@ -62,6 +60,7 @@ public class BusesAlimentacion extends Group {
                 filaBus.add(cuadrado);
                 columnaIndex++;
             }
+
             buses.add(filaBus);
         }
 
@@ -70,14 +69,18 @@ public class BusesAlimentacion extends Group {
         this.getChildren().add(gridPane);
     }
 
-    private void alternarFila(int filaIndex) {
-        boolean filaEncendida = buses.get(filaIndex).get(0).getFill() == Color.RED;
 
-        for (Cuadrados cuadrado : buses.get(filaIndex)) {
-            if (filaEncendida) {
-                cuadrado.setFill(Color.WHITE);
+    private void toggleFilaBus(int filaIndex) {
+        List<Cuadrados> filaBus = buses.get(filaIndex);
+        Color colorEncendido = (filaIndex == 0) ? Color.BLUE : Color.RED;
+
+        boolean estaEncendida = filaBus.get(0).getFill() != Color.WHITE;
+
+        for (Cuadrados cuadrado : filaBus) {
+            if (estaEncendida) {
+                cuadrado.setFill(Color.WHITE);  // Apagar
             } else {
-                cuadrado.setFill(Color.RED);
+                cuadrado.setFill(colorEncendido);  // Encender
             }
         }
     }
