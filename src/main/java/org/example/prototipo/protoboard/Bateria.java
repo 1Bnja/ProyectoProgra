@@ -2,12 +2,10 @@ package org.example.prototipo.protoboard;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
-import javafx.scene.Group;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.Group;
 
 public class Bateria extends Pane {
 
@@ -19,9 +17,8 @@ public class Bateria extends Pane {
     double origenX = Main.origenX - 400;
     double origenY = Main.origenY + 150;
 
-
-    boolean positivo= true;
-    boolean negativo= false;
+    boolean positivo = true;
+    boolean negativo = false;
     Cuadrados conectorPositivo;
     Cuadrados conectorNegativo;
 
@@ -46,19 +43,15 @@ public class Bateria extends Pane {
         }
 
         // Conectores (para los terminales)
-
         conectorPositivo = new Cuadrados(20, 10);
-        conectorPositivo.setX(origenX - 33);
+        conectorPositivo.setX(origenX - 40);
         conectorPositivo.setY(origenY - 140);
         conectorPositivo.setFill(Color.DARKRED);
-        conectorPositivo.tipo_carga(positivo);
-
 
         conectorNegativo = new Cuadrados(20, 10);
-        conectorNegativo.setX(origenX + 18);
+        conectorNegativo.setX(origenX + 20);
         conectorNegativo.setY(origenY - 140);
         conectorNegativo.setFill(Color.DARKBLUE);
-        conectorNegativo.tipo_carga(negativo);
 
         // Parte inferior de la batería (zona negra)
         Line lineaInferiorIzquierda = new Line(origenX - 60, origenY - 70, origenX - 60, origenY + 80);
@@ -92,56 +85,33 @@ public class Bateria extends Pane {
         simboloNegativo.setFill(Color.BLACK);
         simboloNegativo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        // Texto 9V
-        Text texto9V = new Text(origenX - 20, origenY + 30, "5V");
-        texto9V.setFill(Color.WHITE);
-        texto9V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        // Texto 5V
+        Text texto5V = new Text(origenX - 20, origenY + 30, "5V");
+        texto5V.setFill(Color.WHITE);
+        texto5V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
-        // Agregar todos los elementos al nodo
         nodo.getChildren().addAll(
                 lineaSuperior, lineaInferior, lineaSuperiorIzquierda, lineaSuperiorDerecha, conectorPositivo, conectorNegativo,
                 lineaInferiorIzquierda, lineaInferiorDerecha, lineaBase, divisionColor,
-                simboloPositivo, simboloNegativo, texto9V
+                simboloPositivo, simboloNegativo, texto5V
         );
 
-        nodo.setOnMousePressed(e -> {
-            nodo.toFront();  // Asegura que el nodo esté al frente cuando se presiona
-            mouseX = e.getSceneX() - nodo.getLayoutX();
-            mouseY = e.getSceneY() - nodo.getLayoutY();
-        });
 
-        nodo.setOnMouseDragged(e -> {
-            // Calcular las nuevas posiciones propuestas
-            double nuevoX = e.getSceneX() - mouseX;
-            double nuevoY = e.getSceneY() - mouseY;
-
-            double minXLimit = origenX - 420;
-            double minYLimit = origenY - 925;
-            double maxXLimit = origenX + 739;
-            double maxYLimit = origenY - 384;
-
-            // Verificar que el nuevoX y nuevoY estén dentro de los límites establecidos por ti
-            if (nuevoX < minXLimit) {
-                nuevoX = minXLimit;
-            } else if (nuevoX > maxXLimit) {
-                nuevoX = maxXLimit;
-            }
-
-            if (nuevoY < minYLimit) {
-                nuevoY = minYLimit;
-            } else if (nuevoY > maxYLimit) {
-                nuevoY = maxYLimit;
-            }
-
-            // Aplicar las nuevas coordenadas ajustadas
-            nodo.setLayoutX(nuevoX);
-            nodo.setLayoutY(nuevoY);
-        });
+        conectorPositivo.setOnMouseClicked(e -> generarCable(Color.RED, conectorPositivo));
+        conectorNegativo.setOnMouseClicked(e -> generarCable(Color.BLUE, conectorNegativo));
 
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
     }
 
 
+    private void generarCable(Color color, Cuadrados conector) {
+        // Crear un nuevo cable desde la posición del terminal
+        double startX = conector.getX() + conector.getWidth() / 2;
+        double startY = conector.getY() + conector.getHeight() / 2;
+        Cable cable = new Cable(startX, startY, startX + 100, startY);  // El cable se extiende hacia la derecha
+        cable.line.setStroke(color);  // Establecer el color del cable
 
+        this.getChildren().add(cable);
+    }
 }

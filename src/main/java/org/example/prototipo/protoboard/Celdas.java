@@ -2,28 +2,34 @@ package org.example.prototipo.protoboard;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 public class Celdas extends Group {
 
     public List<List<Cuadrados>> grid;
-    private Cable cable;
+    Bateria bateria = new Bateria();
+    public Cuadrados cuadradoSeleccionado;
+    public Cuadrados cuadradoSeleccionado2;
 
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
 
-        cable = new Cable(this);
-
         GridPane gridPane = new GridPane();
         gridPane.setHgap(espacioCeldas);
         gridPane.setVgap(espacioCeldas);
-        
+
+        // Agregar letras en los lados
         for (int j = 0; j < letras.length; j++) {
             Text letraIzquierda = new Text(String.valueOf(letras[j]));
             letraIzquierda.setStroke(Color.BLACK);
@@ -38,7 +44,7 @@ public class Celdas extends Group {
             gridPane.getChildren().add(letraDerecha);
         }
 
-        // Crear la cuadrícula
+        // Crear la cuadrícula de celdas
         for (int i = 0; i < 30; i++) {
             List<Cuadrados> columna = new ArrayList<>();
 
@@ -55,10 +61,9 @@ public class Celdas extends Group {
             gridPane.getChildren().add(numero);
 
             for (int j = 0; j < 5; j++) {
-                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
-
 
                 final int columnaIndex = i;
                 cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
@@ -75,31 +80,27 @@ public class Celdas extends Group {
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
-
     }
 
+    // Método para alternar una columna entre encendida y apagada
     public void alternarColumna(int columnaIndex) {
-        List<Cuadrados> columna = grid.get(columnaIndex);
+        List<Cuadrados> columna = grid.get(columnaIndex); // Obtener la columna seleccionada
+
 
         boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
 
 
-        for(Cuadrados c: columna){
-            if(columnaEncendida){
-                c.setFill(Color.WHITE);
-
-
-            }else {
-                c.setFill(Color.RED);
-
+        for (Cuadrados c : columna) {
+            if (columnaEncendida) {
+                c.setFill(Color.WHITE); // Apagar
+            } else {
+                c.setFill(Color.RED);   // Encender
             }
-
         }
-
-
     }
-
-
-
-
 }
+
+
+
+
+

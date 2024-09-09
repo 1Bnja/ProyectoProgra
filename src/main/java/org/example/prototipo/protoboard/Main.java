@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     static double anchoEscena = 1280;
-    static double altoEscena = 840;
+    static double altoEscena = 920;
 
     static double origenX = anchoEscena/2;
     static double origenY = altoEscena/2;
@@ -35,7 +35,7 @@ public class Main extends Application {
         primaryStage.show();
 
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }}
