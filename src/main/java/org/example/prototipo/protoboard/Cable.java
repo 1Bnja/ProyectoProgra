@@ -11,6 +11,7 @@ public class Cable extends Pane {
     private Cuadrados inicio;
     private Cuadrados fin;
     private double mouseX, mouseY;
+    Bateria bateria= new Bateria();
 
     public Cable(double startX, double startY, double endX, double endY) {
 
@@ -30,6 +31,7 @@ public class Cable extends Pane {
         fin.setX(endX - fin.getWidth() / 2);
         fin.setY(endY - fin.getHeight() / 2);
 
+
         this.setPickOnBounds(false);
 
         inicio.setOnMouseDragged(event -> arrastrarExtremo(event, true));
@@ -37,6 +39,20 @@ public class Cable extends Pane {
 
         line.setOnMousePressed(this::iniciarMovimientoLinea);
         line.setOnMouseDragged(this::moverLineaCompleta);
+
+        inicio.setOnMouseReleased(event ->{
+            if(inicio !=null){
+                if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                } else if (bateria.conectorNegativo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                }else{
+                    System.out.println("no se pudo :p");}
+            }});
 
         this.getChildren().addAll(line, inicio, fin);
     }
