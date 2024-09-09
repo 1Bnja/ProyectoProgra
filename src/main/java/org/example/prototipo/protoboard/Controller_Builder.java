@@ -5,12 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Node;
 
 public class Controller_Builder {
 
@@ -26,7 +24,8 @@ public class Controller_Builder {
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
 
-
+    double origenX = Main.origenX;
+    double origenY = Main.origenY;
 
     private void agregar(Node elemento) {
         elementos.add(elemento);
@@ -50,10 +49,13 @@ public class Controller_Builder {
     @FXML
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
-        Cable cable = new Cable();
-        cable.Crear_linea();
+
+        // Crear un nuevo cable con posiciones iniciales
+        Cable cable = new Cable(50, 50, 150, 150);
+
+        // Asegurarse de que los cables no interfieren al ser añadidos
         cable.toFront();
-        agregar(cable);
+        agregar(cable);// Asegúrate de que Anchor_PanelFondo es tu contenedor
     }
 
     @FXML
@@ -70,29 +72,30 @@ public class Controller_Builder {
         Swich swich = new Swich();
         swich.toFront();
         agregar(swich);
-
     }
 
     @FXML
     void Click_Bateria(ActionEvent event) {
-        System.out.println("Se ha agregado un bateria");
-        Bateria bateria = new Bateria();
-        bateria.toFront();
-        agregar(bateria);
-    }
+        // Corregir boolean
+        boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
 
+        if (existe) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Información");
+            alert.setHeaderText(null);
+            alert.setContentText("Ya existe una batería en la pantalla. :p");
+            alert.showAndWait();  // Mostrar el mensaje
+        } else {
+            Bateria bateria = new Bateria();
+            bateria.toFront();
+            System.out.println("Se ha agregado una batería");
+            agregar(bateria);
+        }
+    }
 
     @FXML
     void Click_Proto(ActionEvent event) {
-
-        boolean existe = false;
-
-        for (Node nodo : Anchor_PanelFondo.getChildren()) {
-            if (nodo instanceof Prototipo_Protoboard) {
-                existe = true;
-                break;
-            }
-        }
+        boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Prototipo_Protoboard);
 
         if (existe) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -108,15 +111,13 @@ public class Controller_Builder {
         }
     }
 
-
     @FXML
     void Click_Eliminar(ActionEvent event) {
-        System.out.println("se ha eliminado "+elemento_seleccionado);
-        if(elemento_seleccionado != null) {
+        System.out.println("Se ha eliminado " + elemento_seleccionado);
+        if (elemento_seleccionado != null) {
             Anchor_PanelFondo.getChildren().remove(elemento_seleccionado);
             elementos.remove(elemento_seleccionado);
             elemento_seleccionado = null;
         }
     }
-
 }
