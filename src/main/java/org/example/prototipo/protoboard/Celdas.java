@@ -61,7 +61,7 @@ public class Celdas extends Group {
             gridPane.getChildren().add(numero);
 
             for (int j = 0; j < 5; j++) {
-                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
 
