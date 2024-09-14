@@ -56,6 +56,12 @@ public class Controller_Builder {
         // Asegurarse de que los cables no interfieren al ser añadidos
         cable.toFront();
         agregar(cable);// Asegúrate de que Anchor_PanelFondo es tu contenedor
+        for (int i = 0 ; i < elementos.size() ; i++) {
+            if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                cable.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+            }
+        }
+
     }
 
     @FXML
@@ -108,6 +114,13 @@ public class Controller_Builder {
             proto.toFront();
             System.out.println("Se ha agregado un protoboard");
             agregarProto(proto);
+
+            for (int i = 0 ; i < elementos.size() ; i++) {
+                if (elementos.get(i) instanceof Cable) {
+                    ((Cable) elementos.get(i)).setProtoboard(proto);
+                }
+            }
+
         }
     }
 

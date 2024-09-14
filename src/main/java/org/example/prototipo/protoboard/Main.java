@@ -1,5 +1,10 @@
 package org.example.prototipo.protoboard;
 
+
+//JDK 22.0.2
+// IDE: 21.0.3+13-b509.4
+
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;

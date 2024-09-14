@@ -3,7 +3,7 @@ package org.example.prototipo.protoboard;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.Group;
+    import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
 
 public class Prototipo_Protoboard extends Pane {
@@ -13,6 +13,10 @@ public class Prototipo_Protoboard extends Pane {
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
+    Celdas celdas1;
+    Celdas celdas2;
+    BusesAlimentacion bus1;
+    BusesAlimentacion bus2;
     public Prototipo_Protoboard() {
         this.setPickOnBounds(false);
 
@@ -47,13 +51,13 @@ public class Prototipo_Protoboard extends Pane {
 
         nodo.getChildren().addAll(lineaGuia1, lineaGuia2, lineaGuia3, lineaGuia4);
 
-        Celdas celdas1 = new Celdas(origenX - 210, origenY - 190, new char[]{'j', 'i', 'h', 'g', 'f'}, false);
+        celdas1 = new Celdas(origenX - 210, origenY - 190, new char[]{'j', 'i', 'h', 'g', 'f'}, false);
         nodo.getChildren().add(celdas1);
-        Celdas celdas2 = new Celdas(origenX - 210, origenY + 30, new char[]{'e', 'd', 'c', 'b', 'a'}, true);
+        celdas2 = new Celdas(origenX - 210, origenY + 30, new char[]{'e', 'd', 'c', 'b', 'a'}, true);
         nodo.getChildren().add(celdas2);
-        BusesAlimentacion bus1 = new BusesAlimentacion(origenX - 190, origenY - 265, new char[]{'-', '+'});
+        bus1 = new BusesAlimentacion(origenX - 190, origenY - 265, new char[]{'-', '+'});
         nodo.getChildren().add(bus1);
-        BusesAlimentacion bus2 = new BusesAlimentacion(origenX - 190, origenY + 225, new char[]{'-', '+'});
+        bus2 = new BusesAlimentacion(origenX - 190, origenY + 225, new char[]{'-', '+'});
         nodo.getChildren().add(bus2);
 
         // Lineas Exteriores
@@ -103,5 +107,25 @@ public class Prototipo_Protoboard extends Pane {
         fondo.getPoints().addAll(puntosConvertidos);
         fondo.setFill(color);
         return fondo;
+    }
+
+    private boolean isCuadrado(int posX, int posY){
+
+        return false;
+    }
+
+    public Celdas getCelda1(){
+        return celdas1;
+    }
+    public Celdas getCelda2(){
+        return celdas2;
+    }
+
+    public BusesAlimentacion getBus1() {
+        return bus1;
+    }
+
+    public BusesAlimentacion getBus2() {
+        return bus2;
     }
 }

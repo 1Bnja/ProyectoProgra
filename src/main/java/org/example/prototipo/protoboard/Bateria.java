@@ -109,7 +109,7 @@ public class Bateria extends Pane {
         // Crear un nuevo cable desde la posición del terminal
         double startX = conector.getX() + conector.getWidth() / 2;
         double startY = conector.getY() + conector.getHeight() / 2;
-        Cable cable = new Cable(startX, startY, startX + 100, startY);  // El cable se extiende hacia la derecha
+        Cable cable = new Cable(startX, startY, startX , startY- 100);  // El cable se extiende hacia la derecha
         cable.line.setStroke(color);  // Establecer el color del cable
 
         this.getChildren().add(cable);
