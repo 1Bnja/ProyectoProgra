@@ -70,7 +70,7 @@ public class BusesAlimentacion extends Group {
     }
 
 
-    private void toggleFilaBus(int filaIndex) {
+    public void toggleFilaBus(int filaIndex) {
         List<Cuadrados> filaBus = buses.get(filaIndex);
         Color colorEncendido = (filaIndex == 0) ? Color.BLUE : Color.RED;
 

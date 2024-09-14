@@ -50,12 +50,29 @@ public class Cable extends Pane {
 
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
-            Bounds arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
-            Bounds abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
-            Bounds bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
-            Bounds bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+            Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
+            Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
+            Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
+            Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+            Integer col = 0;
+            if(arriba != null) {
+                col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
+                protoboard.getCelda1().alternarColumna(col);
+            }
+            if(abajo != null) {
+                 col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
+                 protoboard.getCelda2().alternarColumna(col);
+            }
+            if(bus_abajo != null) {
+                Integer row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
+                protoboard.getBus2().toggleFilaBus(row);
+            }
+            if(bus_arriba != null) {
+                Integer row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
+                protoboard.getBus1().toggleFilaBus(row);
 
 
+            }
 
 
 
@@ -159,7 +176,7 @@ public class Cable extends Pane {
         this.bateria = bateria;
     }
 
-    private Bounds verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
+    private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
             // Obtener los límites de la celda en coordenadas de la escena
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
@@ -169,7 +186,7 @@ public class Cable extends Pane {
                 Integer row = GridPane.getRowIndex(child);
                 Integer col = GridPane.getColumnIndex(child);
                 System.out.println("El nodo está sobre la celda en fila: " + row + ", columna: " + col);
-                return boundsInScene;
+                return child;
             }
         }
         return null;
