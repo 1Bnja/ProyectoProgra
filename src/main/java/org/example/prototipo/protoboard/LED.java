@@ -9,7 +9,8 @@ import javafx.scene.shape.Line;
 
 public class LED extends Pane {
     private Group nodo = new Group();
-    private Line fin1, fin2, pata1, pata2;
+    private Line pata1, pata2;
+    private Cuadrados fin1, fin2;
 
     // Variables para la posición del mouse
     private double mouseX, mouseY;
@@ -59,7 +60,7 @@ public class LED extends Pane {
         mouseY = event.getSceneY();
     }
 
-    private void configurarArrastre(Line estirable, Line pata) {
+    private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e, pata);
             estirable.toFront();
@@ -92,7 +93,7 @@ public class LED extends Pane {
         });
     }
 
-    private void arrastrePata(MouseEvent event, Line pata, Line estirable) {
+    private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
@@ -107,21 +108,19 @@ public class LED extends Pane {
         line_en_arrastre = false;
     }
 
-    private Line crearEstirable(Line pata) {
-        Line esquina = new Line(
-                pata.getEndX() - 5, pata.getEndY(),
-                pata.getEndX() + 5, pata.getEndY()
-        );
-        esquina.setStroke(Color.RED);
-        esquina.setStrokeWidth(8);
+    private Cuadrados crearEstirable(Line pata) {
+        Cuadrados esquina = new Cuadrados(11,2);
+        esquina.setFill(Color.RED);
+        esquina.setX(pata.getEndX()-5);
+        esquina.setY(pata.getEndY()-5);
         return esquina;
     }
 
-    private void actualizarEstirable(Line esquina, Line pata){
-        esquina.setStartX(pata.getEndX() - 5);
-        esquina.setStartY(pata.getEndY());
-        esquina.setEndX(pata.getEndX() + 5);
-        esquina.setEndY(pata.getEndY());
+    private void actualizarEstirable(Cuadrados esquina, Line pata){
+        esquina.setX(pata.getEndX()-5);
+        esquina.setY(pata.getEndY());
+        esquina.setX(pata.getEndX()-5);
+        esquina.setY(pata.getEndY());
     }
 
     private void actualizarPosiciones(){

@@ -52,7 +52,7 @@ public class BusesAlimentacion extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 int finalJ = j;
-                cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
+                //cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
 
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
                 gridPane.getChildren().add(cuadrado);
@@ -70,18 +70,20 @@ public class BusesAlimentacion extends Group {
     }
 
 
-    public void toggleFilaBus(int filaIndex) {
+    public void toggleFilaBus(int filaIndex, int signo) {
         List<Cuadrados> filaBus = buses.get(filaIndex);
-        Color colorEncendido = (filaIndex == 0) ? Color.BLUE : Color.RED;
+        Color colorEncendido = (signo == -1) ? Color.BLUE : Color.RED;
 
-        boolean estaEncendida = filaBus.get(0).getFill() != Color.WHITE;
 
         for (Cuadrados cuadrado : filaBus) {
-            if (estaEncendida) {
-                cuadrado.setFill(Color.WHITE);  // Apagar
-            } else {
+
                 cuadrado.setFill(colorEncendido);  // Encender
-            }
+
         }
+    }
+
+    public int getSigno(int fila, int col){
+        List<Cuadrados> columna = buses.get(col);
+        return columna.get(fila).getSigno();
     }
 }

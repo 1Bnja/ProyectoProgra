@@ -60,6 +60,9 @@ public class Controller_Builder {
             if (elementos.get(i) instanceof Prototipo_Protoboard) {
                 cable.setProtoboard((Prototipo_Protoboard)elementos.get(i));
             }
+            if (elementos.get(i) instanceof Bateria) {
+                cable.setBateria((Bateria) elementos.get(i));
+            }
         }
 
     }
@@ -96,6 +99,8 @@ public class Controller_Builder {
             bateria.toFront();
             System.out.println("Se ha agregado una batería");
             agregar(bateria);
+
+
         }
     }
 

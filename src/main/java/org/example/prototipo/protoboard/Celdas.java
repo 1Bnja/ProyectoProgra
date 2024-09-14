@@ -112,6 +112,11 @@ public class Celdas extends Group {
             }
         }
     }
+
+    public int getSigno(int fila, int col){
+        List<Cuadrados> columna = grid.get(col);
+        return columna.get(fila).getSigno();
+    }
 }
 
 

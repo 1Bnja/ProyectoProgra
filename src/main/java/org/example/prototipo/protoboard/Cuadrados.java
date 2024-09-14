@@ -6,11 +6,12 @@ import javafx.scene.shape.Rectangle;
 public class Cuadrados extends Rectangle {
     private int tamanio;
     private boolean tipocarga = false;
+    private int signo = 0;
 
 
     public Cuadrados(int tamanio, int espacio) {
         this.tamanio = tamanio;
-
+        this.signo = 0;
 
         this.setWidth(tamanio);
         this.setHeight(tamanio);
@@ -52,5 +53,13 @@ public class Cuadrados extends Rectangle {
 
     public void setFillColor(Color color) {
         this.setFill(color);
+    }
+
+    public int getSigno() {
+        return this.signo;
+    }
+
+    public void setSigno(int signo) {
+        this.signo = signo;
     }
 }

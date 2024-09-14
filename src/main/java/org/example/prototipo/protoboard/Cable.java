@@ -14,7 +14,7 @@ public class Cable extends Pane {
     private Cuadrados inicio;
     private Cuadrados fin;
     private double mouseX, mouseY;
-    Bateria bateria= new Bateria();
+    Bateria bateria;
     LED led;
     Swich boton;
     Prototipo_Protoboard protoboard;
@@ -29,6 +29,8 @@ public class Cable extends Pane {
         inicio = new Cuadrados(12, 2);
         fin = new Cuadrados(12, 2);
         inicio.setFillColor(Color.RED);
+        inicio.setSigno(0);
+        fin.setSigno(0);
         fin.setFillColor(Color.RED);
 
 
@@ -50,33 +52,59 @@ public class Cable extends Pane {
 
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
-            Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
-            Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
-            Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
-            Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
-            Integer col = 0;
-            if(arriba != null) {
-                col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
-                protoboard.getCelda1().alternarColumna(col);
+            if(protoboard != null){
+                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
+                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
+                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
+                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+                int col = 0;
+                int row = 0;
+                if(arriba != null) {
+                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
+                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
+                    inicio.setSigno(protoboard.getCelda1().getSigno(row,col));
+                    protoboard.getCelda1().alternarColumna(col);
+                }
+                if(abajo != null) {
+                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
+                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
+                    protoboard.getCelda2().alternarColumna(col);
+                    inicio.setSigno(protoboard.getCelda2().getSigno(row,col));
+
+                }
+                if(bus_abajo != null) {
+                    row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
+                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
+                    inicio.setSigno(protoboard.getBus2().getSigno(row,col));
+                    protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );
+
+                }
+                if(bus_arriba != null) {
+                    row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
+                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
+                    inicio.setSigno(protoboard.getBus1().getSigno(row,col));
+                    protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() );
+                }
             }
-            if(abajo != null) {
-                 col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
-                 protoboard.getCelda2().alternarColumna(col);
+
+            if(bateria != null) {
+                if(verificarSiEstaEnTerminalNegativo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorNegativo().getSigno());
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                    fin.setSigno(bateria.getConectorNegativo().getSigno());
+                }
+                if(verificarSiEstaEnTerminalPositivo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorPositivo().getSigno());
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                    fin.setSigno(bateria.getConectorPositivo().getSigno());
+                }
             }
-            if(bus_abajo != null) {
-                Integer row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
-                protoboard.getBus2().toggleFilaBus(row);
-            }
-            if(bus_arriba != null) {
-                Integer row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
-                protoboard.getBus1().toggleFilaBus(row);
 
-
-            }
-
-
-
-            if(inicio !=null){
+            /*if(inicio !=null){
                 if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
                     inicio.setFill(bateria.conectorPositivo.getFill());
                     fin.setFill(bateria.conectorPositivo.getFill());
@@ -87,11 +115,83 @@ public class Cable extends Pane {
                     line.setStroke(bateria.conectorNegativo.getFillColor());
                 }else{
                     System.out.println("no se pudo :p");}
+            }*/
+        });
+
+
+        fin.setOnMouseReleased(event ->{
+
+            double mouseX = event.getSceneX();
+            double mouseY = event.getSceneY();
+            if(protoboard != null){
+                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
+                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
+                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
+                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+                int col = 0;
+                int row = 0;
+                if(arriba != null) {
+                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
+                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
+                    fin.setSigno(protoboard.getCelda1().getSigno(row,col));
+                    protoboard.getCelda1().alternarColumna(col);
+                }
+                if(abajo != null) {
+                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
+                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
+                    protoboard.getCelda2().alternarColumna(col);
+                    fin.setSigno(protoboard.getCelda2().getSigno(row,col));
+
+                }
+                if(bus_abajo != null) {
+                    row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
+                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
+                    //fin.setSigno(protoboard.getBus2().getSigno(row,col));
+                    protoboard.getBus2().toggleFilaBus(row, fin.getSigno());
+                }
+                if(bus_arriba != null) {
+                    row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
+                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
+                    //fin.setSigno(protoboard.getBus1().getSigno(row,col));  //TODO hacer al reves, set el signo el cable en el cuadro del protoboard y setear los colores de los buses si es necesario
+                    protoboard.getBus1().toggleFilaBus(row, fin.getSigno());
+                }
             }
+
+            if(bateria != null) {
+                if(verificarSiEstaEnTerminalNegativo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorNegativo().getSigno());
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                    fin.setSigno(bateria.getConectorNegativo().getSigno());
+                }
+                if(verificarSiEstaEnTerminalPositivo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorPositivo().getSigno());
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                    fin.setSigno(bateria.getConectorPositivo().getSigno());
+                }
+            }
+
+            /*if(inicio !=null){
+                if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                } else if (bateria.conectorNegativo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                }else{
+                    System.out.println("no se pudo :p");}
+            }*/
         });
 
         this.getChildren().addAll(line, inicio, fin);
     }
+
+
 
     private void arrastrarExtremo(MouseEvent event, boolean esInicio) {
         event.consume();  // Consumir el evento para evitar que se propague
@@ -174,6 +274,23 @@ public class Cable extends Pane {
 
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
+    }
+
+    private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
+        if(mouseX >=  bateria.getConectorPositivo().getX() &&
+                mouseX <= bateria.getConectorPositivo().getX() +20 &&
+        mouseY >= bateria.getConectorPositivo().getY() && mouseY <= bateria.getConectorPositivo().getY()+20){
+            return true;
+        }
+        return false;
+    }
+    private boolean verificarSiEstaEnTerminalNegativo(double mouseX, double mouseY, Bateria bateria) {
+        if(mouseX >=  bateria.getConectorNegativo().getX() &&
+                mouseX <= bateria.getConectorNegativo().getX() +20 &&
+                mouseY >= bateria.getConectorNegativo().getY() && mouseY <= bateria.getConectorNegativo().getY()+20){
+            return true;
+        }
+        return false;
     }
 
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
