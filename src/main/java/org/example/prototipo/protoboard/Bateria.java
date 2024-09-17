@@ -47,11 +47,13 @@ public class Bateria extends Pane {
         conectorPositivo.setX(origenX - 40);
         conectorPositivo.setY(origenY - 140);
         conectorPositivo.setFill(Color.DARKRED);
+        conectorPositivo.setSigno(1);
 
         conectorNegativo = new Cuadrados(20, 10);
         conectorNegativo.setX(origenX + 20);
         conectorNegativo.setY(origenY - 140);
         conectorNegativo.setFill(Color.DARKBLUE);
+        conectorNegativo.setSigno(-1);
 
         // Parte inferior de la batería (zona negra)
         Line lineaInferiorIzquierda = new Line(origenX - 60, origenY - 70, origenX - 60, origenY + 80);
@@ -109,9 +111,17 @@ public class Bateria extends Pane {
         // Crear un nuevo cable desde la posición del terminal
         double startX = conector.getX() + conector.getWidth() / 2;
         double startY = conector.getY() + conector.getHeight() / 2;
-        Cable cable = new Cable(startX, startY, startX + 100, startY);  // El cable se extiende hacia la derecha
+        Cable cable = new Cable(startX, startY, startX , startY- 100);  // El cable se extiende hacia la derecha
         cable.line.setStroke(color);  // Establecer el color del cable
 
         this.getChildren().add(cable);
+    }
+
+    public Cuadrados getConectorNegativo() {
+        return conectorNegativo;
+    }
+
+    public Cuadrados getConectorPositivo() {
+        return conectorPositivo;
     }
 }

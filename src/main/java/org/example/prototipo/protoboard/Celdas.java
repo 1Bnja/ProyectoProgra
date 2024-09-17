@@ -2,6 +2,7 @@ package org.example.prototipo.protoboard;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -80,6 +81,19 @@ public class Celdas extends Group {
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
+
+        for(int i=0; i < gridPane.getChildren().size(); i++ ){
+            Bounds boundsInScene = gridPane.getChildren().get(i).localToScene(gridPane.getChildren().get(i).getBoundsInLocal());
+
+            double posX = boundsInScene.getMinX();
+            double posY = boundsInScene.getMinY();
+
+            System.out.println("Posición X relativa al GridPane: " + posX + ", Posición Y relativa al GridPane: " + posY);
+
+        }
+
+
+
     }
 
     // Método para alternar una columna entre encendida y apagada
@@ -97,6 +111,11 @@ public class Celdas extends Group {
                 c.setFill(Color.RED);   // Encender
             }
         }
+    }
+
+    public int getSigno(int fila, int col){
+        List<Cuadrados> columna = grid.get(col);
+        return columna.get(fila).getSigno();
     }
 }
 

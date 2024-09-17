@@ -13,7 +13,7 @@ public class Swich extends Pane {
     private Group nodo = new Group();
 
 
-    private Line fin1, fin2, fin3, fin4;
+    private Cuadrados fin1, fin2, fin3, fin4;
     private Line pata1, pata2, pata3, pata4;
 
     // Posición del mouse
@@ -109,17 +109,15 @@ public class Swich extends Pane {
         return fondo;
     }
 
-    private Line Esquina_Estirable(Line pata) {
-        Line point = new Line(
-                pata.getEndX() - 5, pata.getEndY(),
-                pata.getEndX() + 5, pata.getEndY()
-        );
-        point.setStroke(Color.RED);
-        point.setStrokeWidth(8);
+    private Cuadrados Esquina_Estirable(Line pata) {
+        Cuadrados point = new Cuadrados(11,2);
+        point.setX(pata.getEndX()-5);
+        point.setY(pata.getEndY()-5);
+        point.setFill(Color.RED);
         return point;
     }
 
-    private void configurarArrastre(Line estirable, Line pata) {
+    private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e, pata);
             nodo.toFront();
@@ -158,7 +156,7 @@ public class Swich extends Pane {
         mouseY = event.getSceneY();
     }
 
-    private void Arrastre(MouseEvent event, Line line, Line estirable) {
+    private void Arrastre(MouseEvent event, Line line, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
@@ -173,11 +171,11 @@ public class Swich extends Pane {
         line_en_arrastre = false;
     }
 
-    private void actualizarEstirable(Line estirable, Line pata) {
-        estirable.setStartX(pata.getEndX() - 5);
-        estirable.setStartY(pata.getEndY());
-        estirable.setEndX(pata.getEndX() + 5);
-        estirable.setEndY(pata.getEndY());
+    private void actualizarEstirable(Cuadrados estirable, Line pata) {
+        estirable.setX(pata.getEndX() - 5);
+        estirable.setY(pata.getEndY());
+        estirable.setX(pata.getEndX() -5);
+        estirable.setY(pata.getEndY());
     }
 
     private void actualizarPosiciones(){
