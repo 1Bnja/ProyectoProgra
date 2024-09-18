@@ -67,7 +67,7 @@ public class Celdas extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 final int columnaIndex = i;
-                cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
+                //cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
 
                 GridPane.setConstraints(cuadrado, i + 1, j + 1);
                 gridPane.getChildren().add(cuadrado);
@@ -97,20 +97,23 @@ public class Celdas extends Group {
     }
 
     // Método para alternar una columna entre encendida y apagada
-    public void alternarColumna(int columnaIndex) {
+    public void alternarColumna(int columnaIndex, int signo) {
         List<Cuadrados> columna = grid.get(columnaIndex); // Obtener la columna seleccionada
 
+        Color colorEncendido = Color.WHITE;
 
-        boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
+        if(signo ==-1){
+            colorEncendido = Color.BLUE;
+        } else if(signo == 1){
+            colorEncendido = Color.RED;
+        }
 
 
         for (Cuadrados c : columna) {
-            if (columnaEncendida) {
-                c.setFill(Color.WHITE); // Apagar
-            } else {
-                c.setFill(Color.RED);   // Encender
+
+                c.setFill(colorEncendido); // Apagar
             }
-        }
+
     }
 
     public int getSigno(int fila, int col){

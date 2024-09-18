@@ -73,6 +73,11 @@ public class Controller_Builder {
         LED led = new LED();
         led.toFront();
         agregar(led);
+        for (int i = 0 ; i < elementos.size() ; i++) {
+            if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                led.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+            }
+        }
     }
 
     @FXML
@@ -123,6 +128,9 @@ public class Controller_Builder {
             for (int i = 0 ; i < elementos.size() ; i++) {
                 if (elementos.get(i) instanceof Cable) {
                     ((Cable) elementos.get(i)).setProtoboard(proto);
+                }
+                if (elementos.get(i) instanceof LED) {
+                    ((LED) elementos.get(i)).setProtoboard(proto);
                 }
             }
 

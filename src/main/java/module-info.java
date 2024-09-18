@@ -1,7 +1,7 @@
 module org.example.prototipo {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
+    requires jdk.unsupported.desktop;
 
 
     opens org.example.prototipo to javafx.fxml;

@@ -62,28 +62,49 @@ public class Cable extends Pane {
                 if(arriba != null) {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
-                    inicio.setSigno(protoboard.getCelda1().getSigno(row,col));
-                    protoboard.getCelda1().alternarColumna(col);
+                    //
+                    if(inicio.getSigno() != 0){
+                        protoboard.getCelda1().alternarColumna(col,inicio.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getCelda1().getSigno(row,col));
+                    }
                 }
                 if(abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    protoboard.getCelda2().alternarColumna(col);
-                    inicio.setSigno(protoboard.getCelda2().getSigno(row,col));
+                    if(inicio.getSigno() != 0){
+                        protoboard.getCelda2().alternarColumna(col,inicio.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getCelda2().getSigno(row,col));
+                    }
+
 
                 }
                 if(bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
-                    inicio.setSigno(protoboard.getBus2().getSigno(row,col));
-                    protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );
+                    if(inicio.getSigno() != 0){
+                        protoboard.getBus2().setSigno(row,col,inicio.getSigno());
+                        protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getBus2().getSigno(row,col));
+                    }
+
 
                 }
                 if(bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
-                    inicio.setSigno(protoboard.getBus1().getSigno(row,col));
-                    protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() );
+                    if(inicio.getSigno() != 0){
+                        protoboard.getBus1().setSigno(row,col,inicio.getSigno());
+                        protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() );
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getBus1().getSigno(row,col));
+                    }
+
                 }
             }
 
@@ -103,6 +124,12 @@ public class Cable extends Pane {
                     fin.setSigno(bateria.getConectorPositivo().getSigno());
                 }
             }
+
+            //if(led != null){
+              //  if(verificarSiEstaEnfin1(mouseX,mouseY,led)){
+
+             //   }
+           // }
 
             /*if(inicio !=null){
                 if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
@@ -133,27 +160,55 @@ public class Cable extends Pane {
                 if(arriba != null) {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
-                    fin.setSigno(protoboard.getCelda1().getSigno(row,col));
-                    protoboard.getCelda1().alternarColumna(col);
+
+                    if(fin.getSigno() != 0){
+                        protoboard.getCelda1().alternarColumna(col,fin.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getCelda1().getSigno(row,col));
+                    }
+
                 }
                 if(abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    protoboard.getCelda2().alternarColumna(col);
-                    fin.setSigno(protoboard.getCelda2().getSigno(row,col));
+                    if(fin.getSigno() != 0){
+                        protoboard.getCelda2().alternarColumna(col,fin.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getCelda2().getSigno(row,col));
+                    }
 
                 }
                 if(bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
                     //fin.setSigno(protoboard.getBus2().getSigno(row,col));
-                    protoboard.getBus2().toggleFilaBus(row, fin.getSigno());
+
+                    if(fin.getSigno() != 0){
+                        protoboard.getBus2().setSigno(row,col,fin.getSigno());
+                        protoboard.getBus2().toggleFilaBus(row, fin.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getBus2().getSigno(row,col));
+                    }
+
+
                 }
                 if(bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
                     //fin.setSigno(protoboard.getBus1().getSigno(row,col));  //TODO hacer al reves, set el signo el cable en el cuadro del protoboard y setear los colores de los buses si es necesario
-                    protoboard.getBus1().toggleFilaBus(row, fin.getSigno());
+
+                    if(fin.getSigno() != 0){
+                        protoboard.getBus1().setSigno(row,col,fin.getSigno());
+                        protoboard.getBus1().toggleFilaBus(row, fin.getSigno());
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getBus1().getSigno(row,col));
+                    }
+
+
                 }
             }
 
@@ -191,6 +246,19 @@ public class Cable extends Pane {
         this.getChildren().addAll(line, inicio, fin);
     }
 
+    private void setSignoColor(int row, int col, int signo) {
+        inicio.setSigno(signo);
+        fin.setSigno(signo);
+        if(inicio.getSigno() ==-1){
+            inicio.setFill(Color.BLUE);
+            fin.setFill(Color.BLUE);
+            line.setStroke(Color.BLUE);
+        }else {
+            inicio.setFill(Color.RED);
+            fin.setFill(Color.RED);
+            line.setStroke(Color.RED);
+        }
+    }
 
 
     private void arrastrarExtremo(MouseEvent event, boolean esInicio) {
@@ -274,6 +342,23 @@ public class Cable extends Pane {
 
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
+    }
+
+    private boolean verificarSiEstaEnfin1(double mouseX, double mouseY, LED led){
+        if(mouseX >=  led.getFin1().getX() &&
+                mouseX <= led.getFin1().getX() -5 &&
+                mouseY >= led.getFin1().getY() && mouseY <= led.getFin1().getY()-5){
+            return true;
+        }
+        return false;
+    }
+    private boolean verificarSiEstaEnfin2(double mouseX, double mouseY, LED led){
+        if(mouseX >=  led.getFin2().getX() &&
+                mouseX <= led.getFin2().getX() -5 &&
+                mouseY >= led.getFin2().getY() && mouseY <= led.getFin2().getY()-5){
+            return true;
+        }
+        return false;
     }
 
     private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
