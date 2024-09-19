@@ -80,11 +80,13 @@ public class BusesAlimentacion extends Group {
             colorEncendido = Color.BLUE;
         } else if(signo == 1){
             colorEncendido = Color.RED;
+        } else if (signo==0) {
+            colorEncendido = Color.WHITE;
         }
 
 
         for (Cuadrados cuadrado : filaBus) {
-
+                cuadrado.setSigno(signo); //se setea el signo
                 cuadrado.setFill(colorEncendido);  // Encender
 
         }

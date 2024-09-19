@@ -106,11 +106,13 @@ public class Celdas extends Group {
             colorEncendido = Color.BLUE;
         } else if(signo == 1){
             colorEncendido = Color.RED;
+        } else if (signo ==0) {
+            colorEncendido = Color.WHITE;
         }
 
 
         for (Cuadrados c : columna) {
-                c.setSigno(signo);
+                c.setSigno(signo); //se setea el signo
                 c.setFill(colorEncendido); // Apagar
             }
 

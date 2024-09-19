@@ -54,23 +54,23 @@ public class Swich extends Pane {
         cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
 
         cuadradoInterno.setOnMouseClicked(event -> {
-            if (encendido) {
-                if(celda == 1){
-                    protoboard.getCelda1().alternarColumna(colum_2, 0);
+            if (encendido) { //cuando se apaga
+                if(celda == 1){ //si es celda 1
+                    protoboard.getCelda1().alternarColumna(colum_2, 0); //se pinta del signo
                 }
-                else{
-                    protoboard.getCelda2().alternarColumna(colum_2, 0);
+                else{ //si es la celda 2
+                    protoboard.getCelda2().alternarColumna(colum_2, 0); //se pinta del signo
                 }
                 cuadradoInterno.setFill(Color.BLACK); // Apagado
-            } else {
-
+            } else { //cuando se prende
+                //se pasa el signo de las patas a otras
                 fin1.setSigno(fin2.getSigno());
                 fin3.setSigno(fin4.getSigno());
 
                 if(celda==1){
-                    protoboard.getCelda1().alternarColumna(colum_2, fin1.getSigno());
+                    protoboard.getCelda1().alternarColumna(colum_2, fin1.getSigno()); //Se pinta del signo
                 } else if(celda==2){
-                    protoboard.getCelda2().alternarColumna(colum_2, fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(colum_2, fin1.getSigno()); //se pinta del signo
                 }
 
 
@@ -163,9 +163,9 @@ public class Swich extends Pane {
                 if(arriba != null) {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba)-1;
-                    estirable.setSigno(protoboard.getCelda1().getSigno(row,col));
-                    if (lado == 1)  colum_1= col;
-                    if (lado == 2)  colum_2= col;
+                    estirable.setSigno(protoboard.getCelda1().getSigno(row,col)); //se setea el signo a la punta del switch
+                    if (lado == 1)  colum_1= col; //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                    if (lado == 2)  colum_2= col;//para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
 
                     celda=1;
                     //protoboard.getCelda1().alternarColumna(col,estirable.getSigno());
@@ -174,8 +174,8 @@ public class Swich extends Pane {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo)-1;
                     estirable.setSigno(protoboard.getCelda2().getSigno(row,col));
-                    if (lado == 1)  colum_1= col;
-                    if (lado == 2)  colum_2= col;
+                    if (lado == 1)  colum_1= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                    if (lado == 2)  colum_2= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
                     celda=2;
                     //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
 

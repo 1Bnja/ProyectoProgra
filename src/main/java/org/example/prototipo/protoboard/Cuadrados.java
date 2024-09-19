@@ -7,7 +7,8 @@ public class Cuadrados extends Rectangle {
     private int tamanio;
     private boolean tipocarga = false;
     private int signo = 0;
-
+    int lugar; // 0= bus1, 1= celda1, 2= celda2, 3= bus2
+    int col, fila;
 
     public Cuadrados(int tamanio, int espacio) {
         this.tamanio = tamanio;
@@ -62,4 +63,24 @@ public class Cuadrados extends Rectangle {
     public void setSigno(int signo) {
         this.signo = signo;
     }
+
+    public int getLugar() {
+        return this.lugar;
+    }
+    public void setLugar(int lugar) {
+        this.lugar = lugar;
+    }
+    public int getCol() {
+        return this.col;
+    }
+    public void setCol(int col) {
+        this.col = col;
+    }
+    public int getFila() {
+        return this.fila;
+    }
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
 }

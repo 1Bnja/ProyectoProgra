@@ -50,18 +50,16 @@ public class Controller_Builder {
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
 
-        // Crear un nuevo cable con posiciones iniciales
         Cable cable = new Cable(50, 50, 150, 150);
-
-        // Asegurarse de que los cables no interfieren al ser añadidos
         cable.toFront();
-        agregar(cable);// Asegúrate de que Anchor_PanelFondo es tu contenedor
-        for (int i = 0 ; i < elementos.size() ; i++) {
-            if (elementos.get(i) instanceof Prototipo_Protoboard) {
-                cable.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+        agregar(cable);
+
+        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
+                cable.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el cable
             }
-            if (elementos.get(i) instanceof Bateria) {
-                cable.setBateria((Bateria) elementos.get(i));
+            if (elementos.get(i) instanceof Bateria) { //busca una bateria
+                cable.setBateria((Bateria) elementos.get(i)); //si lo encuentra se setea en el cable
             }
         }
 
@@ -73,9 +71,9 @@ public class Controller_Builder {
         LED led = new LED();
         led.toFront();
         agregar(led);
-        for (int i = 0 ; i < elementos.size() ; i++) {
-            if (elementos.get(i) instanceof Prototipo_Protoboard) {
-                led.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
+                led.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el led
             }
         }
     }
@@ -86,12 +84,12 @@ public class Controller_Builder {
         Swich swich = new Swich();
         swich.toFront();
         agregar(swich);
-        for (int i = 0 ; i < elementos.size() ; i++) {
-            if (elementos.get(i) instanceof Prototipo_Protoboard) {
-                swich.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
+                swich.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el cable
             }
-            if (elementos.get(i) instanceof LED) {
-                swich.setLed((LED) elementos.get(i));
+            if (elementos.get(i) instanceof LED) { //se busca un led
+                swich.setLed((LED) elementos.get(i)); //si lo encuentra se setea en el cable
             }
         }
 
@@ -134,12 +132,12 @@ public class Controller_Builder {
             System.out.println("Se ha agregado un protoboard");
             agregarProto(proto);
 
-            for (int i = 0 ; i < elementos.size() ; i++) {
-                if (elementos.get(i) instanceof Cable) {
-                    ((Cable) elementos.get(i)).setProtoboard(proto);
+            for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+                if (elementos.get(i) instanceof Cable) { //se busca un cable
+                    ((Cable) elementos.get(i)).setProtoboard(proto); //si lo encuentra lo setea en la proto
                 }
-                if (elementos.get(i) instanceof LED) {
-                    ((LED) elementos.get(i)).setProtoboard(proto);
+                if (elementos.get(i) instanceof LED) { //Se busca un led
+                    ((LED) elementos.get(i)).setProtoboard(proto); //si lo encuentra lo setea en el proto
                 }
             }
 

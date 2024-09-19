@@ -89,12 +89,12 @@ public class LED extends Pane {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
 
-                    protoboard.getCelda1().alternarColumna(col,estirable.getSigno());
+                    //protoboard.getCelda1().alternarColumna(col,estirable.getSigno()); //patas del led pintan columna
                 }
                 if(abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
+                    //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
 
 
                 }
@@ -102,16 +102,16 @@ public class LED extends Pane {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
                     //estirable.setSigno(protoboard.getBus2().getSigno(row,col));
-                    protoboard.getBus2().setSigno(row,col,estirable.getSigno());
-                    protoboard.getBus2().toggleFilaBus(row,estirable.getSigno() );
+                    //protoboard.getBus2().setSigno(row,col,estirable.getSigno());
+                    //protoboard.getBus2().toggleFilaBus(row,estirable.getSigno() );
 
                 }
                 if(bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
                     //estirable.setSigno(protoboard.getBus1().getSigno(row,col));
-                    protoboard.getBus1().setSigno(row,col,estirable.getSigno());
-                    protoboard.getBus1().toggleFilaBus(row,estirable.getSigno() );
+                    //protoboard.getBus1().setSigno(row,col,estirable.getSigno());
+                    //protoboard.getBus1().toggleFilaBus(row,estirable.getSigno() );
                 }
             }
 
