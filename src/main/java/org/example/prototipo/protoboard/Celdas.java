@@ -110,13 +110,14 @@ public class Celdas extends Group {
 
 
         for (Cuadrados c : columna) {
-
+                c.setSigno(signo);
                 c.setFill(colorEncendido); // Apagar
             }
 
     }
 
     public int getSigno(int fila, int col){
+        System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
     }

@@ -86,6 +86,15 @@ public class Controller_Builder {
         Swich swich = new Swich();
         swich.toFront();
         agregar(swich);
+        for (int i = 0 ; i < elementos.size() ; i++) {
+            if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                swich.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+            }
+            if (elementos.get(i) instanceof LED) {
+                swich.setLed((LED) elementos.get(i));
+            }
+        }
+
     }
 
     @FXML
