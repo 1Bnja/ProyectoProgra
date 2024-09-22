@@ -14,6 +14,7 @@ public class LED extends Pane {
     private Group nodo = new Group();
     private Line pata1, pata2;
     private Cuadrados fin1, fin2;
+    private CubicCurve curva;
 
     // Variables para la posición del mouse
     private double mouseX, mouseY;
@@ -23,18 +24,24 @@ public class LED extends Pane {
     double origenY = Main.origenY;
     Prototipo_Protoboard protoboard;
 
+    private boolean fin1Conectada = false;
+    private boolean fin2Conectada = false;
+    private int signoFin1 = 0;
+    private int signoFin2 = 0;
 
     public LED() {
         // LED
         Line led1 = crearLinea(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
-        CubicCurve curva = crearCurva(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
+        curva = crearCurva(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
         pata1 = crearLinea(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
         pata2 = crearLinea(origenX - 520, origenY - 150, origenX - 520, origenY - 135);
 
-        fin1 = crearEstirable(pata1);
-        fin1.setSigno(-1);
-        fin2 = crearEstirable(pata2);
-        fin2.setSigno(1);
+        // Pata positiva
+        fin1 = crearEstirable(pata1, Color.RED);
+        fin1.setSigno(1);
+        // Pata negativa
+        fin2 = crearEstirable(pata2, Color.BLUE);
+        fin2.setSigno(-1);
 
         configurarArrastre(fin1, pata1);
         configurarArrastre(fin2, pata2);
@@ -74,47 +81,59 @@ public class LED extends Pane {
         });
         estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
 
-        estirable.setOnMouseReleased(event ->{
+        estirable.setOnMouseReleased(event -> {
 
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
-            if(protoboard != null){
-                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
-                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
-                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
-                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+            int signoCelda = 0;
+            boolean connected = false;
+
+            if (protoboard != null) {
+                Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
+                Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
+                Node bus_arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getBus1().getChildren().getFirst());
+                Node bus_abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getBus2().getChildren().getFirst());
                 int col = 0;
                 int row = 0;
-                if(arriba != null) {
-                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
-                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
 
-                    //protoboard.getCelda1().alternarColumna(col,estirable.getSigno()); //patas del led pintan columna
-                }
-                if(abajo != null) {
-                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
-                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
-
-
-                }
-                if(bus_abajo != null) {
+                if (arriba != null) {
+                    col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
+                    row = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
+                    signoCelda = protoboard.getCelda1().getSigno(row, col);
+                    connected = true;
+                } else if (abajo != null) {
+                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
+                    row = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
+                    signoCelda = protoboard.getCelda2().getSigno(row, col);
+                    connected = true;
+                } else if (bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
-                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
-                    //estirable.setSigno(protoboard.getBus2().getSigno(row,col));
-                    //protoboard.getBus2().setSigno(row,col,estirable.getSigno());
-                    //protoboard.getBus2().toggleFilaBus(row,estirable.getSigno() );
-
-                }
-                if(bus_arriba != null) {
+                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo) - 1;
+                    signoCelda = protoboard.getBus2().getSigno(row, col);
+                    connected = true;
+                } else if (bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
-                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
-                    //estirable.setSigno(protoboard.getBus1().getSigno(row,col));
-                    //protoboard.getBus1().setSigno(row,col,estirable.getSigno());
-                    //protoboard.getBus1().toggleFilaBus(row,estirable.getSigno() );
+                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba) - 1;
+                    signoCelda = protoboard.getBus1().getSigno(row, col);
+                    connected = true;
+                } else {
+                    // No está conectado a ninguna celda
+                    signoCelda = 0;
+                    connected = false;
                 }
-            }
 
+                // Actualizar el estado de la pata correspondiente
+                if (estirable == fin1) {
+                    fin1Conectada = connected;
+                    signoFin1 = signoCelda;
+                } else if (estirable == fin2) {
+                    fin2Conectada = connected;
+                    signoFin2 = signoCelda;
+                }
+
+                // Verificar si el LED debe estar encendido
+                checkLedState();
+            }
         });
     }
 
@@ -174,9 +193,9 @@ public class LED extends Pane {
         line_en_arrastre = false;
     }
 
-    private Cuadrados crearEstirable(Line pata) {
+    private Cuadrados crearEstirable(Line pata, Color color) {
         Cuadrados esquina = new Cuadrados(11,2);
-        esquina.setFill(Color.RED);
+        esquina.setFill(color);
         esquina.setX(pata.getEndX()-5);
         esquina.setY(pata.getEndY()-5);
         return esquina;
@@ -192,6 +211,19 @@ public class LED extends Pane {
     private void actualizarPosiciones(){
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
+    }
+
+    private void checkLedState() {
+
+        if (fin1Conectada && fin2Conectada) {
+            if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
+                curva.setFill(Color.YELLOW);
+            } else {
+                curva.setFill(Color.LIGHTBLUE);
+            }
+        } else {
+            curva.setFill(Color.LIGHTBLUE);
+        }
     }
 
     public Cuadrados getFin1() {
