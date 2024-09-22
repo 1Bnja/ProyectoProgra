@@ -1,7 +1,10 @@
 package org.example.prototipo.protoboard;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
@@ -18,6 +21,8 @@ public class LED extends Pane {
 
     double origenX = Main.origenX;
     double origenY = Main.origenY;
+    Prototipo_Protoboard protoboard;
+
 
     public LED() {
         // LED
@@ -27,7 +32,9 @@ public class LED extends Pane {
         pata2 = crearLinea(origenX - 520, origenY - 150, origenX - 520, origenY - 135);
 
         fin1 = crearEstirable(pata1);
+        fin1.setSigno(-1);
         fin2 = crearEstirable(pata2);
+        fin2.setSigno(1);
 
         configurarArrastre(fin1, pata1);
         configurarArrastre(fin2, pata2);
@@ -66,6 +73,49 @@ public class LED extends Pane {
             estirable.toFront();
         });
         estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
+
+        estirable.setOnMouseReleased(event ->{
+
+            double mouseX = event.getSceneX();
+            double mouseY = event.getSceneY();
+            if(protoboard != null){
+                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
+                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
+                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
+                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+                int col = 0;
+                int row = 0;
+                if(arriba != null) {
+                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
+                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
+
+                    //protoboard.getCelda1().alternarColumna(col,estirable.getSigno()); //patas del led pintan columna
+                }
+                if(abajo != null) {
+                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
+                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
+                    //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
+
+
+                }
+                if(bus_abajo != null) {
+                    row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
+                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
+                    //estirable.setSigno(protoboard.getBus2().getSigno(row,col));
+                    //protoboard.getBus2().setSigno(row,col,estirable.getSigno());
+                    //protoboard.getBus2().toggleFilaBus(row,estirable.getSigno() );
+
+                }
+                if(bus_arriba != null) {
+                    row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
+                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
+                    //estirable.setSigno(protoboard.getBus1().getSigno(row,col));
+                    //protoboard.getBus1().setSigno(row,col,estirable.getSigno());
+                    //protoboard.getBus1().toggleFilaBus(row,estirable.getSigno() );
+                }
+            }
+
+        });
     }
 
     private void configurarArrastreNodo() {
@@ -91,6 +141,22 @@ public class LED extends Pane {
                 actualizarPosiciones();
             }
         });
+    }
+
+    private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            // Obtener los límites de la celda en coordenadas de la escena
+            Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
+
+            // Verificar si el mouse está dentro de los límites de la celda
+            if (boundsInScene.contains(mouseX, mouseY)) {
+                Integer row = GridPane.getRowIndex(child);
+                Integer col = GridPane.getColumnIndex(child);
+                System.out.println("El nodo está sobre la celda en fila: " + row + ", columna: " + col);
+                return child;
+            }
+        }
+        return null;
     }
 
     private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
@@ -126,6 +192,22 @@ public class LED extends Pane {
     private void actualizarPosiciones(){
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
+    }
+
+    public Cuadrados getFin1() {
+        return fin1;
+    }
+
+    public Cuadrados getFin2() {
+        return fin2;
+    }
+
+    public Prototipo_Protoboard getProtoboard() {
+        return protoboard;
+    }
+
+    public void setProtoboard(Prototipo_Protoboard protoboard) {
+        this.protoboard = protoboard;
     }
 }
 

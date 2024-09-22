@@ -52,6 +52,7 @@ public class Cable extends Pane {
 
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
+
             if(protoboard != null){
                 Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
                 Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
@@ -59,35 +60,78 @@ public class Cable extends Pane {
                 Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
                 int col = 0;
                 int row = 0;
+                if(arriba==null && abajo==null && bus_arriba==null && bus_abajo==null){ //Para despintar, todos tienen que estar en null
+                    //se pregunta el lugar, 0= bus1 , 1=celda1, 2=celda2, 3= bus2
+                    if(inicio.getLugar()==1) {
+                        protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
+                    } if(inicio.getLugar()==2) {
+                        protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
+                    } if(inicio.getLugar()==3) {
+                        protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
+                    } if(inicio.getLugar()==0) {
+                        protoboard.getBus1().toggleFilaBus(inicio.getFila(),0);
+                    }
+                }
                 if(arriba != null) {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
-                    inicio.setSigno(protoboard.getCelda1().getSigno(row,col));
-                    protoboard.getCelda1().alternarColumna(col);
+                    //
+                    if(inicio.getSigno() != 0){ //si el inicio tiene carga
+                        protoboard.getCelda1().alternarColumna(col,inicio.getSigno()); //se pinta la col del color del signo de inicio
+                    }
+                    else{ //si el signo de inicio es 0
+                        setSignoColor(row,col,protoboard.getCelda1().getSigno(row,col)); //se coloca el signo y se pinta
+                    }
+                    inicio.setLugar(1);
+                    inicio.setFila(row);
+                    inicio.setCol(col);
                 }
                 if(abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    protoboard.getCelda2().alternarColumna(col);
-                    inicio.setSigno(protoboard.getCelda2().getSigno(row,col));
+                    if(inicio.getSigno() != 0){//si el inicio tiene carga
+                        protoboard.getCelda2().alternarColumna(col,inicio.getSigno()); //se pinta la col del color del signo de inicio
+                    }
+                    else{ //si el signo de inicio es 0
+                        setSignoColor(row,col,protoboard.getCelda2().getSigno(row,col)); //se coloca el signo y se pinta
+                    }
+                    inicio.setLugar(2);
+                    inicio.setFila(row);
+                    inicio.setCol(col);
 
                 }
                 if(bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
-                    inicio.setSigno(protoboard.getBus2().getSigno(row,col));
-                    protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );
+                    if(inicio.getSigno() != 0){ //si el inicio tiene carga
+                        protoboard.getBus2().setSigno(row,col,inicio.getSigno()); //se coloca el  signo de inicio
+                        protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );   //se pinta la col del color del signo de inicio
+                    }
+                    else{ //si el signo de inicio es 0
+                        setSignoColor(row,col,protoboard.getBus2().getSigno(row,col)); //se coloca el signo y se pinta
+                    }
+                    inicio.setLugar(3);
+                    inicio.setFila(row);
+                    inicio.setCol(col);
 
                 }
                 if(bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
-                    inicio.setSigno(protoboard.getBus1().getSigno(row,col));
-                    protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() );
+                    if(inicio.getSigno() != 0){ //si el inicio tiene carga
+                        protoboard.getBus1().setSigno(row,col,inicio.getSigno()); //se coloca el  signo de inicio
+                        protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() ); //se pinta la col del color del signo de inicio
+                    }
+                    else{ //si el signo de inicio es 0
+                        setSignoColor(row,col,protoboard.getBus1().getSigno(row,col)); //se coloca el signo y se pinta
+                    }
+                    inicio.setLugar(0);
+                    inicio.setFila(row);
+                    inicio.setCol(col);
                 }
             }
 
-            if(bateria != null) {
+            if(bateria != null) {  //pinta el cable del signo del conector de la bateria.
                 if(verificarSiEstaEnTerminalNegativo(mouseX,mouseY,bateria)){
                     inicio.setSigno(bateria.getConectorNegativo().getSigno());
                     inicio.setFill(bateria.conectorNegativo.getFill());
@@ -103,6 +147,12 @@ public class Cable extends Pane {
                     fin.setSigno(bateria.getConectorPositivo().getSigno());
                 }
             }
+
+            //if(led != null){
+              //  if(verificarSiEstaEnfin1(mouseX,mouseY,led)){
+
+             //   }
+           // }
 
             /*if(inicio !=null){
                 if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
@@ -130,34 +180,84 @@ public class Cable extends Pane {
                 Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
                 int col = 0;
                 int row = 0;
+
+                if(arriba==null && abajo==null && bus_arriba==null && bus_abajo==null){ //Para despintar, todos tienen que estar en null
+                   //se pregunta el lugar, 0= bus1 , 1=celda1, 2=celda2, 3= bus2
+                    if(fin.getLugar()==1) {
+                        protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
+                    } if(fin.getLugar()==2) {
+                        protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
+                    } if(fin.getLugar()==3) {
+                        protoboard.getBus2().toggleFilaBus(fin.getFila(),0);
+                    } if(fin.getLugar()==0) {
+                        protoboard.getBus1().toggleFilaBus(fin.getFila(),0);
+                    }
+                }
                 if(arriba != null) {
                     col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
-                    fin.setSigno(protoboard.getCelda1().getSigno(row,col));
-                    protoboard.getCelda1().alternarColumna(col);
+
+                    if(fin.getSigno() != 0){ //si el fin tiene carga
+                        protoboard.getCelda1().alternarColumna(col,fin.getSigno()); //se coloca en la col el signo y se pinta
+                    }
+                    else{ //si el fin no tiene carga
+                        setSignoColor(row,col,protoboard.getCelda1().getSigno(row,col)); //se coloca en el cable el signo de la col y se pinta
+                    }
+                    fin.setLugar(1);
+                    fin.setFila(row);
+                    fin.setCol(col);
                 }
-                if(abajo != null) {
+                if(abajo != null) { //si el fin tiene carga
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
                     row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    protoboard.getCelda2().alternarColumna(col);
-                    fin.setSigno(protoboard.getCelda2().getSigno(row,col));
+                    if(fin.getSigno() != 0){
+                        protoboard.getCelda2().alternarColumna(col,fin.getSigno()); //se coloca en la col el signo y se pinta
+                    }
+                    else{//si el fin no tiene carga
+                        setSignoColor(row,col,protoboard.getCelda2().getSigno(row,col));//se coloca en el cable el signo de la col y se pinta
+                    }
+                    fin.setLugar(2);
+                    fin.setFila(row);
+                    fin.setCol(col);
 
                 }
                 if(bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
                     //fin.setSigno(protoboard.getBus2().getSigno(row,col));
-                    protoboard.getBus2().toggleFilaBus(row, fin.getSigno());
+
+                    if(fin.getSigno() != 0){//si el fin tiene carga
+                        protoboard.getBus2().setSigno(row,col,fin.getSigno()); //se coloca el signo del fin
+                        protoboard.getBus2().toggleFilaBus(row, fin.getSigno()); //se pinta del color del signo del fin
+                    }
+                    else{
+                        setSignoColor(row,col,protoboard.getBus2().getSigno(row,col));
+                    }
+                    fin.setLugar(3);
+                    fin.setFila(row);
+                    fin.setCol(col);
+
                 }
-                if(bus_arriba != null) {
+                if(bus_arriba != null) { //si el fin tiene carga
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
                     //fin.setSigno(protoboard.getBus1().getSigno(row,col));  //TODO hacer al reves, set el signo el cable en el cuadro del protoboard y setear los colores de los buses si es necesario
-                    protoboard.getBus1().toggleFilaBus(row, fin.getSigno());
+
+                    if(fin.getSigno() != 0){ //si el fin no tiene carga
+                        protoboard.getBus1().setSigno(row,col,fin.getSigno());  //se coloca el signo del fin
+                        protoboard.getBus1().toggleFilaBus(row, fin.getSigno()); //se pinta del color del signo del fin
+                    }
+                    else{//si el fin no tiene carga
+                        setSignoColor(row,col,protoboard.getBus1().getSigno(row,col));
+                    }
+                    fin.setLugar(0);
+                    fin.setFila(row);
+                    fin.setCol(col);
+
                 }
             }
 
-            if(bateria != null) {
+            if(bateria != null) { //se pinta el cable del color del signo del conector de la bateria.
                 if(verificarSiEstaEnTerminalNegativo(mouseX,mouseY,bateria)){
                     inicio.setSigno(bateria.getConectorNegativo().getSigno());
                     inicio.setFill(bateria.conectorNegativo.getFill());
@@ -191,6 +291,20 @@ public class Cable extends Pane {
         this.getChildren().addAll(line, inicio, fin);
     }
 
+    private void setSignoColor(int row, int col, int signo) {
+       //pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
+        inicio.setSigno(signo);
+        fin.setSigno(signo);
+        if(inicio.getSigno() ==-1){
+            inicio.setFill(Color.BLUE);
+            fin.setFill(Color.BLUE);
+            line.setStroke(Color.BLUE);
+        }else {
+            inicio.setFill(Color.RED);
+            fin.setFill(Color.RED);
+            line.setStroke(Color.RED);
+        }
+    }
 
 
     private void arrastrarExtremo(MouseEvent event, boolean esInicio) {
@@ -276,6 +390,23 @@ public class Cable extends Pane {
         this.bateria = bateria;
     }
 
+    private boolean verificarSiEstaEnfin1(double mouseX, double mouseY, LED led){
+        if(mouseX >=  led.getFin1().getX() &&
+                mouseX <= led.getFin1().getX() -5 &&
+                mouseY >= led.getFin1().getY() && mouseY <= led.getFin1().getY()-5){
+            return true;
+        }
+        return false;
+    }
+    private boolean verificarSiEstaEnfin2(double mouseX, double mouseY, LED led){
+        if(mouseX >=  led.getFin2().getX() &&
+                mouseX <= led.getFin2().getX() -5 &&
+                mouseY >= led.getFin2().getY() && mouseY <= led.getFin2().getY()-5){
+            return true;
+        }
+        return false;
+    }
+
     private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
         if(mouseX >=  bateria.getConectorPositivo().getX() &&
                 mouseX <= bateria.getConectorPositivo().getX() +20 &&
@@ -302,6 +433,8 @@ public class Cable extends Pane {
             if (boundsInScene.contains(mouseX, mouseY)) {
                 Integer row = GridPane.getRowIndex(child);
                 Integer col = GridPane.getColumnIndex(child);
+
+
                 System.out.println("El nodo está sobre la celda en fila: " + row + ", columna: " + col);
                 return child;
             }

@@ -1,5 +1,8 @@
 package org.example.prototipo.protoboard;
 
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -25,6 +28,11 @@ public class Swich extends Pane {
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
+    Prototipo_Protoboard protoboard;
+    LED led;
+    int celda;
+    int colum_1,colum_2;
+
     boolean encendido;
 
     public Swich() {
@@ -46,9 +54,26 @@ public class Swich extends Pane {
         cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
 
         cuadradoInterno.setOnMouseClicked(event -> {
-            if (encendido) {
+            if (encendido) { //cuando se apaga
+                if(celda == 1){ //si es celda 1
+                    protoboard.getCelda1().alternarColumna(colum_2, 0); //se pinta del signo
+                }
+                else{ //si es la celda 2
+                    protoboard.getCelda2().alternarColumna(colum_2, 0); //se pinta del signo
+                }
                 cuadradoInterno.setFill(Color.BLACK); // Apagado
-            } else {
+            } else { //cuando se prende
+                //se pasa el signo de las patas a otras
+                fin1.setSigno(fin2.getSigno());
+                fin3.setSigno(fin4.getSigno());
+
+                if(celda==1){
+                    protoboard.getCelda1().alternarColumna(colum_2, fin1.getSigno()); //Se pinta del signo
+                } else if(celda==2){
+                    protoboard.getCelda2().alternarColumna(colum_2, fin1.getSigno()); //se pinta del signo
+                }
+
+
                 cuadradoInterno.setFill(Color.YELLOW); // Encendido
             }
             encendido = !encendido; // Cambiar estado
@@ -58,7 +83,7 @@ public class Swich extends Pane {
 
 
         // Patas
-        pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
+        pata1 = crearLinea(origenX - 505 *achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
         pata2 = crearLinea(origenX - 555 * achicar, origenY - 100 * achicar, origenX - 555 * achicar, origenY - 107.5 * achicar);
         pata3 = crearLinea(origenX - 505 * achicar, origenY - 40 * achicar, origenX - 505 * achicar, origenY - 32.5 * achicar);
         pata4 = crearLinea(origenX - 555 * achicar, origenY - 40 * achicar, origenX - 555 * achicar, origenY - 32.5 * achicar);
@@ -72,10 +97,10 @@ public class Swich extends Pane {
         fin3 = Esquina_Estirable(pata3);
         fin4 = Esquina_Estirable(pata4);
 
-        configurarArrastre(fin1, pata1);
-        configurarArrastre(fin2, pata2);
-        configurarArrastre(fin3, pata3);
-        configurarArrastre(fin4, pata4);
+        configurarArrastre(fin1, pata1, 2);
+        configurarArrastre(fin2, pata2,1);
+        configurarArrastre(fin3, pata3,2);
+        configurarArrastre(fin4, pata4,1);
 
         // Mover el nodo completo
         configurarArrastreNodo();
@@ -117,12 +142,66 @@ public class Swich extends Pane {
         return point;
     }
 
-    private void configurarArrastre(Cuadrados estirable, Line pata) {
+    private void configurarArrastre(Cuadrados estirable, Line pata, int lado) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e, pata);
             nodo.toFront();
         });
         estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
+
+        estirable.setOnMouseReleased(event ->{
+
+            double mouseX = event.getSceneX();
+            double mouseY = event.getSceneY();
+            if(protoboard != null){
+                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
+                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
+                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
+                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+                int col = 0;
+                int row = 0;
+                if(arriba != null) {
+                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
+                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba)-1;
+                    estirable.setSigno(protoboard.getCelda1().getSigno(row,col)); //se setea el signo a la punta del switch
+                    if (lado == 1)  colum_1= col; //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                    if (lado == 2)  colum_2= col;//para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+
+                    celda=1;
+                    //protoboard.getCelda1().alternarColumna(col,estirable.getSigno());
+                }
+                if(abajo != null) {
+                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
+                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo)-1;
+                    estirable.setSigno(protoboard.getCelda2().getSigno(row,col));
+                    if (lado == 1)  colum_1= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                    if (lado == 2)  colum_2= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                    celda=2;
+                    //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
+
+
+                }
+
+            }
+
+        });
+
+    }
+
+    private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            // Obtener los límites de la celda en coordenadas de la escena
+            Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
+
+            // Verificar si el mouse está dentro de los límites de la celda
+            if (boundsInScene.contains(mouseX, mouseY)) {
+                Integer row = GridPane.getRowIndex(child);
+                Integer col = GridPane.getColumnIndex(child);
+                System.out.println("El nodo está sobre la celda en fila: " + row + ", columna: " + col);
+                return child;
+            }
+        }
+        return null;
     }
 
     private void configurarArrastreNodo() {
@@ -148,6 +227,8 @@ public class Swich extends Pane {
                 actualizarPosiciones();
             }
         });
+
+
     }
 
     private void empezarArrastre(MouseEvent event, Line pata) {
@@ -183,5 +264,35 @@ public class Swich extends Pane {
         actualizarEstirable(fin2, pata2);
         actualizarEstirable(fin3, pata3);
         actualizarEstirable(fin4, pata4);
+    }
+
+    public Prototipo_Protoboard getProtoboard() {
+        return protoboard;
+    }
+
+    public void setProtoboard(Prototipo_Protoboard protoboard) {
+        this.protoboard = protoboard;
+    }
+    public LED getLed() {
+        return led;
+    }
+
+    public void setLed(LED led) {
+        this.led = led;
+    }
+
+    public Cuadrados getFin1() {
+        return fin1;
+    }
+
+    public Cuadrados getFin2() {
+        return fin2;
+    }
+    public Cuadrados getFin3() {
+        return fin1;
+    }
+
+    public Cuadrados getFin4() {
+        return fin2;
     }
 }
