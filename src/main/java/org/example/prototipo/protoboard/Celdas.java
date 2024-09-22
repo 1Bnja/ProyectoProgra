@@ -98,25 +98,23 @@ public class Celdas extends Group {
 
     // Método para alternar una columna entre encendida y apagada
     public void alternarColumna(int columnaIndex, int signo) {
-        List<Cuadrados> columna = grid.get(columnaIndex); // Obtener la columna seleccionada
+        List<Cuadrados> columna = grid.get(columnaIndex);
+        Color color;
 
-        Color colorEncendido = Color.WHITE;
-
-        if(signo ==-1){
-            colorEncendido = Color.BLUE;
-        } else if(signo == 1){
-            colorEncendido = Color.RED;
-        } else if (signo ==0) {
-            colorEncendido = Color.WHITE;
+        if(signo == -1) {
+            color = Color.BLUE;
+        } else if(signo == 1) {
+            color = Color.RED;
+        } else {
+            color = Color.WHITE;
         }
 
-
         for (Cuadrados c : columna) {
-                c.setSigno(signo); //se setea el signo
-                c.setFill(colorEncendido); // Apagar
-            }
-
+            c.setSigno(signo);
+            c.setFill(color);
+        }
     }
+
 
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);

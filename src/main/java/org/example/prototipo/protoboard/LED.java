@@ -214,9 +214,8 @@ public class LED extends Pane {
     }
 
     private void checkLedState() {
-
         if (fin1Conectada && fin2Conectada) {
-            if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
+            if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
                 curva.setFill(Color.YELLOW);
             } else {
                 curva.setFill(Color.LIGHTBLUE);
@@ -225,6 +224,7 @@ public class LED extends Pane {
             curva.setFill(Color.LIGHTBLUE);
         }
     }
+
 
     public Cuadrados getFin1() {
         return fin1;
