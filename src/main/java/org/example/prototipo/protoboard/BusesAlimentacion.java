@@ -4,6 +4,8 @@ import javafx.scene.Group;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class BusesAlimentacion extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 int finalJ = j;
-                cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
+                //cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
 
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
                 gridPane.getChildren().add(cuadrado);
@@ -70,18 +72,39 @@ public class BusesAlimentacion extends Group {
     }
 
 
-    private void toggleFilaBus(int filaIndex) {
+    public void toggleFilaBus(int filaIndex, int signo) {
         List<Cuadrados> filaBus = buses.get(filaIndex);
-        Color colorEncendido = (filaIndex == 0) ? Color.BLUE : Color.RED;
+        Color colorEncendido = Color.WHITE;
 
-        boolean estaEncendida = filaBus.get(0).getFill() != Color.WHITE;
+        if(signo ==-1){
+            colorEncendido = Color.BLUE;
+        } else if(signo == 1){
+            colorEncendido = Color.RED;
+        } else if (signo==0) {
+            colorEncendido = Color.WHITE;
+        }
+
 
         for (Cuadrados cuadrado : filaBus) {
-            if (estaEncendida) {
-                cuadrado.setFill(Color.WHITE);  // Apagar
-            } else {
+                cuadrado.setSigno(signo); //se setea el signo
                 cuadrado.setFill(colorEncendido);  // Encender
-            }
+
         }
+    }
+
+    public int getSigno(int fila, int col){
+        System.out.println(col+ "| " +fila);
+        List<Cuadrados> columna = buses.get(fila);
+
+        return columna.get(col).getSigno();
+    }
+
+    public void setSigno(int fila, int col, int signo){
+        for (int i =0; i < buses.get(fila).size(); i++) {
+
+            this.buses.get(fila).get(i).setSigno(signo);  // Encender
+
+        }
+
     }
 }
