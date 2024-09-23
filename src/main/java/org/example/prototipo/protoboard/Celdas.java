@@ -2,6 +2,7 @@ package org.example.prototipo.protoboard;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -66,7 +67,7 @@ public class Celdas extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 final int columnaIndex = i;
-                cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
+                //cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
 
                 GridPane.setConstraints(cuadrado, i + 1, j + 1);
                 gridPane.getChildren().add(cuadrado);
@@ -80,23 +81,45 @@ public class Celdas extends Group {
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
+
+        for(int i=0; i < gridPane.getChildren().size(); i++ ){
+            Bounds boundsInScene = gridPane.getChildren().get(i).localToScene(gridPane.getChildren().get(i).getBoundsInLocal());
+
+            double posX = boundsInScene.getMinX();
+            double posY = boundsInScene.getMinY();
+
+            System.out.println("Posición X relativa al GridPane: " + posX + ", Posición Y relativa al GridPane: " + posY);
+
+        }
+
+
+
     }
 
     // Método para alternar una columna entre encendida y apagada
-    public void alternarColumna(int columnaIndex) {
-        List<Cuadrados> columna = grid.get(columnaIndex); // Obtener la columna seleccionada
+    public void alternarColumna(int columnaIndex, int signo) {
+        List<Cuadrados> columna = grid.get(columnaIndex);
+        Color color;
 
-
-        boolean columnaEncendida = columna.get(0).getFill() == Color.RED;
-
+        if(signo == -1) {
+            color = Color.BLUE;
+        } else if(signo == 1) {
+            color = Color.RED;
+        } else {
+            color = Color.WHITE;
+        }
 
         for (Cuadrados c : columna) {
-            if (columnaEncendida) {
-                c.setFill(Color.WHITE); // Apagar
-            } else {
-                c.setFill(Color.RED);   // Encender
-            }
+            c.setSigno(signo);
+            c.setFill(color);
         }
+    }
+
+
+    public int getSigno(int fila, int col){
+        System.out.println(col +"|"+ fila);
+        List<Cuadrados> columna = grid.get(col);
+        return columna.get(fila).getSigno();
     }
 }
 
