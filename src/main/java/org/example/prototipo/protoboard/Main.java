@@ -10,7 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import  java.io.IOException;
+import java.io.IOException;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -42,6 +43,5 @@ public class Main extends Application {
     
     public static void main(String[] args) {
         launch(args);
-    }
-}
+    }}
 

@@ -6,6 +6,7 @@ import javafx.scene.shape.Line;
     import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
 
+
 public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
@@ -78,6 +79,7 @@ public class Prototipo_Protoboard extends Pane {
 
         this.getChildren().add(nodo);
     }
+
 
     private Line crearLinea(double startX, double startY, double endX, double endY, Color color) {
         Line linea = new Line(startX, startY, endX, endY);

@@ -98,23 +98,8 @@ public class Bateria extends Pane {
                 simboloPositivo, simboloNegativo, texto5V
         );
 
-
-        conectorPositivo.setOnMouseClicked(e -> generarCable(Color.RED, conectorPositivo));
-        conectorNegativo.setOnMouseClicked(e -> generarCable(Color.BLUE, conectorNegativo));
-
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
-    }
-
-
-    private void generarCable(Color color, Cuadrados conector) {
-        // Crear un nuevo cable desde la posición del terminal
-        double startX = conector.getX() + conector.getWidth() / 2;
-        double startY = conector.getY() + conector.getHeight() / 2;
-        Cable cable = new Cable(startX, startY, startX , startY- 100);  // El cable se extiende hacia la derecha
-        cable.line.setStroke(color);  // Establecer el color del cable
-
-        this.getChildren().add(cable);
     }
 
     public Cuadrados getConectorNegativo() {

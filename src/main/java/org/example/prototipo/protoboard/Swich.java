@@ -35,6 +35,9 @@ public class Swich extends Pane {
 
     boolean encendido;
 
+    int filaEntrada, columnaEntrada;
+    int filaSalida, columnaSalida;
+
     public Swich() {
         double achicar = 0.7;
         double achicar2= 0.5;
@@ -54,33 +57,28 @@ public class Swich extends Pane {
         cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
 
         cuadradoInterno.setOnMouseClicked(event -> {
-            if (encendido) { //cuando se apaga
-                if(celda == 1){ //si es celda 1
-                    protoboard.getCelda1().alternarColumna(colum_2, 0); //se pinta del signo
+            if (encendido) {
+                // Apagar el switch
+                if (celda == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaSalida, 0); // Cortar energía
+                } else if (celda == 2) {
+                    protoboard.getCelda2().alternarColumna(columnaSalida, 0);
                 }
-                else{ //si es la celda 2
-                    protoboard.getCelda2().alternarColumna(colum_2, 0); //se pinta del signo
+                cuadradoInterno.setFill(Color.BLACK); // Cambiar color a apagado
+            } else {
+                // Encender el switch
+                int signoEntrada;
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaSalida, signoEntrada); // Transferir energía
+                } else if (celda == 2) {
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda2().alternarColumna(columnaSalida, signoEntrada);
                 }
-                cuadradoInterno.setFill(Color.BLACK); // Apagado
-            } else { //cuando se prende
-                //se pasa el signo de las patas a otras
-                fin1.setSigno(fin2.getSigno());
-                fin3.setSigno(fin4.getSigno());
-
-                if(celda==1){
-                    protoboard.getCelda1().alternarColumna(colum_2, fin1.getSigno()); //Se pinta del signo
-                } else if(celda==2){
-                    protoboard.getCelda2().alternarColumna(colum_2, fin1.getSigno()); //se pinta del signo
-                }
-
-
-                cuadradoInterno.setFill(Color.YELLOW); // Encendido
+                cuadradoInterno.setFill(Color.YELLOW); // Cambiar color a encendido
             }
             encendido = !encendido; // Cambiar estado
         });
-
-
-
 
         // Patas
         pata1 = crearLinea(origenX - 505 *achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
@@ -149,43 +147,50 @@ public class Swich extends Pane {
         });
         estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
 
-        estirable.setOnMouseReleased(event ->{
-
+        estirable.setOnMouseReleased(event -> {
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
-            if(protoboard != null){
-                Node arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda1().getChildren().getFirst());
-                Node abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getCelda2().getChildren().getFirst());
-                Node bus_arriba = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus1().getChildren().getFirst());
-                Node bus_abajo = verificarSiEstaEnCelda(mouseX,mouseY,(GridPane) protoboard.getBus2().getChildren().getFirst());
+            if (protoboard != null) {
+                Node celdaEncontrada = null;
                 int col = 0;
                 int row = 0;
-                if(arriba != null) {
-                    col =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba)-1;
-                    row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba)-1;
-                    estirable.setSigno(protoboard.getCelda1().getSigno(row,col)); //se setea el signo a la punta del switch
-                    if (lado == 1)  colum_1= col; //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
-                    if (lado == 2)  colum_2= col;//para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
+                int signoCelda = 0;
 
-                    celda=1;
-                    //protoboard.getCelda1().alternarColumna(col,estirable.getSigno());
+                // Verificar si está sobre celda1
+                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
+                if (celdaEncontrada != null) {
+                    col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    row = GridPane.getRowIndex(celdaEncontrada) - 1;
+                    signoCelda = protoboard.getCelda1().getSigno(row, col);
+                    celda = 1;
+                } else {
+                    // Verificar si está sobre celda2
+                    celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
+                    if (celdaEncontrada != null) {
+                        col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                        row = GridPane.getRowIndex(celdaEncontrada) - 1;
+                        signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        celda = 2;
+                    } else {
+                        // No está conectado a ninguna celda
+                        estirable.setSigno(0);
+                        return;
+                    }
                 }
-                if(abajo != null) {
-                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
-                    row =  ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo)-1;
-                    estirable.setSigno(protoboard.getCelda2().getSigno(row,col));
-                    if (lado == 1)  colum_1= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
-                    if (lado == 2)  colum_2= col;  //para saber el lado que tiene que pasarse o cortarse el signo (Se usa en el click)
-                    celda=2;
-                    //protoboard.getCelda2().alternarColumna(col, estirable.getSigno());
 
+                estirable.setSigno(signoCelda);
 
+                if (lado == 1) {
+                    // Pata de entrada
+                    filaEntrada = row;
+                    columnaEntrada = col;
+                } else if (lado == 2) {
+                    // Pata de salida
+                    filaSalida = row;
+                    columnaSalida = col;
                 }
-
             }
-
         });
-
     }
 
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
