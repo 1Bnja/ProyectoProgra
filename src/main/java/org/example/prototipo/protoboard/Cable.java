@@ -8,6 +8,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cable extends Pane {
 
     public Line line;
@@ -18,9 +21,14 @@ public class Cable extends Pane {
     LED led;
     Swich boton;
     Prototipo_Protoboard protoboard;
+    List<Node> ListaCables = new ArrayList<>();
+    Controller_Builder controller_builder;
+
 
     public Cable(double startX, double startY, double endX, double endY) {
 
+
+        System.out.println("cantidad 2: "+ListaCables.size());
         line = new Line(startX, startY, endX, endY);
         line.setStroke(Color.GREENYELLOW);
         line.setStrokeWidth(7);
@@ -85,6 +93,7 @@ public class Cable extends Pane {
                     inicio.setLugar(1);
                     inicio.setFila(row);
                     inicio.setCol(col);
+
                 }
                 if(abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo)-1;
@@ -290,6 +299,11 @@ public class Cable extends Pane {
 
         this.getChildren().addAll(line, inicio, fin);
     }
+    public void setListaCables(Cable cable) {
+        ListaCables.add(cable);
+    }
+
+
 
     private void setSignoColor(int row, int col, int signo) {
        //pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
@@ -389,6 +403,7 @@ public class Cable extends Pane {
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
     }
+
 
     private boolean verificarSiEstaEnfin1(double mouseX, double mouseY, LED led){
         if(mouseX >=  led.getFin1().getX() &&

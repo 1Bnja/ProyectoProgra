@@ -24,8 +24,11 @@ public class Controller_Builder {
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
 
+    List<Node> Lista_cables = new ArrayList<>();
+
     double origenX = Main.origenX;
     double origenY = Main.origenY;
+
 
     private void agregar(Node elemento) {
         elementos.add(elemento);
@@ -37,6 +40,12 @@ public class Controller_Builder {
         elementos.add(elemento);
         Anchor_PanelFondo.getChildren().add(elemento);
         elemento.toBack();
+    }
+
+    private void agregarCables(Node elemento) {
+        Lista_cables.add(elemento);
+
+
     }
 
     private void seleccionar(Node elemento) {
@@ -53,6 +62,9 @@ public class Controller_Builder {
         Cable cable = new Cable(50, 50, 150, 150);
         cable.toFront();
         agregar(cable);
+        agregarCables(cable);
+        cable.setListaCables(cable);
+        System.out.println("cantidad de cables: " + Lista_cables.size());
 
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
             if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
@@ -147,10 +159,17 @@ public class Controller_Builder {
     @FXML
     void Click_Eliminar(ActionEvent event) {
         System.out.println("Se ha eliminado " + elemento_seleccionado);
+        if(elemento_seleccionado instanceof Cable) {
+            Lista_cables.remove((Cable) elemento_seleccionado);
+        }
         if (elemento_seleccionado != null) {
             Anchor_PanelFondo.getChildren().remove(elemento_seleccionado);
             elementos.remove(elemento_seleccionado);
             elemento_seleccionado = null;
         }
+    }
+
+    public List<Node> getLista_de_cables() {
+        return this.Lista_cables;
     }
 }
