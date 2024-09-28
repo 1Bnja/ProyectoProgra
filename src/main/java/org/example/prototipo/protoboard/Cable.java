@@ -21,14 +21,16 @@ public class Cable extends Pane {
     LED led;
     Swich boton;
     Prototipo_Protoboard protoboard;
-    List<Node> ListaCables = new ArrayList<>();
-    Controller_Builder controller_builder;
+    List<Cable> ListaCables = new ArrayList<>();
+    Controller_Builder controller;
 
 
     public Cable(double startX, double startY, double endX, double endY) {
 
+        controller = new Controller_Builder();
+        ListaCables = controller.getLista_cables();
+        System.out.println("cantidAD 2: "+ ListaCables.size());
 
-        System.out.println("cantidad 2: "+ListaCables.size());
         line = new Line(startX, startY, endX, endY);
         line.setStroke(Color.GREENYELLOW);
         line.setStrokeWidth(7);
@@ -298,10 +300,16 @@ public class Cable extends Pane {
         });
 
         this.getChildren().addAll(line, inicio, fin);
+
+
     }
-    public void setListaCables(Cable cable) {
-        ListaCables.add(cable);
+    public void setListaCables(List<Cable> listaCables) {
+        ListaCables= listaCables;
+        System.out.println("cantidad 2: "+ListaCables.size());
+
+
     }
+
 
 
 

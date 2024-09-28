@@ -24,7 +24,10 @@ public class Controller_Builder {
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
 
-    List<Node> Lista_cables = new ArrayList<>();
+    Cable cable;
+
+
+    List<Cable> Lista_cables = new ArrayList<>();
 
     double origenX = Main.origenX;
     double origenY = Main.origenY;
@@ -43,9 +46,7 @@ public class Controller_Builder {
     }
 
     private void agregarCables(Node elemento) {
-        Lista_cables.add(elemento);
-
-
+        Lista_cables.add((Cable) elemento);
     }
 
     private void seleccionar(Node elemento) {
@@ -63,7 +64,6 @@ public class Controller_Builder {
         cable.toFront();
         agregar(cable);
         agregarCables(cable);
-        cable.setListaCables(cable);
         System.out.println("cantidad de cables: " + Lista_cables.size());
 
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
@@ -73,6 +73,7 @@ public class Controller_Builder {
             if (elementos.get(i) instanceof Bateria) { //busca una bateria
                 cable.setBateria((Bateria) elementos.get(i)); //si lo encuentra se setea en el cable
             }
+
         }
 
     }
@@ -169,7 +170,8 @@ public class Controller_Builder {
         }
     }
 
-    public List<Node> getLista_de_cables() {
-        return this.Lista_cables;
+    public List<Cable> getLista_cables() {
+        return Lista_cables;
     }
+
 }
