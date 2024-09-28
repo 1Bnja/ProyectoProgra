@@ -225,11 +225,14 @@ public class LED extends Pane {
             } if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 !=1 && signoFin2 != -1){
                 curva.setFill(Color.RED);
                 bandera = true;
-            }
+            }  if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 ==2 || signoFin2 == 2){
+            curva.setFill(Color.RED);
+            bandera = true;
+        }
         } else {
             curva.setFill(Color.LIGHTBLUE);
         }
-        if(bandera){
+        if(bandera==true){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);

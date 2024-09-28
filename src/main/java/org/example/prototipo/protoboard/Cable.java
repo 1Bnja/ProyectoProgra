@@ -87,6 +87,7 @@ public class Cable extends Pane {
                     row =  ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
                     //
                     if(inicio.getSigno() != 0){ //si el inicio tiene carga
+
                         protoboard.getCelda1().alternarColumna(col,inicio.getSigno()); //se pinta la col del color del signo de inicio
                     }
                     else{ //si el signo de inicio es 0
