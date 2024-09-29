@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
     import javafx.scene.Group;
 import javafx.scene.shape.Polygon;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Prototipo_Protoboard extends Pane {
 
@@ -17,6 +19,9 @@ public class Prototipo_Protoboard extends Pane {
     Celdas celdas2;
     BusesAlimentacion bus1;
     BusesAlimentacion bus2;
+
+   public static List<LED> componentesConectados = new ArrayList<>();
+
     public Prototipo_Protoboard() {
         this.setPickOnBounds(false);
 
@@ -51,9 +56,9 @@ public class Prototipo_Protoboard extends Pane {
 
         nodo.getChildren().addAll(lineaGuia1, lineaGuia2, lineaGuia3, lineaGuia4);
 
-        celdas1 = new Celdas(origenX - 210, origenY - 190, new char[]{'j', 'i', 'h', 'g', 'f'}, false);
+        celdas1 = new Celdas(origenX - 210, origenY - 190, new char[]{'j', 'i', 'h', 'g', 'f'}, false, this);
         nodo.getChildren().add(celdas1);
-        celdas2 = new Celdas(origenX - 210, origenY + 30, new char[]{'e', 'd', 'c', 'b', 'a'}, true);
+        celdas2 = new Celdas(origenX - 210, origenY + 30, new char[]{'e', 'd', 'c', 'b', 'a'}, true, this);
         nodo.getChildren().add(celdas2);
         bus1 = new BusesAlimentacion(origenX - 190, origenY - 265, new char[]{'-', '+'});
         nodo.getChildren().add(bus1);
@@ -107,6 +112,16 @@ public class Prototipo_Protoboard extends Pane {
         fondo.getPoints().addAll(puntosConvertidos);
         fondo.setFill(color);
         return fondo;
+    }
+
+    public void agregarComponenteConectado(LED componente) {
+        componentesConectados.add(componente);
+    }
+
+    public static void notificarComponentesConectados() {
+        for (LED componente : componentesConectados) {
+            componente.checkFinConnections();
+        }
     }
 
     private boolean isCuadrado(int posX, int posY){

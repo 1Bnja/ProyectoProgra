@@ -20,8 +20,12 @@ public class Celdas extends Group {
     Bateria bateria = new Bateria();
     public Cuadrados cuadradoSeleccionado;
     public Cuadrados cuadradoSeleccionado2;
+    private Prototipo_Protoboard protoboard;
 
-    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
+    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
+
+        this.protoboard = protoboard;
+
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
@@ -113,6 +117,8 @@ public class Celdas extends Group {
             c.setSigno(signo);
             c.setFill(color);
         }
+
+        Prototipo_Protoboard.notificarComponentesConectados();
     }
 
 

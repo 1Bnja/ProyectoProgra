@@ -152,7 +152,8 @@ public class LED extends Pane {
         actualizarEstirable(fin2, pata2);
     }
 
-    private void checkFinConnections() {
+    // Cambiamos la visibilidad del método a público
+    public void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
         checkLedState();
