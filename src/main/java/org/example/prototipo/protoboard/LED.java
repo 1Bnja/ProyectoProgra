@@ -221,32 +221,38 @@ public class LED extends Pane {
     }
 
     private void checkLedState() {
-        boolean bandera= false;
+        boolean quemado = false;
+
+        // Si ambos terminales están conectados
         if (fin1Conectada && fin2Conectada) {
+            // Si ambos terminales tienen signos diferentes (1 y -1)
             if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
-                curva.setFill(Color.YELLOW);
-            } if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 == signoFin2){
-                curva.setFill(Color.RED);
-                bandera = true;
-            } if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 !=1 && signoFin2 != -1){
-                curva.setFill(Color.RED);
-                bandera = true;
-            }  if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 ==2 || signoFin2 == 2){
-            curva.setFill(Color.RED);
-            bandera = true;
-        }
+                curva.setFill(Color.YELLOW);  // LED encendido
+            } else {
+                curva.setFill(Color.LIGHTBLUE);  // LED apagado
+            }
+
+            // Verificar si el LED está en una configuración incorrecta (ejemplo, ambos terminales con el mismo signo)
+            if (signoFin1 == signoFin2 && signoFin1 != 0) {
+                quemado = true;  // LED quemado si ambos terminales tienen el mismo signo
+                curva.setFill(Color.RED);  // Color rojo para LED quemado
+            }
+
         } else {
-            curva.setFill(Color.LIGHTBLUE); // LED apagado
+            // Apagar el LED si alguno de los terminales no está conectado
+            curva.setFill(Color.LIGHTBLUE);  // LED apagado
         }
-        if(bandera==true){
+
+        // Mostrar una alerta si el LED está quemado
+        if (quemado) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
             alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
-
             alert.showAndWait();
         }
     }
+
 
     public Cuadrados getFin1() {
         return fin1;

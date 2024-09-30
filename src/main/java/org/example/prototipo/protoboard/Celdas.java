@@ -110,35 +110,23 @@ public class Celdas extends Group {
             color = Color.BLUE;
         } else if(signo == 1) {
             color = Color.RED;
-        } else {
+        } else {  // Apagado
             color = Color.WHITE;
         }
 
-
         for (Cuadrados c : columna) {
-            if(c.getSigno()==0 ) {
-                c.setSigno(signo);
-                c.setFill(color);
-            } else if (signo==3) {
-                System.out.println("Se apago");
+            if (signo == 0 || signo == 3) {  // Apagar columna
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("ALERTA");
-                alert.setHeaderText(null);
-                alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
-
-                alert.showAndWait();
-                c.setFill(Color.OLIVE);
-                c.setSigno(2);
+                c.setSigno(signo);
+                c.setFill(color);
             }
-
         }
 
+        // Notificar a los componentes conectados para verificar su estado
         Prototipo_Protoboard.notificarComponentesConectados();
     }
-
 
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);

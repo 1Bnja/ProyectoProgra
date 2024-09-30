@@ -76,11 +76,10 @@ public class Swich extends Pane {
             }
             encendido = !encendido; // Cambiar estado
 
-            // Llamar al método del LED para que actualice su estado
-            if (led != null) {
-                led.checkFinConnections();
-            }
+            // Notificar a los LEDs conectados para actualizar su estado
+            Prototipo_Protoboard.notificarComponentesConectados();
         });
+
 
         // Patas
         pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
