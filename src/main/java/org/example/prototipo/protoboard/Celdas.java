@@ -3,6 +3,7 @@ package org.example.prototipo.protoboard;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -20,8 +21,12 @@ public class Celdas extends Group {
     Bateria bateria = new Bateria();
     public Cuadrados cuadradoSeleccionado;
     public Cuadrados cuadradoSeleccionado2;
+    private Prototipo_Protoboard protoboard;
 
-    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior) {
+    public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
+
+        this.protoboard = protoboard;
+
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
@@ -105,22 +110,30 @@ public class Celdas extends Group {
             color = Color.BLUE;
         } else if(signo == 1) {
             color = Color.RED;
-        } else {
+        } else {  // Apagado
             color = Color.WHITE;
         }
 
         for (Cuadrados c : columna) {
-            c.setSigno(signo);
-            c.setFill(color);
+            if (signo == 0 || signo == 3) {  // Apagar columna
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else {
+                c.setSigno(signo);
+                c.setFill(color);
+            }
         }
-    }
 
+        // Notificar a los componentes conectados para verificar su estado
+        Prototipo_Protoboard.notificarComponentesConectados();
+    }
 
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
     }
+
 }
 
 

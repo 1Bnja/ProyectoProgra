@@ -3,6 +3,7 @@ package org.example.prototipo.protoboard;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,7 +33,10 @@ public class LED extends Pane {
     public LED() {
         // LED
         Line led1 = crearLinea(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
-        curva = crearCurva(origenX - 550, origenY - 150, origenX - 549.25, origenY - 200, origenX - 515.75, origenY - 200, origenX - 515, origenY - 150);
+        curva = crearCurva(origenX - 550, origenY - 150,
+                origenX - 549.25, origenY - 200,
+                origenX - 515.75, origenY - 200,
+                origenX - 515, origenY - 150);
         pata1 = crearLinea(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
         pata2 = crearLinea(origenX - 520, origenY - 150, origenX - 520, origenY - 135);
 
@@ -60,80 +64,27 @@ public class LED extends Pane {
         return linea;
     }
 
-    private CubicCurve crearCurva(double startX, double startY, double controlX1, double controlY1, double controlX2, double controlY2, double endX, double endY) {
-        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY);
+    private CubicCurve crearCurva(double startX, double startY,
+                                  double controlX1, double controlY1,
+                                  double controlX2, double controlY2,
+                                  double endX, double endY) {
+        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1,
+                controlX2, controlY2, endX, endY);
         curva.setStroke(Color.BLACK);
         curva.setFill(Color.LIGHTBLUE);
         return curva;
     }
 
-    private void empezarArrastre(MouseEvent event, Line pata) {
-        // Indicar que estamos arrastrando una línea
-        line_en_arrastre = true;
-        mouseX = event.getSceneX();
-        mouseY = event.getSceneY();
-    }
-
     private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
-            empezarArrastre(e, pata);
+            empezarArrastre(e);
             estirable.toFront();
         });
         estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
 
         estirable.setOnMouseReleased(event -> {
-
-            double mouseX = event.getSceneX();
-            double mouseY = event.getSceneY();
-            int signoCelda = 0;
-            boolean connected = false;
-
-            if (protoboard != null) {
-                Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
-                Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
-                Node bus_arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getBus1().getChildren().getFirst());
-                Node bus_abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getBus2().getChildren().getFirst());
-                int col = 0;
-                int row = 0;
-
-                if (arriba != null) {
-                    col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
-                    row = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
-                    signoCelda = protoboard.getCelda1().getSigno(row, col);
-                    connected = true;
-                } else if (abajo != null) {
-                    col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
-                    row = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
-                    signoCelda = protoboard.getCelda2().getSigno(row, col);
-                    connected = true;
-                } else if (bus_abajo != null) {
-                    row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
-                    col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo) - 1;
-                    signoCelda = protoboard.getBus2().getSigno(row, col);
-                    connected = true;
-                } else if (bus_arriba != null) {
-                    row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
-                    col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba) - 1;
-                    signoCelda = protoboard.getBus1().getSigno(row, col);
-                    connected = true;
-                } else {
-                    // No está conectado a ninguna celda
-                    signoCelda = 0;
-                    connected = false;
-                }
-
-                // Actualizar el estado de la pata correspondiente
-                if (estirable == fin1) {
-                    fin1Conectada = connected;
-                    signoFin1 = signoCelda;
-                } else if (estirable == fin2) {
-                    fin2Conectada = connected;
-                    signoFin2 = signoCelda;
-                }
-
-                // Verificar si el LED debe estar encendido
-                checkLedState();
-            }
+            updateFinConnection(estirable);
+            checkLedState();
         });
     }
 
@@ -158,24 +109,15 @@ public class LED extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
+                checkFinConnections(); // Verificar conexiones después de mover el nodo
             }
         });
     }
 
-    private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
-        for (Node child : gridPane.getChildren()) {
-            // Obtener los límites de la celda en coordenadas de la escena
-            Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
-
-            // Verificar si el mouse está dentro de los límites de la celda
-            if (boundsInScene.contains(mouseX, mouseY)) {
-                Integer row = GridPane.getRowIndex(child);
-                Integer col = GridPane.getColumnIndex(child);
-                System.out.println("El nodo está sobre la celda en fila: " + row + ", columna: " + col);
-                return child;
-            }
-        }
-        return null;
+    private void empezarArrastre(MouseEvent event) {
+        line_en_arrastre = true;
+        mouseX = event.getSceneX();
+        mouseY = event.getSceneY();
     }
 
     private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
@@ -194,34 +136,120 @@ public class LED extends Pane {
     }
 
     private Cuadrados crearEstirable(Line pata, Color color) {
-        Cuadrados esquina = new Cuadrados(11,2);
+        Cuadrados esquina = new Cuadrados(11, 2);
         esquina.setFill(color);
-        esquina.setX(pata.getEndX()-5);
-        esquina.setY(pata.getEndY()-5);
+        esquina.setX(pata.getEndX() - 5);
+        esquina.setY(pata.getEndY() - 5);
         return esquina;
     }
 
-    private void actualizarEstirable(Cuadrados esquina, Line pata){
-        esquina.setX(pata.getEndX()-5);
-        esquina.setY(pata.getEndY());
-        esquina.setX(pata.getEndX()-5);
-        esquina.setY(pata.getEndY());
+    private void actualizarEstirable(Cuadrados esquina, Line pata) {
+        esquina.setX(pata.getEndX() - 5);
+        esquina.setY(pata.getEndY() - 5);
     }
 
-    private void actualizarPosiciones(){
+    private void actualizarPosiciones() {
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
     }
 
-    private void checkLedState() {
-        if (fin1Conectada && fin2Conectada) {
-            if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
-                curva.setFill(Color.YELLOW);
-            } else {
-                curva.setFill(Color.LIGHTBLUE);
+    // Cambiamos la visibilidad del método a público
+    public void checkFinConnections() {
+        updateFinConnection(fin1);
+        updateFinConnection(fin2);
+        checkLedState();
+    }
+
+    private void updateFinConnection(Cuadrados estirable) {
+        double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
+        double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
+
+        int signoCelda = 0;
+        boolean connected = false;
+
+        if (protoboard != null) {
+            Node celdaEncontrada = null;
+            GridPane[] gridPanes = {
+                    (GridPane) protoboard.getCelda1().getChildren().get(0),
+                    (GridPane) protoboard.getCelda2().getChildren().get(0),
+                    (GridPane) protoboard.getBus1().getChildren().get(0),
+                    (GridPane) protoboard.getBus2().getChildren().get(0)
+            };
+
+            for (GridPane gridPane : gridPanes) {
+                celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
+                if (celdaEncontrada != null) {
+                    int col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    int row = GridPane.getRowIndex(celdaEncontrada);
+
+                    if (gridPane == gridPanes[0]) {
+                        signoCelda = protoboard.getCelda1().getSigno(row, col);
+                    } else if (gridPane == gridPanes[1]) {
+                        signoCelda = protoboard.getCelda2().getSigno(row, col);
+                    } else if (gridPane == gridPanes[2]) {
+                        signoCelda = protoboard.getBus1().getSigno(row, col);
+                    } else if (gridPane == gridPanes[3]) {
+                        signoCelda = protoboard.getBus2().getSigno(row, col);
+                    }
+                    connected = true;
+                    break;
+                }
             }
+
+            if (!connected) {
+                signoCelda = 0;
+            }
+
+            if (estirable == fin1) {
+                fin1Conectada = connected;
+                signoFin1 = signoCelda;
+            } else if (estirable == fin2) {
+                fin2Conectada = connected;
+                signoFin2 = signoCelda;
+            }
+        }
+    }
+
+    private Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
+            if (boundsInScene.contains(x, y)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    private void checkLedState() {
+        boolean quemado = false;
+
+        // Si ambos terminales están conectados
+        if (fin1Conectada && fin2Conectada) {
+            // Si ambos terminales tienen signos diferentes (1 y -1)
+            if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
+                curva.setFill(Color.YELLOW);  // LED encendido
+            } else {
+                curva.setFill(Color.LIGHTBLUE);  // LED apagado
+            }
+
+            // Verificar si el LED está en una configuración incorrecta (ejemplo, ambos terminales con el mismo signo)
+            if (signoFin1 == signoFin2 && signoFin1 != 0) {
+                quemado = true;  // LED quemado si ambos terminales tienen el mismo signo
+                curva.setFill(Color.RED);  // Color rojo para LED quemado
+            }
+
         } else {
-            curva.setFill(Color.LIGHTBLUE);
+            // Apagar el LED si alguno de los terminales no está conectado
+            curva.setFill(Color.LIGHTBLUE);  // LED apagado
+        }
+
+        // Mostrar una alerta si el LED está quemado
+        if (quemado) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
+            alert.showAndWait();
         }
     }
 
@@ -242,5 +270,3 @@ public class LED extends Pane {
         this.protoboard = protoboard;
     }
 }
-
-
