@@ -60,9 +60,9 @@ public class Swich extends Pane {
             if (encendido) {
                 // Apagar el switch
                 if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(columnaSalida, 0); // Cortar energía
+                    protoboard.getCelda1().alternarColumna(columnaSalida, 3); // Cortar energía
                 } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(columnaSalida, 0);
+                    protoboard.getCelda2().alternarColumna(columnaSalida, 3);
                 }
                 cuadradoInterno.setFill(Color.BLACK); // Cambiar color a apagado
             } else {
