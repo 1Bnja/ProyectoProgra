@@ -145,4 +145,7 @@ public class Prototipo_Protoboard extends Pane {
     public BusesAlimentacion getBus2() {
         return bus2;
     }
+
+
+
 }

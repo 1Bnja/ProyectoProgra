@@ -10,22 +10,26 @@ import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Controller_Builder {
 
     @FXML
     private AnchorPane Anchor_PanelFondo;
 
     @FXML
-    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto;
+    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Motor, Boton_Resistencia;
 
-    @FXML
-    private Label Lebel_Agregar;
 
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
 
+
+
+
+
     double origenX = Main.origenX;
     double origenY = Main.origenY;
+
 
     private void agregar(Node elemento) {
         elementos.add(elemento);
@@ -38,6 +42,7 @@ public class Controller_Builder {
         Anchor_PanelFondo.getChildren().add(elemento);
         elemento.toBack();
     }
+
 
     private void seleccionar(Node elemento) {
         elemento.setOnMouseClicked(mouseEvent -> {
@@ -54,6 +59,7 @@ public class Controller_Builder {
         cable.toFront();
         agregar(cable);
 
+
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
             if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
                 cable.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el cable
@@ -61,6 +67,7 @@ public class Controller_Builder {
             if (elementos.get(i) instanceof Bateria) { //busca una bateria
                 cable.setBateria((Bateria) elementos.get(i)); //si lo encuentra se setea en el cable
             }
+
         }
 
     }
@@ -79,6 +86,32 @@ public class Controller_Builder {
                 led.setProtoboard(protoboard);
                 protoboard.agregarComponenteConectado(led);
                 break;
+            }
+        }
+    }
+
+    @FXML
+    void Click_resistencia(ActionEvent event) {
+        System.out.println("Se ha agregado una resistencia");
+        //LED led = new LED(); //clase resistencia con new resistencia
+        //led.toFront(); //front a resistencia
+        //agregar(led); //agregar resistencia a la lista
+        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
+                //led.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en resistencia
+            }
+        }
+    }
+
+    @FXML
+    void Click_Motor(ActionEvent event) {
+        System.out.println("Se ha agregado un motor");
+        //LED led = new LED();
+        //led.toFront();
+        //agregar(led);
+        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
+                //led.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el led
             }
         }
     }
@@ -157,4 +190,7 @@ public class Controller_Builder {
             elemento_seleccionado = null;
         }
     }
+
+
+
 }

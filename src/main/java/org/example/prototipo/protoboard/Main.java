@@ -10,10 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
+import java.awt.*;
 import java.io.IOException;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.ScrollPane;
 
 
 public class Main extends Application {
@@ -33,7 +36,10 @@ public class Main extends Application {
         Pane fondo= new Pane();
         fondo.getChildren().add(fxmlContent);
 
-        Scene scene = new Scene(fondo,1280, 840);
+      ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(fondo);
+
+        Scene scene = new Scene(scrollPane,1280, 840);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Prototipo Proyecto");

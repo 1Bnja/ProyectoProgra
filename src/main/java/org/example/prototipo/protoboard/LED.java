@@ -3,6 +3,7 @@ package org.example.prototipo.protoboard;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -220,14 +221,30 @@ public class LED extends Pane {
     }
 
     private void checkLedState() {
+        boolean bandera= false;
         if (fin1Conectada && fin2Conectada) {
             if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
-                curva.setFill(Color.YELLOW); // LED encendido
-            } else {
-                curva.setFill(Color.LIGHTBLUE); // LED apagado
-            }
+                curva.setFill(Color.YELLOW);
+            } if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 == signoFin2){
+                curva.setFill(Color.RED);
+                bandera = true;
+            } if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 !=1 && signoFin2 != -1){
+                curva.setFill(Color.RED);
+                bandera = true;
+            }  if(signoFin1 != 0 && signoFin2 != 0 && signoFin1 ==2 || signoFin2 == 2){
+            curva.setFill(Color.RED);
+            bandera = true;
+        }
         } else {
             curva.setFill(Color.LIGHTBLUE); // LED apagado
+        }
+        if(bandera==true){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
+
+            alert.showAndWait();
         }
     }
 
