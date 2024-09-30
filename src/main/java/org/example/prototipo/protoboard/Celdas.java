@@ -116,9 +116,13 @@ public class Celdas extends Group {
 
 
         for (Cuadrados c : columna) {
-            if(c.getSigno()==0){
+            if(c.getSigno()==0 ) {
                 c.setSigno(signo);
                 c.setFill(color);
+            } else if (signo==3) {
+                System.out.println("Se apago");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("ALERTA");
