@@ -1,20 +1,18 @@
 package org.example.prototipo.protoboard;
 
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
-
 
 public class Swich extends Pane {
 
     private Group nodo = new Group();
-
 
     private Cuadrados fin1, fin2, fin3, fin4;
     private Line pata1, pata2, pata3, pata4;
@@ -24,14 +22,13 @@ public class Swich extends Pane {
     private double mouseY;
     private boolean line_en_arrastre = false;
 
-
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
     Prototipo_Protoboard protoboard;
     LED led;
     int celda;
-    int colum_1,colum_2;
+    int colum_1, colum_2;
 
     boolean encendido;
 
@@ -40,9 +37,9 @@ public class Swich extends Pane {
 
     public Swich() {
         double achicar = 0.7;
-        double achicar2= 0.5;
+        double achicar2 = 0.5;
         int tamanioCuadradoInterno = (int) (37 * achicar2); // Tamaño del cuadrado interno
-       this.encendido = false;
+        this.encendido = false;
 
         // Cuadrado exterior usando líneas
         Line lineaSuperiorCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 100 * achicar);
@@ -78,10 +75,15 @@ public class Swich extends Pane {
                 cuadradoInterno.setFill(Color.YELLOW); // Cambiar color a encendido
             }
             encendido = !encendido; // Cambiar estado
+
+            // Llamar al método del LED para que actualice su estado
+            if (led != null) {
+                led.checkFinConnections();
+            }
         });
 
         // Patas
-        pata1 = crearLinea(origenX - 505 *achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
+        pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
         pata2 = crearLinea(origenX - 555 * achicar, origenY - 100 * achicar, origenX - 555 * achicar, origenY - 107.5 * achicar);
         pata3 = crearLinea(origenX - 505 * achicar, origenY - 40 * achicar, origenX - 505 * achicar, origenY - 32.5 * achicar);
         pata4 = crearLinea(origenX - 555 * achicar, origenY - 40 * achicar, origenX - 555 * achicar, origenY - 32.5 * achicar);
@@ -96,9 +98,9 @@ public class Swich extends Pane {
         fin4 = Esquina_Estirable(pata4);
 
         configurarArrastre(fin1, pata1, 2);
-        configurarArrastre(fin2, pata2,1);
-        configurarArrastre(fin3, pata3,2);
-        configurarArrastre(fin4, pata4,1);
+        configurarArrastre(fin2, pata2, 1);
+        configurarArrastre(fin3, pata3, 2);
+        configurarArrastre(fin4, pata4, 1);
 
         // Mover el nodo completo
         configurarArrastreNodo();
@@ -133,9 +135,9 @@ public class Swich extends Pane {
     }
 
     private Cuadrados Esquina_Estirable(Line pata) {
-        Cuadrados point = new Cuadrados(11,2);
-        point.setX(pata.getEndX()-5);
-        point.setY(pata.getEndY()-5);
+        Cuadrados point = new Cuadrados(11, 2);
+        point.setX(pata.getEndX() - 5);
+        point.setY(pata.getEndY() - 5);
         point.setFill(Color.RED);
         return point;
     }
@@ -232,8 +234,6 @@ public class Swich extends Pane {
                 actualizarPosiciones();
             }
         });
-
-
     }
 
     private void empezarArrastre(MouseEvent event, Line pata) {
@@ -259,12 +259,10 @@ public class Swich extends Pane {
 
     private void actualizarEstirable(Cuadrados estirable, Line pata) {
         estirable.setX(pata.getEndX() - 5);
-        estirable.setY(pata.getEndY());
-        estirable.setX(pata.getEndX() -5);
-        estirable.setY(pata.getEndY());
+        estirable.setY(pata.getEndY() - 5);
     }
 
-    private void actualizarPosiciones(){
+    private void actualizarPosiciones() {
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
         actualizarEstirable(fin3, pata3);
@@ -278,6 +276,7 @@ public class Swich extends Pane {
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }
+
     public LED getLed() {
         return led;
     }
@@ -293,11 +292,12 @@ public class Swich extends Pane {
     public Cuadrados getFin2() {
         return fin2;
     }
+
     public Cuadrados getFin3() {
-        return fin1;
+        return fin3;
     }
 
     public Cuadrados getFin4() {
-        return fin2;
+        return fin4;
     }
 }
