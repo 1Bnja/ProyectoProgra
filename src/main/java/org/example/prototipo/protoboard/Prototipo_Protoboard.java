@@ -8,6 +8,7 @@ import javafx.scene.shape.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Prototipo_Protoboard extends Pane {
 
     private Group nodo = new Group();
@@ -84,6 +85,7 @@ public class Prototipo_Protoboard extends Pane {
         this.getChildren().add(nodo);
     }
 
+
     private Line crearLinea(double startX, double startY, double endX, double endY, Color color) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(color);
@@ -143,4 +145,7 @@ public class Prototipo_Protoboard extends Pane {
     public BusesAlimentacion getBus2() {
         return bus2;
     }
+
+
+
 }

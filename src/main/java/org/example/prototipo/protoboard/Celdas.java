@@ -3,6 +3,7 @@ package org.example.prototipo.protoboard;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -113,9 +114,26 @@ public class Celdas extends Group {
             color = Color.WHITE;
         }
 
+
         for (Cuadrados c : columna) {
-            c.setSigno(signo);
-            c.setFill(color);
+            if(c.getSigno()==0 ) {
+                c.setSigno(signo);
+                c.setFill(color);
+            } else if (signo==3) {
+                System.out.println("Se apago");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ALERTA");
+                alert.setHeaderText(null);
+                alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+
+                alert.showAndWait();
+                c.setFill(Color.OLIVE);
+                c.setSigno(2);
+            }
+
         }
 
         Prototipo_Protoboard.notificarComponentesConectados();
@@ -127,6 +145,7 @@ public class Celdas extends Group {
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
     }
+
 }
 
 
