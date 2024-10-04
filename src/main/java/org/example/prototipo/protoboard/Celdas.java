@@ -115,13 +115,24 @@ public class Celdas extends Group {
         }
 
         for (Cuadrados c : columna) {
-            if (signo == 0 || signo == 3) {  // Apagar columna
+            if(c.getSigno()==0 ) {
+                c.setSigno(signo);
+                c.setFill(color);
+            } else if (signo==3) {
+                System.out.println("Se apago");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else {
-                c.setSigno(signo);
-                c.setFill(color);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ALERTA");
+                alert.setHeaderText(null);
+                alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+
+                alert.showAndWait();
+                c.setFill(Color.OLIVE);
+                c.setSigno(2);
             }
+
         }
 
         // Notificar a los componentes conectados para verificar su estado
