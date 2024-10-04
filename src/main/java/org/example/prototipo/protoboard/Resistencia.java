@@ -186,6 +186,7 @@ public class Resistencia extends Pane {
 
         estirable.setOnMouseReleased(event -> {
             updateFinConnection(estirable);
+            checkResistorState();
         });
     }
 
@@ -212,6 +213,7 @@ public class Resistencia extends Pane {
 
                 actualizarPosiciones();
                 checkFinConnections();
+
             }
         });
     }
@@ -224,6 +226,26 @@ public class Resistencia extends Pane {
     public void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
+        checkResistorState();
+    }
+
+    // Estado de Resistencia
+    public void checkResistorState() {
+        boolean quemado = false;
+
+        if (signoFin1 == signoFin2 && signoFin1 != 0) {
+            quemado = true;
+            fondo.setFill(Color.RED);
+            franja1.setStroke(Color.RED);
+        }
+
+        if (quemado) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! LA RESISTENCIA SE QUEMÓ AAAAAAAA");
+            alert.showAndWait();
+        }
     }
 
     public Prototipo_Protoboard getProtoboard() {
