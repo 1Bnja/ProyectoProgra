@@ -91,14 +91,14 @@ public class Controller_Builder {
     }
 
     @FXML
-    void Click_resistencia(ActionEvent event) {
+    void Click_Resistencia(ActionEvent event) {
         System.out.println("Se ha agregado una resistencia");
-        //LED led = new LED(); //clase resistencia con new resistencia
-        //led.toFront(); //front a resistencia
-        //agregar(led); //agregar resistencia a la lista
+        Resistencia resistencia = new Resistencia();
+        resistencia.toFront();
+        agregar(resistencia);
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
             if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
-                //led.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en resistencia
+                resistencia.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en resistencia
             }
         }
     }

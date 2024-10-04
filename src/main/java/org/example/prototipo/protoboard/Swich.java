@@ -89,8 +89,6 @@ public class Swich extends Pane {
 
         // Fondo del cuadrado exterior
         Polygon fondoCuadradoE = crearFondo(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
-        Polygon fondoCuadradoI = crearFondo(origenX - 510 * achicar, origenY - 90 * achicar, origenX - 550 * achicar, origenY - 50 * achicar, Color.BLACK);
-
         fin1 = Esquina_Estirable(pata1);
         fin2 = Esquina_Estirable(pata2);
         fin3 = Esquina_Estirable(pata3);

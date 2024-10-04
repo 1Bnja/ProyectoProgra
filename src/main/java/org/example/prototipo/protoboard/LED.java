@@ -109,7 +109,7 @@ public class LED extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                checkFinConnections(); // Verificar conexiones después de mover el nodo
+                checkFinConnections();
             }
         });
     }
@@ -153,7 +153,6 @@ public class LED extends Pane {
         actualizarEstirable(fin2, pata2);
     }
 
-    // Cambiamos la visibilidad del método a público
     public void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
