@@ -17,7 +17,7 @@ public class Controller_Builder {
     private AnchorPane Anchor_PanelFondo;
 
     @FXML
-    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Motor, Boton_Resistencia;
+    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Motor, Boton_Resistencia, Boton_Chip;
 
 
     private List<Node> elementos = new ArrayList<>();
@@ -70,6 +70,15 @@ public class Controller_Builder {
 
         }
 
+    }
+
+    @FXML
+    void Click_Chip(ActionEvent event) {
+        System.out.println("Se ha agregado un chip");
+
+        Chip chip= new Chip();
+        chip.toFront();
+        agregar(chip);
     }
 
     @FXML
