@@ -109,8 +109,14 @@ public class LED extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                checkFinConnections();
+                // Desactivar chequeo en movimiento
+                // checkFinConnections();
             }
+        });
+
+        // Solo actualiza y verifica las conexiones cuando se suelta el nodo
+        nodo.setOnMouseReleased(e -> {
+            checkFinConnections();
         });
     }
 
@@ -251,7 +257,6 @@ public class LED extends Pane {
             alert.showAndWait();
         }
     }
-
 
     public Cuadrados getFin1() {
         return fin1;

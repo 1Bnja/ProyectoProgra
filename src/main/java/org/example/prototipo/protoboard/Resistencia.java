@@ -60,7 +60,6 @@ public class Resistencia extends Pane {
 
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
-
     }
 
     // Dibujo
@@ -190,7 +189,7 @@ public class Resistencia extends Pane {
         });
     }
 
-    //Arrastre Nodo
+    // Arrastre Nodo
     private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
@@ -212,9 +211,14 @@ public class Resistencia extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                checkFinConnections();
-
+                // Desactivar chequeo en movimiento
+                // checkFinConnections();
             }
+        });
+
+        // Solo actualiza y verifica las conexiones cuando se suelta el nodo
+        nodo.setOnMouseReleased(e -> {
+            checkFinConnections();
         });
     }
 

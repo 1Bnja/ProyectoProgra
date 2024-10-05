@@ -22,11 +22,7 @@ public class Cable extends Pane {
     Swich boton;
     Prototipo_Protoboard protoboard;
 
-
-
     public Cable(double startX, double startY, double endX, double endY) {
-
-
 
         line = new Line(startX, startY, endX, endY);
         line.setStroke(Color.GREENYELLOW);
