@@ -38,7 +38,7 @@ public class Swich extends Pane {
     public Swich() {
         double achicar = 0.7;
         double achicar2 = 0.5;
-        int tamanioCuadradoInterno = (int) (37 * achicar2); // Tamaño del cuadrado interno
+        int tamanioCuadradoInterno = (int) (37 * achicar2);
         this.encendido = false;
 
         // Cuadrado exterior usando líneas
@@ -51,19 +51,19 @@ public class Swich extends Pane {
         Cuadrados cuadradoInterno = new Cuadrados(tamanioCuadradoInterno, 0);
         cuadradoInterno.setTranslateX(origenX - 543 * achicar);
         cuadradoInterno.setTranslateY(origenY - 84 * achicar);
-        cuadradoInterno.setFill(Color.BLACK); // Configurar el color del cuadrado
+        cuadradoInterno.setFill(Color.BLACK);
 
         cuadradoInterno.setOnMouseClicked(event -> {
             if (encendido) {
-                // Apagar el switch
+
                 if (celda == 1) {
                     protoboard.getCelda1().alternarColumna(columnaSalida, 3); // Cortar energía
                 } else if (celda == 2) {
                     protoboard.getCelda2().alternarColumna(columnaSalida, 3);
                 }
-                cuadradoInterno.setFill(Color.BLACK); // Cambiar color a apagado
+                cuadradoInterno.setFill(Color.BLACK);
             } else {
-                // Encender el switch
+
                 int signoEntrada;
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
@@ -76,10 +76,9 @@ public class Swich extends Pane {
             }
             encendido = !encendido; // Cambiar estado
 
-            // Notificar a los LEDs conectados para actualizar su estado
+
             Prototipo_Protoboard.notificarComponentesConectados();
         });
-
 
         // Patas
         pata1 = crearLinea(origenX - 495 * achicar, origenY - 100 * achicar, origenX - 496 * achicar, origenY - 110 * achicar);
@@ -147,57 +146,61 @@ public class Swich extends Pane {
         estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
 
         estirable.setOnMouseReleased(event -> {
-            double mouseX = event.getSceneX();
-            double mouseY = event.getSceneY();
-            if (protoboard != null) {
-                Node celdaEncontrada = null;
-                int col = 0;
-                int row = 0;
-                int signoCelda = 0;
+            verificarConexionPata(estirable, pata, lado);
+        });
+    }
 
-                // Verificar si está sobre celda1
-                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
+    private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
+        double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
+        double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
+
+        if (protoboard != null) {
+            Node celdaEncontrada = null;
+            int col = 0;
+            int row = 0;
+            int signoCelda = 0;
+
+            // Verificar si está sobre celda1
+            celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
+            if (celdaEncontrada != null) {
+                col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                row = GridPane.getRowIndex(celdaEncontrada);
+                signoCelda = protoboard.getCelda1().getSigno(row, col);
+                celda = 1;
+            } else {
+                // Verificar si está sobre celda2
+                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
                 if (celdaEncontrada != null) {
                     col = GridPane.getColumnIndex(celdaEncontrada) - 1;
                     row = GridPane.getRowIndex(celdaEncontrada) - 1;
-                    signoCelda = protoboard.getCelda1().getSigno(row, col);
-                    celda = 1;
+                    signoCelda = protoboard.getCelda2().getSigno(row, col);
+                    celda = 2;
                 } else {
-                    // Verificar si está sobre celda2
-                    celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
-                    if (celdaEncontrada != null) {
-                        col = GridPane.getColumnIndex(celdaEncontrada) - 1;
-                        row = GridPane.getRowIndex(celdaEncontrada) - 1;
-                        signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        celda = 2;
-                    } else {
-                        // No está conectado a ninguna celda
-                        estirable.setSigno(0);
-                        return;
-                    }
-                }
-
-                estirable.setSigno(signoCelda);
-
-                if (lado == 1) {
-                    // Pata de entrada
-                    filaEntrada = row;
-                    columnaEntrada = col;
-                } else if (lado == 2) {
-                    // Pata de salida
-                    filaSalida = row;
-                    columnaSalida = col;
+                    // No está conectado a ninguna celda
+                    estirable.setSigno(0);
+                    return;
                 }
             }
-        });
+
+            estirable.setSigno(signoCelda);
+
+            if (lado == 1) {
+
+                filaEntrada = row;
+                columnaEntrada = col;
+            } else if (lado == 2) {
+
+                filaSalida = row;
+                columnaSalida = col;
+            }
+        }
     }
 
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
-            // Obtener los límites de la celda en coordenadas de la escena
+
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
 
-            // Verificar si el mouse está dentro de los límites de la celda
             if (boundsInScene.contains(mouseX, mouseY)) {
                 Integer row = GridPane.getRowIndex(child);
                 Integer col = GridPane.getColumnIndex(child);
@@ -230,6 +233,10 @@ public class Swich extends Pane {
 
                 actualizarPosiciones();
             }
+        });
+
+        nodo.setOnMouseReleased(event -> {
+            actualizarConexionesPatas();
         });
     }
 
@@ -266,6 +273,13 @@ public class Swich extends Pane {
         actualizarEstirable(fin4, pata4);
     }
 
+    private void actualizarConexionesPatas() {
+        verificarConexionPata(fin1, pata1, 2);
+        verificarConexionPata(fin2, pata2, 1);
+        verificarConexionPata(fin3, pata3, 2);
+        verificarConexionPata(fin4, pata4, 1);
+    }
+
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }
@@ -298,3 +312,4 @@ public class Swich extends Pane {
         return fin4;
     }
 }
+

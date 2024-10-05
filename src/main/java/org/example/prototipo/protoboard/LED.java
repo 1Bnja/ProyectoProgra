@@ -255,7 +255,7 @@ public class LED extends Pane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("ALERTA");
         alert.setHeaderText(null);
-        alert.setContentText("¡Oh no! El LED se ha quemado.");
+        alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
 
         alert.showAndWait();
     }
