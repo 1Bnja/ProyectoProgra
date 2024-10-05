@@ -21,9 +21,8 @@ public class BusesAlimentacion extends Group {
         buses = new ArrayList<>();
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(espacioCeldas);
+        gridPane.setHgap(15);
         gridPane.setVgap(espacioCeldas);
-
 
         for (int j = 0; j < simbolos.length; j++) {
             Text simboloIzquierda = new Text(String.valueOf(simbolos[j]));
@@ -35,7 +34,7 @@ public class BusesAlimentacion extends Group {
             Text simboloDerecha = new Text(String.valueOf(simbolos[j]));
             simboloDerecha.setStroke(Color.BLACK);
             simboloDerecha.setRotate(270);
-            GridPane.setConstraints(simboloDerecha, 34, j);
+            GridPane.setConstraints(simboloDerecha, 26, j);
             gridPane.getChildren().add(simboloDerecha);
         }
 
@@ -45,18 +44,13 @@ public class BusesAlimentacion extends Group {
             int columnaIndex = 1;
 
             for (int i = 0; i < 25; i++) {
-                if (i > 0 && i % 5 == 0) {
-                    columnaIndex += espacioExtra;
-                }
 
-                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
 
-                int finalJ = j;
-                //cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
-
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
+                cuadrado.setTranslateX(-10);
                 gridPane.getChildren().add(cuadrado);
 
                 filaBus.add(cuadrado);

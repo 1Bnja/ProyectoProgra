@@ -27,7 +27,6 @@ public class Celdas extends Group {
 
         this.protoboard = protoboard;
 
-        double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
 
