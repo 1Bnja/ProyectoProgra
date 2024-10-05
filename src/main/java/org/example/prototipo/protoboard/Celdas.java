@@ -117,21 +117,12 @@ public class Celdas extends Group {
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else {
-<<<<<<< HEAD
-                bandera = true;
-=======
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("ALERTA");
-                alert.setHeaderText(null);
-                alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
 
-                alert.showAndWait();
->>>>>>> Benjamin
+                bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
             }
 
-<<<<<<< HEAD
         }
         if(bandera==true) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -140,8 +131,7 @@ public class Celdas extends Group {
             alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
 
             alert.showAndWait();
-=======
->>>>>>> Benjamin
+
         }
 
         Prototipo_Protoboard.notificarComponentesConectados();
