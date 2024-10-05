@@ -75,7 +75,7 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_resistencia" prefHeight="40.0" prefWidth="114.0" text="RESISTENCIA">
+            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_Resistencia" prefHeight="40.0" prefWidth="114.0" text="RESISTENCIA">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
