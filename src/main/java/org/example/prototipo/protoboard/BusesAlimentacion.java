@@ -1,6 +1,7 @@
 package org.example.prototipo.protoboard;
 
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -48,6 +49,7 @@ public class BusesAlimentacion extends Group {
                 Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
+                cuadrado.setSigno(0);
 
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
                 cuadrado.setTranslateX(-10);
@@ -68,24 +70,55 @@ public class BusesAlimentacion extends Group {
 
     public void toggleFilaBus(int filaIndex, int signo) {
         List<Cuadrados> filaBus = buses.get(filaIndex);
-        Color colorEncendido = Color.WHITE;
+        Color color;
 
-        if(signo ==-1){
-            colorEncendido = Color.BLUE;
-        } else if(signo == 1){
-            colorEncendido = Color.RED;
-        } else if (signo==0) {
-            colorEncendido = Color.WHITE;
+        if (signo == -1) {
+            color = Color.BLUE;
+        } else if (signo == 1) {
+            color = Color.RED;
+        } else {
+            color = Color.WHITE;
         }
 
+        boolean bandera = false;
 
-        for (Cuadrados cuadrado : filaBus) {
-                cuadrado.setSigno(signo); //se setea el signo
-                cuadrado.setFill(colorEncendido);  // Encender
+        for (Cuadrados c : filaBus) {
+            if (c.getSigno() == 0) {
+                c.setSigno(signo);
+                c.setFill(color);
+            } else if (signo == 3) {
+                System.out.println("Se apago");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else if (signo == 0) {
+                System.out.println("Se apago la columna");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+
+            } else if (c.getSigno()==signo) {
+                c.setFill(color);
+                c.setSigno(signo);
+            }
+            else {
+
+                bandera = true;
+                c.setFill(Color.OLIVE);
+                c.setSigno(2);
+            }
 
         }
+        if (bandera == true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+
+            alert.showAndWait();
+
+        }
+
+        Prototipo_Protoboard.notificarComponentesConectados();
     }
-
     public int getSigno(int fila, int col){
         System.out.println(col+ "| " +fila);
         List<Cuadrados> columna = buses.get(fila);

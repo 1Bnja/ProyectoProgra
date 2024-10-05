@@ -116,6 +116,14 @@ public class Celdas extends Group {
                 System.out.println("Se apago");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
+            } else if (signo==0) {
+                System.out.println("Se apago la columna");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else if (c.getSigno() == signo) {
+                c.setSigno(signo);
+                c.setFill(color);
+
             } else {
 
                 bandera = true;
