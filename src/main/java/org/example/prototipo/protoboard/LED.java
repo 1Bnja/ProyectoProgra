@@ -226,36 +226,26 @@ public class LED extends Pane {
     }
 
     private void checkLedState() {
-        boolean quemado = false;
-
-        // Si ambos terminales están conectados
+        boolean bandera= false;
         if (fin1Conectada && fin2Conectada) {
-            // Si ambos terminales tienen signos diferentes (1 y -1)
-            if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
-                curva.setFill(Color.YELLOW);  // LED encendido
-            } else {
-                curva.setFill(Color.LIGHTBLUE);  // LED apagado
-            }
-
-            // Verificar si el LED está en una configuración incorrecta (ejemplo, ambos terminales con el mismo signo)
-            if (signoFin1 == signoFin2 && signoFin1 != 0) {
-                quemado = true;  // LED quemado si ambos terminales tienen el mismo signo
-                curva.setFill(Color.RED);  // Color rojo para LED quemado
-            }
-
+            if(signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()){
+                curva.setFill(Color.YELLOW);
+            } else{ curva.setFill(Color.RED); bandera = true;}
         } else {
-            // Apagar el LED si alguno de los terminales no está conectado
-            curva.setFill(Color.LIGHTBLUE);  // LED apagado
+            curva.setFill(Color.LIGHTBLUE);
         }
 
-        // Mostrar una alerta si el LED está quemado
-        if (quemado) {
+
+        if(bandera==true){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
             alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
+
             alert.showAndWait();
+
         }
+
     }
 
     public Cuadrados getFin1() {

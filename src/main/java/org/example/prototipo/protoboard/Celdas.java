@@ -102,9 +102,11 @@ public class Celdas extends Group {
             color = Color.BLUE;
         } else if(signo == 1) {
             color = Color.RED;
-        } else {  // Apagado
+        } else {
             color = Color.WHITE;
         }
+
+        boolean bandera= false;
 
         for (Cuadrados c : columna) {
             if(c.getSigno()==0 ) {
@@ -115,15 +117,20 @@ public class Celdas extends Group {
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("ALERTA");
-                alert.setHeaderText(null);
-                alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
 
-                alert.showAndWait();
+                bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
             }
+
+        }
+        if(bandera==true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+
+            alert.showAndWait();
 
         }
 
