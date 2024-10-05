@@ -82,10 +82,10 @@ public class Swich extends Pane {
 
 
         // Patas
-        pata1 = crearLinea(origenX - 505 * achicar, origenY - 100 * achicar, origenX - 505 * achicar, origenY - 107.5 * achicar);
-        pata2 = crearLinea(origenX - 555 * achicar, origenY - 100 * achicar, origenX - 555 * achicar, origenY - 107.5 * achicar);
-        pata3 = crearLinea(origenX - 505 * achicar, origenY - 40 * achicar, origenX - 505 * achicar, origenY - 32.5 * achicar);
-        pata4 = crearLinea(origenX - 555 * achicar, origenY - 40 * achicar, origenX - 555 * achicar, origenY - 32.5 * achicar);
+        pata1 = crearLinea(origenX - 495 * achicar, origenY - 100 * achicar, origenX - 496 * achicar, origenY - 110 * achicar);
+        pata2 = crearLinea(origenX - 565 * achicar, origenY - 100 * achicar, origenX - 564 * achicar, origenY - 110 * achicar);
+        pata3 = crearLinea(origenX - 495 * achicar, origenY - 40 * achicar, origenX - 496 * achicar, origenY - 32.5 * achicar);
+        pata4 = crearLinea(origenX - 565 * achicar, origenY - 40 * achicar, origenX - 564 * achicar, origenY - 32.5 * achicar);
 
         // Fondo del cuadrado exterior
         Polygon fondoCuadradoE = crearFondo(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
