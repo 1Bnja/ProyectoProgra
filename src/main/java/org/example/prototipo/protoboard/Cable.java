@@ -22,11 +22,7 @@ public class Cable extends Pane {
     Swich boton;
     Prototipo_Protoboard protoboard;
 
-
-
     public Cable(double startX, double startY, double endX, double endY) {
-
-
 
         line = new Line(startX, startY, endX, endY);
         line.setStroke(Color.GREENYELLOW);
@@ -113,11 +109,11 @@ public class Cable extends Pane {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
                     col = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getColumnIndex(bus_abajo)-1;
                     if(inicio.getSigno() != 0){ //si el inicio tiene carga
-                        protoboard.getBus2().setSigno(row,col,inicio.getSigno()); //se coloca el  signo de inicio
                         protoboard.getBus2().toggleFilaBus(row,inicio.getSigno() );   //se pinta la col del color del signo de inicio
                     }
                     else{ //si el signo de inicio es 0
                         setSignoColor(row,col,protoboard.getBus2().getSigno(row,col)); //se coloca el signo y se pinta
+
                     }
                     inicio.setLugar(3);
                     inicio.setFila(row);
@@ -128,7 +124,6 @@ public class Cable extends Pane {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
                     col = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getColumnIndex(bus_arriba)-1;
                     if(inicio.getSigno() != 0){ //si el inicio tiene carga
-                        protoboard.getBus1().setSigno(row,col,inicio.getSigno()); //se coloca el  signo de inicio
                         protoboard.getBus1().toggleFilaBus(row,inicio.getSigno() ); //se pinta la col del color del signo de inicio
                     }
                     else{ //si el signo de inicio es 0
@@ -236,7 +231,7 @@ public class Cable extends Pane {
                     //fin.setSigno(protoboard.getBus2().getSigno(row,col));
 
                     if(fin.getSigno() != 0){//si el fin tiene carga
-                        protoboard.getBus2().setSigno(row,col,fin.getSigno()); //se coloca el signo del fin
+
                         protoboard.getBus2().toggleFilaBus(row, fin.getSigno()); //se pinta del color del signo del fin
                     }
                     else{
@@ -253,7 +248,7 @@ public class Cable extends Pane {
                     //fin.setSigno(protoboard.getBus1().getSigno(row,col));  //TODO hacer al reves, set el signo el cable en el cuadro del protoboard y setear los colores de los buses si es necesario
 
                     if(fin.getSigno() != 0){ //si el fin no tiene carga
-                        protoboard.getBus1().setSigno(row,col,fin.getSigno());  //se coloca el signo del fin
+
                         protoboard.getBus1().toggleFilaBus(row, fin.getSigno()); //se pinta del color del signo del fin
                     }
                     else{//si el fin no tiene carga

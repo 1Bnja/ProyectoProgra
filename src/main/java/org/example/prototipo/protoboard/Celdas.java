@@ -27,7 +27,6 @@ public class Celdas extends Group {
 
         this.protoboard = protoboard;
 
-        double tamanioCeldas = 13;
         double espacioCeldas = 11;
         grid = new ArrayList<>();
 
@@ -71,10 +70,8 @@ public class Celdas extends Group {
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
 
-                final int columnaIndex = i;
-                //cuadrado.setOnMouseClicked(event -> alternarColumna(columnaIndex));
-
-                GridPane.setConstraints(cuadrado, i + 1, j + 1);
+                GridPane.setConstraints(cuadrado, i + 1, j );
+                cuadrado.setTranslateY(25);
                 gridPane.getChildren().add(cuadrado);
 
                 columna.add(cuadrado);
@@ -82,23 +79,18 @@ public class Celdas extends Group {
 
             grid.add(columna);
         }
-
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
 
-        for(int i=0; i < gridPane.getChildren().size(); i++ ){
+        for(int i= 0; i < gridPane.getChildren().size(); i++ ){
             Bounds boundsInScene = gridPane.getChildren().get(i).localToScene(gridPane.getChildren().get(i).getBoundsInLocal());
 
             double posX = boundsInScene.getMinX();
             double posY = boundsInScene.getMinY();
 
             System.out.println("Posición X relativa al GridPane: " + posX + ", Posición Y relativa al GridPane: " + posY);
-
         }
-
-
-
     }
 
     // Método para alternar una columna entre encendida y apagada
@@ -110,21 +102,46 @@ public class Celdas extends Group {
             color = Color.BLUE;
         } else if(signo == 1) {
             color = Color.RED;
-        } else {  // Apagado
+        } else {
             color = Color.WHITE;
         }
 
+        boolean bandera= false;
+
         for (Cuadrados c : columna) {
-            if (signo == 0 || signo == 3) {  // Apagar columna
-                c.setSigno(0);
-                c.setFill(Color.WHITE);
-            } else {
+            if(c.getSigno()==0 ) {
                 c.setSigno(signo);
                 c.setFill(color);
+            } else if (signo==3) {
+                System.out.println("Se apago");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else if (signo==0) {
+                System.out.println("Se apago la columna");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else if (c.getSigno() == signo) {
+                c.setSigno(signo);
+                c.setFill(color);
+
+            } else {
+
+                bandera = true;
+                c.setFill(Color.OLIVE);
+                c.setSigno(2);
             }
+
+        }
+        if(bandera==true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+
+            alert.showAndWait();
+
         }
 
-        // Notificar a los componentes conectados para verificar su estado
         Prototipo_Protoboard.notificarComponentesConectados();
     }
 

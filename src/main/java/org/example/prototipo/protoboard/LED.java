@@ -109,8 +109,14 @@ public class LED extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                checkFinConnections(); // Verificar conexiones después de mover el nodo
+                // Desactivar chequeo en movimiento
+                // checkFinConnections();
             }
+        });
+
+        // Solo actualiza y verifica las conexiones cuando se suelta el nodo
+        nodo.setOnMouseReleased(e -> {
+            checkFinConnections();
         });
     }
 
@@ -153,7 +159,6 @@ public class LED extends Pane {
         actualizarEstirable(fin2, pata2);
     }
 
-    // Cambiamos la visibilidad del método a público
     public void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
@@ -221,36 +226,38 @@ public class LED extends Pane {
     }
 
     private void checkLedState() {
-        boolean quemado = false;
-
-        // Si ambos terminales están conectados
         if (fin1Conectada && fin2Conectada) {
-            // Si ambos terminales tienen signos diferentes (1 y -1)
-            if (signoFin1 != 0 && signoFin2 != 0 && signoFin1 != signoFin2) {
-                curva.setFill(Color.YELLOW);  // LED encendido
+            if (signoFin1 == 0 || signoFin2 == 0) {
+
+                curva.setFill(Color.LIGHTBLUE);
+            } else if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
+
+                curva.setFill(Color.YELLOW);
+            } else if (signoFin1 == signoFin2) {
+
+                curva.setFill(Color.RED);
+                mostrarAlertaLedQuemado();
+            } else if (signoFin1 == fin2.getSigno() && signoFin2 == fin1.getSigno()) {
+
+                curva.setFill(Color.RED);
+                mostrarAlertaLedQuemado();
             } else {
-                curva.setFill(Color.LIGHTBLUE);  // LED apagado
-            }
 
-            // Verificar si el LED está en una configuración incorrecta (ejemplo, ambos terminales con el mismo signo)
-            if (signoFin1 == signoFin2 && signoFin1 != 0) {
-                quemado = true;  // LED quemado si ambos terminales tienen el mismo signo
-                curva.setFill(Color.RED);  // Color rojo para LED quemado
+                curva.setFill(Color.LIGHTBLUE);
             }
-
         } else {
-            // Apagar el LED si alguno de los terminales no está conectado
-            curva.setFill(Color.LIGHTBLUE);  // LED apagado
+            // Si no ambos extremos están conectados, el LED está apagado
+            curva.setFill(Color.LIGHTBLUE);
         }
+    }
 
-        // Mostrar una alerta si el LED está quemado
-        if (quemado) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ALERTA");
-            alert.setHeaderText(null);
-            alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
-            alert.showAndWait();
-        }
+    private void mostrarAlertaLedQuemado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ALERTA");
+        alert.setHeaderText(null);
+        alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
+
+        alert.showAndWait();
     }
 
 

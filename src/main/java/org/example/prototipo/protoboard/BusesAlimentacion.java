@@ -1,6 +1,7 @@
 package org.example.prototipo.protoboard;
 
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -21,9 +22,8 @@ public class BusesAlimentacion extends Group {
         buses = new ArrayList<>();
 
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(espacioCeldas);
+        gridPane.setHgap(15);
         gridPane.setVgap(espacioCeldas);
-
 
         for (int j = 0; j < simbolos.length; j++) {
             Text simboloIzquierda = new Text(String.valueOf(simbolos[j]));
@@ -35,7 +35,7 @@ public class BusesAlimentacion extends Group {
             Text simboloDerecha = new Text(String.valueOf(simbolos[j]));
             simboloDerecha.setStroke(Color.BLACK);
             simboloDerecha.setRotate(270);
-            GridPane.setConstraints(simboloDerecha, 34, j);
+            GridPane.setConstraints(simboloDerecha, 26, j);
             gridPane.getChildren().add(simboloDerecha);
         }
 
@@ -45,18 +45,14 @@ public class BusesAlimentacion extends Group {
             int columnaIndex = 1;
 
             for (int i = 0; i < 25; i++) {
-                if (i > 0 && i % 5 == 0) {
-                    columnaIndex += espacioExtra;
-                }
 
-                Cuadrados cuadrado = new Cuadrados((int) tamanioCeldas, (int) espacioCeldas);
+                Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
-
-                int finalJ = j;
-                //cuadrado.setOnMouseClicked(event -> toggleFilaBus(finalJ));  // Manejador de eventos
+                cuadrado.setSigno(0);
 
                 GridPane.setConstraints(cuadrado, columnaIndex, j);
+                cuadrado.setTranslateX(-10);
                 gridPane.getChildren().add(cuadrado);
 
                 filaBus.add(cuadrado);
@@ -74,24 +70,55 @@ public class BusesAlimentacion extends Group {
 
     public void toggleFilaBus(int filaIndex, int signo) {
         List<Cuadrados> filaBus = buses.get(filaIndex);
-        Color colorEncendido = Color.WHITE;
+        Color color;
 
-        if(signo ==-1){
-            colorEncendido = Color.BLUE;
-        } else if(signo == 1){
-            colorEncendido = Color.RED;
-        } else if (signo==0) {
-            colorEncendido = Color.WHITE;
+        if (signo == -1) {
+            color = Color.BLUE;
+        } else if (signo == 1) {
+            color = Color.RED;
+        } else {
+            color = Color.WHITE;
         }
 
+        boolean bandera = false;
 
-        for (Cuadrados cuadrado : filaBus) {
-                cuadrado.setSigno(signo); //se setea el signo
-                cuadrado.setFill(colorEncendido);  // Encender
+        for (Cuadrados c : filaBus) {
+            if (c.getSigno() == 0) {
+                c.setSigno(signo);
+                c.setFill(color);
+            } else if (signo == 3) {
+                System.out.println("Se apago");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+            } else if (signo == 0) {
+                System.out.println("Se apago la columna");
+                c.setSigno(0);
+                c.setFill(Color.WHITE);
+
+            } else if (c.getSigno()==signo) {
+                c.setFill(color);
+                c.setSigno(signo);
+            }
+            else {
+
+                bandera = true;
+                c.setFill(Color.OLIVE);
+                c.setSigno(2);
+            }
 
         }
+        if (bandera == true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERTA");
+            alert.setHeaderText(null);
+            alert.setContentText("OH NO!! EL BUS SE QUEMÓ AAAAAAAA");
+
+            alert.showAndWait();
+
+        }
+
+        Prototipo_Protoboard.notificarComponentesConectados();
     }
-
     public int getSigno(int fila, int col){
         System.out.println(col+ "| " +fila);
         List<Cuadrados> columna = buses.get(fila);
