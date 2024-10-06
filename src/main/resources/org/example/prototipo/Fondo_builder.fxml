@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Anchor_PanelFondo" prefHeight="920.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
+<AnchorPane fx:id="Anchor_PanelFondo" prefHeight="920.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
    <children>
       <HBox layoutX="8.0" prefHeight="50.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -75,9 +75,17 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_resistencia" prefHeight="40.0" prefWidth="114.0" text="RESISTENCIA">
+            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_Resistencia" prefHeight="40.0" prefWidth="114.0" text="RESISTENCIA">
                <font>
                   <Font name="System Bold" size="13.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="Boton_Chip" mnemonicParsing="false" onAction="#Click_Chip" prefHeight="40.0" prefWidth="70.0" text="CHIP">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
                <HBox.margin>
                   <Insets left="15.0" top="10.0" />

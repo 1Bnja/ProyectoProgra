@@ -21,7 +21,7 @@ public class Prototipo_Protoboard extends Pane {
     BusesAlimentacion bus1;
     BusesAlimentacion bus2;
 
-   public static List<LED> componentesConectados = new ArrayList<>();
+   public static List<LED> ledsConectados = new ArrayList<>();
 
     public Prototipo_Protoboard() {
         this.setPickOnBounds(false);
@@ -117,11 +117,11 @@ public class Prototipo_Protoboard extends Pane {
     }
 
     public void agregarComponenteConectado(LED componente) {
-        componentesConectados.add(componente);
+        ledsConectados.add(componente);
     }
 
     public static void notificarComponentesConectados() {
-        for (LED componente : componentesConectados) {
+        for (LED componente : ledsConectados) {
             componente.checkFinConnections();
         }
     }
