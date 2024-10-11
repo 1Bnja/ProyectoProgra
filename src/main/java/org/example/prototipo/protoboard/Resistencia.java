@@ -29,12 +29,14 @@ public class Resistencia extends Pane {
     private boolean fin1Conectada = false;
     private boolean fin2Conectada = false;
 
-    private boolean valorResistencia;
+    private double valorResistencia;
 
     private int signoFin1 = 0;
     private int signoFin2 = 0;
 
-    public Resistencia() {
+    public Resistencia(double valorResistencia) {
+        this.valorResistencia = valorResistencia;
+
         lineaSu = crearLinea(origenX - 550, origenY - 150, origenX - 532, origenY - 150, Color.BLACK);
         lineaIn = crearLinea(origenX - 550, origenY - 126, origenX - 532, origenY - 126, Color.BLACK);
         lineaIzq = crearLinea(origenX - 550, origenY - 150, origenX - 550, origenY - 126, Color.BLACK);

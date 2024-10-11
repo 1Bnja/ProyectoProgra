@@ -111,7 +111,7 @@ public class BusesAlimentacion extends Group {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
-            alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+            alert.setContentText("OH NO!! EL BUS SE QUEMÓ AAAAAAAA");
 
             alert.showAndWait();
 

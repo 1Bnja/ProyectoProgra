@@ -3,10 +3,10 @@ package org.example.prototipo.protoboard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,14 +102,49 @@ public class Controller_Builder {
     @FXML
     void Click_Resistencia(ActionEvent event) {
         System.out.println("Se ha agregado una resistencia");
-        Resistencia resistencia = new Resistencia();
-        resistencia.toFront();
-        agregar(resistencia);
-        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
-            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
-                resistencia.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en resistencia
+
+        Dialog<Double> dialog = new Dialog<>();
+        dialog.setTitle("Ingresar valor de resistencia");
+
+        TextField inputValor = new TextField();
+        ComboBox<String> unidades = new ComboBox<>();
+        unidades.getItems().addAll("Ω", "kΩ", "MΩ");
+        unidades.setValue("Ω");
+
+        VBox vbox = new VBox(new Label("Valor de Resistencia:"), inputValor, new Label("Unidades:"), unidades);
+        dialog.getDialogPane().setContent(vbox);
+
+        inputValor.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().toString().equals("ENTER")) {
+                String valorTexto = inputValor.getText();
+                if (!valorTexto.isEmpty()) {
+                    try {
+                        double valor = Double.parseDouble(valorTexto);
+                        String unidad = unidades.getValue();
+
+                        if (unidad.equals("kΩ")) valor *= 1000;
+                        else if (unidad.equals("MΩ")) valor *= 1_000_000;
+
+                        Resistencia resistencia = new Resistencia(valor);
+                        resistencia.toFront();
+                        agregar(resistencia);
+
+                        for (int i = 0; i < elementos.size(); i++) {
+                            if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                                resistencia.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+                            }
+                        }
+                        dialog.setResult(valor);
+                        dialog.close();
+                    } catch (NumberFormatException e) {
+                        System.out.println("Por favor ingresa un valor numérico válido.");
+                    }
+                } else {
+                    System.out.println("El campo de valor está vacío.");
+                }
             }
-        }
+        });
+        dialog.showAndWait();
     }
 
     @FXML
