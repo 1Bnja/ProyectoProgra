@@ -180,6 +180,8 @@ public class Controller_Builder {
     void Click_Bateria(ActionEvent event) {
         // Corregir boolean
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
+        Motor motor= new Motor();
+        agregarProto(motor);
 
         if (existe) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

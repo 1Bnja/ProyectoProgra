@@ -14,8 +14,8 @@ public class Bateria extends Pane {
     private double mouseX;
     private double mouseY;
 
-    double origenX = Main.origenX - 400;
-    double origenY = Main.origenY + 150;
+    double origenX = Main.origenX - 350;
+    double origenY = Main.origenY + 50;
 
     boolean positivo = true;
     boolean negativo = false;
