@@ -6,21 +6,22 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.Group;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bateria extends Pane {
 
     private Group nodo = new Group();
 
-    private double mouseX;
-    private double mouseY;
-
     double origenX = Main.origenX - 350;
     double origenY = Main.origenY + 50;
 
-    boolean positivo = true;
-    boolean negativo = false;
     Cuadrados conectorPositivo;
     Cuadrados conectorNegativo;
+
+    // Listas de cables conectados
+    private List<Cable> cablesConectadosPositivo = new ArrayList<>();
+    private List<Cable> cablesConectadosNegativo = new ArrayList<>();
 
     public Bateria() {
         // Parte superior de la batería
@@ -100,6 +101,35 @@ public class Bateria extends Pane {
 
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
+    }
+
+    // Métodos para manejar cables conectados
+    public void conectarCablePositivo(Cable cable) {
+        if (!cablesConectadosPositivo.contains(cable)) {
+            cablesConectadosPositivo.add(cable);
+        }
+    }
+
+    public void conectarCableNegativo(Cable cable) {
+        if (!cablesConectadosNegativo.contains(cable)) {
+            cablesConectadosNegativo.add(cable);
+        }
+    }
+
+    public void desconectarCablePositivo(Cable cable) {
+        cablesConectadosPositivo.remove(cable);
+    }
+
+    public void desconectarCableNegativo(Cable cable) {
+        cablesConectadosNegativo.remove(cable);
+    }
+
+    public List<Cable> getCablesConectadosPositivo() {
+        return cablesConectadosPositivo;
+    }
+
+    public List<Cable> getCablesConectadosNegativo() {
+        return cablesConectadosNegativo;
     }
 
     public Cuadrados getConectorNegativo() {
