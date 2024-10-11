@@ -194,8 +194,7 @@ public class Controller_Builder {
             bateria.toFront();
             System.out.println("Se ha agregado una batería");
             agregar(bateria);
-
-
+            motor.setBateria(bateria);
         }
     }
 

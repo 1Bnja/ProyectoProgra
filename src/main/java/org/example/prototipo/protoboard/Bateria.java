@@ -46,14 +46,14 @@ public class Bateria extends Pane {
         conectorPositivo = new Cuadrados(20, 10);
         conectorPositivo.setX(origenX - 40);
         conectorPositivo.setY(origenY - 140);
-        conectorPositivo.setFill(Color.DARKRED);
-        conectorPositivo.setSigno(1);
+        conectorPositivo.setFill(Color.DARKGREY);
+        conectorPositivo.setSigno(0);
 
         conectorNegativo = new Cuadrados(20, 10);
         conectorNegativo.setX(origenX + 20);
         conectorNegativo.setY(origenY - 140);
-        conectorNegativo.setFill(Color.DARKBLUE);
-        conectorNegativo.setSigno(-1);
+        conectorNegativo.setFill(Color.DARKGREY);
+        conectorNegativo.setSigno(0);
 
         // Parte inferior de la batería (zona negra)
         Line lineaInferiorIzquierda = new Line(origenX - 60, origenY - 70, origenX - 60, origenY + 80);
