@@ -67,14 +67,6 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Boton_Motor" mnemonicParsing="false" onAction="#Click_Motor" prefHeight="40.0" prefWidth="82.0" text="MOTOR">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="15.0" top="10.0" />
-               </HBox.margin>
-            </Button>
             <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_Resistencia" prefHeight="40.0" prefWidth="114.0" text="RESISTENCIA">
                <font>
                   <Font name="System Bold" size="13.0" />
