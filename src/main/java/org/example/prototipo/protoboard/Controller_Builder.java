@@ -17,7 +17,7 @@ public class Controller_Builder {
     private AnchorPane Anchor_PanelFondo;
 
     @FXML
-    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Motor, Boton_Resistencia, Boton_Chip;
+    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip;
 
 
     private List<Node> elementos = new ArrayList<>();
@@ -147,18 +147,6 @@ public class Controller_Builder {
         dialog.showAndWait();
     }
 
-    @FXML
-    void Click_Motor(ActionEvent event) {
-        System.out.println("Se ha agregado un motor");
-        //LED led = new LED();
-        //led.toFront();
-        //agregar(led);
-        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
-            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
-                //led.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el led
-            }
-        }
-    }
 
     @FXML
     void Click_Switch(ActionEvent event) {
