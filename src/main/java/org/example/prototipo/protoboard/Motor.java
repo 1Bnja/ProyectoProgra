@@ -41,12 +41,17 @@ public class Motor extends Pane {
         boton.setFill(Color.DARKGREY);
         boton.toFront();
 
+
+
         Line conector= new Line(origenX +70, origenY -112, origenX +70, origenY -143);
         conector.setStrokeWidth(10);
         conector.setStroke(Color.DARKGREY);
 
+
         nodo.getChildren().addAll(fondodetras,fondo,boton,sobre,conector);
         this.getChildren().add(nodo);
+
+
 
         boton.setOnMouseClicked(mouseEvent -> {
             if(encendido) {

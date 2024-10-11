@@ -261,55 +261,58 @@ public class Cable extends Pane {
                 }
             }
 
-            if (bateria != null) {  // Verifica si hay una batería presente
-                if (verificarSiEstaEnTerminalNegativo(mouseX, mouseY, bateria)) {
-                    if (bateria.getConectorNegativo().getSigno() != 0) {  // Solo cambia el color si el signo no es 0
-                        inicio.setSigno(bateria.getConectorNegativo().getSigno());
-                        inicio.setFill(bateria.conectorNegativo.getFill());
-                        fin.setFill(bateria.conectorNegativo.getFill());
-                        line.setStroke(bateria.conectorNegativo.getFillColor());
-                        fin.setSigno(bateria.getConectorNegativo().getSigno());
-                    } else {
-                        line.setStroke(Color.GREENYELLOW);
-                    }
+            if(bateria != null) { //se pinta el cable del color del signo del conector de la bateria.
+                if(verificarSiEstaEnTerminalNegativo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorNegativo().getSigno());
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                    fin.setSigno(bateria.getConectorNegativo().getSigno());
                 }
-                if (verificarSiEstaEnTerminalPositivo(mouseX, mouseY, bateria)) {
-                    if (bateria.getConectorPositivo().getSigno() != 0) {  // Solo cambia el color si el signo no es 0
-                        inicio.setSigno(bateria.getConectorPositivo().getSigno());
-                        inicio.setFill(bateria.conectorPositivo.getFill());
-                        fin.setFill(bateria.conectorPositivo.getFill());
-                        line.setStroke(bateria.conectorPositivo.getFillColor());
-                        fin.setSigno(bateria.getConectorPositivo().getSigno());
-                    } else {
-                        line.setStroke(Color.GREENYELLOW);
-                    }
+                if(verificarSiEstaEnTerminalPositivo(mouseX,mouseY,bateria)){
+                    inicio.setSigno(bateria.getConectorPositivo().getSigno());
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                    fin.setSigno(bateria.getConectorPositivo().getSigno());
                 }
             }
 
+            /*if(inicio !=null){
+                if(bateria.conectorPositivo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorPositivo.getFill());
+                    fin.setFill(bateria.conectorPositivo.getFill());
+                    line.setStroke(bateria.conectorPositivo.getFillColor());
+                } else if (bateria.conectorNegativo.getBoundsInParent().intersects(inicio.getBoundsInParent())){
+                    inicio.setFill(bateria.conectorNegativo.getFill());
+                    fin.setFill(bateria.conectorNegativo.getFill());
+                    line.setStroke(bateria.conectorNegativo.getFillColor());
+                }else{
+                    System.out.println("no se pudo :p");}
+            }*/
         });
 
         this.getChildren().addAll(line, inicio, fin);
 
+
     }
 
-    private void setSignoColor(int row, int col, int signo) {
 
+
+
+
+    private void setSignoColor(int row, int col, int signo) {
+       //pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
         inicio.setSigno(signo);
         fin.setSigno(signo);
         if(inicio.getSigno() ==-1){
             inicio.setFill(Color.BLUE);
             fin.setFill(Color.BLUE);
             line.setStroke(Color.BLUE);
-        }
-        if(inicio.getSigno() == 1){
+        }else {
             inicio.setFill(Color.RED);
             fin.setFill(Color.RED);
             line.setStroke(Color.RED);
-        }
-        else {
-            inicio.setFill(Color.RED);
-            fin.setFill(Color.RED);
-            line.setStroke(Color.GREENYELLOW);
         }
     }
 
