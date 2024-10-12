@@ -302,10 +302,16 @@ public class Cable extends Pane {
             inicio.setFill(Color.BLUE);
             fin.setFill(Color.BLUE);
             line.setStroke(Color.BLUE);
-        } else {
+        } else if(inicio.getSigno() == 1) {
             inicio.setFill(Color.RED);
             fin.setFill(Color.RED);
             line.setStroke(Color.RED);
+        } else if(inicio.getSigno() == 0) {
+            line.setStroke(Color.BLACK);
+        } else if (inicio.getSigno() == 2) {
+            line.setStroke(Color.OLIVE);
+            inicio.setFill(Color.OLIVE);
+            fin.setFill(Color.OLIVE);
         }
     }
 

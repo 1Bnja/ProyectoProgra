@@ -152,8 +152,10 @@ public class Controller_Builder {
     void Click_Switch(ActionEvent event) {
         System.out.println("Se ha agregado un switch");
         Swich swich = new Swich();
+        Switch_8 switch8= new Switch_8();
         swich.toFront();
         agregar(swich);
+        agregar(switch8);
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 swich.setProtoboard((Prototipo_Protoboard) elemento);
