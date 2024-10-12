@@ -124,6 +124,11 @@ public class Celdas extends Group {
                 c.setSigno(signo);
                 c.setFill(color);
 
+            } else if (signo==2) {
+                bandera = true;
+                c.setFill(Color.OLIVE);
+                c.setSigno(signo);
+
             } else {
 
                 bandera = true;
