@@ -2,29 +2,31 @@ package org.example.prototipo.protoboard;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 
 public class Controller_Builder {
+
 
     @FXML
     private AnchorPane Anchor_PanelFondo;
 
     @FXML
-    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip;
+    private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip, Boton_Switch8;
 
 
     private List<Node> elementos = new ArrayList<>();
     private Node elemento_seleccionado;
-
-
-
 
 
     double origenX = Main.origenX;
@@ -152,16 +154,30 @@ public class Controller_Builder {
     void Click_Switch(ActionEvent event) {
         System.out.println("Se ha agregado un switch");
         Swich swich = new Swich();
-        Switch_8 switch8= new Switch_8();
         swich.toFront();
         agregar(swich);
-        agregar(switch8);
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 swich.setProtoboard((Prototipo_Protoboard) elemento);
             }
             if (elemento instanceof LED) {
                 swich.setLed((LED) elemento);
+            }
+        }
+    }
+
+    @FXML
+    void Click_Switch8(ActionEvent event) {
+        System.out.println("Se ha agregado un switch de 8 posiciones");
+        Switch_8 switch8 = new Switch_8();
+        switch8.toFront();
+        agregar(switch8);
+        for (Node elemento : elementos) {
+            if (elemento instanceof Prototipo_Protoboard) {
+                switch8.setProtoboard((Prototipo_Protoboard) elemento);
+            }
+            if (elemento instanceof LED) {
+                switch8.setLed((LED) elemento);
             }
         }
     }

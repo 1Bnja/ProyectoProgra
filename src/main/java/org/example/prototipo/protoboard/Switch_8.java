@@ -53,11 +53,62 @@ public class Switch_8 extends Pane{
         boton1.setTranslateY(origenY - 94);
         boton1.setFill(Color.BLACK);
 
+
+
+        boton1.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida+2, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida+2, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
         Cuadrados boton2 = new Cuadrados(7, 0);
         boton2.setheidht(50);
         boton2.setTranslateX(origenX - 433 );
         boton2.setTranslateY(origenY - 94);
         boton2.setFill(Color.BLACK);
+
+        boton2.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
 
         Cuadrados boton3 = new Cuadrados(7, 0);
         boton3.setheidht(50);
@@ -65,11 +116,59 @@ public class Switch_8 extends Pane{
         boton3.setTranslateY(origenY - 94);
         boton3.setFill(Color.BLACK);
 
+        boton3.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
         Cuadrados boton4 = new Cuadrados(7, 0);
         boton4.setheidht(50);
         boton4.setTranslateX(origenX - 483 );
         boton4.setTranslateY(origenY - 94);
         boton4.setFill(Color.BLACK);
+
+        boton4.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
 
         Cuadrados boton5 = new Cuadrados(7, 0);
         boton5.setheidht(50);
@@ -77,11 +176,59 @@ public class Switch_8 extends Pane{
         boton5.setTranslateY(origenY - 94);
         boton5.setFill(Color.BLACK);
 
+        boton5.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
         Cuadrados boton6 = new Cuadrados(7, 0);
         boton6.setheidht(50);
         boton6.setTranslateX(origenX - 533 );
         boton6.setTranslateY(origenY - 94);
         boton6.setFill(Color.BLACK);
+
+        boton6.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
 
         Cuadrados boton7 = new Cuadrados(7, 0);
         boton7.setheidht(50);
@@ -89,11 +236,59 @@ public class Switch_8 extends Pane{
         boton7.setTranslateY(origenY - 94);
         boton7.setFill(Color.BLACK);
 
+        boton7.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
         Cuadrados boton8 = new Cuadrados(7, 0);
         boton8.setheidht(50);
         boton8.setTranslateX(origenX - 583 );
         boton8.setTranslateY(origenY - 94);
         boton8.setFill(Color.BLACK);
+
+        boton8.setOnMouseClicked(event -> {
+            if (encendido) {
+
+                System.out.println("kie");
+
+            } else {
+                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
+                    fin12.setSigno(fin1.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
+                }
+            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
+                fin1.setSigno(fin12.getSigno());
+                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
+            }
+            else{
+                System.out.println("No se que esta pasandoooooooo");
+            }
+
+            encendido = !encendido; // Cambiar estado
+
+
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
 
         // Patas arriba (derecha a izquierda)
         pata1 = crearLinea(origenX - 405 , origenY - 105 , origenX - 405 , origenY - 125 );
@@ -118,22 +313,38 @@ public class Switch_8 extends Pane{
         // Fondo del cuadrado exterior
         Polygon fondoCuadradoE = crearFondo(origenX - 400 , origenY - 105 , origenX - 588 , origenY - 35 , Color.GAINSBORO);
         fin1 = Esquina_Estirable(pata1);
+        fin1.setLugar(1);
         fin2 = Esquina_Estirable(pata2);
+        fin2.setLugar(1);
         fin3 = Esquina_Estirable(pata3);
+        fin3.setLugar(1);
         fin4 = Esquina_Estirable(pata4);
+        fin4.setLugar(1);
         fin5 = Esquina_Estirable(pata5);
+        fin5.setLugar(1);
         fin6 = Esquina_Estirable(pata6);
+        fin6.setLugar(1);
         fin7 = Esquina_Estirable(pata7);
+        fin7.setLugar(1);
         fin8 = Esquina_Estirable(pata8);
+        fin8.setLugar(1);
 
         fin12= Esquina_Estirable(pata12);
+        fin12.setLugar(2);
         fin22= Esquina_Estirable(pata22);
+        fin22.setLugar(2);
         fin32= Esquina_Estirable(pata32);
+        fin32.setLugar(2);
         fin42= Esquina_Estirable(pata42);
+        fin42.setLugar(2);
         fin52= Esquina_Estirable(pata52);
+        fin52.setLugar(2);
         fin62= Esquina_Estirable(pata62);
+        fin62.setLugar(2);
         fin72= Esquina_Estirable(pata72);
+        fin72.setLugar(2);
         fin82= Esquina_Estirable(pata82);
+        fin82.setLugar(2);
 
         configurarArrastre(fin1, pata1, 1);
         configurarArrastre(fin2, pata2, 1);
