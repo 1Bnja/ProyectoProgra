@@ -45,6 +45,9 @@ public class Cable extends Pane {
         inicio.setOnMouseDragged(event -> arrastrarExtremo(event, true));
         fin.setOnMouseDragged(event -> arrastrarExtremo(event, false));
 
+        line.setOnMousePressed(this::iniciarMovimientoLinea);
+        line.setOnMouseDragged(this::moverLineaCompleta);
+
         inicio.setOnMouseReleased(event -> {
 
             double mouseX = event.getSceneX();
