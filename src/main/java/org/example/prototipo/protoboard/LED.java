@@ -246,7 +246,7 @@ public class LED extends Pane {
                 curva.setFill(Color.LIGHTBLUE);
             }
         } else {
-            // Si no ambos extremos están conectados, el LED está apagado
+
             curva.setFill(Color.LIGHTBLUE);
         }
     }
