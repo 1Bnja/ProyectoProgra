@@ -36,6 +36,9 @@ public class Cuadrados extends Rectangle {
         this.setHeight(tamanio);
     }
 
+    public void setheidht(int heidht){
+        this.setHeight(heidht);
+    }
 
     public boolean isTipocarga() {
         return tipocarga;

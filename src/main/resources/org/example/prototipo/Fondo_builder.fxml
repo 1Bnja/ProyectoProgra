@@ -59,17 +59,17 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Proto" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="126.0" text="PROTOBOARD">
+            <Button fx:id="Boton_Switch8" mnemonicParsing="false" onAction="#Click_Switch8" prefHeight="40.0" prefWidth="114.0" text="SWITCH 8">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
                <HBox.margin>
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Boton_Motor" mnemonicParsing="false" onAction="#Click_Motor" prefHeight="40.0" prefWidth="82.0" text="MOTOR">
+            <Button fx:id="Proto" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="126.0" text="PROTOBOARD">
                <font>
-                  <Font name="System Bold" size="16.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
                <HBox.margin>
                   <Insets left="15.0" top="10.0" />
