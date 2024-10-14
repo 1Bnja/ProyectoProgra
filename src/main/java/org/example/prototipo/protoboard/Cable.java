@@ -53,6 +53,17 @@ public class Cable extends Pane {
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
 
+            // Restablecer la celda o bus anterior
+            if (inicio.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
+            } else if (inicio.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
+            } else if (inicio.getLugar() == 3) {
+                protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
+            } else if (inicio.getLugar() == 0) {
+                protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
+            }
+
             if (protoboard != null) {
                 Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
                 Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
@@ -60,20 +71,9 @@ public class Cable extends Pane {
                 Node bus_abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getBus2().getChildren().getFirst());
                 int col = 0;
                 int row = 0;
+
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
-                    // se pregunta el lugar, 0= bus1 , 1=celda1, 2=celda2, 3= bus2
-                    if (inicio.getLugar() == 1) {
-                        protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
-                    }
-                    if (inicio.getLugar() == 2) {
-                        protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
-                    }
-                    if (inicio.getLugar() == 3) {
-                        protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
-                    }
-                    if (inicio.getLugar() == 0) {
-                        protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
-                    }
+                    // No está sobre ninguna celda o bus
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -164,6 +164,18 @@ public class Cable extends Pane {
 
             double mouseX = event.getSceneX();
             double mouseY = event.getSceneY();
+
+            // Restablecer la celda o bus anterior
+            if (fin.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
+            } else if (fin.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
+            } else if (fin.getLugar() == 3) {
+                protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
+            } else if (fin.getLugar() == 0) {
+                protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+            }
+
             if (protoboard != null) {
                 Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
                 Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
@@ -173,18 +185,7 @@ public class Cable extends Pane {
                 int row = 0;
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
-                    if (fin.getLugar() == 1) {
-                        protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
-                    }
-                    if (fin.getLugar() == 2) {
-                        protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
-                    }
-                    if (fin.getLugar() == 3) {
-                        protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
-                    }
-                    if (fin.getLugar() == 0) {
-                        protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
-                    }
+                    // No está sobre ninguna celda o bus
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -302,12 +303,14 @@ public class Cable extends Pane {
             inicio.setFill(Color.BLUE);
             fin.setFill(Color.BLUE);
             line.setStroke(Color.BLUE);
-        } else if(inicio.getSigno() == 1) {
+        } else if (inicio.getSigno() == 1) {
             inicio.setFill(Color.RED);
             fin.setFill(Color.RED);
             line.setStroke(Color.RED);
-        } else if(inicio.getSigno() == 0) {
+        } else if (inicio.getSigno() == 0) {
             line.setStroke(Color.BLACK);
+            inicio.setFill(Color.BLACK);
+            fin.setFill(Color.BLACK);
         } else if (inicio.getSigno() == 2) {
             line.setStroke(Color.OLIVE);
             inicio.setFill(Color.OLIVE);
