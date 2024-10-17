@@ -26,7 +26,7 @@ public class Controller_Builder {
 
 
     private List<Node> elementos = new ArrayList<>();
-    private ListaConexiones conexiones= ListaConexiones.obtenerInstancia();
+
     private Node elemento_seleccionado;
 
 
@@ -62,8 +62,7 @@ public class Controller_Builder {
         cable.toFront();
         agregar(cable);
 
-        Conexion c = new Conexion(cable.getInicio().getSigno(),0,0,0, cable,true);
-        conexiones.agregarConexion(c);
+
 
 
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
@@ -94,8 +93,6 @@ public class Controller_Builder {
         led.toFront();
         agregar(led); // Agrega el LED a la escena y a la lista 'elementos'
 
-        Conexion c = new Conexion(0,0,0,0, led,false);
-        conexiones.agregarConexion(c);
 
         // Buscar el protoboard en la lista de elementos
         for (Node elemento : elementos) {
@@ -164,8 +161,7 @@ public class Controller_Builder {
         swich.toFront();
         agregar(swich);
 
-        Conexion c = new Conexion(0,0,0,0, swich,false);
-        conexiones.agregarConexion(c);
+
 
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
@@ -220,8 +216,7 @@ public class Controller_Builder {
 
             }
 
-            Conexion c = new Conexion(0,0,0,0, bateria,false);
-            conexiones.agregarConexion(c);
+
         }
     }
 

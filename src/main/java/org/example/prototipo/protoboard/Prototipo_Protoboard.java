@@ -24,7 +24,7 @@ public class Prototipo_Protoboard extends Pane {
    public static List<LED> ledsConectados = new ArrayList<>();
    public static List<Cable> cablesConctados = new ArrayList<>();
 
-    private List<Conexion> conexiones = new ArrayList<>();
+
 
 
     public Prototipo_Protoboard() {
@@ -150,15 +150,7 @@ public class Prototipo_Protoboard extends Pane {
         return bus2;
     }
 
-    public List<Conexion> getConexiones() {
-        return conexiones;
-    }
 
-    public void setConexiones(List<Conexion> conexiones) {
-        this.conexiones = conexiones;
-
-
-    }
 
     public  List<Cable> getCablesConctados() {
         return cablesConctados;
