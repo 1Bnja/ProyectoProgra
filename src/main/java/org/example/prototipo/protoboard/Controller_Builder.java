@@ -26,6 +26,7 @@ public class Controller_Builder {
 
 
     private List<Node> elementos = new ArrayList<>();
+    private ListaConexiones conexiones= ListaConexiones.obtenerInstancia();
     private Node elemento_seleccionado;
 
 
@@ -61,6 +62,9 @@ public class Controller_Builder {
         cable.toFront();
         agregar(cable);
 
+        Conexion c = new Conexion(cable.getInicio().getSigno(),0,0,0, cable,true);
+        conexiones.agregarConexion(c);
+
 
         for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
             if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
@@ -89,6 +93,9 @@ public class Controller_Builder {
         LED led = new LED();
         led.toFront();
         agregar(led); // Agrega el LED a la escena y a la lista 'elementos'
+
+        Conexion c = new Conexion(0,0,0,0, led,false);
+        conexiones.agregarConexion(c);
 
         // Buscar el protoboard en la lista de elementos
         for (Node elemento : elementos) {
@@ -156,6 +163,10 @@ public class Controller_Builder {
         Swich swich = new Swich();
         swich.toFront();
         agregar(swich);
+
+        Conexion c = new Conexion(0,0,0,0, swich,false);
+        conexiones.agregarConexion(c);
+
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 swich.setProtoboard((Prototipo_Protoboard) elemento);
@@ -189,6 +200,7 @@ public class Controller_Builder {
         Motor motor= new Motor();
         agregarProto(motor);
 
+
         if (existe) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
@@ -201,6 +213,9 @@ public class Controller_Builder {
             System.out.println("Se ha agregado una batería");
             agregar(bateria);
             motor.setBateria(bateria);
+
+            Conexion c = new Conexion(0,0,0,0, bateria,false);
+            conexiones.agregarConexion(c);
         }
     }
 
@@ -219,6 +234,8 @@ public class Controller_Builder {
             proto.toFront();
             System.out.println("Se ha agregado un protoboard");
             agregarProto(proto);
+
+
 
             for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
                 if (elementos.get(i) instanceof Cable) { //se busca un cable

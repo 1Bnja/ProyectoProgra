@@ -11,6 +11,7 @@ import javafx.scene.shape.Line;
 public class Cable extends Pane {
 
     public Line line;
+
     private Cuadrados inicio;
     private Cuadrados fin;
     private double mouseX, mouseY;
@@ -20,6 +21,8 @@ public class Cable extends Pane {
     Prototipo_Protoboard protoboard;
     private Object componenteInicio;
     private Object componenteFin;
+    private ListaConexiones conexiones= ListaConexiones.obtenerInstancia();
+
 
     public Cable(double startX, double startY, double endX, double endY) {
 
@@ -74,6 +77,16 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
+                    // 0= bus1, 1= celda1, 2= celda2, 3= bus2
+                    if(inicio.getLugar() == 0) {
+                        protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
+                        setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+
+
+                    }
+
+
+
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -86,6 +99,9 @@ public class Cable extends Pane {
                     inicio.setLugar(1);
                     inicio.setFila(row);
                     inicio.setCol(col);
+
+                    protoboard.addCablesConctados(this);
+
                 }
                 if (abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
@@ -98,6 +114,7 @@ public class Cable extends Pane {
                     inicio.setLugar(2);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
@@ -110,6 +127,7 @@ public class Cable extends Pane {
                     inicio.setLugar(3);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
@@ -122,6 +140,7 @@ public class Cable extends Pane {
                     inicio.setLugar(0);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
             }
 
@@ -134,6 +153,7 @@ public class Cable extends Pane {
                     bateria.conectarCableNegativo(this);
 
                     componenteInicio = bateria;
+                    conexiones.setConexiones(bateria, this, bateria.getConectorNegativo().getSigno() );
                 }
                 if (verificarSiEstaEnTerminalPositivo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorPositivo().getSigno());
@@ -143,6 +163,7 @@ public class Cable extends Pane {
                     bateria.conectarCablePositivo(this);
 
                     componenteInicio = bateria;
+                    conexiones.setConexiones(bateria, this, bateria.getConectorPositivo().getSigno() );
                 }
             }
         });
@@ -199,6 +220,7 @@ public class Cable extends Pane {
                     fin.setLugar(1);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
@@ -211,6 +233,7 @@ public class Cable extends Pane {
                     fin.setLugar(2);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
 
                 }
                 if (bus_abajo != null) {
@@ -225,6 +248,7 @@ public class Cable extends Pane {
                     fin.setLugar(3);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
@@ -238,6 +262,7 @@ public class Cable extends Pane {
                     fin.setLugar(0);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
             }
 
@@ -249,6 +274,7 @@ public class Cable extends Pane {
 
                     // Registrar el cable en la batería
                     bateria.conectarCableNegativo(this);
+                    conexiones.setConexiones(bateria, this, bateria.getConectorNegativo().getSigno() );
                 }
                 if (verificarSiEstaEnTerminalPositivo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorPositivo().getSigno());
@@ -257,6 +283,7 @@ public class Cable extends Pane {
 
                     // Registrar el cable en la batería
                     bateria.conectarCablePositivo(this);
+                    conexiones.setConexiones(bateria, this, bateria.getConectorPositivo().getSigno() );
                 }
             }
         });
@@ -396,6 +423,25 @@ public class Cable extends Pane {
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
     }
+
+
+    public Cuadrados getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Cuadrados inicio) {
+        this.inicio = inicio;
+    }
+
+    public Cuadrados getFin() {
+        return fin;
+    }
+
+    public void setFin(Cuadrados fin) {
+        this.fin = fin;
+    }
+
+
 
     private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
         if (mouseX >= bateria.getConectorPositivo().getX() &&

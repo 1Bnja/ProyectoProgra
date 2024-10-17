@@ -22,6 +22,10 @@ public class Prototipo_Protoboard extends Pane {
     BusesAlimentacion bus2;
 
    public static List<LED> ledsConectados = new ArrayList<>();
+   public static List<Cable> cablesConctados = new ArrayList<>();
+
+    private List<Conexion> conexiones = new ArrayList<>();
+
 
     public Prototipo_Protoboard() {
         this.setPickOnBounds(false);
@@ -146,6 +150,22 @@ public class Prototipo_Protoboard extends Pane {
         return bus2;
     }
 
+    public List<Conexion> getConexiones() {
+        return conexiones;
+    }
+
+    public void setConexiones(List<Conexion> conexiones) {
+        this.conexiones = conexiones;
 
 
+    }
+
+    public  List<Cable> getCablesConctados() {
+        return cablesConctados;
+    }
+
+    public  void addCablesConctados(Cable cable) {
+        if(!cablesConctados.contains(cable))
+            Prototipo_Protoboard.cablesConctados.add(cable);
+    }
 }

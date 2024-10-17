@@ -23,6 +23,7 @@ public class Celdas extends Group {
     public Cuadrados cuadradoSeleccionado2;
     private Prototipo_Protoboard protoboard;
 
+
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
 
         this.protoboard = protoboard;
@@ -148,7 +149,9 @@ public class Celdas extends Group {
         }
 
         Prototipo_Protoboard.notificarComponentesConectados();
+
     }
+
 
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
