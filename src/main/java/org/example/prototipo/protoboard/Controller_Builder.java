@@ -213,6 +213,12 @@ public class Controller_Builder {
             System.out.println("Se ha agregado una batería");
             agregar(bateria);
             motor.setBateria(bateria);
+            for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
+                if (elementos.get(i) instanceof Prototipo_Protoboard) { //se busca un cable
+                    motor.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra lo setea en la proto
+                }
+
+            }
 
             Conexion c = new Conexion(0,0,0,0, bateria,false);
             conexiones.agregarConexion(c);

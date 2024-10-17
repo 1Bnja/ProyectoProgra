@@ -168,4 +168,7 @@ public class Prototipo_Protoboard extends Pane {
         if(!cablesConctados.contains(cable))
             Prototipo_Protoboard.cablesConctados.add(cable);
     }
+
+
+
 }

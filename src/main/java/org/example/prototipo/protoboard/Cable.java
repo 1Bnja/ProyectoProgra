@@ -397,6 +397,28 @@ public class Cable extends Pane {
         }
     }
 
+    public void signoBateria( int signo, Cuadrados a, Cuadrados b, Line l) {
+        // Pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
+
+        if (signo == -1) {
+            a.setFill(Color.BLUE);
+            b.setFill(Color.BLUE);
+            l.setStroke(Color.BLUE);
+        } else if (signo == 1) {
+            a.setFill(Color.RED);
+            b.setFill(Color.RED);
+            l.setStroke(Color.RED);
+        } else if (signo == 0) {
+            l.setStroke(Color.BLACK);
+            a.setFill(Color.BLACK);
+            b.setFill(Color.BLACK);
+        } else if (signo == 2) {
+            l.setStroke(Color.OLIVE);
+            a.setFill(Color.OLIVE);
+            b.setFill(Color.OLIVE);
+        }
+    }
+
     private void arrastrarExtremo(MouseEvent event, boolean esInicio) {
         event.consume();  // Consumir el evento para evitar que se propague
 

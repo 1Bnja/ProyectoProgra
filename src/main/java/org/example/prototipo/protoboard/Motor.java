@@ -11,6 +11,7 @@ public class Motor extends Pane {
     double origenX = Main.origenX - 440;
     double origenY = Main.origenY + 280;
     Bateria bateria;
+    private Prototipo_Protoboard protoboard;
 
     Boolean encendido;
 
@@ -51,7 +52,14 @@ public class Motor extends Pane {
                 bateria.conectorPositivo.setSigno(1);
                 bateria.conectorNegativo.setFill(Color.DARKBLUE);
                 bateria.conectorPositivo.setFill(Color.DARKRED);
-
+                for (int i=0; i < protoboard.getCablesConctados().size(); i++){
+                    //celda.alternarColumna(protoboard.getCablesConctados().get(i).getInicio().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).signoBateria(protoboard.getCablesConctados().get(i).getInicio().getSigno(),protoboard.getCablesConctados().get(i).getInicio(), protoboard.getCablesConctados().get(i).getFin(),protoboard.getCablesConctados().get(i).line);
+                }
+                protoboard.getCelda1().onOff(0,true);
+                protoboard.getCelda2().onOff(0,true);
+                protoboard.getBus1().onOff(0,true);
+                protoboard.getBus2().onOff(0,true);
                 // Notificar a los cables conectados para actualizar su color
                 actualizarCablesConectados();
             } else {
@@ -61,6 +69,17 @@ public class Motor extends Pane {
                 bateria.conectorPositivo.setSigno(0);
                 bateria.conectorNegativo.setFill(Color.DARKGREY);
                 bateria.conectorPositivo.setFill(Color.DARKGREY);
+
+                for (int i=0; i < protoboard.getCablesConctados().size(); i++){
+                    //celda.alternarColumna(protoboard.getCablesConctados().get(i).getInicio().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).signoBateria(0, protoboard.getCablesConctados().get(i).getInicio(), protoboard.getCablesConctados().get(i).getFin() , protoboard.getCablesConctados().get(i).line);
+
+
+                }
+                protoboard.getCelda1().onOff(0, false);
+                protoboard.getCelda2().onOff(0, false);
+                protoboard.getBus1().onOff(0, false);
+                protoboard.getBus2().onOff(0, false);
 
                 // Notificar a los cables conectados para actualizar su color
                 actualizarCablesConectados();
@@ -87,5 +106,13 @@ public class Motor extends Pane {
 
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
+    }
+
+    public Prototipo_Protoboard getProtoboard() {
+        return protoboard;
+    }
+
+    public void setProtoboard(Prototipo_Protoboard protoboard) {
+        this.protoboard = protoboard;
     }
 }
