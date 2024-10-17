@@ -21,7 +21,6 @@ public class Cable extends Pane {
     Prototipo_Protoboard protoboard;
     private Object componenteInicio;
     private Object componenteFin;
-    private ListaConexiones conexiones= ListaConexiones.obtenerInstancia();
 
 
     public Cable(double startX, double startY, double endX, double endY) {
@@ -62,9 +61,9 @@ public class Cable extends Pane {
             } else if (inicio.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
             } else if (inicio.getLugar() == 3) {
-                protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
+               // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
             } else if (inicio.getLugar() == 0) {
-                protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
+                //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
             }
 
             if (protoboard != null) {
@@ -78,14 +77,7 @@ public class Cable extends Pane {
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
                     // 0= bus1, 1= celda1, 2= celda2, 3= bus2
-                    if(inicio.getLugar() == 0) {
-                        protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
-                        setSignoColor(inicio.getFila(), inicio.getCol(), 0);
-
-
-                    }
-
-
+                    verifica_cables_protoboard();
 
                 }
                 if (arriba != null) {
@@ -153,7 +145,6 @@ public class Cable extends Pane {
                     bateria.conectarCableNegativo(this);
 
                     componenteInicio = bateria;
-                    conexiones.setConexiones(bateria, this, bateria.getConectorNegativo().getSigno() );
                 }
                 if (verificarSiEstaEnTerminalPositivo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorPositivo().getSigno());
@@ -163,7 +154,6 @@ public class Cable extends Pane {
                     bateria.conectarCablePositivo(this);
 
                     componenteInicio = bateria;
-                    conexiones.setConexiones(bateria, this, bateria.getConectorPositivo().getSigno() );
                 }
             }
         });
@@ -192,9 +182,9 @@ public class Cable extends Pane {
             } else if (fin.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
             } else if (fin.getLugar() == 3) {
-                protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
+               // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
             } else if (fin.getLugar() == 0) {
-                protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+               // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
             }
 
             if (protoboard != null) {
@@ -207,6 +197,7 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
+                     verifica_cables_protoboard();
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -274,7 +265,6 @@ public class Cable extends Pane {
 
                     // Registrar el cable en la batería
                     bateria.conectarCableNegativo(this);
-                    conexiones.setConexiones(bateria, this, bateria.getConectorNegativo().getSigno() );
                 }
                 if (verificarSiEstaEnTerminalPositivo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorPositivo().getSigno());
@@ -283,7 +273,6 @@ public class Cable extends Pane {
 
                     // Registrar el cable en la batería
                     bateria.conectarCablePositivo(this);
-                    conexiones.setConexiones(bateria, this, bateria.getConectorPositivo().getSigno() );
                 }
             }
         });
@@ -302,6 +291,69 @@ public class Cable extends Pane {
         });
 
         this.getChildren().addAll(line, inicio, fin);
+    }
+
+    private void verifica_cables_protoboard() {
+
+        if(inicio.getLugar() == 0) {
+            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+
+        }
+        if(inicio.getLugar() == 1) {
+            protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+            valida_cables(1, protoboard.getCelda1(), this);
+        }
+        if(inicio.getLugar() == 2) {
+            protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+            valida_cables(2, protoboard.getCelda2(), this);
+        }
+        if(inicio.getLugar() == 3) {
+            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+
+        }
+        if(fin.getLugar() == 0){
+            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+        }
+        if(fin.getLugar() == 1){
+            protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+
+            valida_cables(1, protoboard.getCelda1(), this);
+
+        }
+        if(fin.getLugar() == 2){
+            protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+            valida_cables(2, protoboard.getCelda2(), this);
+        }
+        if(fin.getLugar() == 3){
+            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+        }
+    }
+
+    private void valida_cables(int lugar, Celdas celda, Cable c) {
+        for (int i=0; i < protoboard.getCablesConctados().size(); i++){
+            if(!protoboard.getCablesConctados().get(i).equals(c) &&
+                    (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar || protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar)
+                    && (protoboard.getCablesConctados().get(i).getInicio().getCol() == inicio.getCol() || protoboard.getCablesConctados().get(i).getFin().getCol() == fin.getCol()) ){
+                if (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar){
+                    celda.alternarColumna(protoboard.getCablesConctados().get(i).getInicio().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
+                }
+                if (protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar){
+                    celda.alternarColumna(protoboard.getCablesConctados().get(i).getFin().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
+                }
+
+            }
+
+        }
     }
 
     public void actualizarColorDesdeTerminal(Cuadrados terminal) {
