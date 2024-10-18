@@ -71,7 +71,7 @@ public class Celdas extends Group {
                 cuadrado.setFill(Color.WHITE);
 
                 GridPane.setConstraints(cuadrado, i + 1, j );
-                cuadrado.setTranslateY(25);
+                cuadrado.setTranslateY(20);
                 gridPane.getChildren().add(cuadrado);
 
                 columna.add(cuadrado);
