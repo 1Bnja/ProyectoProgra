@@ -84,10 +84,10 @@ public class Resistencia extends Pane {
     }
 
     private Cuadrados crearEstirable(Line pata, Color color) {
-        Cuadrados pin = new Cuadrados(8, 2);
+        Cuadrados pin = new Cuadrados(11, 2);
         pin.setFill(color);
-        pin.setX(pata.getEndX() - 4);
-        pin.setY(pata.getEndY() - 4);
+        pin.setX(pata.getEndX() - 5);
+        pin.setY(pata.getEndY() - 5);
         return pin;
     }
 
@@ -114,8 +114,8 @@ public class Resistencia extends Pane {
     }
 
     private void actualizarEstirable(Cuadrados esquina, Line pata) {
-        esquina.setX(pata.getEndX() - 4);
-        esquina.setY(pata.getEndY() - 4);
+        esquina.setX(pata.getEndX() - 5);
+        esquina.setY(pata.getEndY() - 5);
     }
 
     private void updateFinConnection(Cuadrados estirable) {
@@ -214,7 +214,6 @@ public class Resistencia extends Pane {
 
                 actualizarPosiciones();
                 // Desactivar chequeo en movimiento
-                // checkFinConnections();
             }
         });
 

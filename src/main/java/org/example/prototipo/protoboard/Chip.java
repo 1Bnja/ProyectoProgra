@@ -161,19 +161,28 @@ public class Chip extends Pane {
             for (GridPane gridPane : gridPanes) {
                 celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    int col = GridPane.getColumnIndex(celdaEncontrada) - 1;
-                    int row = GridPane.getRowIndex(celdaEncontrada);
+                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
+                    Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
 
-                    if (gridPane == gridPanes[0]) {
-                        signoCelda = protoboard.getCelda1().getSigno(row, col);
-                    } else if (gridPane == gridPanes[1]) {
-                        signoCelda = protoboard.getCelda2().getSigno(row, col);
-                    } else if (gridPane == gridPanes[2]) {
-                        signoCelda = protoboard.getBus1().getSigno(row, col);
-                    } else if (gridPane == gridPanes[3]) {
-                        signoCelda = protoboard.getBus2().getSigno(row, col);
+                    if (colIndex != null && rowIndex != null) {
+                        int col = colIndex - 1;
+                        int row = rowIndex;
+
+                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
+
+                        if (gridPane == gridPanes[0]) {
+                            signoCelda = protoboard.getCelda1().getSigno(row, col);
+                        } else if (gridPane == gridPanes[1]) {
+                            signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        } else if (gridPane == gridPanes[2]) {
+                            signoCelda = protoboard.getBus1().getSigno(row, col);
+                        } else if (gridPane == gridPanes[3]) {
+                            signoCelda = protoboard.getBus2().getSigno(row, col);
+                        }
+                        connected = true;
+                    } else {
+                        System.out.println("Índices de columna o fila son nulos");
                     }
-                    connected = true;
                     break;
                 }
             }
@@ -209,6 +218,7 @@ public class Chip extends Pane {
             }
         }
     }
+
 
     private Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
@@ -253,7 +263,6 @@ public class Chip extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                checkFinConnections();
             }
         });
 

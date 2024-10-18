@@ -77,10 +77,17 @@ public class Controller_Builder {
     @FXML
     void Click_Chip(ActionEvent event) {
         System.out.println("Se ha agregado un chip");
-
         Chip chip= new Chip();
-        chip.toFront();
         agregar(chip);
+        chip.toFront();
+
+        for (Node elemento : elementos) {
+            if (elemento instanceof Prototipo_Protoboard) {
+                Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
+                chip.setProtoboard(protoboard);
+                break;
+            }
+        }
     }
 
     @FXML
