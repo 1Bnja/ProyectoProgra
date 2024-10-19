@@ -191,7 +191,6 @@ public class Controller_Builder {
 
     @FXML
     void Click_Bateria(ActionEvent event) {
-        // Corregir boolean
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
         Motor motor= new Motor();
         agregarProto(motor);
