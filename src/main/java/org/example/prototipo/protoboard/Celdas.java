@@ -12,9 +12,6 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 public class Celdas extends Group {
 
     public List<List<Cuadrados>> grid;
@@ -23,7 +20,7 @@ public class Celdas extends Group {
     public Cuadrados cuadradoSeleccionado2;
     private Prototipo_Protoboard protoboard;
 
-
+    // Constructor de la clase Celdas
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
 
         this.protoboard = protoboard;
@@ -35,7 +32,7 @@ public class Celdas extends Group {
         gridPane.setHgap(espacioCeldas);
         gridPane.setVgap(espacioCeldas);
 
-        // Agregar letras en los lados
+        // Agregar letras en los lados del GridPane
         for (int j = 0; j < letras.length; j++) {
             Text letraIzquierda = new Text(String.valueOf(letras[j]));
             letraIzquierda.setStroke(Color.BLACK);
@@ -54,6 +51,7 @@ public class Celdas extends Group {
         for (int i = 0; i < 30; i++) {
             List<Cuadrados> columna = new ArrayList<>();
 
+            // Crear el número de columna y agregarlo al GridPane
             Text numero = new Text(String.valueOf(i + 1));
             numero.setStroke(Color.BLACK);
             numero.setRotate(270);
@@ -66,6 +64,7 @@ public class Celdas extends Group {
 
             gridPane.getChildren().add(numero);
 
+            // Crear las celdas de la columna
             for (int j = 0; j < 5; j++) {
                 Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
@@ -80,10 +79,12 @@ public class Celdas extends Group {
 
             grid.add(columna);
         }
+        // Establecer la posición del GridPane
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
         this.getChildren().add(gridPane);
 
+        // Imprimir las posiciones de cada elemento en el GridPane (para depuración)
         for(int i= 0; i < gridPane.getChildren().size(); i++ ){
             Bounds boundsInScene = gridPane.getChildren().get(i).localToScene(gridPane.getChildren().get(i).getBoundsInLocal());
 
@@ -94,11 +95,12 @@ public class Celdas extends Group {
         }
     }
 
-    // Método para alternar una columna entre encendida y apagada
+    // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo) {
         List<Cuadrados> columna = grid.get(columnaIndex);
         Color color;
 
+        // Determinar el color basado en el signo
         if(signo == -1) {
             color = Color.BLUE;
         } else if(signo == 1) {
@@ -111,51 +113,55 @@ public class Celdas extends Group {
 
         for (Cuadrados c : columna) {
             if(c.getSigno()==0 ) {
+                // Si el cuadrado está apagado, establecer el nuevo signo y color
                 c.setSigno(signo);
                 c.setFill(color);
             } else if (signo==3) {
-                System.out.println("Se apago");
+                // Apagar el cuadrado
+                System.out.println("Se apagó");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else if (signo==0) {
-                System.out.println("Se apago la columna");
+                // Apagar la columna completa
+                System.out.println("Se apagó la columna");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
             } else if (c.getSigno() == signo) {
+                // Mantener el mismo signo y color
                 c.setSigno(signo);
                 c.setFill(color);
-
             } else if (signo==2) {
+                // Indicar que ocurrió una sobrecarga o corto circuito
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(signo);
-
             } else {
-
+                // Indicar que ocurrió una sobrecarga o corto circuito
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
             }
-
         }
         if(bandera==true) {
+            // Mostrar una alerta indicando que la columna se quemó
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
-            alert.setContentText("OH NO!! LA COLUMNA SE QUEMÓ AAAAAAAA");
+            alert.setContentText("¡OH NO! LA COLUMNA SE QUEMÓ");
 
             alert.showAndWait();
-
         }
 
+        // Notificar a los componentes conectados en el protoboard
         Prototipo_Protoboard.notificarComponentesConectados();
-
     }
 
-    public void onOff( int signo, boolean trueColor) {
+    // Método para encender o apagar las celdas según el signo y un indicador de color real
+    public void onOff(int signo, boolean trueColor) {
         Color color= Color.WHITE;
 
         if(!trueColor) {
+            // Determinar el color basado en el signo
             if (signo == -1) {
                 color = Color.BLUE;
             } else if (signo == 1) {
@@ -164,6 +170,7 @@ public class Celdas extends Group {
                 color = Color.WHITE;
             }
         }
+        // Recorrer todas las celdas y actualizar su color
         for(List<Cuadrados> c : grid)
             for (Cuadrados col : c) {
                 if(trueColor) {
@@ -175,11 +182,11 @@ public class Celdas extends Group {
                         color = Color.WHITE;
                     }
                 }
-                    col.setFill(color);
+                col.setFill(color);
             }
     }
 
-
+    // Método para obtener el signo de una celda específica
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
@@ -187,8 +194,3 @@ public class Celdas extends Group {
     }
 
 }
-
-
-
-
-

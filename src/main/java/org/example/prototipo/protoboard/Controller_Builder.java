@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 public class Controller_Builder {
-
 
     @FXML
     private AnchorPane Anchor_PanelFondo;
@@ -24,66 +22,68 @@ public class Controller_Builder {
     @FXML
     private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip, Boton_Switch8;
 
-
+    // Lista para almacenar todos los elementos agregados al panel
     private List<Node> elementos = new ArrayList<>();
 
+    // Elemento actualmente seleccionado
     private Node elemento_seleccionado;
 
-
+    // Coordenadas de origen (posiblemente para posicionamiento inicial)
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
-
+    // Método para agregar un elemento al panel y a la lista de elementos
     private void agregar(Node elemento) {
         elementos.add(elemento);
         Anchor_PanelFondo.getChildren().add(elemento);
-        seleccionar(elemento);
+        seleccionar(elemento); // Permitir selección del elemento
     }
 
+    // Método específico para agregar el protoboard al panel y enviarlo al fondo
     private void agregarProto(Node elemento) {
         elementos.add(elemento);
         Anchor_PanelFondo.getChildren().add(elemento);
-        elemento.toBack();
+        elemento.toBack(); // Envía el protoboard al fondo para que otros elementos estén encima
     }
 
-
+    // Método para configurar la selección de un elemento al hacer clic
     private void seleccionar(Node elemento) {
         elemento.setOnMouseClicked(mouseEvent -> {
-            elemento_seleccionado = elemento;
-            elemento.toFront();
+            elemento_seleccionado = elemento; // Establece el elemento como seleccionado
+            elemento.toFront(); // Trae el elemento al frente
         });
     }
 
+    // Acción al hacer clic en el botón para agregar un Cable
     @FXML
     void Click_Cable(ActionEvent event) {
         System.out.println("Se ha agregado un cable");
 
+        // Crear un nuevo cable con posiciones iniciales
         Cable cable = new Cable(50, 50, 150, 150);
-        cable.toFront();
-        agregar(cable);
+        cable.toFront(); // Traer el cable al frente
+        agregar(cable); // Agregar el cable al panel y a la lista
 
-
-
-
-        for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
-            if (elementos.get(i) instanceof Prototipo_Protoboard) { //Se busca un protoboard
-                cable.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra se setea en el cable
+        // Asignar el protoboard y la batería al cable si existen
+        for (int i = 0 ; i < elementos.size() ; i++) {
+            if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                cable.setProtoboard((Prototipo_Protoboard)elementos.get(i));
             }
-            if (elementos.get(i) instanceof Bateria) { //busca una bateria
-                cable.setBateria((Bateria) elementos.get(i)); //si lo encuentra se setea en el cable
+            if (elementos.get(i) instanceof Bateria) {
+                cable.setBateria((Bateria) elementos.get(i));
             }
-
         }
-
     }
 
+    // Acción al hacer clic en el botón para agregar un Chip
     @FXML
     void Click_Chip(ActionEvent event) {
         System.out.println("Se ha agregado un chip");
-        Chip chip= new Chip();
+        Chip chip = new Chip();
         agregar(chip);
         chip.toFront();
 
+        // Asignar el protoboard al chip si existe
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
@@ -93,15 +93,15 @@ public class Controller_Builder {
         }
     }
 
+    // Acción al hacer clic en el botón para agregar un LED
     @FXML
     void Click_Led(ActionEvent event) {
         System.out.println("Se ha agregado un led");
         LED led = new LED();
         led.toFront();
-        agregar(led); // Agrega el LED a la escena y a la lista 'elementos'
+        agregar(led); // Agrega el LED al panel y a la lista de elementos
 
-
-        // Buscar el protoboard en la lista de elementos
+        // Buscar y asignar el protoboard al LED si existe
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
@@ -112,10 +112,12 @@ public class Controller_Builder {
         }
     }
 
+    // Acción al hacer clic en el botón para agregar una Resistencia
     @FXML
     void Click_Resistencia(ActionEvent event) {
         System.out.println("Se ha agregado una resistencia");
 
+        // Crear un diálogo para ingresar el valor de la resistencia
         Dialog<Double> dialog = new Dialog<>();
         dialog.setTitle("Ingresar valor de resistencia");
 
@@ -124,9 +126,11 @@ public class Controller_Builder {
         unidades.getItems().addAll("Ω", "kΩ", "MΩ");
         unidades.setValue("Ω");
 
+        // Configurar el contenido del diálogo
         VBox vbox = new VBox(new Label("Valor de Resistencia:"), inputValor, new Label("Unidades:"), unidades);
         dialog.getDialogPane().setContent(vbox);
 
+        // Manejar el evento de presionar ENTER en el campo de texto
         inputValor.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().toString().equals("ENTER")) {
                 String valorTexto = inputValor.getText();
@@ -135,13 +139,16 @@ public class Controller_Builder {
                         double valor = Double.parseDouble(valorTexto);
                         String unidad = unidades.getValue();
 
+                        // Convertir el valor según la unidad seleccionada
                         if (unidad.equals("kΩ")) valor *= 1000;
                         else if (unidad.equals("MΩ")) valor *= 1_000_000;
 
+                        // Crear y agregar la resistencia
                         Resistencia resistencia = new Resistencia(valor);
                         resistencia.toFront();
                         agregar(resistencia);
 
+                        // Asignar el protoboard a la resistencia si existe
                         for (int i = 0; i < elementos.size(); i++) {
                             if (elementos.get(i) instanceof Prototipo_Protoboard) {
                                 resistencia.setProtoboard((Prototipo_Protoboard)elementos.get(i));
@@ -157,10 +164,10 @@ public class Controller_Builder {
                 }
             }
         });
-        dialog.showAndWait();
+        dialog.showAndWait(); // Mostrar el diálogo y esperar
     }
 
-
+    // Acción al hacer clic en el botón para agregar un Switch
     @FXML
     void Click_Switch(ActionEvent event) {
         System.out.println("Se ha agregado un switch");
@@ -168,8 +175,7 @@ public class Controller_Builder {
         swich.toFront();
         agregar(swich);
 
-
-
+        // Asignar el protoboard y el LED al switch si existen
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 swich.setProtoboard((Prototipo_Protoboard) elemento);
@@ -180,12 +186,15 @@ public class Controller_Builder {
         }
     }
 
+    // Acción al hacer clic en el botón para agregar un Switch de 8 posiciones
     @FXML
     void Click_Switch8(ActionEvent event) {
         System.out.println("Se ha agregado un switch de 8 posiciones");
         Switch_8 switch8 = new Switch_8();
         switch8.toFront();
         agregar(switch8);
+
+        // Asignar el protoboard y el LED al switch de 8 posiciones si existen
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
@@ -196,66 +205,73 @@ public class Controller_Builder {
         }
     }
 
+    // Acción al hacer clic en el botón para agregar una Batería
     @FXML
     void Click_Bateria(ActionEvent event) {
+        // Verificar si ya existe una batería en la lista de elementos
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
-        Motor motor= new Motor();
+
+        // Crear y agregar un motor
+        Motor motor = new Motor();
         agregarProto(motor);
 
-
         if (existe) {
+            // Mostrar alerta si ya hay una batería
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
             alert.setHeaderText(null);
             alert.setContentText("Ya existe una batería en la pantalla. :p");
-            alert.showAndWait();  // Mostrar el mensaje
+            alert.showAndWait(); // Mostrar el mensaje
         } else {
+            // Crear y agregar la batería
             Bateria bateria = new Bateria();
             bateria.toFront();
             System.out.println("Se ha agregado una batería");
             agregar(bateria);
             motor.setBateria(bateria);
-            for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
-                if (elementos.get(i) instanceof Prototipo_Protoboard) { //se busca un cable
-                    motor.setProtoboard((Prototipo_Protoboard)elementos.get(i)); //si lo encuentra lo setea en la proto
+
+            // Asignar el protoboard al motor si existe
+            for (int i = 0 ; i < elementos.size() ; i++) {
+                if (elementos.get(i) instanceof Prototipo_Protoboard) {
+                    motor.setProtoboard((Prototipo_Protoboard)elementos.get(i));
                 }
-
             }
-
-
         }
     }
 
+    // Acción al hacer clic en el botón para agregar un Protoboard
     @FXML
     void Click_Proto(ActionEvent event) {
+        // Verificar si ya existe un protoboard en la lista de elementos
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Prototipo_Protoboard);
 
         if (existe) {
+            // Mostrar alerta si ya hay un protoboard
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
             alert.setHeaderText(null);
             alert.setContentText("Ya existe un protoboard en la pantalla. :p");
             alert.showAndWait();
         } else {
+            // Crear y agregar el protoboard
             Prototipo_Protoboard proto = new Prototipo_Protoboard();
             proto.toFront();
             System.out.println("Se ha agregado un protoboard");
             agregarProto(proto);
 
-
-
-            for (int i = 0 ; i < elementos.size() ; i++) { //se busca en la lista de elementos agregados
-                if (elementos.get(i) instanceof Cable) { //se busca un cable
-                    ((Cable) elementos.get(i)).setProtoboard(proto); //si lo encuentra lo setea en la proto
+            // Asignar el protoboard a los cables y LEDs existentes
+            for (int i = 0 ; i < elementos.size() ; i++) {
+                if (elementos.get(i) instanceof Cable) {
+                    ((Cable) elementos.get(i)).setProtoboard(proto);
                 }
-                if (elementos.get(i) instanceof LED) { //Se busca un led
-                    ((LED) elementos.get(i)).setProtoboard(proto); //si lo encuentra lo setea en el proto
+                if (elementos.get(i) instanceof LED) {
+                    ((LED) elementos.get(i)).setProtoboard(proto);
                 }
             }
-
         }
     }
 
+    // Acción al hacer clic en el botón para eliminar un elemento seleccionado
     @FXML
     void Click_Eliminar(ActionEvent event) {
         System.out.println("Se ha eliminado " + elemento_seleccionado);
@@ -265,7 +281,4 @@ public class Controller_Builder {
             elemento_seleccionado = null;
         }
     }
-
-
-
 }
