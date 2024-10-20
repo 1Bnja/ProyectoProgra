@@ -11,6 +11,7 @@ import javafx.scene.shape.Line;
 public class Cable extends Pane {
 
     public Line line;
+
     private Cuadrados inicio;
     private Cuadrados fin;
     private double mouseX, mouseY;
@@ -20,6 +21,7 @@ public class Cable extends Pane {
     Prototipo_Protoboard protoboard;
     private Object componenteInicio;
     private Object componenteFin;
+
 
     public Cable(double startX, double startY, double endX, double endY) {
 
@@ -59,9 +61,9 @@ public class Cable extends Pane {
             } else if (inicio.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
             } else if (inicio.getLugar() == 3) {
-                protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
+               // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
             } else if (inicio.getLugar() == 0) {
-                protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
+                //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
             }
 
             if (protoboard != null) {
@@ -74,6 +76,9 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
+                    // 0= bus1, 1= celda1, 2= celda2, 3= bus2
+                    verifica_cables_protoboard();
+
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -86,6 +91,9 @@ public class Cable extends Pane {
                     inicio.setLugar(1);
                     inicio.setFila(row);
                     inicio.setCol(col);
+
+                    protoboard.addCablesConctados(this);
+
                 }
                 if (abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
@@ -98,6 +106,7 @@ public class Cable extends Pane {
                     inicio.setLugar(2);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_abajo != null) {
                     row = ((GridPane) protoboard.getBus2().getChildren().getFirst()).getRowIndex(bus_abajo);
@@ -110,6 +119,7 @@ public class Cable extends Pane {
                     inicio.setLugar(3);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
@@ -122,6 +132,7 @@ public class Cable extends Pane {
                     inicio.setLugar(0);
                     inicio.setFila(row);
                     inicio.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
             }
 
@@ -171,9 +182,9 @@ public class Cable extends Pane {
             } else if (fin.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
             } else if (fin.getLugar() == 3) {
-                protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
+               // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
             } else if (fin.getLugar() == 0) {
-                protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+               // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
             }
 
             if (protoboard != null) {
@@ -186,6 +197,7 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
+                     verifica_cables_protoboard();
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -199,6 +211,7 @@ public class Cable extends Pane {
                     fin.setLugar(1);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
@@ -211,6 +224,7 @@ public class Cable extends Pane {
                     fin.setLugar(2);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
 
                 }
                 if (bus_abajo != null) {
@@ -225,6 +239,7 @@ public class Cable extends Pane {
                     fin.setLugar(3);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
                 if (bus_arriba != null) {
                     row = ((GridPane) protoboard.getBus1().getChildren().getFirst()).getRowIndex(bus_arriba);
@@ -238,6 +253,7 @@ public class Cable extends Pane {
                     fin.setLugar(0);
                     fin.setFila(row);
                     fin.setCol(col);
+                    protoboard.addCablesConctados(this);
                 }
             }
 
@@ -275,6 +291,69 @@ public class Cable extends Pane {
         });
 
         this.getChildren().addAll(line, inicio, fin);
+    }
+
+    private void verifica_cables_protoboard() {
+
+        if(inicio.getLugar() == 0) {
+            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+
+        }
+        if(inicio.getLugar() == 1) {
+            protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+            valida_cables(1, protoboard.getCelda1(), this);
+        }
+        if(inicio.getLugar() == 2) {
+            protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+            valida_cables(2, protoboard.getCelda2(), this);
+        }
+        if(inicio.getLugar() == 3) {
+            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+            setSignoColor(inicio.getFila(), inicio.getCol(), 0);
+
+        }
+        if(fin.getLugar() == 0){
+            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+        }
+        if(fin.getLugar() == 1){
+            protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+
+            valida_cables(1, protoboard.getCelda1(), this);
+
+        }
+        if(fin.getLugar() == 2){
+            protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+            valida_cables(2, protoboard.getCelda2(), this);
+        }
+        if(fin.getLugar() == 3){
+            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+            setSignoColor(fin.getFila(), fin.getCol(), 0);
+        }
+    }
+
+    private void valida_cables(int lugar, Celdas celda, Cable c) {
+        for (int i=0; i < protoboard.getCablesConctados().size(); i++){
+            if(!protoboard.getCablesConctados().get(i).equals(c) &&
+                    (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar || protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar)
+                    && (protoboard.getCablesConctados().get(i).getInicio().getCol() == inicio.getCol() || protoboard.getCablesConctados().get(i).getFin().getCol() == fin.getCol()) ){
+                if (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar){
+                    celda.alternarColumna(protoboard.getCablesConctados().get(i).getInicio().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
+                }
+                if (protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar){
+                    celda.alternarColumna(protoboard.getCablesConctados().get(i).getFin().getCol(), 0);
+                    protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
+                }
+
+            }
+
+        }
     }
 
     public void actualizarColorDesdeTerminal(Cuadrados terminal) {
@@ -315,6 +394,28 @@ public class Cable extends Pane {
             line.setStroke(Color.OLIVE);
             inicio.setFill(Color.OLIVE);
             fin.setFill(Color.OLIVE);
+        }
+    }
+
+    public void signoBateria( int signo, Cuadrados a, Cuadrados b, Line l) {
+        // Pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
+
+        if (signo == -1) {
+            a.setFill(Color.BLUE);
+            b.setFill(Color.BLUE);
+            l.setStroke(Color.BLUE);
+        } else if (signo == 1) {
+            a.setFill(Color.RED);
+            b.setFill(Color.RED);
+            l.setStroke(Color.RED);
+        } else if (signo == 0) {
+            l.setStroke(Color.BLACK);
+            a.setFill(Color.BLACK);
+            b.setFill(Color.BLACK);
+        } else if (signo == 2) {
+            l.setStroke(Color.OLIVE);
+            a.setFill(Color.OLIVE);
+            b.setFill(Color.OLIVE);
         }
     }
 
@@ -396,6 +497,25 @@ public class Cable extends Pane {
     public void setBateria(Bateria bateria) {
         this.bateria = bateria;
     }
+
+
+    public Cuadrados getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Cuadrados inicio) {
+        this.inicio = inicio;
+    }
+
+    public Cuadrados getFin() {
+        return fin;
+    }
+
+    public void setFin(Cuadrados fin) {
+        this.fin = fin;
+    }
+
+
 
     private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
         if (mouseX >= bateria.getConectorPositivo().getX() &&

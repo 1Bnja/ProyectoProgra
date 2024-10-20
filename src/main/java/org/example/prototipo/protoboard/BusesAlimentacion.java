@@ -134,4 +134,31 @@ public class BusesAlimentacion extends Group {
         }
 
     }
+
+    public void onOff( int signo, boolean trueColor) {
+        Color color = Color.WHITE;
+        if(!trueColor) {
+            if (signo == -1) {
+                color = Color.BLUE;
+            } else if (signo == 1) {
+                color = Color.RED;
+            } else {
+                color = Color.WHITE;
+            }
+        }
+        for(List<Cuadrados> c : buses)
+            for (Cuadrados col : c) {
+                if(trueColor) {
+                    if (col.getSigno() == -1) {
+                        color = Color.BLUE;
+                    } else if (col.getSigno() == 1) {
+                        color = Color.RED;
+                    } else {
+                            color = Color.WHITE;
+                    }
+                }
+                col.setFill(color);
+            }
+    }
+
 }

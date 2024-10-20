@@ -23,6 +23,7 @@ public class Celdas extends Group {
     public Cuadrados cuadradoSeleccionado2;
     private Prototipo_Protoboard protoboard;
 
+
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
 
         this.protoboard = protoboard;
@@ -148,7 +149,36 @@ public class Celdas extends Group {
         }
 
         Prototipo_Protoboard.notificarComponentesConectados();
+
     }
+
+    public void onOff( int signo, boolean trueColor) {
+        Color color= Color.WHITE;
+
+        if(!trueColor) {
+            if (signo == -1) {
+                color = Color.BLUE;
+            } else if (signo == 1) {
+                color = Color.RED;
+            } else {
+                color = Color.WHITE;
+            }
+        }
+        for(List<Cuadrados> c : grid)
+            for (Cuadrados col : c) {
+                if(trueColor) {
+                    if (col.getSigno() == -1) {
+                        color = Color.BLUE;
+                    } else if (col.getSigno() == 1) {
+                        color = Color.RED;
+                    } else {
+                        color = Color.WHITE;
+                    }
+                }
+                    col.setFill(color);
+            }
+    }
+
 
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
