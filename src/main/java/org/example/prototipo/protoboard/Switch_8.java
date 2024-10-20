@@ -55,13 +55,6 @@ public class Switch_8 extends Pane {
 
         // Crear los botones del switch
         Cuadrados boton1 = crearBoton(origenX - 410, origenY - 94);
-        Cuadrados boton2 = crearBoton(origenX - 433, origenY - 94);
-        Cuadrados boton3 = crearBoton(origenX - 458, origenY - 94);
-        Cuadrados boton4 = crearBoton(origenX - 483, origenY - 94);
-        Cuadrados boton5 = crearBoton(origenX - 508, origenY - 94);
-        Cuadrados boton6 = crearBoton(origenX - 533, origenY - 94);
-        Cuadrados boton7 = crearBoton(origenX - 560, origenY - 94);
-        Cuadrados boton8 = crearBoton(origenX - 583, origenY - 94);
 
         // Crear las patas superiores (de derecha a izquierda)
         pata1 = crearLinea(origenX - 405, origenY - 105, origenX - 405, origenY - 125);
@@ -130,7 +123,7 @@ public class Switch_8 extends Pane {
 
         // Añadir todos los elementos al grupo nodo
         nodo.getChildren().addAll(
-                fondoCuadradoE, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8,
+                fondoCuadradoE, boton1,
                 lineaSuperiorCE, lineaInferiorCE, lineaIzquierdaCE, lineaDerechaCE,
                 pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8,
                 pata12, pata22, pata32, pata42, pata52, pata62, pata72, pata82,
@@ -157,16 +150,9 @@ public class Switch_8 extends Pane {
         boton.setOnMouseClicked(event -> {
             if (encendido) {
                 System.out.println("Interruptor apagado");
+                desconectarPatas();
             } else {
-                if (fin1.getSigno() != 0 && fin12.getSigno() == 0) {
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida + 2, fin12.getSigno());
-                } else if (fin1.getSigno() == 0 && fin12.getSigno() != 0) {
-                    fin1.setSigno(fin12.getSigno());
-                    protoboard.getCelda1().alternarColumna(columnaSalida + 2, fin12.getSigno());
-                } else {
-                    System.out.println("No se pudo cambiar el estado del interruptor");
-                }
+                conectarPatas();
             }
             encendido = !encendido; // Cambiar estado
             Prototipo_Protoboard.notificarComponentesConectados();
@@ -365,22 +351,64 @@ public class Switch_8 extends Pane {
 
     // Método para actualizar las conexiones de todas las patas
     private void actualizarConexionesPatas() {
-        verificarConexionPata(fin1, pata1, 2);
+        verificarConexionPata(fin1, pata1, 1);
         verificarConexionPata(fin2, pata2, 1);
-        verificarConexionPata(fin3, pata3, 2);
+        verificarConexionPata(fin3, pata3, 1);
         verificarConexionPata(fin4, pata4, 1);
-        verificarConexionPata(fin5, pata5, 2);
+        verificarConexionPata(fin5, pata5, 1);
         verificarConexionPata(fin6, pata6, 1);
-        verificarConexionPata(fin7, pata7, 2);
+        verificarConexionPata(fin7, pata7, 1);
         verificarConexionPata(fin8, pata8, 1);
         verificarConexionPata(fin12, pata12, 2);
-        verificarConexionPata(fin22, pata22, 1);
+        verificarConexionPata(fin22, pata22, 2);
         verificarConexionPata(fin32, pata32, 2);
-        verificarConexionPata(fin42, pata42, 1);
+        verificarConexionPata(fin42, pata42, 2);
         verificarConexionPata(fin52, pata52, 2);
-        verificarConexionPata(fin62, pata62, 1);
+        verificarConexionPata(fin62, pata62, 2);
         verificarConexionPata(fin72, pata72, 2);
-        verificarConexionPata(fin82, pata82, 1);
+        verificarConexionPata(fin82, pata82, 2);
+    }
+
+    // Método para conectar todas las patas
+    private void conectarPatas() {
+        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
+        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
+
+        for (int i = 0; i < entradas.length; i++) {
+            Cuadrados entrada = entradas[i];
+            Cuadrados salida = salidas[i];
+
+            if (entrada.getSigno() != 0 && salida.getSigno() == 0) {
+                salida.setSigno(entrada.getSigno());
+                // Actualizar la columna correspondiente en el protoboard
+                if (protoboard != null) {
+                    protoboard.getCelda2().alternarColumna(columnaSalida + i, salida.getSigno());
+                }
+            } else if (entrada.getSigno() == 0 && salida.getSigno() != 0) {
+                entrada.setSigno(salida.getSigno());
+                if (protoboard != null) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada + i, entrada.getSigno());
+                }
+            } else {
+                System.out.println("No se pudo cambiar el estado del interruptor para la pata " + (i + 1));
+            }
+        }
+    }
+
+    // Método para desconectar todas las patas
+    private void desconectarPatas() {
+        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
+        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
+
+        for (int i = 0; i < entradas.length; i++) {
+            entradas[i].setSigno(0);
+            salidas[i].setSigno(0);
+            // Actualizar la columna correspondiente en el protoboard para reflejar la desconexión
+            if (protoboard != null) {
+                protoboard.getCelda1().alternarColumna(columnaEntrada + i, 0);
+                protoboard.getCelda2().alternarColumna(columnaSalida + i, 0);
+            }
+        }
     }
 
     // Getters y setters para el protoboard y el LED
@@ -415,5 +443,53 @@ public class Switch_8 extends Pane {
 
     public Cuadrados getFin4() {
         return fin4;
+    }
+
+    public Cuadrados getFin5() {
+        return fin5;
+    }
+
+    public Cuadrados getFin6() {
+        return fin6;
+    }
+
+    public Cuadrados getFin7() {
+        return fin7;
+    }
+
+    public Cuadrados getFin8() {
+        return fin8;
+    }
+
+    public Cuadrados getFin12() {
+        return fin12;
+    }
+
+    public Cuadrados getFin22() {
+        return fin22;
+    }
+
+    public Cuadrados getFin32() {
+        return fin32;
+    }
+
+    public Cuadrados getFin42() {
+        return fin42;
+    }
+
+    public Cuadrados getFin52() {
+        return fin52;
+    }
+
+    public Cuadrados getFin62() {
+        return fin62;
+    }
+
+    public Cuadrados getFin72() {
+        return fin72;
+    }
+
+    public Cuadrados getFin82() {
+        return fin82;
     }
 }

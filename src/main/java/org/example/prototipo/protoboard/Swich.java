@@ -167,7 +167,7 @@ public class Swich extends Pane {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.RED);
+        point.setFill(Color.ORANGE);
         return point;
     }
 

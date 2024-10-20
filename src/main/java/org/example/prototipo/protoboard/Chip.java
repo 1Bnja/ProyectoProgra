@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Chip extends Pane {
     private Group nodo = new Group();
@@ -52,24 +54,34 @@ public class Chip extends Pane {
     public Chip() {
 
         // Crear el cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 485 , origenY - 105, origenX - 570 , origenY - 105 );
-        Line lineaInferiorCE = crearLinea(origenX - 485, origenY - 35 , origenX - 570 , origenY - 35 );
-        Line lineaIzquierdaCE = crearLinea(origenX - 485 , origenY - 105 , origenX - 485 , origenY - 35 );
-        Line lineaDerechaCE = crearLinea(origenX - 570 , origenY - 105 , origenX - 570 , origenY - 35 );
+        Line lineaSuperiorCE = crearLinea(origenX - 485, origenY - 105, origenX - 570, origenY - 105);
+        Line lineaInferiorCE = crearLinea(origenX - 485, origenY - 35, origenX - 570, origenY - 35);
+        Line lineaIzquierdaCE = crearLinea(origenX - 485, origenY - 105, origenX - 485, origenY - 35);
+        Line lineaDerechaCE = crearLinea(origenX - 570, origenY - 105, origenX - 570, origenY - 35);
 
         // Crear las patas del chip
-        pata1 = crearLinea(origenX - 565 , origenY - 105 , origenX - 565 , origenY - 125 );
-        pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541 , origenY - 125 );
-        pata3 = crearLinea(origenX - 517, origenY - 105 , origenX - 517 , origenY - 125 );
-        pata4 = crearLinea(origenX - 493 , origenY - 105 , origenX - 493, origenY - 125 );
+        pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
+        pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
+        pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
+        pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
 
-        pata5 = crearLinea(origenX - 565, origenY - 35 , origenX - 565, origenY - 15 );
-        pata6 = crearLinea(origenX - 541, origenY - 35 , origenX - 541, origenY - 15 );
-        pata7 = crearLinea(origenX - 517, origenY - 35 , origenX - 517, origenY - 15 );
-        pata8 = crearLinea(origenX - 493, origenY - 35 , origenX - 493, origenY - 15 );
+        pata5 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata6 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
+        pata7 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
+        pata8 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
 
         // Crear el fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 485 , origenY - 105, origenX - 570 , origenY - 35 , Color.BLACK);
+        Polygon fondoCuadradoE = crearFondo(origenX - 485, origenY - 105, origenX - 570, origenY - 35, Color.BLACK);
+
+        // **Agregar el texto "CHIP" en el centro**
+        Text textoChip = new Text("CHIP");
+        textoChip.setFill(Color.WHITE);
+        textoChip.setFont(Font.font("Arial", 18));
+        // Posicionar el texto en el centro del chip
+        double centerX = (origenX - 485 + origenX - 570) / 2 - textoChip.getLayoutBounds().getWidth() / 2;
+        double centerY = (origenY - 105 + origenY - 35) / 2 + textoChip.getLayoutBounds().getHeight() / 4;
+        textoChip.setX(centerX);
+        textoChip.setY(centerY);
 
         // Crear los puntos estirables en las patas
         fin1 = Esquina_Estirable(pata1);
@@ -98,7 +110,8 @@ public class Chip extends Pane {
         nodo.getChildren().addAll(
                 fondoCuadradoE, lineaSuperiorCE, lineaInferiorCE, lineaIzquierdaCE, lineaDerechaCE,
                 pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8,
-                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8
+                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8,
+                textoChip // Añadir el texto al grupo
         );
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
@@ -129,7 +142,7 @@ public class Chip extends Pane {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.RED);
+        point.setFill(Color.ORANGE);
         return point;
     }
 

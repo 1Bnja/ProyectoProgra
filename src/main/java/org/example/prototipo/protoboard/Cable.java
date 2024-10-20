@@ -32,10 +32,10 @@ public class Cable extends Pane {
         // Crear los extremos del cable utilizando la clase Cuadrados
         inicio = new Cuadrados(12, 2);
         fin = new Cuadrados(12, 2);
-        inicio.setFillColor(Color.RED);
+        inicio.setFillColor(Color.ORANGE);
         inicio.setSigno(0);
         fin.setSigno(0);
-        fin.setFillColor(Color.RED);
+        fin.setFillColor(Color.ORANGE);
 
         // Establecer las posiciones iniciales de los extremos
         inicio.setX(startX - inicio.getWidth() / 2);
