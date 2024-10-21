@@ -1,4 +1,5 @@
 package org.example.prototipo.protoboard;
+
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -9,343 +10,96 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
-public class Switch_8 extends Pane{
+public class Switch_8 extends Pane {
 
     private Group nodo = new Group();
 
+    // Definición de las esquinas estirables y las patas del interruptor
     private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8;
     private Cuadrados fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82;
     private Line pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8;
     private Line pata12, pata22, pata32, pata42, pata52, pata62, pata72, pata82;
 
-    // Posición del mouse
+    // Posición del mouse para manejar el arrastre
     private double mouseX;
     private double mouseY;
     private boolean line_en_arrastre = false;
 
+    // Coordenadas de origen
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
+    // Referencias al protoboard y al LED
     Prototipo_Protoboard protoboard;
     LED led;
     int celda;
     int colum_1, colum_2;
 
+    // Estado del interruptor
     boolean encendido;
 
+    // Variables para almacenar la posición de entrada y salida
     int filaEntrada, columnaEntrada;
     int filaSalida, columnaSalida;
 
+    // Constructor de la clase Switch_8
     public Switch_8() {
 
         this.encendido = false;
 
-        // Cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 400 , origenY - 105 , origenX - 588 , origenY - 105 );
-        Line lineaInferiorCE = crearLinea(origenX - 400 , origenY - 35 , origenX - 588 , origenY - 35 );
-        Line lineaIzquierdaCE = crearLinea(origenX - 400 , origenY - 105 , origenX - 400 , origenY - 35 );
-        Line lineaDerechaCE = crearLinea(origenX - 588 , origenY - 105 , origenX - 588 , origenY - 35 );
-
-        //botones
-        Cuadrados boton1 = new Cuadrados(7, 0);
-        boton1.setheidht(50);
-        boton1.setTranslateX(origenX - 410 );
-        boton1.setTranslateY(origenY - 94);
-        boton1.setFill(Color.BLACK);
-
-
-
-        boton1.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida+2, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida+2, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton2 = new Cuadrados(7, 0);
-        boton2.setheidht(50);
-        boton2.setTranslateX(origenX - 433 );
-        boton2.setTranslateY(origenY - 94);
-        boton2.setFill(Color.BLACK);
-
-        boton2.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-
-        Cuadrados boton3 = new Cuadrados(7, 0);
-        boton3.setheidht(50);
-        boton3.setTranslateX(origenX - 458 );
-        boton3.setTranslateY(origenY - 94);
-        boton3.setFill(Color.BLACK);
-
-        boton3.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton4 = new Cuadrados(7, 0);
-        boton4.setheidht(50);
-        boton4.setTranslateX(origenX - 483 );
-        boton4.setTranslateY(origenY - 94);
-        boton4.setFill(Color.BLACK);
-
-        boton4.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton5 = new Cuadrados(7, 0);
-        boton5.setheidht(50);
-        boton5.setTranslateX(origenX - 508 );
-        boton5.setTranslateY(origenY - 94);
-        boton5.setFill(Color.BLACK);
-
-        boton5.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton6 = new Cuadrados(7, 0);
-        boton6.setheidht(50);
-        boton6.setTranslateX(origenX - 533 );
-        boton6.setTranslateY(origenY - 94);
-        boton6.setFill(Color.BLACK);
-
-        boton6.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton7 = new Cuadrados(7, 0);
-        boton7.setheidht(50);
-        boton7.setTranslateX(origenX - 560 );
-        boton7.setTranslateY(origenY - 94);
-        boton7.setFill(Color.BLACK);
-
-        boton7.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        Cuadrados boton8 = new Cuadrados(7, 0);
-        boton8.setheidht(50);
-        boton8.setTranslateX(origenX - 583 );
-        boton8.setTranslateY(origenY - 94);
-        boton8.setFill(Color.BLACK);
-
-        boton8.setOnMouseClicked(event -> {
-            if (encendido) {
-
-                System.out.println("kie");
-
-            } else {
-                if(fin1.getSigno()!=0 && fin12.getSigno()==0 ){
-                    fin12.setSigno(fin1.getSigno());
-                    protoboard.getCelda2().alternarColumna(columnaSalida, fin12.getSigno());
-                }
-            } if(fin1.getSigno()==0 && fin12.getSigno()!=0){
-                fin1.setSigno(fin12.getSigno());
-                protoboard.getCelda1().alternarColumna(columnaSalida, fin12.getSigno());
-            }
-            else{
-                System.out.println("No se que esta pasandoooooooo");
-            }
-
-            encendido = !encendido; // Cambiar estado
-
-
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
-
-        // Patas arriba (derecha a izquierda)
-        pata1 = crearLinea(origenX - 405 , origenY - 105 , origenX - 405 , origenY - 125 );
-        pata2 = crearLinea(origenX - 430 , origenY - 105 , origenX - 430, origenY - 125 );
-        pata3 = crearLinea(origenX - 455 , origenY - 105 , origenX - 455, origenY - 125 );
-        pata4 = crearLinea(origenX - 480 , origenY - 105, origenX - 480, origenY - 125 );
-        pata5 = crearLinea(origenX - 505 , origenY - 105, origenX - 505, origenY - 125);
-        pata6 = crearLinea(origenX - 530 , origenY - 105, origenX - 530, origenY - 125);
-        pata7 = crearLinea(origenX - 555 , origenY - 105, origenX - 555, origenY - 125);
-        pata8 = crearLinea(origenX - 579 , origenY - 105, origenX - 580, origenY - 125);
-
-        //Patas abajo
-        pata12 = crearLinea(origenX - 405 , origenY - 35 , origenX - 405 , origenY -15 );
-        pata22 = crearLinea(origenX - 430 , origenY - 35 , origenX - 430, origenY - 15 );
-        pata32 = crearLinea(origenX - 455 , origenY - 35 , origenX - 455, origenY - 15 );
-        pata42 = crearLinea(origenX - 480 , origenY - 35, origenX - 480, origenY - 15 );
-        pata52 = crearLinea(origenX - 505 , origenY - 35, origenX - 505, origenY - 15);
-        pata62 = crearLinea(origenX - 530 , origenY - 35, origenX - 530, origenY - 15);
-        pata72 = crearLinea(origenX - 555 , origenY - 35, origenX - 555, origenY - 15);
-        pata82 = crearLinea(origenX - 579 , origenY - 35, origenX - 580, origenY - 15);
-
-        // Fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 400 , origenY - 105 , origenX - 588 , origenY - 35 , Color.GAINSBORO);
-        fin1 = Esquina_Estirable(pata1);
-        fin1.setLugar(1);
-        fin2 = Esquina_Estirable(pata2);
-        fin2.setLugar(1);
-        fin3 = Esquina_Estirable(pata3);
-        fin3.setLugar(1);
-        fin4 = Esquina_Estirable(pata4);
-        fin4.setLugar(1);
-        fin5 = Esquina_Estirable(pata5);
-        fin5.setLugar(1);
-        fin6 = Esquina_Estirable(pata6);
-        fin6.setLugar(1);
-        fin7 = Esquina_Estirable(pata7);
-        fin7.setLugar(1);
-        fin8 = Esquina_Estirable(pata8);
-        fin8.setLugar(1);
-
-        fin12= Esquina_Estirable(pata12);
-        fin12.setLugar(2);
-        fin22= Esquina_Estirable(pata22);
-        fin22.setLugar(2);
-        fin32= Esquina_Estirable(pata32);
-        fin32.setLugar(2);
-        fin42= Esquina_Estirable(pata42);
-        fin42.setLugar(2);
-        fin52= Esquina_Estirable(pata52);
-        fin52.setLugar(2);
-        fin62= Esquina_Estirable(pata62);
-        fin62.setLugar(2);
-        fin72= Esquina_Estirable(pata72);
-        fin72.setLugar(2);
-        fin82= Esquina_Estirable(pata82);
-        fin82.setLugar(2);
-
+        // Crear el cuadrado exterior usando líneas
+        Line lineaSuperiorCE = crearLinea(origenX - 400, origenY - 105, origenX - 588, origenY - 105);
+        Line lineaInferiorCE = crearLinea(origenX - 400, origenY - 35, origenX - 588, origenY - 35);
+        Line lineaIzquierdaCE = crearLinea(origenX - 400, origenY - 105, origenX - 400, origenY - 35);
+        Line lineaDerechaCE = crearLinea(origenX - 588, origenY - 105, origenX - 588, origenY - 35);
+
+        // Crear los botones del switch
+        Cuadrados boton1 = crearBoton(origenX - 410, origenY - 94);
+
+        // Crear las patas superiores (de derecha a izquierda)
+        pata1 = crearLinea(origenX - 405, origenY - 105, origenX - 405, origenY - 125);
+        pata2 = crearLinea(origenX - 430, origenY - 105, origenX - 430, origenY - 125);
+        pata3 = crearLinea(origenX - 455, origenY - 105, origenX - 455, origenY - 125);
+        pata4 = crearLinea(origenX - 480, origenY - 105, origenX - 480, origenY - 125);
+        pata5 = crearLinea(origenX - 505, origenY - 105, origenX - 505, origenY - 125);
+        pata6 = crearLinea(origenX - 530, origenY - 105, origenX - 530, origenY - 125);
+        pata7 = crearLinea(origenX - 555, origenY - 105, origenX - 555, origenY - 125);
+        pata8 = crearLinea(origenX - 579, origenY - 105, origenX - 580, origenY - 125);
+
+        // Crear las patas inferiores
+        pata12 = crearLinea(origenX - 405, origenY - 35, origenX - 405, origenY - 15);
+        pata22 = crearLinea(origenX - 430, origenY - 35, origenX - 430, origenY - 15);
+        pata32 = crearLinea(origenX - 455, origenY - 35, origenX - 455, origenY - 15);
+        pata42 = crearLinea(origenX - 480, origenY - 35, origenX - 480, origenY - 15);
+        pata52 = crearLinea(origenX - 505, origenY - 35, origenX - 505, origenY - 15);
+        pata62 = crearLinea(origenX - 530, origenY - 35, origenX - 530, origenY - 15);
+        pata72 = crearLinea(origenX - 555, origenY - 35, origenX - 555, origenY - 15);
+        pata82 = crearLinea(origenX - 579, origenY - 35, origenX - 580, origenY - 15);
+
+        // Crear el fondo del cuadrado exterior
+        Polygon fondoCuadradoE = crearFondo(origenX - 400, origenY - 105, origenX - 588, origenY - 35, Color.GAINSBORO);
+
+        // Crear las esquinas estirables en las patas superiores
+        fin1 = crearEsquinaEstirable(pata1, 1);
+        fin2 = crearEsquinaEstirable(pata2, 1);
+        fin3 = crearEsquinaEstirable(pata3, 1);
+        fin4 = crearEsquinaEstirable(pata4, 1);
+        fin5 = crearEsquinaEstirable(pata5, 1);
+        fin6 = crearEsquinaEstirable(pata6, 1);
+        fin7 = crearEsquinaEstirable(pata7, 1);
+        fin8 = crearEsquinaEstirable(pata8, 1);
+
+        // Crear las esquinas estirables en las patas inferiores
+        fin12 = crearEsquinaEstirable(pata12, 2);
+        fin22 = crearEsquinaEstirable(pata22, 2);
+        fin32 = crearEsquinaEstirable(pata32, 2);
+        fin42 = crearEsquinaEstirable(pata42, 2);
+        fin52 = crearEsquinaEstirable(pata52, 2);
+        fin62 = crearEsquinaEstirable(pata62, 2);
+        fin72 = crearEsquinaEstirable(pata72, 2);
+        fin82 = crearEsquinaEstirable(pata82, 2);
+
+        // Configurar el arrastre para cada esquina estirable
         configurarArrastre(fin1, pata1, 1);
         configurarArrastre(fin2, pata2, 1);
         configurarArrastre(fin3, pata3, 1);
@@ -355,34 +109,66 @@ public class Switch_8 extends Pane{
         configurarArrastre(fin7, pata7, 1);
         configurarArrastre(fin8, pata8, 1);
 
-        configurarArrastre(fin12,pata12,2);
-        configurarArrastre(fin22,pata22,2);
-        configurarArrastre(fin32,pata32,2);
-        configurarArrastre(fin42,pata42,2);
-        configurarArrastre(fin52,pata52,2);
-        configurarArrastre(fin62,pata62,2);
-        configurarArrastre(fin72,pata72,2);
-        configurarArrastre(fin82,pata82,2);
+        configurarArrastre(fin12, pata12, 2);
+        configurarArrastre(fin22, pata22, 2);
+        configurarArrastre(fin32, pata32, 2);
+        configurarArrastre(fin42, pata42, 2);
+        configurarArrastre(fin52, pata52, 2);
+        configurarArrastre(fin62, pata62, 2);
+        configurarArrastre(fin72, pata72, 2);
+        configurarArrastre(fin82, pata82, 2);
 
-        // Mover el nodo completo
+        // Configurar el arrastre para el nodo completo (interruptor)
         configurarArrastreNodo();
 
-        // Agregar los elementos al grupo
+        // Añadir todos los elementos al grupo nodo
         nodo.getChildren().addAll(
-                fondoCuadradoE, boton1, boton2,boton3,boton4,boton5,boton6,boton7,boton8,lineaSuperiorCE, lineaInferiorCE,
-                lineaIzquierdaCE, lineaDerechaCE, pata1, pata2, pata3, pata4,pata5,pata6,pata7,pata8,pata12,pata22,pata32,pata42,pata52,pata62,pata72,pata82,fin1,fin2,fin3,fin4,fin5,fin6,fin7,fin8,fin12,fin22,fin32,fin42,fin52,fin62,fin72,fin82);
+                fondoCuadradoE, boton1,
+                lineaSuperiorCE, lineaInferiorCE, lineaIzquierdaCE, lineaDerechaCE,
+                pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8,
+                pata12, pata22, pata32, pata42, pata52, pata62, pata72, pata82,
+                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8,
+                fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82
+        );
 
+        // Añadir el nodo al pane
         this.getChildren().add(nodo);
 
+        // Desactivar la detección de eventos en los límites del pane
         this.setPickOnBounds(false);
     }
 
+    // Método para crear un botón en el interruptor
+    private Cuadrados crearBoton(double x, double y) {
+        Cuadrados boton = new Cuadrados(7, 0);
+        boton.setheidht(50);
+        boton.setTranslateX(x);
+        boton.setTranslateY(y);
+        boton.setFill(Color.BLACK);
+
+        // Evento al hacer clic en el botón
+        boton.setOnMouseClicked(event -> {
+            if (encendido) {
+                System.out.println("Interruptor apagado");
+                desconectarPatas();
+            } else {
+                conectarPatas();
+            }
+            encendido = !encendido; // Cambiar estado
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
+        return boton;
+    }
+
+    // Método para crear una línea entre dos puntos
     private Line crearLinea(double startX, double startY, double endX, double endY) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
     }
 
+    // Método para crear un fondo rectangular usando polígonos
     private Polygon crearFondo(double startX, double startY, double endX, double endY, Color color) {
         Polygon fondo = new Polygon();
         fondo.getPoints().addAll(
@@ -395,26 +181,30 @@ public class Switch_8 extends Pane{
         return fondo;
     }
 
-    private Cuadrados Esquina_Estirable(Line pata) {
+    // Método para crear una esquina estirable en la punta de una pata
+    private Cuadrados crearEsquinaEstirable(Line pata, int lugar) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
         point.setFill(Color.RED);
+        point.setLugar(lugar);
         return point;
     }
 
+    // Método para configurar el arrastre de las esquinas estirables
     private void configurarArrastre(Cuadrados estirable, Line pata, int lado) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e, pata);
             nodo.toFront();
         });
-        estirable.setOnMouseDragged(e -> Arrastre(e, pata, estirable));
+        estirable.setOnMouseDragged(e -> arrastre(e, pata, estirable));
 
         estirable.setOnMouseReleased(event -> {
             verificarConexionPata(estirable, pata, lado);
         });
     }
 
+    // Método para verificar si una pata está conectada a una celda del protoboard
     private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
         double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
         double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
@@ -447,23 +237,24 @@ public class Switch_8 extends Pane{
                 }
             }
 
+            // Establecer el signo de la pata según la celda conectada
             estirable.setSigno(signoCelda);
 
             if (lado == 1) {
-
+                // Lado de entrada
                 filaEntrada = row;
                 columnaEntrada = col;
             } else if (lado == 2) {
-
+                // Lado de salida
                 filaSalida = row;
                 columnaSalida = col;
             }
         }
     }
 
+    // Método para verificar si un punto está sobre una celda específica
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
-
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
 
             if (boundsInScene.contains(mouseX, mouseY)) {
@@ -476,6 +267,7 @@ public class Switch_8 extends Pane{
         return null;
     }
 
+    // Método para configurar el arrastre del nodo completo (interruptor)
     private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
@@ -490,6 +282,7 @@ public class Switch_8 extends Pane{
                 double dX = e.getSceneX() - mouseX;
                 double dY = e.getSceneY() - mouseY;
 
+                // Actualizar la posición del nodo
                 nodo.setLayoutX(nodo.getLayoutX() + dX);
                 nodo.setLayoutY(nodo.getLayoutY() + dY);
 
@@ -501,20 +294,24 @@ public class Switch_8 extends Pane{
         });
 
         nodo.setOnMouseReleased(event -> {
+            // Actualizar las conexiones de las patas al soltar el nodo
             actualizarConexionesPatas();
         });
     }
 
+    // Método que inicia el arrastre al presionar el mouse
     private void empezarArrastre(MouseEvent event, Line pata) {
         line_en_arrastre = true;
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
     }
 
-    private void Arrastre(MouseEvent event, Line line, Cuadrados estirable) {
+    // Método que maneja el arrastre de una pata
+    private void arrastre(MouseEvent event, Line line, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
+        // Actualizar la posición de la línea (pata)
         line.setEndX(line.getEndX() + offsetX);
         line.setEndY(line.getEndY() + offsetY);
 
@@ -526,25 +323,95 @@ public class Switch_8 extends Pane{
         line_en_arrastre = false;
     }
 
+    // Método para actualizar la posición de la esquina estirable según la pata
     private void actualizarEstirable(Cuadrados estirable, Line pata) {
         estirable.setX(pata.getEndX() - 5);
         estirable.setY(pata.getEndY() - 5);
     }
 
+    // Método para actualizar las posiciones de las esquinas estirables al mover el nodo
     private void actualizarPosiciones() {
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
         actualizarEstirable(fin3, pata3);
         actualizarEstirable(fin4, pata4);
+        actualizarEstirable(fin5, pata5);
+        actualizarEstirable(fin6, pata6);
+        actualizarEstirable(fin7, pata7);
+        actualizarEstirable(fin8, pata8);
+        actualizarEstirable(fin12, pata12);
+        actualizarEstirable(fin22, pata22);
+        actualizarEstirable(fin32, pata32);
+        actualizarEstirable(fin42, pata42);
+        actualizarEstirable(fin52, pata52);
+        actualizarEstirable(fin62, pata62);
+        actualizarEstirable(fin72, pata72);
+        actualizarEstirable(fin82, pata82);
     }
 
+    // Método para actualizar las conexiones de todas las patas
     private void actualizarConexionesPatas() {
-        verificarConexionPata(fin1, pata1, 2);
+        verificarConexionPata(fin1, pata1, 1);
         verificarConexionPata(fin2, pata2, 1);
-        verificarConexionPata(fin3, pata3, 2);
+        verificarConexionPata(fin3, pata3, 1);
         verificarConexionPata(fin4, pata4, 1);
+        verificarConexionPata(fin5, pata5, 1);
+        verificarConexionPata(fin6, pata6, 1);
+        verificarConexionPata(fin7, pata7, 1);
+        verificarConexionPata(fin8, pata8, 1);
+        verificarConexionPata(fin12, pata12, 2);
+        verificarConexionPata(fin22, pata22, 2);
+        verificarConexionPata(fin32, pata32, 2);
+        verificarConexionPata(fin42, pata42, 2);
+        verificarConexionPata(fin52, pata52, 2);
+        verificarConexionPata(fin62, pata62, 2);
+        verificarConexionPata(fin72, pata72, 2);
+        verificarConexionPata(fin82, pata82, 2);
     }
 
+    // Método para conectar todas las patas
+    private void conectarPatas() {
+        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
+        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
+
+        for (int i = 0; i < entradas.length; i++) {
+            Cuadrados entrada = entradas[i];
+            Cuadrados salida = salidas[i];
+
+            if (entrada.getSigno() != 0 && salida.getSigno() == 0) {
+                salida.setSigno(entrada.getSigno());
+                // Actualizar la columna correspondiente en el protoboard
+                if (protoboard != null) {
+                    protoboard.getCelda2().alternarColumna(columnaSalida + i, salida.getSigno());
+                }
+            } else if (entrada.getSigno() == 0 && salida.getSigno() != 0) {
+                entrada.setSigno(salida.getSigno());
+                if (protoboard != null) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada + i, entrada.getSigno());
+                }
+            } else {
+                System.out.println("No se pudo cambiar el estado del interruptor para la pata " + (i + 1));
+            }
+        }
+    }
+
+    // Método para desconectar todas las patas
+    private void desconectarPatas() {
+        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
+        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
+
+        for (int i = 0; i < entradas.length; i++) {
+            entradas[i].setSigno(0);
+            salidas[i].setSigno(0);
+            // Actualizar la columna correspondiente en el protoboard para reflejar la desconexión
+            if (protoboard != null) {
+                protoboard.getCelda1().alternarColumna(columnaEntrada + i, 0);
+                protoboard.getCelda2().alternarColumna(columnaSalida + i, 0);
+            }
+        }
+    }
+
+    // Getters y setters para el protoboard y el LED
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }
@@ -561,6 +428,7 @@ public class Switch_8 extends Pane{
         this.led = led;
     }
 
+    // Getters para las esquinas estirables
     public Cuadrados getFin1() {
         return fin1;
     }
@@ -576,6 +444,52 @@ public class Switch_8 extends Pane{
     public Cuadrados getFin4() {
         return fin4;
     }
+
+    public Cuadrados getFin5() {
+        return fin5;
+    }
+
+    public Cuadrados getFin6() {
+        return fin6;
+    }
+
+    public Cuadrados getFin7() {
+        return fin7;
+    }
+
+    public Cuadrados getFin8() {
+        return fin8;
+    }
+
+    public Cuadrados getFin12() {
+        return fin12;
+    }
+
+    public Cuadrados getFin22() {
+        return fin22;
+    }
+
+    public Cuadrados getFin32() {
+        return fin32;
+    }
+
+    public Cuadrados getFin42() {
+        return fin42;
+    }
+
+    public Cuadrados getFin52() {
+        return fin52;
+    }
+
+    public Cuadrados getFin62() {
+        return fin62;
+    }
+
+    public Cuadrados getFin72() {
+        return fin72;
+    }
+
+    public Cuadrados getFin82() {
+        return fin82;
+    }
 }
-
-

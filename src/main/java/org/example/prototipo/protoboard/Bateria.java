@@ -110,32 +110,39 @@ public class Bateria extends Pane {
         }
     }
 
+    // Método para conectar un cable al conector negativo
     public void conectarCableNegativo(Cable cable) {
         if (!cablesConectadosNegativo.contains(cable)) {
             cablesConectadosNegativo.add(cable);
         }
     }
 
+    // Método para desconectar un cable del conector positivo
     public void desconectarCablePositivo(Cable cable) {
         cablesConectadosPositivo.remove(cable);
     }
 
+    // Método para desconectar un cable del conector negativo
     public void desconectarCableNegativo(Cable cable) {
         cablesConectadosNegativo.remove(cable);
     }
 
+    // Metodo para obtener los cables conectados positivos
     public List<Cable> getCablesConectadosPositivo() {
         return cablesConectadosPositivo;
     }
 
+    // Método para obtener los cables conectados negativos
     public List<Cable> getCablesConectadosNegativo() {
         return cablesConectadosNegativo;
     }
 
+    // Métodos para obtener el conector negativo
     public Cuadrados getConectorNegativo() {
         return conectorNegativo;
     }
 
+    // Método para obtener el conector positivo
     public Cuadrados getConectorPositivo() {
         return conectorPositivo;
     }
