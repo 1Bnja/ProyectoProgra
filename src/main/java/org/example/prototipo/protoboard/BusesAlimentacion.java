@@ -69,7 +69,7 @@ public class BusesAlimentacion extends Group {
     }
 
     // Método para cambiar el estado de una fila de celdas en el bus.
-    public void toggleFilaBus(int filaIndex, int signo) {
+    public void toggleFilaBus(int filaIndex, int signo, double voltaje) {
         List<Cuadrados> filaBus = buses.get(filaIndex);  // Obtiene la fila específica.
         Color color;
 
@@ -133,6 +133,13 @@ public class BusesAlimentacion extends Group {
             this.buses.get(fila).get(i).setSigno(signo);  // Cambia el signo de todas las celdas de la fila.
         }
     }
+
+    public double getVoltaje(int fila, int col) {
+        List<Cuadrados> columna = buses.get(fila);
+        System.out.println("Voltaje: "+columna.get(col).getVoltaje());
+        return columna.get(col).getVoltaje();
+    }
+
 
     // Método para encender/apagar todas las celdas según el signo.
     public void onOff(int signo, boolean trueColor) {

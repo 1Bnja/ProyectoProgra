@@ -179,6 +179,10 @@ public class Prototipo_Protoboard extends Pane {
         return bus2;
     }
 
+
+
+
+
     // Métodos para gestionar los cables conectados al protoboard
     public List<Cable> getCablesConctados() {
         return cablesConctados;

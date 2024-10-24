@@ -96,7 +96,7 @@ public class Celdas extends Group {
     }
 
     // Método para alternar una columna entre diferentes estados según el signo
-    public void alternarColumna(int columnaIndex, int signo) {
+    public void alternarColumna(int columnaIndex, int signo, double voltaje) {
         List<Cuadrados> columna = grid.get(columnaIndex);
         Color color;
 
@@ -191,6 +191,12 @@ public class Celdas extends Group {
         System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
+    }
+
+    public double getVoltaje(int fila, int col){
+        List<Cuadrados> columna = grid.get(col);
+        System.out.println("Voltaje: "+columna.get(fila).getVoltaje());
+        return columna.get(fila).getVoltaje();
     }
 
 }
