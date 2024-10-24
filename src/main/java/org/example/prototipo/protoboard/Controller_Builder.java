@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -97,20 +98,58 @@ public class Controller_Builder {
     @FXML
     void Click_Led(ActionEvent event) {
         System.out.println("Se ha agregado un led");
-        LED led = new LED();
-        led.toFront();
-        agregar(led); // Agrega el LED al panel y a la lista de elementos
 
-        // Buscar y asignar el protoboard al LED si existe
-        for (Node elemento : elementos) {
-            if (elemento instanceof Prototipo_Protoboard) {
-                Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
-                led.setProtoboard(protoboard);
-                protoboard.agregarComponenteConectado(led);
-                break;
+        // Crear una lista de colores
+        List<String> colores = new ArrayList<>();
+        colores.add("Rojo");
+        colores.add("Verde");
+        colores.add("Azul");
+        colores.add("Amarillo");
+
+        // Crear un diálogo para que el usuario elija un color
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Rojo", colores);
+        dialog.setTitle("Seleccionar Color del LED");
+        dialog.setHeaderText("Elige un color para el LED");
+        dialog.setContentText("Colores disponibles:");
+
+        // Obtener la selección del usuario
+        dialog.showAndWait().ifPresent(colorSeleccionado -> {
+            Color colorLed;
+
+            // Asignar el color según la elección del usuario
+            switch (colorSeleccionado) {
+                case "Verde":
+                    colorLed = Color.LIGHTGREEN;
+                    break;
+                case "Azul":
+                    colorLed = Color.LIGHTBLUE;
+                    break;
+                case "Amarillo":
+                    colorLed = Color.LIGHTYELLOW;
+                    break;
+                case "Rojo":
+                default:
+                    colorLed = Color.LIGHTCORAL;
+                    break;
             }
-        }
+
+            // Crear el LED con el color seleccionado
+            LED led = new LED(colorLed);
+            led.toFront();
+            agregar(led); // Agrega el LED al panel y a la lista de elementos
+
+            // Buscar y asignar el protoboard al LED si existe
+            for (Node elemento : elementos) {
+                if (elemento instanceof Prototipo_Protoboard) {
+                    Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
+                    led.setProtoboard(protoboard);
+                    protoboard.agregarComponenteConectado(led);
+                    break;
+                }
+            }
+        });
     }
+
 
     // Acción al hacer clic en el botón para agregar una Resistencia
     @FXML

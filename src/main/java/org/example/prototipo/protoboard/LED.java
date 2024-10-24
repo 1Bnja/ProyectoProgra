@@ -30,8 +30,12 @@ public class LED extends Pane {
     private int signoFin1 = 0;
     private int signoFin2 = 0;
 
+    private Color colorOriginal;
+
     // Constructor de la clase LED
-    public LED() {
+    public LED(Color colorLED) {
+        this.colorOriginal = colorLED;
+
         // Crear la línea horizontal que representa el LED
         Line led1 = crearLinea(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
 
@@ -39,7 +43,7 @@ public class LED extends Pane {
         curva = crearCurva(origenX - 550, origenY - 150,
                 origenX - 549.25, origenY - 200,
                 origenX - 515.75, origenY - 200,
-                origenX - 515, origenY - 150);
+                origenX - 515, origenY - 150, colorLED);
 
         // Crear las patas del LED
         pata1 = crearLinea(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
@@ -75,14 +79,10 @@ public class LED extends Pane {
     }
 
     // Método para crear una curva cúbica (el cuerpo del LED)
-    private CubicCurve crearCurva(double startX, double startY,
-                                  double controlX1, double controlY1,
-                                  double controlX2, double controlY2,
-                                  double endX, double endY) {
-        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1,
-                controlX2, controlY2, endX, endY);
+    private CubicCurve crearCurva(double startX, double startY, double controlX1, double controlY1, double controlX2, double controlY2, double endX, double endY, Color colorLeD) {
+        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY);
         curva.setStroke(Color.BLACK);
-        curva.setFill(Color.LIGHTBLUE);
+        curva.setFill(colorLeD);
         return curva;
     }
 
@@ -251,30 +251,44 @@ public class LED extends Pane {
     }
 
     // Verificar el estado del LED y actualizar su apariencia
+    // Verificar el estado del LED y actualizar su apariencia
     private void checkLedState() {
         if (fin1Conectada && fin2Conectada) {
             if (signoFin1 == 0 || signoFin2 == 0) {
                 // Si alguno de los extremos no tiene signo, el LED está apagado
-                curva.setFill(Color.LIGHTBLUE);
+                curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
             } else if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
                 // El LED está correctamente polarizado y enciende
-                curva.setFill(Color.YELLOW);
+                curva.setFill(obtenerColorEncendido(colorOriginal));  // Convertir el color "apagado" a "encendido"
             } else if (signoFin1 == signoFin2) {
                 // Si los signos son iguales, el LED se quema
-                curva.setFill(Color.RED);
+                curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
                 mostrarAlertaLedQuemado();
             } else if (signoFin1 == fin2.getSigno() && signoFin2 == fin1.getSigno()) {
                 // Polarización inversa, el LED se quema
-                curva.setFill(Color.RED);
+                curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
                 mostrarAlertaLedQuemado();
             } else {
                 // Cualquier otra condición, el LED está apagado
-                curva.setFill(Color.LIGHTBLUE);
+                curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
             }
         } else {
             // Si no están conectados ambos extremos, el LED está apagado
-            curva.setFill(Color.LIGHTBLUE);
+            curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
         }
+    }
+
+    private Color obtenerColorEncendido(Color colorOriginal) {
+        if (colorOriginal.equals(Color.LIGHTBLUE)) {
+            return Color.BLUE;
+        } else if (colorOriginal.equals(Color.LIGHTGREEN)) {
+            return Color.GREEN;
+        } else if (colorOriginal.equals(Color.LIGHTCORAL)) {
+            return Color.RED;
+        } else if (colorOriginal.equals(Color.LIGHTYELLOW)) {
+            return Color.YELLOW;
+        }
+        return colorOriginal;
     }
 
     // Mostrar una alerta cuando el LED se quema
