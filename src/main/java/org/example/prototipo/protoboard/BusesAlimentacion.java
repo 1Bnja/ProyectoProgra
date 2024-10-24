@@ -5,7 +5,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +12,19 @@ import java.util.List;
 public class BusesAlimentacion extends Group {
 
     private List<List<Cuadrados>> buses;
-    private int espacioExtra = 2;
 
-    // Constructor
+    // Constructor de la clase
     public BusesAlimentacion(double desplazamientoX, double desplazamientoY, char[] simbolos) {
         double tamanioCeldas = 13;
         double espacioCeldas = 11;
         buses = new ArrayList<>();
 
+
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
         gridPane.setVgap(espacioCeldas);
 
+        // Agrega los símbolos en las columnas extremas (izquierda y derecha).
         for (int j = 0; j < simbolos.length; j++) {
             Text simboloIzquierda = new Text(String.valueOf(simbolos[j]));
             simboloIzquierda.setStroke(Color.BLACK);
@@ -39,13 +39,13 @@ public class BusesAlimentacion extends Group {
             gridPane.getChildren().add(simboloDerecha);
         }
 
-
+        // Crea dos filas de celdas para los buses.
         for (int j = 0; j < 2; j++) {
             List<Cuadrados> filaBus = new ArrayList<>();
             int columnaIndex = 1;
 
+            // Crea las celdas (Cuadrados) en cada fila.
             for (int i = 0; i < 25; i++) {
-
                 Cuadrados cuadrado = new Cuadrados(12, 2);
                 cuadrado.setStroke(Color.BLACK);
                 cuadrado.setFill(Color.WHITE);
@@ -62,82 +62,84 @@ public class BusesAlimentacion extends Group {
             buses.add(filaBus);
         }
 
+        // Ajusta la posición del gridPane en el escenario.
         gridPane.setLayoutX(desplazamientoX);
         gridPane.setLayoutY(desplazamientoY);
-        this.getChildren().add(gridPane);
+        this.getChildren().add(gridPane);  // Añadir el gridPane al grupo de la clase.
     }
 
-
+    // Método para cambiar el estado de una fila de celdas en el bus.
     public void toggleFilaBus(int filaIndex, int signo) {
-        List<Cuadrados> filaBus = buses.get(filaIndex);
+        List<Cuadrados> filaBus = buses.get(filaIndex);  // Obtiene la fila específica.
         Color color;
 
+        // Asigna el color dependiendo del valor de 'signo'.
         if (signo == -1) {
-            color = Color.BLUE;
+            color = Color.BLUE;  // Signo negativo: color azul.
         } else if (signo == 1) {
-            color = Color.RED;
+            color = Color.RED;  // Signo positivo: color rojo.
         } else {
-            color = Color.WHITE;
+            color = Color.WHITE;  // Signo 0: color blanco.
         }
 
-        boolean bandera = false;
+        boolean bandera = false;  // Bandera para indicar si hay un conflicto de signos.
 
+        // Itera sobre cada celda de la fila.
         for (Cuadrados c : filaBus) {
-            if (c.getSigno() == 0) {
+            if (c.getSigno() == 0) {  // Si la celda está apagada (signo 0), la enciende con el signo y color dados.
                 c.setSigno(signo);
                 c.setFill(color);
-            } else if (signo == 3) {
-                System.out.println("Se apago");
+            } else if (signo == 3) {  // Si el signo es 3, apaga todas las celdas.
+                System.out.println("Se apagó");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
-            } else if (signo == 0) {
-                System.out.println("Se apago la columna");
+            } else if (signo == 0) {  // Si el signo es 0, también apaga las celdas.
+                System.out.println("Se apagó la columna");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
-
-            } else if (c.getSigno()==signo) {
+            } else if (c.getSigno() == signo) {  // Si la celda ya tiene el mismo signo, solo ajusta el color.
                 c.setFill(color);
                 c.setSigno(signo);
-            }
-            else {
-
+            } else {  // Si hay conflicto de signos, la bandera se activa y la celda se marca en verde oliva.
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
             }
-
         }
-        if (bandera == true) {
+
+        // Si la bandera está activada, muestra una alerta indicando que el bus se ha quemado.
+        if (bandera) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
             alert.setContentText("OH NO!! EL BUS SE QUEMÓ AAAAAAAA");
-
             alert.showAndWait();
-
         }
 
+        // Notifica a los componentes conectados del cambio.
         Prototipo_Protoboard.notificarComponentesConectados();
     }
-    public int getSigno(int fila, int col){
-        System.out.println(col+ "| " +fila);
-        List<Cuadrados> columna = buses.get(fila);
 
-        return columna.get(col).getSigno();
+    // Método para obtener el signo de una celda en una fila y columna específica.
+    public int getSigno(int fila, int col) {
+        System.out.println(col + "| " + fila);
+        List<Cuadrados> columna = buses.get(fila);  // Obtiene la fila específica.
+        return columna.get(col).getSigno();  // Devuelve el signo de la celda en la columna especificada.
     }
 
-    public void setSigno(int fila, int col, int signo){
-        for (int i =0; i < buses.get(fila).size(); i++) {
-
-            this.buses.get(fila).get(i).setSigno(signo);  // Encender
-
+    // Método para establecer el signo de todas las celdas de una fila.
+    public void setSigno(int fila, int col, int signo) {
+        for (int i = 0; i < buses.get(fila).size(); i++) {
+            this.buses.get(fila).get(i).setSigno(signo);  // Cambia el signo de todas las celdas de la fila.
         }
-
     }
 
-    public void onOff( int signo, boolean trueColor) {
+    // Método para encender/apagar todas las celdas según el signo.
+    public void onOff(int signo, boolean trueColor) {
         Color color = Color.WHITE;
-        if(!trueColor) {
+
+        // Si 'trueColor' es falso, asigna el color según el signo dado.
+        if (!trueColor) {
             if (signo == -1) {
                 color = Color.BLUE;
             } else if (signo == 1) {
@@ -146,19 +148,22 @@ public class BusesAlimentacion extends Group {
                 color = Color.WHITE;
             }
         }
-        for(List<Cuadrados> c : buses)
+
+        // Cambia el color de todas las celdas en todas las filas.
+        for (List<Cuadrados> c : buses) {
             for (Cuadrados col : c) {
-                if(trueColor) {
+                // Si 'trueColor' es verdadero, ajusta el color según el signo actual de cada celda.
+                if (trueColor) {
                     if (col.getSigno() == -1) {
                         color = Color.BLUE;
                     } else if (col.getSigno() == 1) {
                         color = Color.RED;
                     } else {
-                            color = Color.WHITE;
+                        color = Color.WHITE;
                     }
                 }
-                col.setFill(color);
+                col.setFill(color);  // Aplica el color.
             }
+        }
     }
-
 }

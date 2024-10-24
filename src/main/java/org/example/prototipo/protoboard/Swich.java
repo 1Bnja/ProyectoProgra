@@ -14,48 +14,63 @@ public class Swich extends Pane {
 
     private Group nodo = new Group();
 
+    // Definición de las esquinas estirables y las patas del interruptor
     private Cuadrados fin1, fin2, fin3, fin4;
     private Line pata1, pata2, pata3, pata4;
 
-    // Posición del mouse
+    // Posición del mouse para manejar el arrastre
     private double mouseX;
     private double mouseY;
     private boolean line_en_arrastre = false;
 
+    // Coordenadas de origen
     double origenX = Main.origenX;
     double origenY = Main.origenY;
 
+    // Referencias al protoboard y al LED
     Prototipo_Protoboard protoboard;
     LED led;
     int celda;
     int colum_1, colum_2;
 
+    // Estado del interruptor
     boolean encendido;
 
+    // Variables para almacenar la posición de entrada y salida
     int filaEntrada, columnaEntrada;
     int filaSalida, columnaSalida;
 
+    // Constructor de la clase Swich
     public Swich() {
         double achicar = 0.7;
         double achicar2 = 0.5;
         int tamanioCuadradoInterno = (int) (37 * achicar2);
         this.encendido = false;
 
-        // Cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 100 * achicar);
-        Line lineaInferiorCE = crearLinea(origenX - 500 * achicar, origenY - 40 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
-        Line lineaIzquierdaCE = crearLinea(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 500 * achicar, origenY - 40 * achicar);
-        Line lineaDerechaCE = crearLinea(origenX - 560 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar);
+        // Crear el cuadrado exterior usando líneas
+        Line lineaSuperiorCE = crearLinea(
+                origenX - 500 * achicar, origenY - 100 * achicar,
+                origenX - 560 * achicar, origenY - 100 * achicar);
+        Line lineaInferiorCE = crearLinea(
+                origenX - 500 * achicar, origenY - 40 * achicar,
+                origenX - 560 * achicar, origenY - 40 * achicar);
+        Line lineaIzquierdaCE = crearLinea(
+                origenX - 500 * achicar, origenY - 100 * achicar,
+                origenX - 500 * achicar, origenY - 40 * achicar);
+        Line lineaDerechaCE = crearLinea(
+                origenX - 560 * achicar, origenY - 100 * achicar,
+                origenX - 560 * achicar, origenY - 40 * achicar);
 
-        // Cuadrado Interno
+        // Crear el cuadrado interno que funciona como botón
         Cuadrados cuadradoInterno = new Cuadrados(tamanioCuadradoInterno, 0);
         cuadradoInterno.setTranslateX(origenX - 543 * achicar);
         cuadradoInterno.setTranslateY(origenY - 84 * achicar);
         cuadradoInterno.setFill(Color.BLACK);
 
+        // Evento al hacer clic en el cuadrado interno (botón)
         cuadradoInterno.setOnMouseClicked(event -> {
             if (encendido) {
-
+                // Si está encendido, apagar el interruptor
                 if (celda == 1) {
                     protoboard.getCelda1().alternarColumna(columnaSalida, 3); // Cortar energía
                 } else if (celda == 2) {
@@ -63,7 +78,7 @@ public class Swich extends Pane {
                 }
                 cuadradoInterno.setFill(Color.BLACK);
             } else {
-
+                // Si está apagado, encender el interruptor
                 int signoEntrada;
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
@@ -76,48 +91,65 @@ public class Swich extends Pane {
             }
             encendido = !encendido; // Cambiar estado
 
-
+            // Notificar a los componentes conectados para actualizar su estado
             Prototipo_Protoboard.notificarComponentesConectados();
         });
 
-        // Patas
-        pata1 = crearLinea(origenX - 495 * achicar, origenY - 100 * achicar, origenX - 496 * achicar, origenY - 110 * achicar);
-        pata2 = crearLinea(origenX - 565 * achicar, origenY - 100 * achicar, origenX - 564 * achicar, origenY - 110 * achicar);
-        pata3 = crearLinea(origenX - 495 * achicar, origenY - 40 * achicar, origenX - 496 * achicar, origenY - 32.5 * achicar);
-        pata4 = crearLinea(origenX - 565 * achicar, origenY - 40 * achicar, origenX - 564 * achicar, origenY - 32.5 * achicar);
+        // Crear las patas del interruptor
+        pata1 = crearLinea(
+                origenX - 495 * achicar, origenY - 100 * achicar,
+                origenX - 496 * achicar, origenY - 110 * achicar);
+        pata2 = crearLinea(
+                origenX - 565 * achicar, origenY - 100 * achicar,
+                origenX - 564 * achicar, origenY - 110 * achicar);
+        pata3 = crearLinea(
+                origenX - 495 * achicar, origenY - 40 * achicar,
+                origenX - 496 * achicar, origenY - 32.5 * achicar);
+        pata4 = crearLinea(
+                origenX - 565 * achicar, origenY - 40 * achicar,
+                origenX - 564 * achicar, origenY - 32.5 * achicar);
 
-        // Fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 500 * achicar, origenY - 100 * achicar, origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
+        // Crear el fondo del cuadrado exterior
+        Polygon fondoCuadradoE = crearFondo(
+                origenX - 500 * achicar, origenY - 100 * achicar,
+                origenX - 560 * achicar, origenY - 40 * achicar, Color.LIGHTGRAY);
+
+        // Crear las esquinas estirables en las patas
         fin1 = Esquina_Estirable(pata1);
         fin2 = Esquina_Estirable(pata2);
         fin3 = Esquina_Estirable(pata3);
         fin4 = Esquina_Estirable(pata4);
 
+        // Configurar el arrastre para cada esquina estirable
         configurarArrastre(fin1, pata1, 2);
         configurarArrastre(fin2, pata2, 1);
         configurarArrastre(fin3, pata3, 2);
         configurarArrastre(fin4, pata4, 1);
 
-        // Mover el nodo completo
+        // Configurar el arrastre para el nodo completo (interruptor)
         configurarArrastreNodo();
 
-        // Agregar los elementos al grupo
+        // Añadir todos los elementos al grupo nodo
         nodo.getChildren().addAll(
                 fondoCuadradoE, cuadradoInterno, lineaSuperiorCE, lineaInferiorCE,
                 lineaIzquierdaCE, lineaDerechaCE, pata1, pata2, pata3, pata4, fin1, fin2, fin3, fin4
         );
 
+        // Añadir el nodo al pane
         this.getChildren().add(nodo);
 
+        // Desactivar la detección de eventos en los límites del pane
         this.setPickOnBounds(false);
     }
 
+    // Método para crear una línea entre dos puntos
     private Line crearLinea(double startX, double startY, double endX, double endY) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
     }
 
+    // Método para crear un fondo rectangular usando polígonos
     private Polygon crearFondo(double startX, double startY, double endX, double endY, Color color) {
         Polygon fondo = new Polygon();
         fondo.getPoints().addAll(
@@ -130,14 +162,16 @@ public class Swich extends Pane {
         return fondo;
     }
 
+    // Método para crear una esquina estirable en la punta de una pata
     private Cuadrados Esquina_Estirable(Line pata) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.RED);
+        point.setFill(Color.ORANGE);
         return point;
     }
 
+    // Método para configurar el arrastre de las esquinas estirables
     private void configurarArrastre(Cuadrados estirable, Line pata, int lado) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e, pata);
@@ -150,6 +184,7 @@ public class Swich extends Pane {
         });
     }
 
+    // Método para verificar si una pata está conectada a una celda del protoboard
     private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
         double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
         double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
@@ -182,23 +217,24 @@ public class Swich extends Pane {
                 }
             }
 
+            // Establecer el signo de la pata según la celda conectada
             estirable.setSigno(signoCelda);
 
             if (lado == 1) {
-
+                // Lado de entrada
                 filaEntrada = row;
                 columnaEntrada = col;
             } else if (lado == 2) {
-
+                // Lado de salida
                 filaSalida = row;
                 columnaSalida = col;
             }
         }
     }
 
+    // Método para verificar si un punto está sobre una celda específica
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
-
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
 
             if (boundsInScene.contains(mouseX, mouseY)) {
@@ -211,6 +247,7 @@ public class Swich extends Pane {
         return null;
     }
 
+    // Método para configurar el arrastre del nodo completo (interruptor)
     private void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
@@ -225,6 +262,7 @@ public class Swich extends Pane {
                 double dX = e.getSceneX() - mouseX;
                 double dY = e.getSceneY() - mouseY;
 
+                // Actualizar la posición del nodo
                 nodo.setLayoutX(nodo.getLayoutX() + dX);
                 nodo.setLayoutY(nodo.getLayoutY() + dY);
 
@@ -236,20 +274,24 @@ public class Swich extends Pane {
         });
 
         nodo.setOnMouseReleased(event -> {
+            // Actualizar las conexiones de las patas al soltar el nodo
             actualizarConexionesPatas();
         });
     }
 
+    // Método que inicia el arrastre al presionar el mouse
     private void empezarArrastre(MouseEvent event, Line pata) {
         line_en_arrastre = true;
         mouseX = event.getSceneX();
         mouseY = event.getSceneY();
     }
 
+    // Método que maneja el arrastre de una pata
     private void Arrastre(MouseEvent event, Line line, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
+        // Actualizar la posición de la línea (pata)
         line.setEndX(line.getEndX() + offsetX);
         line.setEndY(line.getEndY() + offsetY);
 
@@ -261,11 +303,13 @@ public class Swich extends Pane {
         line_en_arrastre = false;
     }
 
+    // Método para actualizar la posición de la esquina estirable según la pata
     private void actualizarEstirable(Cuadrados estirable, Line pata) {
         estirable.setX(pata.getEndX() - 5);
         estirable.setY(pata.getEndY() - 5);
     }
 
+    // Método para actualizar las posiciones de las esquinas estirables al mover el nodo
     private void actualizarPosiciones() {
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
@@ -273,6 +317,7 @@ public class Swich extends Pane {
         actualizarEstirable(fin4, pata4);
     }
 
+    // Método para actualizar las conexiones de todas las patas
     private void actualizarConexionesPatas() {
         verificarConexionPata(fin1, pata1, 2);
         verificarConexionPata(fin2, pata2, 1);
@@ -280,6 +325,7 @@ public class Swich extends Pane {
         verificarConexionPata(fin4, pata4, 1);
     }
 
+    // Getters y setters para el protoboard y el LED
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }
@@ -296,6 +342,7 @@ public class Swich extends Pane {
         this.led = led;
     }
 
+    // Getters para las esquinas estirables
     public Cuadrados getFin1() {
         return fin1;
     }
@@ -312,4 +359,3 @@ public class Swich extends Pane {
         return fin4;
     }
 }
-

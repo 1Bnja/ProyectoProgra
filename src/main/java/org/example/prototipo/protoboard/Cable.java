@@ -22,21 +22,22 @@ public class Cable extends Pane {
     private Object componenteInicio;
     private Object componenteFin;
 
-
     public Cable(double startX, double startY, double endX, double endY) {
 
+        // Crear la línea que representa el cable
         line = new Line(startX, startY, endX, endY);
         line.setStroke(Color.GREENYELLOW);
         line.setStrokeWidth(7);
 
-        // Crear los extremos del cable con la clase Cuadrados
+        // Crear los extremos del cable utilizando la clase Cuadrados
         inicio = new Cuadrados(12, 2);
         fin = new Cuadrados(12, 2);
-        inicio.setFillColor(Color.RED);
+        inicio.setFillColor(Color.ORANGE);
         inicio.setSigno(0);
         fin.setSigno(0);
-        fin.setFillColor(Color.RED);
+        fin.setFillColor(Color.ORANGE);
 
+        // Establecer las posiciones iniciales de los extremos
         inicio.setX(startX - inicio.getWidth() / 2);
         inicio.setY(startY - inicio.getHeight() / 2);
         fin.setX(endX - fin.getWidth() / 2);
@@ -44,12 +45,15 @@ public class Cable extends Pane {
 
         this.setPickOnBounds(false);
 
+        // Configurar eventos de arrastre para los extremos del cable
         inicio.setOnMouseDragged(event -> arrastrarExtremo(event, true));
         fin.setOnMouseDragged(event -> arrastrarExtremo(event, false));
 
+        // Configurar eventos para mover toda la línea del cable
         line.setOnMousePressed(this::iniciarMovimientoLinea);
         line.setOnMouseDragged(this::moverLineaCompleta);
 
+        // Cuando se suelta el extremo inicial, se verifica si está conectado a una celda o bus
         inicio.setOnMouseReleased(event -> {
 
             double mouseX = event.getSceneX();
@@ -61,11 +65,12 @@ public class Cable extends Pane {
             } else if (inicio.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
             } else if (inicio.getLugar() == 3) {
-               // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
+                // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
             } else if (inicio.getLugar() == 0) {
-                //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
+                // protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);
             }
 
+            // Verifica si el extremo inicial del cable está sobre una celda o bus
             if (protoboard != null) {
                 Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
                 Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
@@ -76,10 +81,11 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
-                    // 0= bus1, 1= celda1, 2= celda2, 3= bus2
+                    // 0 = bus1, 1 = celda1, 2 = celda2, 3 = bus2
                     verifica_cables_protoboard();
-
                 }
+
+                // Si el cable está sobre una celda o bus, se conecta
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
                     row = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
@@ -93,7 +99,6 @@ public class Cable extends Pane {
                     inicio.setCol(col);
 
                     protoboard.addCablesConctados(this);
-
                 }
                 if (abajo != null) {
                     col = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getColumnIndex(abajo) - 1;
@@ -136,6 +141,7 @@ public class Cable extends Pane {
                 }
             }
 
+            // Si está conectado a una batería, actualiza el signo y color del cable
             if (bateria != null) {
                 if (verificarSiEstaEnTerminalNegativo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorNegativo().getSigno());
@@ -158,6 +164,7 @@ public class Cable extends Pane {
             }
         });
 
+        // Evento al arrastrar el extremo inicial del cable
         inicio.setOnMouseDragged(event -> {
             arrastrarExtremo(event, true);
 
@@ -171,6 +178,7 @@ public class Cable extends Pane {
             }
         });
 
+        // Cuando se suelta el extremo final, se verifica si está conectado a una celda o bus
         fin.setOnMouseReleased(event -> {
 
             double mouseX = event.getSceneX();
@@ -182,11 +190,12 @@ public class Cable extends Pane {
             } else if (fin.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
             } else if (fin.getLugar() == 3) {
-               // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
+                // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
             } else if (fin.getLugar() == 0) {
-               // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+                // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
             }
 
+            // Verifica si el extremo final del cable está sobre una celda o bus
             if (protoboard != null) {
                 Node arriba = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().getFirst());
                 Node abajo = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().getFirst());
@@ -197,7 +206,7 @@ public class Cable extends Pane {
 
                 if (arriba == null && abajo == null && bus_arriba == null && bus_abajo == null) {
                     // No está sobre ninguna celda o bus
-                     verifica_cables_protoboard();
+                    verifica_cables_protoboard();
                 }
                 if (arriba != null) {
                     col = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getColumnIndex(arriba) - 1;
@@ -257,6 +266,7 @@ public class Cable extends Pane {
                 }
             }
 
+            // Si está conectado a una batería, actualiza el signo y color del cable
             if (bateria != null) {
                 if (verificarSiEstaEnTerminalNegativo(mouseX, mouseY, bateria)) {
                     inicio.setSigno(bateria.getConectorNegativo().getSigno());
@@ -277,6 +287,7 @@ public class Cable extends Pane {
             }
         });
 
+        // Evento al arrastrar el extremo final del cable
         fin.setOnMouseDragged(event -> {
             arrastrarExtremo(event, false);
 
@@ -290,63 +301,66 @@ public class Cable extends Pane {
             }
         });
 
+        // Añadir los elementos gráficos al pane
         this.getChildren().addAll(line, inicio, fin);
     }
 
+    // Método para verificar y actualizar el estado de los cables conectados en la protoboard
     private void verifica_cables_protoboard() {
 
-        if(inicio.getLugar() == 0) {
-            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+        if (inicio.getLugar() == 0) {
+            // protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);  // No sé si tiene batería conectada
             setSignoColor(inicio.getFila(), inicio.getCol(), 0);
 
         }
-        if(inicio.getLugar() == 1) {
+        if (inicio.getLugar() == 1) {
             protoboard.getCelda1().alternarColumna(inicio.getCol(), 0);
             setSignoColor(inicio.getFila(), inicio.getCol(), 0);
             valida_cables(1, protoboard.getCelda1(), this);
         }
-        if(inicio.getLugar() == 2) {
+        if (inicio.getLugar() == 2) {
             protoboard.getCelda2().alternarColumna(inicio.getCol(), 0);
             setSignoColor(inicio.getFila(), inicio.getCol(), 0);
             valida_cables(2, protoboard.getCelda2(), this);
         }
-        if(inicio.getLugar() == 3) {
-            //protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0); NO SE si tiene bateria conectada
+        if (inicio.getLugar() == 3) {
+            // protoboard.getBus1().toggleFilaBus(inicio.getFila(), 0);  // No sé si tiene batería conectada
             setSignoColor(inicio.getFila(), inicio.getCol(), 0);
 
         }
-        if(fin.getLugar() == 0){
-            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+        if (fin.getLugar() == 0) {
+            // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
             setSignoColor(fin.getFila(), fin.getCol(), 0);
         }
-        if(fin.getLugar() == 1){
+        if (fin.getLugar() == 1) {
             protoboard.getCelda1().alternarColumna(fin.getCol(), 0);
             setSignoColor(fin.getFila(), fin.getCol(), 0);
 
             valida_cables(1, protoboard.getCelda1(), this);
 
         }
-        if(fin.getLugar() == 2){
+        if (fin.getLugar() == 2) {
             protoboard.getCelda2().alternarColumna(fin.getCol(), 0);
             setSignoColor(fin.getFila(), fin.getCol(), 0);
             valida_cables(2, protoboard.getCelda2(), this);
         }
-        if(fin.getLugar() == 3){
-            //protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
+        if (fin.getLugar() == 3) {
+            // protoboard.getBus1().toggleFilaBus(fin.getFila(), 0);
             setSignoColor(fin.getFila(), fin.getCol(), 0);
         }
     }
 
+    // Método para validar cables conectados en una celda específica y actualizar sus signos y colores
     private void valida_cables(int lugar, Celdas celda, Cable c) {
-        for (int i=0; i < protoboard.getCablesConctados().size(); i++){
-            if(!protoboard.getCablesConctados().get(i).equals(c) &&
+        for (int i = 0; i < protoboard.getCablesConctados().size(); i++) {
+            if (!protoboard.getCablesConctados().get(i).equals(c) &&
                     (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar || protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar)
-                    && (protoboard.getCablesConctados().get(i).getInicio().getCol() == inicio.getCol() || protoboard.getCablesConctados().get(i).getFin().getCol() == fin.getCol()) ){
-                if (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar){
+                    && (protoboard.getCablesConctados().get(i).getInicio().getCol() == inicio.getCol() || protoboard.getCablesConctados().get(i).getFin().getCol() == fin.getCol())) {
+                if (protoboard.getCablesConctados().get(i).getInicio().getLugar() == lugar) {
                     celda.alternarColumna(protoboard.getCablesConctados().get(i).getInicio().getCol(), 0);
                     protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
                 }
-                if (protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar){
+                if (protoboard.getCablesConctados().get(i).getFin().getLugar() == lugar) {
                     celda.alternarColumna(protoboard.getCablesConctados().get(i).getFin().getCol(), 0);
                     protoboard.getCablesConctados().get(i).setSignoColor(fin.getFila(), fin.getCol(), 0);
                 }
@@ -356,6 +370,7 @@ public class Cable extends Pane {
         }
     }
 
+    // Método para actualizar el color del cable desde un terminal específico
     public void actualizarColorDesdeTerminal(Cuadrados terminal) {
         // Actualizar el signo y el color del cable
         inicio.setSigno(terminal.getSigno());
@@ -374,8 +389,9 @@ public class Cable extends Pane {
         line.setStroke(colorCable);
     }
 
+    // Método para establecer el color del cable dependiendo del signo
     private void setSignoColor(int row, int col, int signo) {
-        // Pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
+        // Pinta el cable del color del signo, si es -1 es azul (negativo), si es 1 es rojo (positivo)
         inicio.setSigno(signo);
         fin.setSigno(signo);
         if (inicio.getSigno() == -1) {
@@ -397,9 +413,9 @@ public class Cable extends Pane {
         }
     }
 
-    public void signoBateria( int signo, Cuadrados a, Cuadrados b, Line l) {
-        // Pinta el cable del color del signo, si es -1 es azul (negativo) si es 1 es rojo (positivo)
-
+    // Método para establecer el color del cable según el signo de la batería
+    public void signoBateria(int signo, Cuadrados a, Cuadrados b, Line l) {
+        // Pinta el cable según el signo de la batería
         if (signo == -1) {
             a.setFill(Color.BLUE);
             b.setFill(Color.BLUE);
@@ -419,6 +435,7 @@ public class Cable extends Pane {
         }
     }
 
+    // Método para manejar el arrastre de un extremo del cable
     private void arrastrarExtremo(MouseEvent event, boolean esInicio) {
         event.consume();  // Consumir el evento para evitar que se propague
 
@@ -436,11 +453,13 @@ public class Cable extends Pane {
         actualizarPosiciones();
     }
 
+    // Método para iniciar el movimiento de toda la línea del cable
     private void iniciarMovimientoLinea(MouseEvent event) {
         mouseX = event.getX();
         mouseY = event.getY();
     }
 
+    // Método para mover toda la línea del cable
     private void moverLineaCompleta(MouseEvent event) {
         event.consume();
 
@@ -458,6 +477,7 @@ public class Cable extends Pane {
         mouseY = event.getY();
     }
 
+    // Método para actualizar las posiciones de los extremos del cable basándose en la línea
     private void actualizarPosiciones() {
         inicio.setX(line.getStartX() - inicio.getWidth() / 2);
         inicio.setY(line.getStartY() - inicio.getHeight() / 2);
@@ -465,6 +485,8 @@ public class Cable extends Pane {
         fin.setX(line.getEndX() - fin.getWidth() / 2);
         fin.setY(line.getEndY() - fin.getHeight() / 2);
     }
+
+    // Getters y setters
 
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
@@ -498,7 +520,6 @@ public class Cable extends Pane {
         this.bateria = bateria;
     }
 
-
     public Cuadrados getInicio() {
         return inicio;
     }
@@ -515,8 +536,7 @@ public class Cable extends Pane {
         this.fin = fin;
     }
 
-
-
+    // Método para verificar si el ratón está sobre el terminal positivo de la batería
     private boolean verificarSiEstaEnTerminalPositivo(double mouseX, double mouseY, Bateria bateria) {
         if (mouseX >= bateria.getConectorPositivo().getX() &&
                 mouseX <= bateria.getConectorPositivo().getX() + 20 &&
@@ -526,6 +546,7 @@ public class Cable extends Pane {
         return false;
     }
 
+    // Método para verificar si el ratón está sobre el terminal negativo de la batería
     private boolean verificarSiEstaEnTerminalNegativo(double mouseX, double mouseY, Bateria bateria) {
         if (mouseX >= bateria.getConectorNegativo().getX() &&
                 mouseX <= bateria.getConectorNegativo().getX() + 20 &&
@@ -535,6 +556,7 @@ public class Cable extends Pane {
         return false;
     }
 
+    // Método para verificar si el ratón está sobre una celda en un GridPane
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
