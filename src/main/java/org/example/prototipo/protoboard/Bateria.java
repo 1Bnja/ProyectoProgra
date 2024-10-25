@@ -90,7 +90,7 @@ public class Bateria extends Pane {
         simboloNegativo.setFill(Color.BLACK);
         simboloNegativo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
-        // Texto 5V
+        // Texto 9V
         Text texto5V = new Text(origenX - 20, origenY + 30, "9V");
         texto5V.setFill(Color.WHITE);
         texto5V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");

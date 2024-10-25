@@ -89,22 +89,27 @@ public class BusesAlimentacion extends Group {
             if (c.getSigno() == 0) {  // Si la celda está apagada (signo 0), la enciende con el signo y color dados.
                 c.setSigno(signo);
                 c.setFill(color);
+                c.setVoltaje(voltaje);
             } else if (signo == 3) {  // Si el signo es 3, apaga todas las celdas.
                 System.out.println("Se apagó");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
+                c.setVoltaje(voltaje);
             } else if (signo == 0) {  // Si el signo es 0, también apaga las celdas.
                 System.out.println("Se apagó la columna");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
+                c.setVoltaje(voltaje);
             } else if (c.getSigno() == signo) {  // Si la celda ya tiene el mismo signo, solo ajusta el color.
                 c.setFill(color);
                 c.setSigno(signo);
+                c.setVoltaje(voltaje);
             } else {  // Si hay conflicto de signos, la bandera se activa y la celda se marca en verde oliva.
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
             }
+            //System.out.println("El voltaje del bus es: "+ c.getVoltaje());
         }
 
         // Si la bandera está activada, muestra una alerta indicando que el bus se ha quemado.
@@ -115,6 +120,8 @@ public class BusesAlimentacion extends Group {
             alert.setContentText("OH NO!! EL BUS SE QUEMÓ AAAAAAAA");
             alert.showAndWait();
         }
+
+        System.out.println("Voltaje de es: "+filaBus.get(filaIndex).getVoltaje());
 
         // Notifica a los componentes conectados del cambio.
         Prototipo_Protoboard.notificarComponentesConectados();
@@ -163,6 +170,7 @@ public class BusesAlimentacion extends Group {
                 if (trueColor) {
                     if (col.getSigno() == -1) {
                         color = Color.BLUE;
+
                     } else if (col.getSigno() == 1) {
                         color = Color.RED;
                     } else {

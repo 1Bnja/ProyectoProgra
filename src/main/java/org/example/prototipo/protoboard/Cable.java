@@ -401,6 +401,8 @@ public class Cable extends Pane {
         // Pinta el cable del color del signo, si es -1 es azul (negativo), si es 1 es rojo (positivo)
         inicio.setSigno(signo);
         fin.setSigno(signo);
+        inicio.setVoltaje(voltaje);
+        fin.setVoltaje(voltaje);
         if (inicio.getSigno() == -1) {
             inicio.setFill(Color.BLUE);
             fin.setFill(Color.BLUE);

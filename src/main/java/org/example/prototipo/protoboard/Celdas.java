@@ -19,6 +19,7 @@ public class Celdas extends Group {
     public Cuadrados cuadradoSeleccionado;
     public Cuadrados cuadradoSeleccionado2;
     private Prototipo_Protoboard protoboard;
+    Controller_Builder controller;
 
     // Constructor de la clase Celdas
     public Celdas(double desplazamientoX, double desplazamientoY, char[] letras, boolean esParteInferior, Prototipo_Protoboard protoboard) {
@@ -91,14 +92,16 @@ public class Celdas extends Group {
             double posX = boundsInScene.getMinX();
             double posY = boundsInScene.getMinY();
 
-            System.out.println("Posición X relativa al GridPane: " + posX + ", Posición Y relativa al GridPane: " + posY);
+            //System.out.println("Posición X relativa al GridPane: " + posX + ", Posición Y relativa al GridPane: " + posY);
         }
     }
+
 
     // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo, double voltaje) {
         List<Cuadrados> columna = grid.get(columnaIndex);
         Color color;
+
 
         // Determinar el color basado en el signo
         if(signo == -1) {
@@ -116,31 +119,38 @@ public class Celdas extends Group {
                 // Si el cuadrado está apagado, establecer el nuevo signo y color
                 c.setSigno(signo);
                 c.setFill(color);
+                c.setVoltaje(voltaje);
             } else if (signo==3) {
                 // Apagar el cuadrado
                 System.out.println("Se apagó");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
+                c.setVoltaje(voltaje);
             } else if (signo==0) {
                 // Apagar la columna completa
                 System.out.println("Se apagó la columna");
                 c.setSigno(0);
                 c.setFill(Color.WHITE);
+                c.setVoltaje(voltaje);
             } else if (c.getSigno() == signo) {
                 // Mantener el mismo signo y color
                 c.setSigno(signo);
                 c.setFill(color);
+                c.setVoltaje(voltaje);
             } else if (signo==2) {
                 // Indicar que ocurrió una sobrecarga o corto circuito
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(signo);
+                c.setVoltaje(voltaje);
             } else {
                 // Indicar que ocurrió una sobrecarga o corto circuito
                 bandera = true;
                 c.setFill(Color.OLIVE);
                 c.setSigno(2);
+                c.setVoltaje(voltaje);
             }
+            System.out.println("El voltaje la celda es: "+ c.getVoltaje());
         }
         if(bandera==true) {
             // Mostrar una alerta indicando que la columna se quemó
@@ -195,8 +205,11 @@ public class Celdas extends Group {
 
     public double getVoltaje(int fila, int col){
         List<Cuadrados> columna = grid.get(col);
-        System.out.println("Voltaje: "+columna.get(fila).getVoltaje());
-        return columna.get(fila).getVoltaje();
+        System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
+        return columna.get(col).getVoltaje();
     }
 
+    public void setController(Controller_Builder controller){
+        this.controller= controller;
+    }
 }
