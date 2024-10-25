@@ -9,6 +9,7 @@ public class Cuadrados extends Rectangle {
     private int signo = 0;
     int lugar; // 0 = bus1, 1 = celda1, 2 = celda2, 3 = bus2
     int col, fila;
+    private double voltaje= 0;
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
@@ -71,6 +72,16 @@ public class Cuadrados extends Rectangle {
     // Setter para establecer el signo
     public void setSigno(int signo) {
         this.signo = signo;
+    }
+
+    // Getter para obtener el voltaje
+    public double getVoltaje() {
+        return this.voltaje;
+    }
+
+    // Setter para establecer el voltaje
+    public void setVoltaje(double voltaje) {
+        this.voltaje = voltaje;
     }
 
     // Getter para obtener el lugar

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -59,6 +60,22 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
+            <Button fx:id="Boton_Switch8" mnemonicParsing="false" onAction="#Click_Switch8" prefHeight="40.0" prefWidth="115.0" text="SWITCH 8">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_Resistencia" prefHeight="40.0" prefWidth="115.0" text="RESISTENCIA">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="Proto" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="126.0" text="PROTOBOARD">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -107,6 +124,7 @@
             </Lighting>
          </effect>
       </HBox>
+      <TextArea fx:id="TextArea" layoutX="24.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
    <effect>
       <Blend />

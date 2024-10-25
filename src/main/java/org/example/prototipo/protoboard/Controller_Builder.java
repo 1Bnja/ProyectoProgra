@@ -8,7 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class Controller_Builder {
     @FXML
     private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip, Boton_Switch8;
 
+    @FXML
+    private TextArea TextArea;
+
     // Lista para almacenar todos los elementos agregados al panel
     private List<Node> elementos = new ArrayList<>();
 
@@ -32,6 +36,23 @@ public class Controller_Builder {
     // Coordenadas de origen (posiblemente para posicionamiento inicial)
     double origenX = Main.origenX;
     double origenY = Main.origenY;
+
+
+
+    public void initialize() {
+        // Redirigir el System.out al TextArea
+        PrintStream ps = new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                // Agrega el carácter al TextArea
+                TextArea.appendText(String.valueOf((char) b));
+            }
+        });
+        System.setOut(ps);
+    }
+
+
+
 
     // Método para agregar un elemento al panel y a la lista de elementos
     private void agregar(Node elemento) {

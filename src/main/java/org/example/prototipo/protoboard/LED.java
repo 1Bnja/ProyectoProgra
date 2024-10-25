@@ -52,9 +52,11 @@ public class LED extends Pane {
         // Pata positiva (ánodo)
         fin1 = crearEstirable(pata1, Color.RED);
         fin1.setSigno(1);
+        fin1.setVoltaje(2);
         // Pata negativa (cátodo)
         fin2 = crearEstirable(pata2, Color.BLUE);
         fin2.setSigno(-1);
+        fin2.setVoltaje(2);
 
         // Configurar eventos de arrastre para las patas
         configurarArrastre(fin1, pata1);
