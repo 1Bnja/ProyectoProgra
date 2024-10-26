@@ -214,12 +214,16 @@ public class LED extends Pane {
                     // Obtener el signo de la celda
                     if (gridPane == gridPanes[0]) {
                         signoCelda = protoboard.getCelda1().getSigno(row, col);
+                        fin1.setLugar(1);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        fin1.setLugar(2);
                     } else if (gridPane == gridPanes[2]) {
                         signoCelda = protoboard.getBus1().getSigno(row, col);
+                        fin1.setLugar(0);
                     } else if (gridPane == gridPanes[3]) {
                         signoCelda = protoboard.getBus2().getSigno(row, col);
+                        fin1.setLugar(3);
                     }
                     connected = true;
                     break;
@@ -255,13 +259,21 @@ public class LED extends Pane {
     // Verificar el estado del LED y actualizar su apariencia
     // Verificar el estado del LED y actualizar su apariencia
     private void checkLedState() {
+        boolean bandera = false;
         if (fin1Conectada && fin2Conectada) {
             if (signoFin1 == 0 || signoFin2 == 0) {
                 // Si alguno de los extremos no tiene signo, el LED está apagado
-                curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
+
+                    curva.setFill(colorOriginal);
+                // Mantener el color original si el LED está apagado
             } else if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
                 // El LED está correctamente polarizado y enciende
-                curva.setFill(obtenerColorEncendido(colorOriginal));  // Convertir el color "apagado" a "encendido"
+
+                bandera = verificar();
+                if(bandera==false){
+                    curva.setFill(obtenerColorEncendido(colorOriginal));  // Convertir el color "apagado" a "encendido"
+                }
+
             } else if (signoFin1 == signoFin2) {
                 // Si los signos son iguales, el LED se quema
                 curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
@@ -293,6 +305,26 @@ public class LED extends Pane {
         return colorOriginal;
     }
 
+    private boolean verificar(){
+        boolean verificado = false;
+        if(fin1.getLugar()==1){
+        if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
+            curva.setFill(Color.BLACK);
+            mostrarAlertaLedQuemado();
+            System.out.println("El led se quemo por sobrepasar su voltaje.");
+            verificado = true;
+            return verificado;}
+        } else if (fin1.getLugar()==2) {
+            if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
+                curva.setFill(Color.BLACK);
+                mostrarAlertaLedQuemado();
+                System.out.println("El led se quemo por sobrepasar su voltaje.");
+                verificado = true;
+                return verificado;
+            }
+        }
+        return verificado;
+    }
     // Mostrar una alerta cuando el LED se quema
     private void mostrarAlertaLedQuemado() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
