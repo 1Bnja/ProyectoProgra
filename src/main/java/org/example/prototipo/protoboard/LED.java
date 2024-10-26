@@ -32,6 +32,8 @@ public class LED extends Pane {
 
     private Color colorOriginal;
 
+    private boolean quemado = false;
+
     // Constructor de la clase LED
     public LED(Color colorLED) {
         this.colorOriginal = colorLED;
@@ -91,16 +93,24 @@ public class LED extends Pane {
     // Configurar eventos de arrastre para los extremos de las patas
     private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
-            empezarArrastre(e);
-            estirable.toFront();
+            if (!quemado) {
+                empezarArrastre(e);
+                estirable.toFront();
+            }
         });
-        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
-
+        estirable.setOnMouseDragged(e -> {
+            if (!quemado) {
+                arrastrePata(e, pata, estirable);
+            }
+        });
         estirable.setOnMouseReleased(event -> {
-            updateFinConnection(estirable);
-            checkLedState();
+            if (!quemado) {
+                updateFinConnection(estirable);
+                checkLedState();
+            }
         });
     }
+
 
     // Configurar arrastre para el nodo completo (LED)
     private void configurarArrastreNodo() {
@@ -257,8 +267,12 @@ public class LED extends Pane {
     }
 
     // Verificar el estado del LED y actualizar su apariencia
-    // Verificar el estado del LED y actualizar su apariencia
     private void checkLedState() {
+        if (quemado) {
+            curva.setFill(Color.BLACK);
+            return;
+        }
+
         boolean bandera = false;
         if (fin1Conectada && fin2Conectada) {
             if (signoFin1 == 0 || signoFin2 == 0) {
@@ -277,10 +291,14 @@ public class LED extends Pane {
             } else if (signoFin1 == signoFin2) {
                 // Si los signos son iguales, el LED se quema
                 curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
+                quemado = true;
+                deshabilitarExtremos();
                 mostrarAlertaLedQuemado();
             } else if (signoFin1 == fin2.getSigno() && signoFin2 == fin1.getSigno()) {
                 // Polarización inversa, el LED se quema
                 curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
+                quemado = true;
+                deshabilitarExtremos();
                 mostrarAlertaLedQuemado();
             } else {
                 // Cualquier otra condición, el LED está apagado
@@ -310,6 +328,8 @@ public class LED extends Pane {
         if(fin1.getLugar()==1){
         if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
             curva.setFill(Color.BLACK);
+            quemado = true;
+            deshabilitarExtremos();
             mostrarAlertaLedQuemado();
             System.out.println("El led se quemo por sobrepasar su voltaje.");
             verificado = true;
@@ -317,6 +337,8 @@ public class LED extends Pane {
         } else if (fin1.getLugar()==2) {
             if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
                 curva.setFill(Color.BLACK);
+                quemado = true;
+                deshabilitarExtremos();
                 mostrarAlertaLedQuemado();
                 System.out.println("El led se quemo por sobrepasar su voltaje.");
                 verificado = true;
@@ -333,6 +355,12 @@ public class LED extends Pane {
         alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
 
         alert.showAndWait();
+    }
+
+    // Deshabilitar los extremos del LED cuando se quema
+    private void deshabilitarExtremos() {
+        fin1.setDisable(true);
+        fin2.setDisable(true);
     }
 
     // Getters para los extremos del LED
