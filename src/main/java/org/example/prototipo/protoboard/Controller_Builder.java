@@ -268,36 +268,42 @@ public class Controller_Builder {
     // Acción al hacer clic en el botón para agregar una Batería
     @FXML
     void Click_Bateria(ActionEvent event) {
-        // Verificar si ya existe una batería en la lista de elementos
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
 
-        // Crear y agregar un motor
-        Motor motor = new Motor();
-        agregarProto(motor);
-
         if (existe) {
-            // Mostrar alerta si ya hay una batería
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
             alert.setHeaderText(null);
             alert.setContentText("Ya existe una batería en la pantalla. :p");
-            alert.showAndWait(); // Mostrar el mensaje
+            alert.showAndWait();
         } else {
-            // Crear y agregar la batería
-            Bateria bateria = new Bateria();
-            bateria.toFront();
-            System.out.println("Se ha agregado una batería");
-            agregar(bateria);
-            motor.setBateria(bateria);
+            ChoiceDialog<Integer> dialog = new ChoiceDialog<>(9, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+            dialog.setTitle("Seleccionar Voltaje de la Batería");
+            dialog.setHeaderText("Elige el voltaje para la batería");
+            dialog.setContentText("Voltajes disponibles (1-9V):");
 
-            // Asignar el protoboard al motor si existe
-            for (int i = 0 ; i < elementos.size() ; i++) {
-                if (elementos.get(i) instanceof Prototipo_Protoboard) {
-                    motor.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+            dialog.showAndWait().ifPresent(voltage -> {
+                Bateria bateria = new Bateria();
+                bateria.toFront();
+                bateria.getConectorPositivo().setVoltaje(voltage);
+                bateria.getConectorNegativo().setVoltaje(voltage);
+
+                System.out.println("Se ha agregado una batería de " + voltage + "V");
+                agregar(bateria);
+
+                Motor motor = new Motor();
+                agregarProto(motor);
+                motor.setBateria(bateria);
+
+                for (Node elemento : elementos) {
+                    if (elemento instanceof Prototipo_Protoboard) {
+                        motor.setProtoboard((Prototipo_Protoboard) elemento);
+                    }
                 }
-            }
+            });
         }
     }
+
 
     // Acción al hacer clic en el botón para agregar un Protoboard
     @FXML
@@ -341,4 +347,27 @@ public class Controller_Builder {
             elemento_seleccionado = null;
         }
     }
+
+    // Acción al hacer clic en el botón Reset
+    @FXML
+    void Click_Reset(ActionEvent event) {
+        System.out.println("Se ha reiniciado el protoboard");
+
+
+        for (Node elemento : elementos) {
+            Anchor_PanelFondo.getChildren().remove(elemento);
+        }
+
+        elementos.clear();
+
+        elemento_seleccionado = null;
+
+        origenX = Main.origenX;
+        origenY = Main.origenY;
+        
+        TextArea.clear();
+        TextArea.appendText("El sistema ha sido reiniciado.\n");
+    }
+
+
 }
