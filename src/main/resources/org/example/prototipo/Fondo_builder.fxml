@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Anchor_PanelFondo" prefHeight="920.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
+<AnchorPane fx:id="Anchor_PanelFondo" prefHeight="920.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.prototipo.protoboard.Controller_Builder">
    <children>
       <HBox layoutX="8.0" prefHeight="50.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -59,6 +60,22 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
+            <Button fx:id="Boton_Switch8" mnemonicParsing="false" onAction="#Click_Switch8" prefHeight="40.0" prefWidth="115.0" text="SWITCH 8">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="Boton_Resistencia" mnemonicParsing="false" onAction="#Click_Resistencia" prefHeight="40.0" prefWidth="115.0" text="RESISTENCIA">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="Proto" mnemonicParsing="false" onAction="#Click_Proto" prefHeight="40.0" prefWidth="126.0" text="PROTOBOARD">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -91,6 +108,14 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
+            <Button fx:id="Boton_Reser" mnemonicParsing="false" onAction="#Click_Reset" prefHeight="40.0" prefWidth="78.0" text="RESET">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
          </children>
          <effect>
             <Lighting diffuseConstant="1.55" specularConstant="0.61" specularExponent="30.64">
@@ -107,6 +132,7 @@
             </Lighting>
          </effect>
       </HBox>
+      <TextArea fx:id="TextArea" layoutX="24.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
    <effect>
       <Blend />

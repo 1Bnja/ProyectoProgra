@@ -72,9 +72,9 @@ public class Swich extends Pane {
             if (encendido) {
                 // Si está encendido, apagar el interruptor
                 if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(columnaSalida, 3); // Cortar energía
+                    protoboard.getCelda1().alternarColumna(columnaSalida, 3,0); // Cortar energía
                 } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(columnaSalida, 3);
+                    protoboard.getCelda2().alternarColumna(columnaSalida, 3,0);
                 }
                 cuadradoInterno.setFill(Color.BLACK);
             } else {
@@ -82,10 +82,10 @@ public class Swich extends Pane {
                 int signoEntrada;
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaSalida, signoEntrada); // Transferir energía
+                    protoboard.getCelda1().alternarColumna(columnaSalida, signoEntrada,protoboard.getCelda1().getVoltaje(filaEntrada,columnaEntrada)); // Transferir energía
                 } else if (celda == 2) {
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda2().alternarColumna(columnaSalida, signoEntrada);
+                    protoboard.getCelda2().alternarColumna(columnaSalida, signoEntrada,protoboard.getCelda2().getVoltaje(filaEntrada,columnaEntrada));
                 }
                 cuadradoInterno.setFill(Color.YELLOW); // Cambiar color a encendido
             }

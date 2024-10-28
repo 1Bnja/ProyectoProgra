@@ -30,8 +30,14 @@ public class LED extends Pane {
     private int signoFin1 = 0;
     private int signoFin2 = 0;
 
+    private Color colorOriginal;
+
+    private boolean quemado = false;
+
     // Constructor de la clase LED
-    public LED() {
+    public LED(Color colorLED) {
+        this.colorOriginal = colorLED;
+
         // Crear la línea horizontal que representa el LED
         Line led1 = crearLinea(origenX - 550, origenY - 150, origenX - 515, origenY - 150);
 
@@ -39,7 +45,7 @@ public class LED extends Pane {
         curva = crearCurva(origenX - 550, origenY - 150,
                 origenX - 549.25, origenY - 200,
                 origenX - 515.75, origenY - 200,
-                origenX - 515, origenY - 150);
+                origenX - 515, origenY - 150, colorLED);
 
         // Crear las patas del LED
         pata1 = crearLinea(origenX - 545, origenY - 150, origenX - 545, origenY - 135);
@@ -48,9 +54,11 @@ public class LED extends Pane {
         // Pata positiva (ánodo)
         fin1 = crearEstirable(pata1, Color.RED);
         fin1.setSigno(1);
+        fin1.setVoltaje(2);
         // Pata negativa (cátodo)
         fin2 = crearEstirable(pata2, Color.BLUE);
         fin2.setSigno(-1);
+        fin2.setVoltaje(2);
 
         // Configurar eventos de arrastre para las patas
         configurarArrastre(fin1, pata1);
@@ -75,30 +83,34 @@ public class LED extends Pane {
     }
 
     // Método para crear una curva cúbica (el cuerpo del LED)
-    private CubicCurve crearCurva(double startX, double startY,
-                                  double controlX1, double controlY1,
-                                  double controlX2, double controlY2,
-                                  double endX, double endY) {
-        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1,
-                controlX2, controlY2, endX, endY);
+    private CubicCurve crearCurva(double startX, double startY, double controlX1, double controlY1, double controlX2, double controlY2, double endX, double endY, Color colorLeD) {
+        CubicCurve curva = new CubicCurve(startX, startY, controlX1, controlY1, controlX2, controlY2, endX, endY);
         curva.setStroke(Color.BLACK);
-        curva.setFill(Color.LIGHTBLUE);
+        curva.setFill(colorLeD);
         return curva;
     }
 
     // Configurar eventos de arrastre para los extremos de las patas
     private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
-            empezarArrastre(e);
-            estirable.toFront();
+            if (!quemado) {
+                empezarArrastre(e);
+                estirable.toFront();
+            }
         });
-        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
-
+        estirable.setOnMouseDragged(e -> {
+            if (!quemado) {
+                arrastrePata(e, pata, estirable);
+            }
+        });
         estirable.setOnMouseReleased(event -> {
-            updateFinConnection(estirable);
-            checkLedState();
+            if (!quemado) {
+                updateFinConnection(estirable);
+                checkLedState();
+            }
         });
     }
+
 
     // Configurar arrastre para el nodo completo (LED)
     private void configurarArrastreNodo() {
@@ -212,12 +224,16 @@ public class LED extends Pane {
                     // Obtener el signo de la celda
                     if (gridPane == gridPanes[0]) {
                         signoCelda = protoboard.getCelda1().getSigno(row, col);
+                        fin1.setLugar(1);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        fin1.setLugar(2);
                     } else if (gridPane == gridPanes[2]) {
                         signoCelda = protoboard.getBus1().getSigno(row, col);
+                        fin1.setLugar(0);
                     } else if (gridPane == gridPanes[3]) {
                         signoCelda = protoboard.getBus2().getSigno(row, col);
+                        fin1.setLugar(3);
                     }
                     connected = true;
                     break;
@@ -252,31 +268,85 @@ public class LED extends Pane {
 
     // Verificar el estado del LED y actualizar su apariencia
     private void checkLedState() {
+        if (quemado) {
+            curva.setFill(Color.BLACK);
+            return;
+        }
+
+        boolean bandera = false;
         if (fin1Conectada && fin2Conectada) {
             if (signoFin1 == 0 || signoFin2 == 0) {
                 // Si alguno de los extremos no tiene signo, el LED está apagado
-                curva.setFill(Color.LIGHTBLUE);
+
+                    curva.setFill(colorOriginal);
+                // Mantener el color original si el LED está apagado
             } else if (signoFin1 == fin1.getSigno() && signoFin2 == fin2.getSigno()) {
                 // El LED está correctamente polarizado y enciende
-                curva.setFill(Color.YELLOW);
+
+                bandera = verificar();
+                if(bandera==false){
+                    curva.setFill(obtenerColorEncendido(colorOriginal));  // Convertir el color "apagado" a "encendido"
+                }
+
             } else if (signoFin1 == signoFin2) {
                 // Si los signos son iguales, el LED se quema
-                curva.setFill(Color.RED);
+                curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
+                quemado = true;
+                deshabilitarExtremos();
                 mostrarAlertaLedQuemado();
             } else if (signoFin1 == fin2.getSigno() && signoFin2 == fin1.getSigno()) {
                 // Polarización inversa, el LED se quema
-                curva.setFill(Color.RED);
+                curva.setFill(Color.BLACK);  // Cambiar a negro cuando el LED se quema
+                quemado = true;
+                deshabilitarExtremos();
                 mostrarAlertaLedQuemado();
             } else {
                 // Cualquier otra condición, el LED está apagado
-                curva.setFill(Color.LIGHTBLUE);
+                curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
             }
         } else {
             // Si no están conectados ambos extremos, el LED está apagado
-            curva.setFill(Color.LIGHTBLUE);
+            curva.setFill(colorOriginal);  // Mantener el color original si el LED está apagado
         }
     }
 
+    private Color obtenerColorEncendido(Color colorOriginal) {
+        if (colorOriginal.equals(Color.LIGHTBLUE)) {
+            return Color.BLUE;
+        } else if (colorOriginal.equals(Color.LIGHTGREEN)) {
+            return Color.GREEN;
+        } else if (colorOriginal.equals(Color.LIGHTCORAL)) {
+            return Color.RED;
+        } else if (colorOriginal.equals(Color.LIGHTYELLOW)) {
+            return Color.YELLOW;
+        }
+        return colorOriginal;
+    }
+
+    private boolean verificar(){
+        boolean verificado = false;
+        if(fin1.getLugar()==1){
+        if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
+            curva.setFill(Color.BLACK);
+            quemado = true;
+            deshabilitarExtremos();
+            mostrarAlertaLedQuemado();
+            System.out.println("El led se quemo por sobrepasar su voltaje.");
+            verificado = true;
+            return verificado;}
+        } else if (fin1.getLugar()==2) {
+            if(protoboard.getCelda1().getVoltaje(fin1.getFila(),fin1.getCol())>fin1.getVoltaje()){
+                curva.setFill(Color.BLACK);
+                quemado = true;
+                deshabilitarExtremos();
+                mostrarAlertaLedQuemado();
+                System.out.println("El led se quemo por sobrepasar su voltaje.");
+                verificado = true;
+                return verificado;
+            }
+        }
+        return verificado;
+    }
     // Mostrar una alerta cuando el LED se quema
     private void mostrarAlertaLedQuemado() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -285,6 +355,12 @@ public class LED extends Pane {
         alert.setContentText("OH NO!! EL LED SE QUEMÓ AAAAAAAA");
 
         alert.showAndWait();
+    }
+
+    // Deshabilitar los extremos del LED cuando se quema
+    private void deshabilitarExtremos() {
+        fin1.setDisable(true);
+        fin2.setDisable(true);
     }
 
     // Getters para los extremos del LED
