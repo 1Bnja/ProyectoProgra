@@ -7,7 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.paint.Color;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ public class Controller_Builder {
     @FXML
     private Button Boton_Cable, Boton_Led, Boton_Switch, Boton_Bateria, Boton_Eliminar, Proto, Boton_Resistencia, Boton_Chip, Boton_Switch8;
 
+    @FXML
+    private TextArea TextArea;
+
     // Lista para almacenar todos los elementos agregados al panel
     private List<Node> elementos = new ArrayList<>();
 
@@ -31,6 +36,23 @@ public class Controller_Builder {
     // Coordenadas de origen (posiblemente para posicionamiento inicial)
     double origenX = Main.origenX;
     double origenY = Main.origenY;
+
+
+
+    public void initialize() {
+        // Redirigir el System.out al TextArea
+        PrintStream ps = new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                // Agrega el carácter al TextArea
+                TextArea.appendText(String.valueOf((char) b));
+            }
+        });
+        System.setOut(ps);
+    }
+
+
+
 
     // Método para agregar un elemento al panel y a la lista de elementos
     private void agregar(Node elemento) {
@@ -97,20 +119,58 @@ public class Controller_Builder {
     @FXML
     void Click_Led(ActionEvent event) {
         System.out.println("Se ha agregado un led");
-        LED led = new LED();
-        led.toFront();
-        agregar(led); // Agrega el LED al panel y a la lista de elementos
 
-        // Buscar y asignar el protoboard al LED si existe
-        for (Node elemento : elementos) {
-            if (elemento instanceof Prototipo_Protoboard) {
-                Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
-                led.setProtoboard(protoboard);
-                protoboard.agregarComponenteConectado(led);
-                break;
+        // Crear una lista de colores
+        List<String> colores = new ArrayList<>();
+        colores.add("Rojo");
+        colores.add("Verde");
+        colores.add("Azul");
+        colores.add("Amarillo");
+
+        // Crear un diálogo para que el usuario elija un color
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Rojo", colores);
+        dialog.setTitle("Seleccionar Color del LED");
+        dialog.setHeaderText("Elige un color para el LED");
+        dialog.setContentText("Colores disponibles:");
+
+        // Obtener la selección del usuario
+        dialog.showAndWait().ifPresent(colorSeleccionado -> {
+            Color colorLed;
+
+            // Asignar el color según la elección del usuario
+            switch (colorSeleccionado) {
+                case "Verde":
+                    colorLed = Color.LIGHTGREEN;
+                    break;
+                case "Azul":
+                    colorLed = Color.LIGHTBLUE;
+                    break;
+                case "Amarillo":
+                    colorLed = Color.LIGHTYELLOW;
+                    break;
+                case "Rojo":
+                default:
+                    colorLed = Color.LIGHTCORAL;
+                    break;
             }
-        }
+
+            // Crear el LED con el color seleccionado
+            LED led = new LED(colorLed);
+            led.toFront();
+            agregar(led); // Agrega el LED al panel y a la lista de elementos
+
+            // Buscar y asignar el protoboard al LED si existe
+            for (Node elemento : elementos) {
+                if (elemento instanceof Prototipo_Protoboard) {
+                    Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
+                    led.setProtoboard(protoboard);
+                    protoboard.agregarComponenteConectado(led);
+                    break;
+                }
+            }
+        });
     }
+
 
     // Acción al hacer clic en el botón para agregar una Resistencia
     @FXML
@@ -208,36 +268,42 @@ public class Controller_Builder {
     // Acción al hacer clic en el botón para agregar una Batería
     @FXML
     void Click_Bateria(ActionEvent event) {
-        // Verificar si ya existe una batería en la lista de elementos
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
 
-        // Crear y agregar un motor
-        Motor motor = new Motor();
-        agregarProto(motor);
-
         if (existe) {
-            // Mostrar alerta si ya hay una batería
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
             alert.setHeaderText(null);
             alert.setContentText("Ya existe una batería en la pantalla. :p");
-            alert.showAndWait(); // Mostrar el mensaje
+            alert.showAndWait();
         } else {
-            // Crear y agregar la batería
-            Bateria bateria = new Bateria();
-            bateria.toFront();
-            System.out.println("Se ha agregado una batería");
-            agregar(bateria);
-            motor.setBateria(bateria);
+            ChoiceDialog<Integer> dialog = new ChoiceDialog<>(9, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+            dialog.setTitle("Seleccionar Voltaje de la Batería");
+            dialog.setHeaderText("Elige el voltaje para la batería");
+            dialog.setContentText("Voltajes disponibles (1-9V):");
 
-            // Asignar el protoboard al motor si existe
-            for (int i = 0 ; i < elementos.size() ; i++) {
-                if (elementos.get(i) instanceof Prototipo_Protoboard) {
-                    motor.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+            dialog.showAndWait().ifPresent(voltage -> {
+                Bateria bateria = new Bateria();
+                bateria.toFront();
+                bateria.getConectorPositivo().setVoltaje(voltage);
+                bateria.getConectorNegativo().setVoltaje(voltage);
+
+                System.out.println("Se ha agregado una batería de " + voltage + "V");
+                agregar(bateria);
+
+                Motor motor = new Motor();
+                agregarProto(motor);
+                motor.setBateria(bateria);
+
+                for (Node elemento : elementos) {
+                    if (elemento instanceof Prototipo_Protoboard) {
+                        motor.setProtoboard((Prototipo_Protoboard) elemento);
+                    }
                 }
-            }
+            });
         }
     }
+
 
     // Acción al hacer clic en el botón para agregar un Protoboard
     @FXML
@@ -281,4 +347,27 @@ public class Controller_Builder {
             elemento_seleccionado = null;
         }
     }
+
+    // Acción al hacer clic en el botón Reset
+    @FXML
+    void Click_Reset(ActionEvent event) {
+        System.out.println("Se ha reiniciado el protoboard");
+
+
+        for (Node elemento : elementos) {
+            Anchor_PanelFondo.getChildren().remove(elemento);
+        }
+
+        elementos.clear();
+
+        elemento_seleccionado = null;
+
+        origenX = Main.origenX;
+        origenY = Main.origenY;
+        
+        TextArea.clear();
+        TextArea.appendText("El sistema ha sido reiniciado.\n");
+    }
+
+
 }

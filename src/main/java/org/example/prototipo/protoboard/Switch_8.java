@@ -382,12 +382,12 @@ public class Switch_8 extends Pane {
                 salida.setSigno(entrada.getSigno());
                 // Actualizar la columna correspondiente en el protoboard
                 if (protoboard != null) {
-                    protoboard.getCelda2().alternarColumna(columnaSalida + i, salida.getSigno());
+                    protoboard.getCelda2().alternarColumna(columnaSalida + i, salida.getSigno(),0);
                 }
             } else if (entrada.getSigno() == 0 && salida.getSigno() != 0) {
                 entrada.setSigno(salida.getSigno());
                 if (protoboard != null) {
-                    protoboard.getCelda1().alternarColumna(columnaEntrada + i, entrada.getSigno());
+                    protoboard.getCelda1().alternarColumna(columnaEntrada + i, entrada.getSigno(),0);
                 }
             } else {
                 System.out.println("No se pudo cambiar el estado del interruptor para la pata " + (i + 1));
@@ -405,8 +405,8 @@ public class Switch_8 extends Pane {
             salidas[i].setSigno(0);
             // Actualizar la columna correspondiente en el protoboard para reflejar la desconexión
             if (protoboard != null) {
-                protoboard.getCelda1().alternarColumna(columnaEntrada + i, 0);
-                protoboard.getCelda2().alternarColumna(columnaSalida + i, 0);
+                protoboard.getCelda1().alternarColumna(columnaEntrada + i, 0,0);
+                protoboard.getCelda2().alternarColumna(columnaSalida + i, 0,0);
             }
         }
     }
