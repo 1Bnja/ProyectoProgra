@@ -39,6 +39,9 @@ public class Resistencia extends Pane {
     private int signoFin1 = 0;
     private int signoFin2 = 0;
 
+    // Variable para indicar si la resistencia está quemada
+    private boolean quemado = false;
+
     // Constructor de la clase Resistencia que recibe el valor de la resistencia
     public Resistencia(double valorResistencia) {
         this.valorResistencia = valorResistencia;
@@ -62,7 +65,7 @@ public class Resistencia extends Pane {
 
         // Crear los puntos estirables en los extremos de las patas
         fin1 = crearEstirable(pata1, Color.RED);
-        fin2 = crearEstirable(pata2, Color.RED);
+        fin2 = crearEstirable(pata2, Color.BLUE);
 
         // Configurar los eventos de arrastre para los extremos
         configurarArrastre(fin1, pata1);
@@ -207,14 +210,22 @@ public class Resistencia extends Pane {
     // Configura los eventos de arrastre para los extremos de las patas
     private void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
-            empezarArrastre(e);
-            estirable.toFront();
+            if (!quemado) {
+                empezarArrastre(e);
+                estirable.toFront();
+            }
         });
-        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
+        estirable.setOnMouseDragged(e -> {
+            if (!quemado) {
+                arrastrePata(e, pata, estirable);
+            }
+        });
 
         estirable.setOnMouseReleased(event -> {
-            updateFinConnection(estirable);
-            checkResistorState();
+            if (!quemado) {
+                updateFinConnection(estirable);
+                checkResistorState();
+            }
         });
     }
 
@@ -243,7 +254,6 @@ public class Resistencia extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                // Desactivar chequeo en movimiento
             }
         });
 
@@ -268,23 +278,38 @@ public class Resistencia extends Pane {
 
     // Verifica el estado de la resistencia y actualiza su apariencia
     public void checkResistorState() {
-        boolean quemado = false;
+        if (quemado) {
+            // Mantener el estado visual de la resistencia quemada
+            fondo.setFill(Color.RED);
+            franja1.setStroke(Color.RED);
+            franja2.setStroke(Color.RED);
+            return;
+        }
 
         // Si ambos extremos tienen el mismo signo y no son cero, la resistencia se quema
         if (signoFin1 == signoFin2 && signoFin1 != 0) {
             quemado = true;
-            fondo.setFill(Color.RED);
-            franja1.setStroke(Color.RED);
+            fondo.setFill(Color.BLACK);
+            franja1.setStroke(Color.BLACK);
+            franja2.setStroke(Color.BLACK);
+            deshabilitarExtremos();
+            mostrarAlertaResistenciaQuemada();
         }
+    }
 
-        if (quemado) {
-            // Mostrar una alerta indicando que la resistencia se quemó
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ALERTA");
-            alert.setHeaderText(null);
-            alert.setContentText("¡OH NO! LA RESISTENCIA SE QUEMÓ");
-            alert.showAndWait();
-        }
+    // Método para deshabilitar los extremos cuando la resistencia está quemada
+    private void deshabilitarExtremos() {
+        fin1.setDisable(true);
+        fin2.setDisable(true);
+    }
+
+    // Mostrar una alerta cuando la resistencia se quema
+    private void mostrarAlertaResistenciaQuemada() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ALERTA");
+        alert.setHeaderText(null);
+        alert.setContentText("¡OH NO! LA RESISTENCIA SE QUEMÓ");
+        alert.showAndWait();
     }
 
     // Getters y setters para el protoboard
