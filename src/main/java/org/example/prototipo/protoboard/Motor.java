@@ -61,15 +61,17 @@ public class Motor extends Pane {
                 bateria.conectorNegativo.setFill(Color.DARKBLUE);
                 bateria.conectorPositivo.setFill(Color.DARKRED);
 
+
                 // Actualizar el estado de los cables conectados
                 for (int i = 0; i < protoboard.getCablesConctados().size(); i++) {
                     Cable cable = protoboard.getCablesConctados().get(i);
                     cable.signoBateria(cable.getInicio().getSigno(), cable.getInicio(), cable.getFin(), cable.line);
+                    cable.pintar(cable);
                 }
-                protoboard.getCelda1().onOff(0, true);
-                protoboard.getCelda2().onOff(0, true);
-                protoboard.getBus1().onOff(0, true);
-                protoboard.getBus2().onOff(0, true);
+                //protoboard.getCelda1().onOff(0, true);
+                //protoboard.getCelda2().onOff(0, true);
+                //protoboard.getBus1().onOff(0, true);
+                //protoboard.getBus2().onOff(0, true);
 
                 // Notificar a los cables conectados para actualizar su color
                 actualizarCablesConectados();
