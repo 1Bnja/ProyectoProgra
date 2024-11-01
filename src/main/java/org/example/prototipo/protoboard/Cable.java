@@ -429,18 +429,22 @@ public class Cable extends Pane {
             a.setFill(Color.BLUE);
             b.setFill(Color.BLUE);
             l.setStroke(Color.BLUE);
+            b.setSigno(-1);
         } else if (signo == 1) {
             a.setFill(Color.RED);
             b.setFill(Color.RED);
             l.setStroke(Color.RED);
+            b.setSigno(1);
         } else if (signo == 0) {
             l.setStroke(Color.BLACK);
             a.setFill(Color.BLACK);
             b.setFill(Color.BLACK);
+            b.setSigno(0);
         } else if (signo == 2) {
             l.setStroke(Color.OLIVE);
             a.setFill(Color.OLIVE);
             b.setFill(Color.OLIVE);
+            b.setSigno(2);
         }
     }
 
@@ -577,5 +581,20 @@ public class Cable extends Pane {
             }
         }
         return null;
+    }
+
+    public void pintar(Cable cable) {
+        if(cable.getInicio().getLugar()==1){
+            protoboard.getCelda1().alternarColumna(cable.getInicio().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
+        }
+        if(cable.getInicio().getLugar()==2){
+            protoboard.getCelda2().alternarColumna(cable.getFin().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
+        }
+        if(cable.getInicio().getLugar()==3){
+            protoboard.getBus2().toggleFilaBus(cable.getInicio().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
+        }
+        if(cable.getInicio().getLugar()==0){
+            protoboard.getBus1().toggleFilaBus(cable.getInicio().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
+        }
     }
 }
