@@ -75,6 +75,7 @@ public class Motor extends Pane {
 
                 // Notificar a los cables conectados para actualizar su color
                 actualizarCablesConectados();
+                Prototipo_Protoboard.notificarComponentesConectados();
             } else {
                 System.out.println("Batería Apagada");
                 sobre.setStroke(Color.DARKGREY);
@@ -95,6 +96,7 @@ public class Motor extends Pane {
 
                 // Notificar a los cables conectados para actualizar su color
                 actualizarCablesConectados();
+                Prototipo_Protoboard.notificarComponentesConectados();
             }
             // Cambiar el estado de encendido
             encendido = !encendido;
