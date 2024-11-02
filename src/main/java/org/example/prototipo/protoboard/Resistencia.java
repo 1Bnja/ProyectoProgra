@@ -16,7 +16,8 @@ public class Resistencia extends Pane {
     private Line pata1, pata2;
     private Line lineaSu, lineaIn, lineaIzq, lineaDer;
     private Line franja1, franja2;
-    private Cuadrados fin1, fin2;
+    private Cuadrados fin1;
+    private Cuadrados fin2;
     private Polygon fondo;
 
     // Variables para manejar la posición del mouse durante el arrastre
@@ -27,6 +28,8 @@ public class Resistencia extends Pane {
     private double origenX = Main.origenX;
     private double origenY = Main.origenY;
     Prototipo_Protoboard protoboard;
+    Bateria bateria;
+    LED led;
 
     // Variables para verificar si los extremos están conectados
     private boolean fin1Conectada = false;
@@ -62,10 +65,11 @@ public class Resistencia extends Pane {
         // Crear las franjas de colores que representan el valor de la resistencia
         franja1 = crearLinea(origenX - 549, origenY - 142, origenX - 533, origenY - 142, Color.RED);
         franja2 = crearLinea(origenX - 549, origenY - 134, origenX - 533, origenY - 134, Color.GREEN);
-
+        franja1.setStrokeWidth(3);
+        franja2.setStrokeWidth(3);
         // Crear los puntos estirables en los extremos de las patas
-        fin1 = crearEstirable(pata1, Color.RED);
-        fin2 = crearEstirable(pata2, Color.BLUE);
+        fin1 = crearEstirable(pata1, Color.ORANGE);
+        fin2 = crearEstirable(pata2, Color.ORANGE);
 
         // Configurar los eventos de arrastre para los extremos
         configurarArrastre(fin1, pata1);
@@ -169,8 +173,14 @@ public class Resistencia extends Pane {
                     // Obtener el signo de la celda donde se conectó
                     if (gridPane == gridPanes[0]) {
                         signoCelda = protoboard.getCelda1().getSigno(row, col);
+                        estirable.setLugar(1);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        estirable.setLugar(2);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     } else if (gridPane == gridPanes[2]) {
                         signoCelda = protoboard.getBus1().getSigno(row, col);
                     } else if (gridPane == gridPanes[3]) {
@@ -189,9 +199,54 @@ public class Resistencia extends Pane {
             if (estirable == fin1) {
                 fin1Conectada = connected;
                 signoFin1 = signoCelda;
+                fin1.setSigno(signoCelda);
+                if(signoFin1==-1){
+                    franja2.setStroke(Color.DARKBLUE);
+                    franja1.setStroke(Color.DARKBLUE);
+                }else if(signoFin1==1){
+                    franja2.setStroke(Color.DARKRED);
+                    franja1.setStroke(Color.DARKRED);
+                }
+
+                if(fin2.getSigno()!=0 && fin1.getSigno()!=0){
+                    if(fin1.getSigno()!=fin2.getSigno()){
+                        quemado=true;
+                    }
+                }
+                if(signoFin1==0 && signoFin2!=0){
+                    if(fin1.getLugar()==1){
+                        protoboard.getCelda1().alternarColumna(fin1.getCol(),fin2.getSigno(),fin2.getVoltaje());
+                    }else if(fin1.getLugar()==2){
+                        protoboard.getCelda2().alternarColumna(fin1.getCol(),fin2.getSigno(),fin2.getVoltaje());
+                    }
+                }
+
             } else if (estirable == fin2) {
                 fin2Conectada = connected;
                 signoFin2 = signoCelda;
+                fin2.setSigno(signoCelda);
+                if(signoFin2==-1){
+                    franja2.setStroke(Color.DARKBLUE);
+                    franja1.setStroke(Color.DARKBLUE);
+                }else if(signoFin2==1){
+                    franja2.setStroke(Color.DARKRED);
+                    franja1.setStroke(Color.DARKRED);
+                }
+
+                if(signoFin2==0 && signoFin1!=0){
+                    if(fin2.getLugar()==1){
+                        protoboard.getCelda1().alternarColumna(fin2.getCol(),fin1.getSigno(),fin1.getVoltaje());
+                        System.out.println("resistencia: " +CalcularResistencia());
+                    }else if(fin2.getLugar()==2){
+                        protoboard.getCelda2().alternarColumna(fin2.getCol(),fin1.getSigno(),fin1.getVoltaje());
+                        System.out.println("resistencia: " +CalcularResistencia());
+                    }
+                }
+                if(fin1.getSigno()!=0 && fin2.getSigno()!=0){
+                    if(fin1.getSigno()!=fin2.getSigno()){
+                        quemado=true;
+                    }
+                }
             }
         }
     }
@@ -278,23 +333,14 @@ public class Resistencia extends Pane {
 
     // Verifica el estado de la resistencia y actualiza su apariencia
     public void checkResistorState() {
-        if (quemado) {
+        if (quemado==true) {
             // Mantener el estado visual de la resistencia quemada
-            fondo.setFill(Color.RED);
-            franja1.setStroke(Color.RED);
-            franja2.setStroke(Color.RED);
-            return;
-        }
-
-        // Si ambos extremos tienen el mismo signo y no son cero, la resistencia se quema
-        if (signoFin1 == signoFin2 && signoFin1 != 0) {
-            quemado = true;
             fondo.setFill(Color.BLACK);
             franja1.setStroke(Color.BLACK);
             franja2.setStroke(Color.BLACK);
-            deshabilitarExtremos();
             mostrarAlertaResistenciaQuemada();
         }
+
     }
 
     // Método para deshabilitar los extremos cuando la resistencia está quemada
@@ -312,6 +358,12 @@ public class Resistencia extends Pane {
         alert.showAndWait();
     }
 
+
+    private double CalcularResistencia(){
+        double corriente= 0.02;
+        return (bateria.getConectorPositivo().getVoltaje() - led.getFin1().getVoltaje())/corriente;
+    }
+
     // Getters y setters para el protoboard
 
     public Prototipo_Protoboard getProtoboard() {
@@ -320,5 +372,39 @@ public class Resistencia extends Pane {
 
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
+    }
+
+    public Bateria getBateria() {
+        return bateria;
+    }
+
+    public void setBateria(Bateria bateria) {
+        this.bateria = bateria;
+    }
+
+    public LED getLed() {
+        return led;
+    }
+
+    public void setLed(LED led) {
+        this.led = led;
+    }
+
+
+
+    public Cuadrados getFin1() {
+        return fin1;
+    }
+
+    public void setFin1(Cuadrados fin1) {
+        this.fin1 = fin1;
+    }
+
+    public Cuadrados getFin2() {
+        return fin2;
+    }
+
+    public void setFin2(Cuadrados fin2) {
+        this.fin2 = fin2;
     }
 }
