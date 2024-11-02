@@ -16,8 +16,8 @@ public class Chip extends Pane {
     private Group nodo = new Group();
 
     // Definición de los puntos finales (patas) y líneas del chip
-    private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8;
-    private Line pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8;
+    private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10, fin11, fin12, fin13, fin14;
+    private Line pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14;
 
     // Posición del mouse para manejar el arrastre
     private double mouseX;
@@ -39,6 +39,12 @@ public class Chip extends Pane {
     private boolean fin6Conectada = false;
     private boolean fin7Conectada = false;
     private boolean fin8Conectada = false;
+    private boolean fin9Conectada = false;
+    private boolean fin10Conectada = false;
+    private boolean fin11Conectada = false;
+    private boolean fin12Conectada = false;
+    private boolean fin13Conectada = false;
+    private boolean fin14Conectada = false;
 
     // Signos de las conexiones de las patas
     private int signoFin1 = 0;
@@ -49,6 +55,12 @@ public class Chip extends Pane {
     private int signoFin6 = 0;
     private int signoFin7 = 0;
     private int signoFin8 = 0;
+    private int signoFin9 = 0;
+    private int signoFin10 = 0;
+    private int signoFin11 = 0;
+    private int signoFin12 = 0;
+    private int signoFin13 = 0;
+    private int signoFin14 = 0;
 
     // Constructor de la clase Chip
     public Chip() {

@@ -10,6 +10,9 @@ public class Cuadrados extends Rectangle {
     int lugar; // 0 = bus1, 1 = celda1, 2 = celda2, 3 = bus2
     int col, fila;
     private double voltaje= 0;
+    private int ancho, alto;
+    private Color color;
+    private double posX, posY;
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
@@ -25,6 +28,22 @@ public class Cuadrados extends Rectangle {
 
         // Establecer el color del borde
         this.setStroke(Color.BLACK);  // Color de la línea del borde
+    }
+
+    public Cuadrados(int ancho, int alto, double posX, double posY, Color color) {
+        this.ancho = ancho;
+        this.alto = alto;
+        this.posX = posX;
+        this.posY = posY;
+
+        this.setheidht(ancho);
+        this.setheidht(alto);
+
+        this.setX(posX);
+        this.setY(posY);
+
+        this.setFill(color);
+        this.setStroke(Color.BLACK);
     }
 
     // Getter para obtener el tamaño
