@@ -287,6 +287,7 @@ public class Controller_Builder {
                 bateria.toFront();
                 bateria.getConectorPositivo().setVoltaje(voltage);
                 bateria.getConectorNegativo().setVoltaje(voltage);
+                bateria.cambiarTxtoVoltaje(voltage);
 
                 System.out.println("Se ha agregado una batería de " + voltage + "V");
                 agregar(bateria);
