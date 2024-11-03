@@ -207,6 +207,7 @@ public class Resistencia extends Pane {
                     franja2.setStroke(Color.DARKRED);
                     franja1.setStroke(Color.DARKRED);
                 }
+                CalcularResistencia();
 
                 if(fin2.getSigno()!=0 && fin1.getSigno()!=0){
                     if(fin1.getSigno()!=fin2.getSigno()){
@@ -232,14 +233,13 @@ public class Resistencia extends Pane {
                     franja2.setStroke(Color.DARKRED);
                     franja1.setStroke(Color.DARKRED);
                 }
+                CalcularResistencia();
 
                 if(signoFin2==0 && signoFin1!=0){
                     if(fin2.getLugar()==1){
                         protoboard.getCelda1().alternarColumna(fin2.getCol(),fin1.getSigno(),fin1.getVoltaje());
-                        System.out.println("resistencia: " +CalcularResistencia());
                     }else if(fin2.getLugar()==2){
                         protoboard.getCelda2().alternarColumna(fin2.getCol(),fin1.getSigno(),fin1.getVoltaje());
-                        System.out.println("resistencia: " +CalcularResistencia());
                     }
                 }
                 if(fin1.getSigno()!=0 && fin2.getSigno()!=0){
@@ -359,9 +359,11 @@ public class Resistencia extends Pane {
     }
 
 
-    private double CalcularResistencia(){
+    private void CalcularResistencia(){
         double corriente= 0.02;
-        return (bateria.getConectorPositivo().getVoltaje() - led.getFin1().getVoltaje())/corriente;
+        double calculo= -(valorResistencia * corriente)+bateria.getConectorPositivo().getVoltaje();
+        fin1.setVoltaje(calculo);
+        fin2.setVoltaje(calculo);
     }
 
     // Getters y setters para el protoboard
