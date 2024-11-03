@@ -31,19 +31,11 @@ public class Cuadrados extends Rectangle {
     }
 
     public Cuadrados(int ancho, int alto, double posX, double posY, Color color) {
-        this.ancho = ancho;
-        this.alto = alto;
-        this.posX = posX;
-        this.posY = posY;
-
-        this.setheidht(ancho);
-        this.setheidht(alto);
-
-        this.setX(posX);
-        this.setY(posY);
-
-        this.setFill(color);
-        this.setStroke(Color.BLACK);
+        super(ancho, alto);
+        setX(posX);
+        setY(posY);
+        setFill(color);
+        setStroke(Color.BLACK);
     }
 
     // Getter para obtener el tamaño

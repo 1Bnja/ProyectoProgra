@@ -65,33 +65,40 @@ public class Chip extends Pane {
     // Constructor de la clase Chip
     public Chip() {
 
-        // Crear el cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 485, origenY - 105, origenX - 570, origenY - 105);
-        Line lineaInferiorCE = crearLinea(origenX - 485, origenY - 35, origenX - 570, origenY - 35);
-        Line lineaIzquierdaCE = crearLinea(origenX - 485, origenY - 105, origenX - 485, origenY - 35);
-        Line lineaDerechaCE = crearLinea(origenX - 570, origenY - 105, origenX - 570, origenY - 35);
+        double posX = origenX - 570;
+        double posY = origenY - 105;
+        int ancho = 155;
+        int alto = 70;
+
+        Cuadrados chip = new Cuadrados(ancho, alto, posX, posY, Color.BLACK);
 
         // Crear las patas del chip
         pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
         pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
         pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
         pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
+        pata5 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
+        pata6 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
+        pata7 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
 
-        pata5 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
-        pata6 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
-        pata7 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
-        pata8 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
+        pata8 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata9 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
+        pata10 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
+        pata11 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
+        pata12 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
+        pata13 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
+        pata14 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
 
-        // Crear el fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 485, origenY - 105, origenX - 570, origenY - 35, Color.BLACK);
 
         // **Agregar el texto "CHIP" en el centro**
         Text textoChip = new Text("CHIP");
         textoChip.setFill(Color.WHITE);
         textoChip.setFont(Font.font("Arial", 18));
         // Posicionar el texto en el centro del chip
-        double centerX = (origenX - 485 + origenX - 570) / 2 - textoChip.getLayoutBounds().getWidth() / 2;
-        double centerY = (origenY - 105 + origenY - 35) / 2 + textoChip.getLayoutBounds().getHeight() / 4;
+
+        double centerX = chip.getX() + chip.getWidth() / 2 - textoChip.getLayoutBounds().getWidth() / 2;
+        double centerY = chip.getY() + chip.getHeight() / 2 + textoChip.getLayoutBounds().getHeight() / 4;
+
         textoChip.setX(centerX);
         textoChip.setY(centerY);
 
@@ -104,6 +111,12 @@ public class Chip extends Pane {
         fin6 = Esquina_Estirable(pata6);
         fin7 = Esquina_Estirable(pata7);
         fin8 = Esquina_Estirable(pata8);
+        fin9 = Esquina_Estirable(pata9);
+        fin10 = Esquina_Estirable(pata10);
+        fin11 = Esquina_Estirable(pata11);
+        fin12 = Esquina_Estirable(pata12);
+        fin13 = Esquina_Estirable(pata13);
+        fin14 = Esquina_Estirable(pata14);
 
         // Configurar el arrastre para cada pata y su punto estirable
         configurarArrastre(fin1, pata1);
@@ -114,16 +127,22 @@ public class Chip extends Pane {
         configurarArrastre(fin6, pata6);
         configurarArrastre(fin7, pata7);
         configurarArrastre(fin8, pata8);
+        configurarArrastre(fin9, pata9);
+        configurarArrastre(fin10, pata10);
+        configurarArrastre(fin11, pata11);
+        configurarArrastre(fin12, pata12);
+        configurarArrastre(fin13, pata13);
+        configurarArrastre(fin14, pata14);
 
         // Configurar el arrastre del nodo completo (chip)
         configurarArrastreNodo();
 
         // Añadir todos los elementos gráficos al grupo nodo
         nodo.getChildren().addAll(
-                fondoCuadradoE, lineaSuperiorCE, lineaInferiorCE, lineaIzquierdaCE, lineaDerechaCE,
-                pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8,
-                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8,
-                textoChip // Añadir el texto al grupo
+                chip,
+                pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14,
+                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10, fin11, fin12, fin13, fin14,
+                textoChip
         );
         this.getChildren().add(nodo);
         this.setPickOnBounds(false);
@@ -264,7 +283,26 @@ public class Chip extends Pane {
             } else if (estirable == fin8) {
                 fin8Conectada = connected;
                 signoFin8 = signoCelda;
+            } else if (estirable == fin9) {
+                fin9Conectada = connected;
+                signoFin9 = signoCelda;
+            } else if (estirable == fin10) {
+                fin10Conectada = connected;
+                signoFin10 = signoCelda;
+            } else if (estirable == fin11) {
+                fin11Conectada = connected;
+                signoFin11 = signoCelda;
+            } else if (estirable == fin12) {
+                fin12Conectada = connected;
+                signoFin12 = signoCelda;
+            } else if (estirable == fin13) {
+                fin13Conectada = connected;
+                signoFin13 = signoCelda;
+            } else if (estirable == fin14) {
+                fin14Conectada = connected;
+                signoFin14 = signoCelda;
             }
+
         }
     }
 
@@ -333,6 +371,12 @@ public class Chip extends Pane {
         actualizarEstirable(fin6, pata6);
         actualizarEstirable(fin7, pata7);
         actualizarEstirable(fin8, pata8);
+        actualizarEstirable(fin9, pata9);
+        actualizarEstirable(fin10, pata10);
+        actualizarEstirable(fin11, pata11);
+        actualizarEstirable(fin12, pata12);
+        actualizarEstirable(fin13, pata13);
+        actualizarEstirable(fin14, pata14);
     }
 
     // Método para verificar y actualizar el estado de conexión de todas las patas
@@ -345,6 +389,12 @@ public class Chip extends Pane {
         updateFinConnection(fin6);
         updateFinConnection(fin7);
         updateFinConnection(fin8);
+        updateFinConnection(fin9);
+        updateFinConnection(fin10);
+        updateFinConnection(fin11);
+        updateFinConnection(fin12);
+        updateFinConnection(fin13);
+        updateFinConnection(fin14);
     }
 
     // Getters y setters para el protoboard

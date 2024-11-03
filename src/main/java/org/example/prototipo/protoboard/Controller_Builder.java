@@ -259,9 +259,6 @@ public class Controller_Builder {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
             }
-            if (elemento instanceof LED) {
-                switch8.setLed((LED) elemento);
-            }
         }
     }
 
