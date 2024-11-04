@@ -23,6 +23,8 @@ public class Bateria extends Pane {
     private List<Cable> cablesConectadosPositivo = new ArrayList<>();
     private List<Cable> cablesConectadosNegativo = new ArrayList<>();
 
+    private Text cantVoltaje;
+
     public Bateria() {
         // Parte superior de la batería
         Line lineaSuperiorIzquierda = new Line(origenX - 60, origenY - 120, origenX - 60, origenY - 70);
@@ -91,14 +93,14 @@ public class Bateria extends Pane {
         simboloNegativo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Texto 9V
-        Text texto5V = new Text(origenX - 20, origenY + 30, "9V");
-        texto5V.setFill(Color.WHITE);
-        texto5V.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+        cantVoltaje = new Text(origenX - 20, origenY + 30, "9V");
+        cantVoltaje.setFill(Color.WHITE);
+        cantVoltaje.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
 
         nodo.getChildren().addAll(
                 lineaSuperior, lineaInferior, lineaSuperiorIzquierda, lineaSuperiorDerecha, conectorPositivo, conectorNegativo,
                 lineaInferiorIzquierda, lineaInferiorDerecha, lineaBase, divisionColor,
-                simboloPositivo, simboloNegativo, texto5V
+                simboloPositivo, simboloNegativo, cantVoltaje
         );
 
         this.getChildren().add(nodo);
@@ -118,6 +120,11 @@ public class Bateria extends Pane {
             cablesConectadosNegativo.add(cable);
         }
     }
+
+    public void cambiarTxtoVoltaje(int voltaje){
+        cantVoltaje.setText(voltaje + "V");
+    }
+
 
     // Método para desconectar un cable del conector positivo
     public void desconectarCablePositivo(Cable cable) {
