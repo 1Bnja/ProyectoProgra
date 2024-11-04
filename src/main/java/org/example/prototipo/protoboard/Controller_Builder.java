@@ -205,6 +205,8 @@ public class Controller_Builder {
 
                         // Crear y agregar la resistencia
                         Resistencia resistencia = new Resistencia(valor);
+                        resistencia.getFin1().setVoltaje(valor);
+                        resistencia.getFin2().setVoltaje(valor);
                         resistencia.toFront();
                         agregar(resistencia);
 
@@ -212,6 +214,10 @@ public class Controller_Builder {
                         for (int i = 0; i < elementos.size(); i++) {
                             if (elementos.get(i) instanceof Prototipo_Protoboard) {
                                 resistencia.setProtoboard((Prototipo_Protoboard)elementos.get(i));
+                            }if (elementos.get(i) instanceof Bateria) {
+                                resistencia.setBateria((Bateria) elementos.get(i));
+                            }if (elementos.get(i) instanceof LED) {
+                                resistencia.setLed((LED) elementos.get(i));
                             }
                         }
                         dialog.setResult(valor);
@@ -259,9 +265,6 @@ public class Controller_Builder {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
             }
-            if (elemento instanceof LED) {
-                switch8.setLed((LED) elemento);
-            }
         }
     }
 
@@ -287,6 +290,7 @@ public class Controller_Builder {
                 bateria.toFront();
                 bateria.getConectorPositivo().setVoltaje(voltage);
                 bateria.getConectorNegativo().setVoltaje(voltage);
+                bateria.cambiarTxtoVoltaje(voltage);
 
                 System.out.println("Se ha agregado una batería de " + voltage + "V");
                 agregar(bateria);

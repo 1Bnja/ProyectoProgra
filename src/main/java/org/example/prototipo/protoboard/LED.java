@@ -224,16 +224,24 @@ public class LED extends Pane {
                     // Obtener el signo de la celda
                     if (gridPane == gridPanes[0]) {
                         signoCelda = protoboard.getCelda1().getSigno(row, col);
-                        fin1.setLugar(1);
+                        estirable.setLugar(1);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        fin1.setLugar(2);
+                        estirable.setLugar(2);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     } else if (gridPane == gridPanes[2]) {
                         signoCelda = protoboard.getBus1().getSigno(row, col);
-                        fin1.setLugar(0);
+                        estirable.setLugar(0);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     } else if (gridPane == gridPanes[3]) {
                         signoCelda = protoboard.getBus2().getSigno(row, col);
-                        fin1.setLugar(3);
+                        estirable.setLugar(3);
+                        estirable.setFila(row);
+                        estirable.setCol(col);
                     }
                     connected = true;
                     break;

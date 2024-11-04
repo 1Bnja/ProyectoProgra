@@ -190,8 +190,10 @@ public class Celdas extends Group {
                         color = Color.RED;
                     } else {
                         color = Color.WHITE;
+
                     }
                 }
+                col.setSigno(signo);
                 col.setFill(color);
             }
     }
