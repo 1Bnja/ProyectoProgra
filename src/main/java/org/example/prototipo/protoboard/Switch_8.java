@@ -42,42 +42,87 @@ public class Switch_8 extends Pane {
     int filaEntrada, columnaEntrada;
     int filaSalida, columnaSalida;
 
+    // Variables para controlar si las patas están conectadas
+    private boolean fin1Conectada = false;
+    private boolean fin2Conectada = false;
+    private boolean fin3Conectada = false;
+    private boolean fin4Conectada = false;
+    private boolean fin5Conectada = false;
+    private boolean fin6Conectada = false;
+    private boolean fin7Conectada = false;
+    private boolean fin8Conectada = false;
+    private boolean fin12Conectada = false;
+    private boolean fin22Conectada = false;
+    private boolean fin32Conectada = false;
+    private boolean fin42Conectada = false;
+    private boolean fin52Conectada = false;
+    private boolean fin62Conectada = false;
+    private boolean fin72Conectada = false;
+    private boolean fin82Conectada = false;
+
+    // Signos de las conexiones de las patas
+    private int signoFin1 = 0;
+    private int signoFin2 = 0;
+    private int signoFin3 = 0;
+    private int signoFin4 = 0;
+    private int signoFin5 = 0;
+    private int signoFin6 = 0;
+    private int signoFin7 = 0;
+    private int signoFin8 = 0;
+    private int signoFin12 = 0;
+    private int signoFin22 = 0;
+    private int signoFin32 = 0;
+    private int signoFin42 = 0;
+    private int signoFin52 = 0;
+    private int signoFin62 = 0;
+    private int signoFin72 = 0;
+    private int signoFin82 = 0;
+
+    Cuadrados boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8;
+
     // Constructor de la clase Switch_8
     public Switch_8() {
 
         this.encendido = false;
 
-        // Crear el cuadrado exterior usando líneas
-        Line lineaSuperiorCE = crearLinea(origenX - 400, origenY - 105, origenX - 588, origenY - 105);
-        Line lineaInferiorCE = crearLinea(origenX - 400, origenY - 35, origenX - 588, origenY - 35);
-        Line lineaIzquierdaCE = crearLinea(origenX - 400, origenY - 105, origenX - 400, origenY - 35);
-        Line lineaDerechaCE = crearLinea(origenX - 588, origenY - 105, origenX - 588, origenY - 35);
+        double posX = origenX - 570;
+        double posY = origenY - 105;
+        int ancho = 180;
+        int alto = 70;
 
-        // Crear los botones del switch
-        Cuadrados boton1 = crearBoton(origenX - 410, origenY - 94);
+        Cuadrados switch8 = new Cuadrados(ancho, alto, posX, posY, Color.GRAY);
 
-        // Crear las patas superiores (de derecha a izquierda)
-        pata1 = crearLinea(origenX - 405, origenY - 105, origenX - 405, origenY - 125);
-        pata2 = crearLinea(origenX - 430, origenY - 105, origenX - 430, origenY - 125);
-        pata3 = crearLinea(origenX - 455, origenY - 105, origenX - 455, origenY - 125);
-        pata4 = crearLinea(origenX - 480, origenY - 105, origenX - 480, origenY - 125);
-        pata5 = crearLinea(origenX - 505, origenY - 105, origenX - 505, origenY - 125);
-        pata6 = crearLinea(origenX - 530, origenY - 105, origenX - 530, origenY - 125);
-        pata7 = crearLinea(origenX - 555, origenY - 105, origenX - 555, origenY - 125);
-        pata8 = crearLinea(origenX - 579, origenY - 105, origenX - 580, origenY - 125);
+        nodo.getChildren().add(switch8);
 
-        // Crear las patas inferiores
-        pata12 = crearLinea(origenX - 405, origenY - 35, origenX - 405, origenY - 15);
-        pata22 = crearLinea(origenX - 430, origenY - 35, origenX - 430, origenY - 15);
-        pata32 = crearLinea(origenX - 455, origenY - 35, origenX - 455, origenY - 15);
-        pata42 = crearLinea(origenX - 480, origenY - 35, origenX - 480, origenY - 15);
-        pata52 = crearLinea(origenX - 505, origenY - 35, origenX - 505, origenY - 15);
-        pata62 = crearLinea(origenX - 530, origenY - 35, origenX - 530, origenY - 15);
-        pata72 = crearLinea(origenX - 555, origenY - 35, origenX - 555, origenY - 15);
-        pata82 = crearLinea(origenX - 579, origenY - 35, origenX - 580, origenY - 15);
+        // Crear las patas superiores (con la misma lógica de distancia que en Chip)
+        pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
+        pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
+        pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
+        pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
+        pata5 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
+        pata6 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
+        pata7 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
+        pata8 = crearLinea(origenX - 397, origenY - 105, origenX - 397, origenY - 125);
 
-        // Crear el fondo del cuadrado exterior
-        Polygon fondoCuadradoE = crearFondo(origenX - 400, origenY - 105, origenX - 588, origenY - 35, Color.GAINSBORO);
+        // Crear las patas inferiores (con la misma lógica de distancia que en Chip)
+        pata12 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata22 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
+        pata32 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
+        pata42 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
+        pata52 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
+        pata62 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
+        pata72 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
+        pata82 = crearLinea(origenX - 397, origenY - 35, origenX - 397, origenY - 15);
+
+        // Crear los botones del interruptor
+        boton1 = crearBoton(origenX - 567, origenY - 95);
+        boton2 = crearBoton(origenX - 543, origenY - 95);
+        boton3 = crearBoton(origenX - 519, origenY - 95);
+        boton4 = crearBoton(origenX - 495, origenY - 95);
+        boton5 = crearBoton(origenX - 471, origenY - 95);
+        boton6 = crearBoton(origenX - 447, origenY - 95);
+        boton7 = crearBoton(origenX - 423, origenY - 95);
+        boton8 = crearBoton(origenX - 399, origenY - 95);
 
         // Crear las esquinas estirables en las patas superiores
         fin1 = crearEsquinaEstirable(pata1, 1);
@@ -123,8 +168,7 @@ public class Switch_8 extends Pane {
 
         // Añadir todos los elementos al grupo nodo
         nodo.getChildren().addAll(
-                fondoCuadradoE, boton1,
-                lineaSuperiorCE, lineaInferiorCE, lineaIzquierdaCE, lineaDerechaCE,
+                boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8,
                 pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8,
                 pata12, pata22, pata32, pata42, pata52, pata62, pata72, pata82,
                 fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8,
@@ -133,7 +177,6 @@ public class Switch_8 extends Pane {
 
         // Añadir el nodo al pane
         this.getChildren().add(nodo);
-
         // Desactivar la detección de eventos en los límites del pane
         this.setPickOnBounds(false);
     }
@@ -150,9 +193,6 @@ public class Switch_8 extends Pane {
         boton.setOnMouseClicked(event -> {
             if (encendido) {
                 System.out.println("Interruptor apagado");
-                desconectarPatas();
-            } else {
-                conectarPatas();
             }
             encendido = !encendido; // Cambiar estado
             Prototipo_Protoboard.notificarComponentesConectados();
@@ -166,19 +206,6 @@ public class Switch_8 extends Pane {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
-    }
-
-    // Método para crear un fondo rectangular usando polígonos
-    private Polygon crearFondo(double startX, double startY, double endX, double endY, Color color) {
-        Polygon fondo = new Polygon();
-        fondo.getPoints().addAll(
-                startX, startY,
-                endX, startY,
-                endX, endY,
-                startX, endY
-        );
-        fondo.setFill(color);
-        return fondo;
     }
 
     // Método para crear una esquina estirable en la punta de una pata
@@ -206,51 +233,110 @@ public class Switch_8 extends Pane {
 
     // Método para verificar si una pata está conectada a una celda del protoboard
     private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
-        double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
-        double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
+        double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
+        double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
+
+        int signoCelda = 0;
+        boolean connected = false;
 
         if (protoboard != null) {
             Node celdaEncontrada = null;
-            int col = 0;
-            int row = 0;
-            int signoCelda = 0;
+            GridPane[] gridPanes = {
+                    (GridPane) protoboard.getCelda1().getChildren().get(0),
+                    (GridPane) protoboard.getCelda2().getChildren().get(0),
+                    (GridPane) protoboard.getBus1().getChildren().get(0),
+                    (GridPane) protoboard.getBus2().getChildren().get(0)
+            };
 
-            // Verificar si está sobre celda1
-            celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
-            if (celdaEncontrada != null) {
-                col = GridPane.getColumnIndex(celdaEncontrada) - 1;
-                row = GridPane.getRowIndex(celdaEncontrada);
-                signoCelda = protoboard.getCelda1().getSigno(row, col);
-                celda = 1;
-            } else {
-                // Verificar si está sobre celda2
-                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
+            // Verificar si el punto está sobre alguna celda del protoboard
+            for (GridPane gridPane : gridPanes) {
+                celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    col = GridPane.getColumnIndex(celdaEncontrada) - 1;
-                    row = GridPane.getRowIndex(celdaEncontrada) - 1;
-                    signoCelda = protoboard.getCelda2().getSigno(row, col);
-                    celda = 2;
-                } else {
-                    // No está conectado a ninguna celda
-                    estirable.setSigno(0);
-                    return;
+                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
+                    Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
+
+                    if (colIndex != null && rowIndex != null) {
+                        int col = colIndex - 1;
+                        int row = rowIndex;
+
+                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
+
+                        // Obtener el signo de la celda donde se conectó
+                        if (gridPane == gridPanes[0]) {
+                            signoCelda = protoboard.getCelda1().getSigno(row, col);
+                        } else if (gridPane == gridPanes[1]) {
+                            signoCelda = protoboard.getCelda2().getSigno(row, col);
+                        } else if (gridPane == gridPanes[2]) {
+                            signoCelda = protoboard.getBus1().getSigno(row, col);
+                        } else if (gridPane == gridPanes[3]) {
+                            signoCelda = protoboard.getBus2().getSigno(row, col);
+                        }
+                        connected = true;
+                    } else {
+                        System.out.println("Índices de columna o fila son nulos");
+                    }
+                    break;
                 }
             }
 
-            // Establecer el signo de la pata según la celda conectada
-            estirable.setSigno(signoCelda);
-
-            if (lado == 1) {
-                // Lado de entrada
-                filaEntrada = row;
-                columnaEntrada = col;
-            } else if (lado == 2) {
-                // Lado de salida
-                filaSalida = row;
-                columnaSalida = col;
+            if (!connected) {
+                signoCelda = 0;
             }
+
+            if (estirable == fin1){
+                fin1Conectada = connected;
+                signoFin1 = signoCelda;
+            } else if (estirable == fin2) {
+                fin2Conectada = connected;
+                signoFin2 = signoCelda;
+            } else if (estirable == fin3) {
+                fin3Conectada = connected;
+                signoFin3 = signoCelda;
+            } else if (estirable == fin4) {
+                fin4Conectada = connected;
+                signoFin4 = signoCelda;
+            } else if (estirable == fin5) {
+                fin5Conectada = connected;
+                signoFin5 = signoCelda;
+            } else if (estirable == fin6) {
+                fin6Conectada = connected;
+                signoFin6 = signoCelda;
+            } else if (estirable == fin7) {
+                fin7Conectada = connected;
+                signoFin7 = signoCelda;
+            } else if (estirable == fin8) {
+                fin8Conectada = connected;
+                signoFin8 = signoCelda;
+            } else if (estirable == fin12) {
+                fin12Conectada = connected;
+                signoFin12 = signoCelda;
+            } else if (estirable == fin22) {
+                fin22Conectada = connected;
+                signoFin22 = signoCelda;
+            } else if (estirable == fin32) {
+                fin32Conectada = connected;
+                signoFin32 = signoCelda;
+            } else if (estirable == fin42) {
+                fin42Conectada = connected;
+                signoFin42 = signoCelda;
+            } else if (estirable == fin52) {
+                fin52Conectada = connected;
+                signoFin52 = signoCelda;
+            } else if (estirable == fin62) {
+                fin62Conectada = connected;
+                signoFin62 = signoCelda;
+            } else if (estirable == fin72) {
+                fin72Conectada = connected;
+                signoFin72 = signoCelda;
+            } else if (estirable == fin82) {
+                fin82Conectada = connected;
+                signoFin82 = signoCelda;
+            }
+
         }
+
     }
+
 
     // Método para verificar si un punto está sobre una celda específica
     private Node verificarSiEstaEnCelda(double mouseX, double mouseY, GridPane gridPane) {
@@ -369,47 +455,7 @@ public class Switch_8 extends Pane {
         verificarConexionPata(fin82, pata82, 2);
     }
 
-    // Método para conectar todas las patas
-    private void conectarPatas() {
-        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
-        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
 
-        for (int i = 0; i < entradas.length; i++) {
-            Cuadrados entrada = entradas[i];
-            Cuadrados salida = salidas[i];
-
-            if (entrada.getSigno() != 0 && salida.getSigno() == 0) {
-                salida.setSigno(entrada.getSigno());
-                // Actualizar la columna correspondiente en el protoboard
-                if (protoboard != null) {
-                    protoboard.getCelda2().alternarColumna(columnaSalida + i, salida.getSigno(),0);
-                }
-            } else if (entrada.getSigno() == 0 && salida.getSigno() != 0) {
-                entrada.setSigno(salida.getSigno());
-                if (protoboard != null) {
-                    protoboard.getCelda1().alternarColumna(columnaEntrada + i, entrada.getSigno(),0);
-                }
-            } else {
-                System.out.println("No se pudo cambiar el estado del interruptor para la pata " + (i + 1));
-            }
-        }
-    }
-
-    // Método para desconectar todas las patas
-    private void desconectarPatas() {
-        Cuadrados[] entradas = {fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8};
-        Cuadrados[] salidas = {fin12, fin22, fin32, fin42, fin52, fin62, fin72, fin82};
-
-        for (int i = 0; i < entradas.length; i++) {
-            entradas[i].setSigno(0);
-            salidas[i].setSigno(0);
-            // Actualizar la columna correspondiente en el protoboard para reflejar la desconexión
-            if (protoboard != null) {
-                protoboard.getCelda1().alternarColumna(columnaEntrada + i, 0,0);
-                protoboard.getCelda2().alternarColumna(columnaSalida + i, 0,0);
-            }
-        }
-    }
 
     // Getters y setters para el protoboard y el LED
     public Prototipo_Protoboard getProtoboard() {

@@ -265,9 +265,6 @@ public class Controller_Builder {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
             }
-            if (elemento instanceof LED) {
-                switch8.setLed((LED) elemento);
-            }
         }
     }
 
@@ -293,6 +290,7 @@ public class Controller_Builder {
                 bateria.toFront();
                 bateria.getConectorPositivo().setVoltaje(voltage);
                 bateria.getConectorNegativo().setVoltaje(voltage);
+                bateria.cambiarTxtoVoltaje(voltage);
 
                 System.out.println("Se ha agregado una batería de " + voltage + "V");
                 agregar(bateria);
