@@ -95,24 +95,24 @@ public class Switch_8 extends Pane {
         nodo.getChildren().add(switch8);
 
         // Crear las patas superiores (con la misma lógica de distancia que en Chip)
-        pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
+        pata1 = crearLinea(origenX - 567, origenY - 105, origenX - 567, origenY - 125);
         pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
         pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
-        pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
-        pata5 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
-        pata6 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
-        pata7 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
-        pata8 = crearLinea(origenX - 397, origenY - 105, origenX - 397, origenY - 125);
+        pata4 = crearLinea(origenX - 491, origenY - 105, origenX - 491, origenY - 125);
+        pata5 = crearLinea(origenX - 467, origenY - 105, origenX - 467, origenY - 125);
+        pata6 = crearLinea(origenX - 442, origenY - 105, origenX - 442, origenY - 125);
+        pata7 = crearLinea(origenX - 418, origenY - 105, origenX - 418, origenY - 125);
+        pata8 = crearLinea(origenX - 393, origenY - 105, origenX - 393, origenY - 125);
 
         // Crear las patas inferiores (con la misma lógica de distancia que en Chip)
-        pata12 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata12 = crearLinea(origenX - 567, origenY - 35, origenX - 567, origenY - 15);
         pata22 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
         pata32 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
-        pata42 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
-        pata52 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
-        pata62 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
-        pata72 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
-        pata82 = crearLinea(origenX - 397, origenY - 35, origenX - 397, origenY - 15);
+        pata42 = crearLinea(origenX - 491, origenY - 35, origenX - 491, origenY - 15);
+        pata52 = crearLinea(origenX - 467, origenY - 35, origenX - 467, origenY - 15);
+        pata62 = crearLinea(origenX - 442, origenY - 35, origenX - 442, origenY - 15);
+        pata72 = crearLinea(origenX - 418, origenY - 35, origenX - 418, origenY - 15);
+        pata82 = crearLinea(origenX - 393, origenY - 35, origenX - 393, origenY - 15);
 
         // Crear los botones del interruptor
         boton1 = crearBoton(origenX - 567, origenY - 95);
