@@ -163,6 +163,36 @@ public class Switch_8 extends Pane {
         configurarArrastre(fin72, pata72, 2);
         configurarArrastre(fin82, pata82, 2);
 
+
+
+        boton1.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (celda == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaSalida, 3,0); // Cortar energía
+                } else if (celda == 2) {
+                    protoboard.getCelda2().alternarColumna(columnaSalida, 3,0);
+                }
+                boton1.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaSalida, signoEntrada,0); // Transferir energía
+                } else if (celda == 2) {
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda2().alternarColumna(columnaSalida, signoEntrada,0);
+                }
+                boton1.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            Prototipo_Protoboard.notificarComponentesConectados();
+        });
+
+
         // Configurar el arrastre para el nodo completo (interruptor)
         configurarArrastreNodo();
 
@@ -189,14 +219,6 @@ public class Switch_8 extends Pane {
         boton.setTranslateY(y);
         boton.setFill(Color.BLACK);
 
-        // Evento al hacer clic en el botón
-        boton.setOnMouseClicked(event -> {
-            if (encendido) {
-                System.out.println("Interruptor apagado");
-            }
-            encendido = !encendido; // Cambiar estado
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
 
         return boton;
     }
@@ -233,106 +255,59 @@ public class Switch_8 extends Pane {
 
     // Método para verificar si una pata está conectada a una celda del protoboard
     private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
-        double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
-        double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
-
-        int signoCelda = 0;
-        boolean connected = false;
+        double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
+        double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
 
         if (protoboard != null) {
             Node celdaEncontrada = null;
-            GridPane[] gridPanes = {
-                    (GridPane) protoboard.getCelda1().getChildren().get(0),
-                    (GridPane) protoboard.getCelda2().getChildren().get(0),
-                    (GridPane) protoboard.getBus1().getChildren().get(0),
-                    (GridPane) protoboard.getBus2().getChildren().get(0)
-            };
+            int col = 0;
+            int row = 0;
+            int signoCelda = 0;
 
-            // Verificar si el punto está sobre alguna celda del protoboard
-            for (GridPane gridPane : gridPanes) {
-                celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
+            // Verificar si está sobre celda1
+            celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
+            if (celdaEncontrada != null) {
+                col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                row = GridPane.getRowIndex(celdaEncontrada);
+                signoCelda = protoboard.getCelda1().getSigno(row, col);
+                celda = 1;
+            } else {
+                // Verificar si está sobre celda2
+                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
-                    Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
-
-                    if (colIndex != null && rowIndex != null) {
-                        int col = colIndex - 1;
-                        int row = rowIndex;
-
-                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
-
-                        // Obtener el signo de la celda donde se conectó
-                        if (gridPane == gridPanes[0]) {
-                            signoCelda = protoboard.getCelda1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[1]) {
-                            signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        } else if (gridPane == gridPanes[2]) {
-                            signoCelda = protoboard.getBus1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[3]) {
-                            signoCelda = protoboard.getBus2().getSigno(row, col);
-                        }
-                        connected = true;
-                    } else {
-                        System.out.println("Índices de columna o fila son nulos");
-                    }
-                    break;
+                    col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    row = GridPane.getRowIndex(celdaEncontrada) ;
+                    signoCelda = protoboard.getCelda2().getSigno(row, col);
+                    celda = 2;
+                } else {
+                    // No está conectado a ninguna celda
+                    estirable.setSigno(0);
+                    return;
                 }
             }
 
-            if (!connected) {
-                signoCelda = 0;
-            }
+            // Establecer el signo de la pata según la celda conectada
+            estirable.setSigno(signoCelda);
 
-            if (estirable == fin1){
-                fin1Conectada = connected;
-                signoFin1 = signoCelda;
-            } else if (estirable == fin2) {
-                fin2Conectada = connected;
-                signoFin2 = signoCelda;
-            } else if (estirable == fin3) {
-                fin3Conectada = connected;
-                signoFin3 = signoCelda;
-            } else if (estirable == fin4) {
-                fin4Conectada = connected;
-                signoFin4 = signoCelda;
-            } else if (estirable == fin5) {
-                fin5Conectada = connected;
-                signoFin5 = signoCelda;
-            } else if (estirable == fin6) {
-                fin6Conectada = connected;
-                signoFin6 = signoCelda;
-            } else if (estirable == fin7) {
-                fin7Conectada = connected;
-                signoFin7 = signoCelda;
-            } else if (estirable == fin8) {
-                fin8Conectada = connected;
-                signoFin8 = signoCelda;
-            } else if (estirable == fin12) {
-                fin12Conectada = connected;
-                signoFin12 = signoCelda;
-            } else if (estirable == fin22) {
-                fin22Conectada = connected;
-                signoFin22 = signoCelda;
-            } else if (estirable == fin32) {
-                fin32Conectada = connected;
-                signoFin32 = signoCelda;
-            } else if (estirable == fin42) {
-                fin42Conectada = connected;
-                signoFin42 = signoCelda;
-            } else if (estirable == fin52) {
-                fin52Conectada = connected;
-                signoFin52 = signoCelda;
-            } else if (estirable == fin62) {
-                fin62Conectada = connected;
-                signoFin62 = signoCelda;
-            } else if (estirable == fin72) {
-                fin72Conectada = connected;
-                signoFin72 = signoCelda;
-            } else if (estirable == fin82) {
-                fin82Conectada = connected;
-                signoFin82 = signoCelda;
+            if (lado == 1 ) {
+                if(estirable.getSigno()!=0){
+                // Lado de entrada
+                filaEntrada = row;
+                columnaEntrada = col;
+                }else{
+                    filaSalida = row;
+                    columnaSalida = col;
+                }
+            } else if (lado == 2) {
+                if(estirable.getSigno()!=0){
+                    filaEntrada = row;
+                    columnaEntrada = col;
+                }else {
+                    // Lado de salida
+                    filaSalida = row;
+                    columnaSalida = col;
+                }
             }
-
         }
 
     }
