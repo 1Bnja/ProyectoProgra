@@ -210,6 +210,11 @@ public class Celdas extends Group {
         System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
         return columna.get(col).getVoltaje();
     }
+    public double getVoltaje2(int col){
+        List<Cuadrados> columna = grid.get(col);
+        double voltaje= columna.get(2).getVoltaje();
+        return voltaje;
+    }
 
     public void setController(Controller_Builder controller){
         this.controller= controller;

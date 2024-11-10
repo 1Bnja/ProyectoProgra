@@ -35,12 +35,15 @@ public class Switch_8 extends Pane {
     int celda;
     int colum_1, colum_2;
 
+    int prueba=0;
+
     // Estado del interruptor
     boolean encendido;
 
     // Variables para almacenar la posición de entrada y salida
     int filaEntrada, columnaEntrada;
     int filaSalida, columnaSalida;
+    double voltaje;
 
     // Variables para controlar si las patas están conectadas
     private boolean fin1Conectada = false;
@@ -168,25 +171,34 @@ public class Switch_8 extends Pane {
         boton1.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton1.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                    prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton1.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -198,25 +210,34 @@ public class Switch_8 extends Pane {
         boton2.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton2.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton2.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -228,25 +249,34 @@ public class Switch_8 extends Pane {
         boton3.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton3.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton3.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -258,25 +288,34 @@ public class Switch_8 extends Pane {
         boton4.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton4.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton4.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -288,25 +327,34 @@ public class Switch_8 extends Pane {
         boton5.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton5.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton5.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -318,25 +366,34 @@ public class Switch_8 extends Pane {
         boton6.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton6.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton6.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -348,25 +405,34 @@ public class Switch_8 extends Pane {
         boton7.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton7.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton7.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -378,25 +444,34 @@ public class Switch_8 extends Pane {
         boton8.setOnMouseClicked(event ->{
             if (encendido) {
                 // Si está encendido, apagar el interruptor
-                if (celda == 1) {
-                    protoboard.getCelda1().alternarColumna(0, 0,0); // Cortar energía
-                } else if (celda == 2) {
-                    protoboard.getCelda2().alternarColumna(0, 0,0);
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
                 }
                 boton8.setFill(Color.BLACK);
             } else {
                 // Si está apagado, encender el interruptor
                 int signoEntrada;
                 int signoSalida;
+                double volt1;
+                double volt2;
+
                 if (celda == 1) {
                     signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
                     signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
                     if(signoEntrada==0){
-                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,0);
-                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,0);} // Transferir energía
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
                 } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
-                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,0);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
                 }
                 boton8.setFill(Color.YELLOW); // Cambiar color a encendido
             }
@@ -477,6 +552,7 @@ public class Switch_8 extends Pane {
             int col = 0;
             int row = 0;
             int signoCelda = 0;
+            double volt=0;
 
             // Verificar si está sobre celda1
             celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
@@ -485,6 +561,8 @@ public class Switch_8 extends Pane {
                 row = GridPane.getRowIndex(celdaEncontrada);
                 signoCelda = protoboard.getCelda1().getSigno(row, col);
                 estirable.setSigno(signoCelda);
+                volt= protoboard.getCelda1().getVoltaje2(col);
+                estirable.setVoltaje(volt);
                 if(signoCelda==0){
                     celda=2;
                 }else{
@@ -499,6 +577,9 @@ public class Switch_8 extends Pane {
                     row = GridPane.getRowIndex(celdaEncontrada) ;
                     signoCelda = protoboard.getCelda2().getSigno(row, col);
                     estirable.setSigno(signoCelda);
+                    volt= protoboard.getCelda2().getVoltaje2(col);
+                    estirable.setVoltaje(volt);
+
                     if(signoCelda==0){
                         celda=1;
                     }else{
