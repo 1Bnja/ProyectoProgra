@@ -1,5 +1,6 @@
 package org.example.prototipo.protoboard;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,6 +14,7 @@ public class Cuadrados extends Rectangle {
     private int ancho, alto;
     private Color color;
     private double posX, posY;
+    private Node celdaConectada;
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
@@ -123,5 +125,13 @@ public class Cuadrados extends Rectangle {
     // Setter para establecer la fila
     public void setFila(int fila) {
         this.fila = fila;
+    }
+
+    public void setCeldaConectada(Node celdaConectada) {
+        this.celdaConectada = celdaConectada;
+    }
+
+    public Node getCeldaConectada() {
+        return celdaConectada;
     }
 }

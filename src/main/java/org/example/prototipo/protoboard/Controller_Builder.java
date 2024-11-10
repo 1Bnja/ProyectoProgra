@@ -100,19 +100,62 @@ public class Controller_Builder {
     // Acción al hacer clic en el botón para agregar un Chip
     @FXML
     void Click_Chip(ActionEvent event) {
-        System.out.println("Se ha agregado un chip");
-        Chip chip = new Chip();
-        agregar(chip);
-        chip.toFront();
+        System.out.println("Se ha solicitado agregar un chip");
 
-        // Asignar el protoboard al chip si existe
-        for (Node elemento : elementos) {
-            if (elemento instanceof Prototipo_Protoboard) {
-                Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
-                chip.setProtoboard(protoboard);
-                break;
+        // Opciones de chips disponibles
+        List<String> opcionesChips = new ArrayList<>();
+        opcionesChips.add("AND Chip");
+        opcionesChips.add("OR Chip");
+        opcionesChips.add("NOT Chip");
+
+        // Crear el diálogo de selección de tipo de chip
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("AND Chip", opcionesChips);
+        dialog.setTitle("Seleccionar Tipo de Chip");
+        dialog.setHeaderText("Elige el tipo de chip que deseas agregar");
+        dialog.setContentText("Chips disponibles:");
+
+        // Obtener la selección del usuario y crear el chip correspondiente
+        dialog.showAndWait().ifPresent(tipoChip -> {
+            Node chip = null;
+
+            // Crear la instancia del chip correspondiente
+            switch (tipoChip) {
+                case "AND Chip":
+                    chip = new ChipAnd();
+                    System.out.println("Se ha agregado un Chip AND");
+                    break;
+                case "OR Chip":
+                    chip = new ChipOr(); // Asegúrate de tener la clase ChipOr
+                    System.out.println("Se ha agregado un Chip OR");
+                    break;
+                case "NOT Chip":
+                    chip = new ChipNot(); // Asegúrate de tener la clase ChipNot
+                    System.out.println("Se ha agregado un Chip NOT");
+                    break;
+                default:
+                    System.out.println("Tipo de chip no reconocido.");
+                    return;
             }
-        }
+
+            // Agregar el chip al panel y traerlo al frente
+            agregar(chip);
+            chip.toFront();
+
+            // Asignar el protoboard al chip si existe en los elementos
+            for (Node elemento : elementos) {
+                if (elemento instanceof Prototipo_Protoboard) {
+                    Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
+                    if (chip instanceof ChipAnd) {
+                        ((ChipAnd) chip).setProtoboard(protoboard);
+                    } else if (chip instanceof ChipOr) {
+                        ((ChipOr) chip).setProtoboard(protoboard);
+                    } else {
+                        ((ChipNot) chip).setProtoboard(protoboard);
+                    }
+                    break;
+                }
+            }
+        });
     }
 
     // Acción al hacer clic en el botón para agregar un LED

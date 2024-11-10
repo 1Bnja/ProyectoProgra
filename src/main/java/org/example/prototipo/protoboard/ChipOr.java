@@ -12,7 +12,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Chip extends Pane {
+public class ChipOr extends Pane{
     private Group nodo = new Group();
 
     // Definición de los puntos finales (patas) y líneas del chip
@@ -63,7 +63,7 @@ public class Chip extends Pane {
     private int signoFin14 = 0;
 
     // Constructor de la clase Chip
-    public Chip() {
+    public ChipOr() {
 
         double posX = origenX - 570;
         double posY = origenY - 105;
@@ -140,8 +140,7 @@ public class Chip extends Pane {
         // Añadir todos los elementos gráficos al grupo nodo
         nodo.getChildren().addAll(
                 chip,
-                pata1,
-                pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14,
+                pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14,
                 fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10, fin11, fin12, fin13, fin14,
                 textoChip
         );
@@ -406,5 +405,4 @@ public class Chip extends Pane {
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }
-
 }
