@@ -25,6 +25,7 @@ public class Prototipo_Protoboard extends Pane {
     // Listas para almacenar LEDs y cables conectados al protoboard
     public static List<LED> ledsConectados = new ArrayList<>();
     public static List<Cable> cablesConctados = new ArrayList<>();
+    public static List<Resistencia> resistenciasConectadas = new ArrayList<>();
 
     // Constructor de la clase Prototipo_Protoboard
     public Prototipo_Protoboard() {
@@ -193,4 +194,14 @@ public class Prototipo_Protoboard extends Pane {
             Prototipo_Protoboard.cablesConctados.add(cable);
     }
 
+
+    // Métodos para gestionar los cables conectados al protoboard
+    public List<Resistencia> getResistenciasConectadas() {
+        return resistenciasConectadas;
+    }
+
+    public void addResistenciasConectadas(Resistencia resistencia) {
+        if(!resistenciasConectadas.contains(resistencia))
+            Prototipo_Protoboard.resistenciasConectadas.add(resistencia);
+    }
 }
