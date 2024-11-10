@@ -116,7 +116,7 @@ public class Controller_Builder {
 
         // Obtener la selección del usuario y crear el chip correspondiente
         dialog.showAndWait().ifPresent(tipoChip -> {
-            Node chip = null;
+            Chip chip = null; // Cambiamos Node a Chip
 
             // Crear la instancia del chip correspondiente
             switch (tipoChip) {
@@ -145,18 +145,14 @@ public class Controller_Builder {
             for (Node elemento : elementos) {
                 if (elemento instanceof Prototipo_Protoboard) {
                     Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
-                    if (chip instanceof ChipAnd) {
-                        ((ChipAnd) chip).setProtoboard(protoboard);
-                    } else if (chip instanceof ChipOr) {
-                        ((ChipOr) chip).setProtoboard(protoboard);
-                    } else {
-                        ((ChipNot) chip).setProtoboard(protoboard);
-                    }
+                    chip.setProtoboard(protoboard);
+                    protoboard.agregarChipConectado(chip); // Registramos el chip como componente conectado
                     break;
                 }
             }
         });
     }
+
 
     // Acción al hacer clic en el botón para agregar un LED
     @FXML
@@ -207,7 +203,7 @@ public class Controller_Builder {
                 if (elemento instanceof Prototipo_Protoboard) {
                     Prototipo_Protoboard protoboard = (Prototipo_Protoboard) elemento;
                     led.setProtoboard(protoboard);
-                    protoboard.agregarComponenteConectado(led);
+                    protoboard.agregarLEDSConectados(led);
                     break;
                 }
             }

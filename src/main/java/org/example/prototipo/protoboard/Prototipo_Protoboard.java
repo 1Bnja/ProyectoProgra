@@ -23,8 +23,11 @@ public class Prototipo_Protoboard extends Pane {
     BusesAlimentacion bus2;
 
     // Listas para almacenar LEDs y cables conectados al protoboard
-    public static List<LED> ledsConectados = new ArrayList<>();
+    public List<LED> ledsConectados = new ArrayList<>();
     public static List<Cable> cablesConctados = new ArrayList<>();
+    public List<Chip> chipsConectados = new ArrayList<>();
+
+    private boolean notificarEnProceso = false;
 
     // Constructor de la clase Prototipo_Protoboard
     public Prototipo_Protoboard() {
@@ -151,11 +154,6 @@ public class Prototipo_Protoboard extends Pane {
     }
 
     // Método estático para notificar a todos los componentes conectados (LEDs)
-    public static void notificarComponentesConectados() {
-        for (LED componente : ledsConectados) {
-            componente.checkFinConnections();
-        }
-    }
 
     // Método para verificar si una posición está dentro de un cuadrado (no implementado)
     private boolean isCuadrado(int posX, int posY){
@@ -180,9 +178,6 @@ public class Prototipo_Protoboard extends Pane {
     }
 
 
-
-
-
     // Métodos para gestionar los cables conectados al protoboard
     public List<Cable> getCablesConctados() {
         return cablesConctados;
@@ -193,4 +188,32 @@ public class Prototipo_Protoboard extends Pane {
             Prototipo_Protoboard.cablesConctados.add(cable);
     }
 
+    public void agregarChipConectado(Chip chip) {
+       if (!chipsConectados.contains(chip)) {
+           chipsConectados.add(chip);
+       }
+    }
+
+    public void agregarLEDSConectados(LED led) {
+        if (!ledsConectados.contains(led)) {
+            ledsConectados.add(led);
+        }
+    }
+
+    public void notificarChipsConectados(){
+        if (notificarEnProceso) {
+            return;
+        }
+        notificarEnProceso = true;
+        for (Chip chip : chipsConectados) {
+            chip.checkFinConnections();
+        }
+        notificarEnProceso = false;
+    }
+
+    public void notificarLEDSConectados(){
+        for (LED led : ledsConectados) {
+            led.checkFinConnections();
+        }
+    }
 }

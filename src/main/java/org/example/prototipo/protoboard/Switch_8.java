@@ -195,7 +195,8 @@ public class Switch_8 extends Pane {
                 System.out.println("Interruptor apagado");
             }
             encendido = !encendido; // Cambiar estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
 
         return boton;

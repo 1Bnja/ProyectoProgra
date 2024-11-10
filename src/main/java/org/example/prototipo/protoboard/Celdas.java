@@ -15,6 +15,7 @@ import java.util.List;
 public class Celdas extends Group {
 
     public List<List<Cuadrados>> grid;
+    private GridPane gridPane;
     Bateria bateria = new Bateria();
     public Cuadrados cuadradoSeleccionado;
     public Cuadrados cuadradoSeleccionado2;
@@ -29,7 +30,7 @@ public class Celdas extends Group {
         double espacioCeldas = 11;
         grid = new ArrayList<>();
 
-        GridPane gridPane = new GridPane();
+        gridPane = new GridPane();
         gridPane.setHgap(espacioCeldas);
         gridPane.setVgap(espacioCeldas);
 
@@ -163,7 +164,8 @@ public class Celdas extends Group {
         }
 
         // Notificar a los componentes conectados en el protoboard
-        Prototipo_Protoboard.notificarComponentesConectados();
+        protoboard.notificarLEDSConectados();
+        protoboard.notificarChipsConectados();
     }
 
     // Método para encender o apagar las celdas según el signo y un indicador de color real
@@ -208,10 +210,14 @@ public class Celdas extends Group {
     public double getVoltaje(int fila, int col){
         List<Cuadrados> columna = grid.get(col);
         System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
-        return columna.get(col).getVoltaje();
+        return columna.get(fila).getVoltaje();
     }
 
     public void setController(Controller_Builder controller){
         this.controller= controller;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 public class BusesAlimentacion extends Group {
 
     private List<List<Cuadrados>> buses;
+    private Prototipo_Protoboard protoboard;
 
     // Constructor de la clase
     public BusesAlimentacion(double desplazamientoX, double desplazamientoY, char[] simbolos) {
@@ -124,7 +125,8 @@ public class BusesAlimentacion extends Group {
         System.out.println("Voltaje de es: "+filaBus.get(filaIndex).getVoltaje());
 
         // Notifica a los componentes conectados del cambio.
-        Prototipo_Protoboard.notificarComponentesConectados();
+        protoboard.notificarLEDSConectados();
+        protoboard.notificarChipsConectados();
     }
 
     // Método para obtener el signo de una celda en una fila y columna específica.

@@ -181,39 +181,37 @@ public abstract class Chip extends Pane {
             for (GridPane gridPane : gridPanes) {
                 celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
+                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
                     Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
 
-                    if (colIndex != null && rowIndex != null) {
-                        int col = colIndex - 1;
-                        int row = rowIndex;
-
-                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
-
-                        // Obtener el signo de la celda donde se conectó
-                        if (gridPane == gridPanes[0]) {
-                            signoCelda = protoboard.getCelda1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[1]) {
-                            signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        } else if (gridPane == gridPanes[2]) {
-                            signoCelda = protoboard.getBus1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[3]) {
-                            signoCelda = protoboard.getBus2().getSigno(row, col);
-                        }
-                        connected = true;
-                        estirable.setCeldaConectada(celdaEncontrada);
-                        break;
+                    // Obtener el signo y voltaje de la celda
+                    if (gridPane == gridPanes[0]) {
+                        signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
+                    } else if (gridPane == gridPanes[1]) {
+                        signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
+                    } else if (gridPane == gridPanes[2]) {
+                        signoCelda = protoboard.getBus1().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getBus1().getVoltaje(rowIndex, colIndex));
+                    } else if (gridPane == gridPanes[3]) {
+                        signoCelda = protoboard.getBus2().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getBus2().getVoltaje(rowIndex, colIndex));
                     }
+
+                    connected = true;
+                    estirable.setCeldaConectada(celdaEncontrada);
+                    break;
                 }
             }
 
             if (!connected) {
                 signoCelda = 0;
                 estirable.setCeldaConectada(null);
+                estirable.setVoltaje(0);
             }
 
             estirable.setSigno(signoCelda);
-
         }
     }
 
@@ -230,15 +228,6 @@ public abstract class Chip extends Pane {
 
     // Método para configurar el arrastre de una pata y su punto estirable
     protected void configurarArrastre(Cuadrados estirable, Line pata) {
-        estirable.setOnMousePressed(e -> {
-            empezarArrastre(e);
-            estirable.toFront();
-        });
-        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
-
-        estirable.setOnMouseReleased(event -> {
-            updateFinConnection(estirable);
-        });
     }
 
     // Método para configurar el arrastre del chip completo
@@ -291,7 +280,7 @@ public abstract class Chip extends Pane {
     }
 
     // Método para verificar y actualizar el estado de conexión de todas las patas
-    protected void checkFinConnections() {
+    public void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
         updateFinConnection(fin3);
