@@ -69,18 +69,6 @@ public class ChipAnd extends Chip{
         calcularSalida(fin12, fin13, fin11);
     }
 
-    protected void configurarArrastre(Cuadrados estirable, Line pata) {
-        estirable.setOnMousePressed(e -> {
-            empezarArrastre(e);
-            estirable.toFront();
-        });
-        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
-
-        estirable.setOnMouseReleased(event -> {
-            updateFinConnection(estirable);
-        });
-    }
-
     // Getters y setters para el protoboard
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;

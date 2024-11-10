@@ -228,6 +228,15 @@ public abstract class Chip extends Pane {
 
     // Método para configurar el arrastre de una pata y su punto estirable
     protected void configurarArrastre(Cuadrados estirable, Line pata) {
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e);
+            estirable.toFront();
+        });
+        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
+
+        estirable.setOnMouseReleased(event -> {
+            updateFinConnection(estirable);
+        });
     }
 
     // Método para configurar el arrastre del chip completo
