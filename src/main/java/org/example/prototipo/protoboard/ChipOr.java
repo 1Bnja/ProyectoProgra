@@ -13,18 +13,14 @@ public class ChipOr extends Chip{
 
     @Override
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
-        // Verificar si ambas entradas están energizadas
-        System.out.println("Signo de entrada1: " + entrada1.getSigno() + ", Signo de entrada2: " + entrada2.getSigno());
-
         int signoSalida;
         Color colorSalida;
 
+        // Lógica de la compuerta AND
         if (entrada1.getSigno() == 1 || entrada2.getSigno() == 1) {
-            // Energizar la salida
             signoSalida = 1;
             colorSalida = Color.RED;
         } else {
-            // Desenergizar la salida
             signoSalida = 0;
             colorSalida = Color.WHITE;
         }
@@ -33,30 +29,37 @@ public class ChipOr extends Chip{
         salida.setSigno(signoSalida);
         salida.setFill(colorSalida);
 
-        // Actualizar la celda conectada a la salida y toda la columna
-        Node salidaCellNode = salida.getCeldaConectada();
-        if (salidaCellNode != null && salidaCellNode instanceof Cuadrados) {
-            Cuadrados salidaCell = (Cuadrados) salidaCellNode;
+        // Actualizar el protoboard si la salida está conectada
+        if (salida.getCeldaConectada() != null) {
+            actualizarCeldaSalida(salida);
+        }
+    }
 
-            // Obtener la referencia al objeto Celdas correspondiente
-            Celdas celdasCorrespondientes = null;
-            if (protoboard.getCelda1().getChildren().contains(salidaCell.getParent())) {
-                celdasCorrespondientes = protoboard.getCelda1();
-            } else if (protoboard.getCelda2().getChildren().contains(salidaCell.getParent())) {
-                celdasCorrespondientes = protoboard.getCelda2();
-            }
 
-            if (celdasCorrespondientes != null) {
-                // Obtener el índice de columna
-                Integer colIndex = GridPane.getColumnIndex(salidaCell);
-                if (colIndex != null) {
-                    int columna = colIndex - 1; // Ajustar si es necesario
-                    // Actualizar toda la columna
-                    celdasCorrespondientes.alternarColumna(columna, signoSalida, signoSalida == 1 ? 5.0 : 0.0);
+    private void actualizarCeldaSalida(Cuadrados salida) {
+        Node celdaConectada = salida.getCeldaConectada();
+        if (celdaConectada != null) {
+            // Determinar a qué gridPane pertenece la celda
+            GridPane gridPane = (GridPane) celdaConectada.getParent();
+
+            // Obtener índices de fila y columna
+            Integer colIndex = GridPane.getColumnIndex(celdaConectada);
+            Integer rowIndex = GridPane.getRowIndex(celdaConectada);
+
+            if (colIndex != null && rowIndex != null) {
+                int columna = colIndex - 1;
+                int fila = rowIndex;
+
+                // Actualizar la columna correspondiente en el protoboard
+                if (gridPane == protoboard.getCelda1().getGridPane()) {
+                    protoboard.getCelda1().alternarColumna(columna, salida.getSigno(), salida.getVoltaje());
+                } else if (gridPane == protoboard.getCelda2().getGridPane()) {
+                    protoboard.getCelda2().alternarColumna(columna, salida.getSigno(), salida.getVoltaje());
                 }
             }
         }
     }
+
 
     protected void calcularSalidas() {
         calcularSalida(fin1, fin2, fin3);
