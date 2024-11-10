@@ -309,12 +309,8 @@ public abstract class Chip extends Pane {
         calcularSalidas();
     }
 
-    public void calcularSalidas() {
-        calcularSalida(fin1, fin2, fin3);
-        calcularSalida(fin4, fin5, fin6);
-        calcularSalida(fin9, fin10, fin8);
-        calcularSalida(fin12, fin13, fin11);
-    }
+    protected abstract void calcularSalidas();
+
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
     // Getters y setters para el protoboard

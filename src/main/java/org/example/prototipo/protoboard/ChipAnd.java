@@ -58,6 +58,13 @@ public class ChipAnd extends Chip{
         }
     }
 
+    protected void calcularSalidas() {
+        calcularSalida(fin1, fin2, fin3);
+        calcularSalida(fin4, fin5, fin6);
+        calcularSalida(fin9, fin10, fin8);
+        calcularSalida(fin12, fin13, fin11);
+    }
+
     // Getters y setters para el protoboard
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;

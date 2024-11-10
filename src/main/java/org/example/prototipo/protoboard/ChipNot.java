@@ -11,10 +11,9 @@ public class ChipNot extends Chip{
         super("Chip NOT");
     }
 
-    @Override
-    protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
+    protected void calcularSalida(Cuadrados entrada1, Cuadrados salida) {
         // Verificar si ambas entradas están energizadas
-        System.out.println("Signo de entrada1: " + entrada1.getSigno() + ", Signo de entrada2: " + entrada2.getSigno());
+        System.out.println("Signo de entrada1: " + entrada1.getSigno());
 
         int signoSalida;
         Color colorSalida;
@@ -56,6 +55,15 @@ public class ChipNot extends Chip{
                 }
             }
         }
+    }
+
+    protected void calcularSalidas() {
+        calcularSalida(fin1, fin2);
+        calcularSalida(fin3, fin4);
+        calcularSalida(fin5, fin6);
+        calcularSalida(fin9, fin8);
+        calcularSalida(fin11, fin10);
+        calcularSalida(fin13, fin12);
     }
 
     // Getters y setters para el protoboard
