@@ -35,12 +35,15 @@ public class Switch_8 extends Pane {
     int celda;
     int colum_1, colum_2;
 
+    int prueba=0;
+
     // Estado del interruptor
     boolean encendido;
 
     // Variables para almacenar la posición de entrada y salida
     int filaEntrada, columnaEntrada;
     int filaSalida, columnaSalida;
+    double voltaje;
 
     // Variables para controlar si las patas están conectadas
     private boolean fin1Conectada = false;
@@ -95,24 +98,24 @@ public class Switch_8 extends Pane {
         nodo.getChildren().add(switch8);
 
         // Crear las patas superiores (con la misma lógica de distancia que en Chip)
-        pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
+        pata1 = crearLinea(origenX - 567, origenY - 105, origenX - 567, origenY - 125);
         pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
         pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
-        pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
-        pata5 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
-        pata6 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
-        pata7 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
-        pata8 = crearLinea(origenX - 397, origenY - 105, origenX - 397, origenY - 125);
+        pata4 = crearLinea(origenX - 491, origenY - 105, origenX - 491, origenY - 125);
+        pata5 = crearLinea(origenX - 467, origenY - 105, origenX - 467, origenY - 125);
+        pata6 = crearLinea(origenX - 442, origenY - 105, origenX - 442, origenY - 125);
+        pata7 = crearLinea(origenX - 418, origenY - 105, origenX - 418, origenY - 125);
+        pata8 = crearLinea(origenX - 393, origenY - 105, origenX - 393, origenY - 125);
 
         // Crear las patas inferiores (con la misma lógica de distancia que en Chip)
-        pata12 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata12 = crearLinea(origenX - 567, origenY - 35, origenX - 567, origenY - 15);
         pata22 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
         pata32 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
-        pata42 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
-        pata52 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
-        pata62 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
-        pata72 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
-        pata82 = crearLinea(origenX - 397, origenY - 35, origenX - 397, origenY - 15);
+        pata42 = crearLinea(origenX - 491, origenY - 35, origenX - 491, origenY - 15);
+        pata52 = crearLinea(origenX - 467, origenY - 35, origenX - 467, origenY - 15);
+        pata62 = crearLinea(origenX - 442, origenY - 35, origenX - 442, origenY - 15);
+        pata72 = crearLinea(origenX - 418, origenY - 35, origenX - 418, origenY - 15);
+        pata82 = crearLinea(origenX - 393, origenY - 35, origenX - 393, origenY - 15);
 
         // Crear los botones del interruptor
         boton1 = crearBoton(origenX - 567, origenY - 95);
@@ -163,6 +166,330 @@ public class Switch_8 extends Pane {
         configurarArrastre(fin72, pata72, 2);
         configurarArrastre(fin82, pata82, 2);
 
+
+
+        boton1.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton1.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                    prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton1.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton2.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton2.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton2.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton3.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton3.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton3.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton4.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton4.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton4.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton5.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton5.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton5.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton6.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton6.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton6.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton7.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton7.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton7.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+        boton8.setOnMouseClicked(event ->{
+            if (encendido) {
+                // Si está encendido, apagar el interruptor
+                if (prueba == 1) {
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, 0,0); // Cortar energía
+                } else if (prueba== 2) {
+                    protoboard.getCelda2().alternarColumna(columnaEntrada, 0,0);
+                }
+                boton8.setFill(Color.BLACK);
+            } else {
+                // Si está apagado, encender el interruptor
+                int signoEntrada;
+                int signoSalida;
+                double volt1;
+                double volt2;
+
+                if (celda == 1) {
+                    signoEntrada = protoboard.getCelda1().getSigno(filaEntrada, columnaEntrada);
+                    signoSalida= protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    volt2= protoboard.getCelda2().getVoltaje2(columnaEntrada);
+                    if(signoEntrada==0){
+                        protoboard.getCelda1().alternarColumna(columnaEntrada, signoSalida,volt1);
+                        prueba=1;
+                    }else{protoboard.getCelda2().alternarColumna(columnaEntrada, signoEntrada,volt2);
+                        prueba=2;} // Transferir energía
+                } else if (celda == 2) {
+                    volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
+                    signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
+                    protoboard.getCelda1().alternarColumna(columnaEntrada, signoEntrada,volt1);
+                    prueba=1;
+                }
+                boton8.setFill(Color.YELLOW); // Cambiar color a encendido
+            }
+            encendido = !encendido; // Cambiar estado
+
+            // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
+        });
+
+
         // Configurar el arrastre para el nodo completo (interruptor)
         configurarArrastreNodo();
 
@@ -189,14 +516,6 @@ public class Switch_8 extends Pane {
         boton.setTranslateY(y);
         boton.setFill(Color.BLACK);
 
-        // Evento al hacer clic en el botón
-        boton.setOnMouseClicked(event -> {
-            if (encendido) {
-                System.out.println("Interruptor apagado");
-            }
-            encendido = !encendido; // Cambiar estado
-            Prototipo_Protoboard.notificarComponentesConectados();
-        });
 
         return boton;
     }
@@ -233,106 +552,75 @@ public class Switch_8 extends Pane {
 
     // Método para verificar si una pata está conectada a una celda del protoboard
     private void verificarConexionPata(Cuadrados estirable, Line pata, int lado) {
-        double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
-        double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
-
-        int signoCelda = 0;
-        boolean connected = false;
+        double mouseX = estirable.localToScene(estirable.getBoundsInLocal()).getCenterX();
+        double mouseY = estirable.localToScene(estirable.getBoundsInLocal()).getCenterY();
 
         if (protoboard != null) {
             Node celdaEncontrada = null;
-            GridPane[] gridPanes = {
-                    (GridPane) protoboard.getCelda1().getChildren().get(0),
-                    (GridPane) protoboard.getCelda2().getChildren().get(0),
-                    (GridPane) protoboard.getBus1().getChildren().get(0),
-                    (GridPane) protoboard.getBus2().getChildren().get(0)
-            };
+            int col = 0;
+            int row = 0;
+            int signoCelda = 0;
+            double volt=0;
 
-            // Verificar si el punto está sobre alguna celda del protoboard
-            for (GridPane gridPane : gridPanes) {
-                celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
+            // Verificar si está sobre celda1
+            celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda1().getChildren().get(0));
+            if (celdaEncontrada != null) {
+                col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                row = GridPane.getRowIndex(celdaEncontrada);
+                signoCelda = protoboard.getCelda1().getSigno(row, col);
+                estirable.setSigno(signoCelda);
+                volt= protoboard.getCelda1().getVoltaje2(col);
+                estirable.setVoltaje(volt);
+                if(signoCelda==0){
+                    celda=2;
+                }else{
+                    celda=1;
+                }
+
+            } else {
+                // Verificar si está sobre celda2
+                celdaEncontrada = verificarSiEstaEnCelda(mouseX, mouseY, (GridPane) protoboard.getCelda2().getChildren().get(0));
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
-                    Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
+                    col = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    row = GridPane.getRowIndex(celdaEncontrada) ;
+                    signoCelda = protoboard.getCelda2().getSigno(row, col);
+                    estirable.setSigno(signoCelda);
+                    volt= protoboard.getCelda2().getVoltaje2(col);
+                    estirable.setVoltaje(volt);
 
-                    if (colIndex != null && rowIndex != null) {
-                        int col = colIndex - 1;
-                        int row = rowIndex;
-
-                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
-
-                        // Obtener el signo de la celda donde se conectó
-                        if (gridPane == gridPanes[0]) {
-                            signoCelda = protoboard.getCelda1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[1]) {
-                            signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        } else if (gridPane == gridPanes[2]) {
-                            signoCelda = protoboard.getBus1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[3]) {
-                            signoCelda = protoboard.getBus2().getSigno(row, col);
-                        }
-                        connected = true;
-                    } else {
-                        System.out.println("Índices de columna o fila son nulos");
+                    if(signoCelda==0){
+                        celda=1;
+                    }else{
+                        celda=2;
                     }
-                    break;
+                } else {
+                    // No está conectado a ninguna celda
+                    estirable.setSigno(0);
+                    return;
                 }
             }
 
-            if (!connected) {
-                signoCelda = 0;
+            // Establecer el signo de la pata según la celda conectada
+            estirable.setSigno(signoCelda);
+            if (celda == 1 ) {
+                if(estirable.getSigno()!=0){
+                // Lado de entrada
+                filaEntrada = row;
+                columnaEntrada = col;
+                }else{
+                    filaSalida = row;
+                    columnaSalida = col;
+                }
+            } else if (celda == 2) {
+                if(estirable.getSigno()!=0){
+                    filaEntrada = row;
+                    columnaEntrada = col;
+                }else {
+                    // Lado de salida
+                    filaSalida = row;
+                    columnaSalida = col;
+                }
             }
-
-            if (estirable == fin1){
-                fin1Conectada = connected;
-                signoFin1 = signoCelda;
-            } else if (estirable == fin2) {
-                fin2Conectada = connected;
-                signoFin2 = signoCelda;
-            } else if (estirable == fin3) {
-                fin3Conectada = connected;
-                signoFin3 = signoCelda;
-            } else if (estirable == fin4) {
-                fin4Conectada = connected;
-                signoFin4 = signoCelda;
-            } else if (estirable == fin5) {
-                fin5Conectada = connected;
-                signoFin5 = signoCelda;
-            } else if (estirable == fin6) {
-                fin6Conectada = connected;
-                signoFin6 = signoCelda;
-            } else if (estirable == fin7) {
-                fin7Conectada = connected;
-                signoFin7 = signoCelda;
-            } else if (estirable == fin8) {
-                fin8Conectada = connected;
-                signoFin8 = signoCelda;
-            } else if (estirable == fin12) {
-                fin12Conectada = connected;
-                signoFin12 = signoCelda;
-            } else if (estirable == fin22) {
-                fin22Conectada = connected;
-                signoFin22 = signoCelda;
-            } else if (estirable == fin32) {
-                fin32Conectada = connected;
-                signoFin32 = signoCelda;
-            } else if (estirable == fin42) {
-                fin42Conectada = connected;
-                signoFin42 = signoCelda;
-            } else if (estirable == fin52) {
-                fin52Conectada = connected;
-                signoFin52 = signoCelda;
-            } else if (estirable == fin62) {
-                fin62Conectada = connected;
-                signoFin62 = signoCelda;
-            } else if (estirable == fin72) {
-                fin72Conectada = connected;
-                signoFin72 = signoCelda;
-            } else if (estirable == fin82) {
-                fin82Conectada = connected;
-                signoFin82 = signoCelda;
-            }
-
         }
 
     }

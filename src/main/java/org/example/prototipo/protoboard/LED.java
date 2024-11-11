@@ -135,8 +135,6 @@ public class LED extends Pane {
                 mouseY = e.getSceneY();
 
                 actualizarPosiciones();
-                // Desactivar chequeo en movimiento
-                // checkFinConnections();
             }
         });
 

@@ -92,7 +92,8 @@ public class Swich extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
 
         // Crear las patas del interruptor
