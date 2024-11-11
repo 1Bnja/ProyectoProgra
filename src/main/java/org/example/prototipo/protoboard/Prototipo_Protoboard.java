@@ -26,6 +26,7 @@ public class Prototipo_Protoboard extends Pane {
     public List<LED> ledsConectados = new ArrayList<>();
     public static List<Cable> cablesConctados = new ArrayList<>();
     public List<Chip> chipsConectados = new ArrayList<>();
+    public static List<Resistencia> resistenciasConectadas = new ArrayList<>();
 
     private boolean notificarEnProceso = false;
 
@@ -215,5 +216,15 @@ public class Prototipo_Protoboard extends Pane {
         for (LED led : ledsConectados) {
             led.checkFinConnections();
         }
+    }
+
+    // Métodos para gestionar los cables conectados al protoboard
+    public List<Resistencia> getResistenciasConectadas() {
+        return resistenciasConectadas;
+    }
+
+    public void addResistenciasConectadas(Resistencia resistencia) {
+        if(!resistenciasConectadas.contains(resistencia))
+            Prototipo_Protoboard.resistenciasConectadas.add(resistencia);
     }
 }

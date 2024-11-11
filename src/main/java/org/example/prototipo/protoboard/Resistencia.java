@@ -176,11 +176,13 @@ public class Resistencia extends Pane {
                         estirable.setLugar(1);
                         estirable.setFila(row);
                         estirable.setCol(col);
+                        protoboard.addResistenciasConectadas(this);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(row, col);
                         estirable.setLugar(2);
                         estirable.setFila(row);
                         estirable.setCol(col);
+                        protoboard.addResistenciasConectadas(this);
                     } else if (gridPane == gridPanes[2]) {
                         signoCelda = protoboard.getBus1().getSigno(row, col);
                     } else if (gridPane == gridPanes[3]) {
@@ -201,11 +203,13 @@ public class Resistencia extends Pane {
                 signoFin1 = signoCelda;
                 fin1.setSigno(signoCelda);
                 if(signoFin1==-1){
-                    franja2.setStroke(Color.DARKBLUE);
-                    franja1.setStroke(Color.DARKBLUE);
+                    fondo.setFill(Color.DARKBLUE);
+                    franja2.setStroke(Color.LIGHTBLUE);
+                    franja1.setStroke(Color.LIGHTBLUE);
                 }else if(signoFin1==1){
-                    franja2.setStroke(Color.DARKRED);
-                    franja1.setStroke(Color.DARKRED);
+                    fondo.setFill(Color.DARKRED);
+                    franja2.setStroke(Color.RED);
+                    franja1.setStroke(Color.RED);
                 }
                 CalcularResistencia();
 
@@ -227,11 +231,13 @@ public class Resistencia extends Pane {
                 signoFin2 = signoCelda;
                 fin2.setSigno(signoCelda);
                 if(signoFin2==-1){
-                    franja2.setStroke(Color.DARKBLUE);
-                    franja1.setStroke(Color.DARKBLUE);
+                    fondo.setFill(Color.DARKBLUE);
+                    franja2.setStroke(Color.LIGHTBLUE);
+                    franja1.setStroke(Color.LIGHTBLUE);
                 }else if(signoFin2==1){
-                    franja2.setStroke(Color.DARKRED);
-                    franja1.setStroke(Color.DARKRED);
+                    fondo.setFill(Color.DARKRED);
+                    franja2.setStroke(Color.RED);
+                    franja1.setStroke(Color.RED);
                 }
                 CalcularResistencia();
 
