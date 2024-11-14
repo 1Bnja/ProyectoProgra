@@ -12,58 +12,26 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Chip extends Pane {
-    private Group nodo = new Group();
+public abstract class Chip extends Pane {
+    protected Group nodo = new Group();
 
     // Definición de los puntos finales (patas) y líneas del chip
-    private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10, fin11, fin12, fin13, fin14;
-    private Line pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14;
+    protected Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10, fin11, fin12, fin13, fin14;
+    protected Line pata1, pata2, pata3, pata4, pata5, pata6, pata7, pata8, pata9, pata10, pata11, pata12, pata13, pata14;
 
     // Posición del mouse para manejar el arrastre
-    private double mouseX;
-    private double mouseY;
-    private boolean line_en_arrastre = false;
+    protected double mouseX;
+    protected double mouseY;
+    protected boolean line_en_arrastre = false;
 
     // Coordenadas de origen
-    double origenX = Main.origenX;
-    double origenY = Main.origenY;
+    protected double origenX = Main.origenX;
+    protected double origenY = Main.origenY;
 
-    Prototipo_Protoboard protoboard;
-
-    // Variables para controlar si las patas están conectadas
-    private boolean fin1Conectada = false;
-    private boolean fin2Conectada = false;
-    private boolean fin3Conectada = false;
-    private boolean fin4Conectada = false;
-    private boolean fin5Conectada = false;
-    private boolean fin6Conectada = false;
-    private boolean fin7Conectada = false;
-    private boolean fin8Conectada = false;
-    private boolean fin9Conectada = false;
-    private boolean fin10Conectada = false;
-    private boolean fin11Conectada = false;
-    private boolean fin12Conectada = false;
-    private boolean fin13Conectada = false;
-    private boolean fin14Conectada = false;
-
-    // Signos de las conexiones de las patas
-    private int signoFin1 = 0;
-    private int signoFin2 = 0;
-    private int signoFin3 = 0;
-    private int signoFin4 = 0;
-    private int signoFin5 = 0;
-    private int signoFin6 = 0;
-    private int signoFin7 = 0;
-    private int signoFin8 = 0;
-    private int signoFin9 = 0;
-    private int signoFin10 = 0;
-    private int signoFin11 = 0;
-    private int signoFin12 = 0;
-    private int signoFin13 = 0;
-    private int signoFin14 = 0;
+    protected Prototipo_Protoboard protoboard;
 
     // Constructor de la clase Chip
-    public Chip() {
+    public Chip(String nombre) {
 
         double posX = origenX - 570;
         double posY = origenY - 105;
@@ -73,27 +41,27 @@ public class Chip extends Pane {
         Cuadrados chip = new Cuadrados(ancho, alto, posX, posY, Color.BLACK);
 
         // Crear las patas del chip
-        pata1 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
-        pata2 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
-        pata3 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
-        pata4 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
-        pata5 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
-        pata6 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
-        pata7 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
+        pata14 = crearLinea(origenX - 565, origenY - 105, origenX - 565, origenY - 125);
+        pata13 = crearLinea(origenX - 541, origenY - 105, origenX - 541, origenY - 125);
+        pata12 = crearLinea(origenX - 517, origenY - 105, origenX - 517, origenY - 125);
+        pata11 = crearLinea(origenX - 493, origenY - 105, origenX - 493, origenY - 125);
+        pata10 = crearLinea(origenX - 469, origenY - 105, origenX - 469, origenY - 125);
+        pata9 = crearLinea(origenX - 445, origenY - 105, origenX - 445, origenY - 125);
+        pata8 = crearLinea(origenX - 421, origenY - 105, origenX - 421, origenY - 125);
 
-        pata8 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
-        pata9 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
-        pata10 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
-        pata11 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
-        pata12 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
-        pata13 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
-        pata14 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
+        pata1 = crearLinea(origenX - 565, origenY - 35, origenX - 565, origenY - 15);
+        pata2 = crearLinea(origenX - 541, origenY - 35, origenX - 541, origenY - 15);
+        pata3 = crearLinea(origenX - 517, origenY - 35, origenX - 517, origenY - 15);
+        pata4 = crearLinea(origenX - 493, origenY - 35, origenX - 493, origenY - 15);
+        pata5 = crearLinea(origenX - 469, origenY - 35, origenX - 469, origenY - 15);
+        pata6 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
+        pata7 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
 
 
         // **Agregar el texto "CHIP" en el centro**
-        Text textoChip = new Text("CHIP");
+        Text textoChip = new Text(nombre);
         textoChip.setFill(Color.WHITE);
-        textoChip.setFont(Font.font("Arial", 18));
+        textoChip.setFont(Font.font("Arial", 15));
         // Posicionar el texto en el centro del chip
 
         double centerX = chip.getX() + chip.getWidth() / 2 - textoChip.getLayoutBounds().getWidth() / 2;
@@ -102,21 +70,21 @@ public class Chip extends Pane {
         textoChip.setX(centerX);
         textoChip.setY(centerY);
 
-        // Crear los puntos estirables en las patas
-        fin1 = Esquina_Estirable(pata1);
-        fin2 = Esquina_Estirable(pata2);
-        fin3 = Esquina_Estirable(pata3);
-        fin4 = Esquina_Estirable(pata4);
-        fin5 = Esquina_Estirable(pata5);
-        fin6 = Esquina_Estirable(pata6);
-        fin7 = Esquina_Estirable(pata7);
-        fin8 = Esquina_Estirable(pata8);
-        fin9 = Esquina_Estirable(pata9);
-        fin10 = Esquina_Estirable(pata10);
-        fin11 = Esquina_Estirable(pata11);
-        fin12 = Esquina_Estirable(pata12);
-        fin13 = Esquina_Estirable(pata13);
-        fin14 = Esquina_Estirable(pata14);
+        fin1 = Esquina_Estirable(pata1, Color.ORANGE);
+        fin2 = Esquina_Estirable(pata2, Color.ORANGE);
+        fin3 = Esquina_Estirable(pata3, Color.ORANGE);
+        fin4 = Esquina_Estirable(pata4, Color.ORANGE);
+        fin5 = Esquina_Estirable(pata5, Color.ORANGE);
+        fin6 = Esquina_Estirable(pata6, Color.ORANGE);
+        fin7 = Esquina_Estirable(pata7, Color.BLUE);
+        fin8 = Esquina_Estirable(pata8, Color.ORANGE);
+        fin9 = Esquina_Estirable(pata9, Color.ORANGE);
+        fin10 = Esquina_Estirable(pata10, Color.ORANGE);
+        fin11 = Esquina_Estirable(pata11, Color.ORANGE);
+        fin12 = Esquina_Estirable(pata12, Color.ORANGE);
+        fin13 = Esquina_Estirable(pata13, Color.ORANGE);
+        fin14 = Esquina_Estirable(pata14, Color.RED);
+
 
         // Configurar el arrastre para cada pata y su punto estirable
         configurarArrastre(fin1, pata1);
@@ -149,43 +117,30 @@ public class Chip extends Pane {
     }
 
     // Método para crear una línea entre dos puntos
-    private Line crearLinea(double startX, double startY, double endX, double endY) {
+    protected Line crearLinea(double startX, double startY, double endX, double endY) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
     }
 
-    // Método para crear el fondo del cuadrado exterior
-    private Polygon crearFondo(double startX, double startY, double endX, double endY, Color color) {
-        Polygon fondo = new Polygon();
-        fondo.getPoints().addAll(
-                startX, startY,
-                endX, startY,
-                endX, endY,
-                startX, endY
-        );
-        fondo.setFill(color);
-        return fondo;
-    }
-
     // Método para crear un punto estirable en la punta de una pata
-    private Cuadrados Esquina_Estirable(Line pata) {
+    protected Cuadrados Esquina_Estirable(Line pata, Color color) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.ORANGE);
+        point.setFill(color);
         return point;
     }
 
     // Método que inicia el arrastre al presionar el mouse
-    private void empezarArrastre(MouseEvent e) {
+    protected void empezarArrastre(MouseEvent e) {
         line_en_arrastre = true;
         mouseX = e.getSceneX();
         mouseY = e.getSceneY();
     }
 
     // Método que maneja el arrastre de una pata
-    private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
+    protected void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
 
@@ -201,13 +156,18 @@ public class Chip extends Pane {
     }
 
     // Método para actualizar la posición del punto estirable basado en la pata
-    private void actualizarEstirable(Cuadrados esquina, Line pata) {
-        esquina.setX(pata.getEndX() - 5);
-        esquina.setY(pata.getEndY() - 5);
+    protected void actualizarEstirable(Cuadrados esquina, Line pata) {
+        double nuevoX = pata.getEndX() - 5;
+        double nuevoY = pata.getEndY() - 5;
+
+        if (esquina.getX() != nuevoX || esquina.getY() != nuevoY) {
+            esquina.setX(nuevoX);
+            esquina.setY(nuevoY);
+        }
     }
 
     // Método para actualizar el estado de conexión de una pata
-    private void updateFinConnection(Cuadrados estirable) {
+    protected void updateFinConnection(Cuadrados estirable) {
         double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
         double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
 
@@ -219,95 +179,43 @@ public class Chip extends Pane {
             GridPane[] gridPanes = {
                     (GridPane) protoboard.getCelda1().getChildren().get(0),
                     (GridPane) protoboard.getCelda2().getChildren().get(0),
-                    (GridPane) protoboard.getBus1().getChildren().get(0),
-                    (GridPane) protoboard.getBus2().getChildren().get(0)
             };
 
-            // Verificar si el punto está sobre alguna celda del protoboard
             for (GridPane gridPane : gridPanes) {
                 celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada);
+                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
                     Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
 
-                    if (colIndex != null && rowIndex != null) {
-                        int col = colIndex - 1;
-                        int row = rowIndex;
-
-                        System.out.println("Chip conectado en fila: " + row + ", columna: " + col);
-
-                        // Obtener el signo de la celda donde se conectó
-                        if (gridPane == gridPanes[0]) {
-                            signoCelda = protoboard.getCelda1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[1]) {
-                            signoCelda = protoboard.getCelda2().getSigno(row, col);
-                        } else if (gridPane == gridPanes[2]) {
-                            signoCelda = protoboard.getBus1().getSigno(row, col);
-                        } else if (gridPane == gridPanes[3]) {
-                            signoCelda = protoboard.getBus2().getSigno(row, col);
-                        }
-                        connected = true;
-                    } else {
-                        System.out.println("Índices de columna o fila son nulos");
+                    // Obtener el signo y voltaje de la celda
+                    if (gridPane == gridPanes[0]) {
+                        signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
+                    } else if (gridPane == gridPanes[1]) {
+                        signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
                     }
+
+                    connected = true;
+                    estirable.setCeldaConectada(celdaEncontrada);
                     break;
                 }
             }
 
             if (!connected) {
                 signoCelda = 0;
+                estirable.setCeldaConectada(null);
+                estirable.setVoltaje(0);
             }
 
-            // Actualizar el estado de conexión y signo de la pata correspondiente
-            if (estirable == fin1) {
-                fin1Conectada = connected;
-                signoFin1 = signoCelda;
-            } else if (estirable == fin2) {
-                fin2Conectada = connected;
-                signoFin2 = signoCelda;
-            } else if (estirable == fin3) {
-                fin3Conectada = connected;
-                signoFin3 = signoCelda;
-            } else if (estirable == fin4) {
-                fin4Conectada = connected;
-                signoFin4 = signoCelda;
-            } else if (estirable == fin5) {
-                fin5Conectada = connected;
-                signoFin5 = signoCelda;
-            } else if (estirable == fin6) {
-                fin6Conectada = connected;
-                signoFin6 = signoCelda;
-            } else if (estirable == fin7) {
-                fin7Conectada = connected;
-                signoFin7 = signoCelda;
-            } else if (estirable == fin8) {
-                fin8Conectada = connected;
-                signoFin8 = signoCelda;
-            } else if (estirable == fin9) {
-                fin9Conectada = connected;
-                signoFin9 = signoCelda;
-            } else if (estirable == fin10) {
-                fin10Conectada = connected;
-                signoFin10 = signoCelda;
-            } else if (estirable == fin11) {
-                fin11Conectada = connected;
-                signoFin11 = signoCelda;
-            } else if (estirable == fin12) {
-                fin12Conectada = connected;
-                signoFin12 = signoCelda;
-            } else if (estirable == fin13) {
-                fin13Conectada = connected;
-                signoFin13 = signoCelda;
-            } else if (estirable == fin14) {
-                fin14Conectada = connected;
-                signoFin14 = signoCelda;
-            }
+            estirable.setSigno(signoCelda);
 
         }
+
     }
 
     // Método para verificar si un punto está sobre una celda específica
-    private Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
+    protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
             if (boundsInScene.contains(x, y)) {
@@ -318,7 +226,7 @@ public class Chip extends Pane {
     }
 
     // Método para configurar el arrastre de una pata y su punto estirable
-    private void configurarArrastre(Cuadrados estirable, Line pata) {
+    protected void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e);
             estirable.toFront();
@@ -331,7 +239,7 @@ public class Chip extends Pane {
     }
 
     // Método para configurar el arrastre del chip completo
-    private void configurarArrastreNodo() {
+    protected void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
                 nodo.toFront();
@@ -362,7 +270,7 @@ public class Chip extends Pane {
     }
 
     // Método para actualizar las posiciones de los puntos estirables al mover el chip
-    private void actualizarPosiciones() {
+    protected void actualizarPosiciones() {
         actualizarEstirable(fin1, pata1);
         actualizarEstirable(fin2, pata2);
         actualizarEstirable(fin3, pata3);
@@ -379,8 +287,30 @@ public class Chip extends Pane {
         actualizarEstirable(fin14, pata14);
     }
 
+    protected void verificarEncendido(){
+        boolean encendido = false;
+
+        double voltajeFin14 = fin14.getVoltaje();
+        double voltajeFin7 = fin7.getVoltaje();
+        int signoFin14 = fin14.getSigno();
+        int signoFin7 = fin7.getSigno();
+
+        if (voltajeFin14 > 0 && signoFin14 == 1 && voltajeFin7 > 0 && signoFin7 == -1){
+            encendido = true;
+        }
+
+        if (encendido){
+            calcularSalidas();
+        } else {
+            desactivarSalidas();
+        }
+    }
+
+    protected void desactivarSalidas(){
+    }
+
     // Método para verificar y actualizar el estado de conexión de todas las patas
-    public void checkFinConnections() {
+    protected void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
         updateFinConnection(fin3);
@@ -395,6 +325,39 @@ public class Chip extends Pane {
         updateFinConnection(fin12);
         updateFinConnection(fin13);
         updateFinConnection(fin14);
+        verificarEncendido();
+    }
+
+    protected void resetearSalida(Cuadrados salida) {
+        salida.setSigno(0);
+        salida.setFill(Color.WHITE);
+
+        // Actualizar la columna de la protoboard conectada a la salida, si existe
+        if (salida.getCeldaConectada() != null) {
+            Node celdaConectada = salida.getCeldaConectada();
+            GridPane gridPane = (GridPane) celdaConectada.getParent();
+
+            // Obtener los índices de fila y columna
+            Integer colIndex = GridPane.getColumnIndex(celdaConectada);
+            Integer rowIndex = GridPane.getRowIndex(celdaConectada);
+
+            if (colIndex != null && rowIndex != null) {
+                int columna = colIndex - 1;
+                int fila = rowIndex;
+
+                // Actualizar la celda en el protoboard a un estado apagado
+                if (gridPane == protoboard.getCelda1().getGridPane()) {
+                    protoboard.getCelda1().alternarColumna(columna, 0, 0);
+                } else if (gridPane == protoboard.getCelda2().getGridPane()) {
+                    protoboard.getCelda2().alternarColumna(columna, 0, 0);
+                }
+            }
+        }
+    }
+
+    protected abstract void calcularSalidas();
+
+    protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
 
     // Getters y setters para el protoboard

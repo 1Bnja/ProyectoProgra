@@ -15,6 +15,7 @@ import java.util.List;
 public class Celdas extends Group {
 
     public List<List<Cuadrados>> grid;
+    private GridPane gridPane;
     Bateria bateria = new Bateria();
     public Cuadrados cuadradoSeleccionado;
     public Cuadrados cuadradoSeleccionado2;
@@ -29,7 +30,7 @@ public class Celdas extends Group {
         double espacioCeldas = 11;
         grid = new ArrayList<>();
 
-        GridPane gridPane = new GridPane();
+        gridPane = new GridPane();
         gridPane.setHgap(espacioCeldas);
         gridPane.setVgap(espacioCeldas);
 
@@ -100,70 +101,57 @@ public class Celdas extends Group {
     // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo, double voltaje) {
         List<Cuadrados> columna = grid.get(columnaIndex);
-        Color color;
+        Color color = obtenerColor(signo);
 
-
-        // Determinar el color basado en el signo
-        if(signo == -1) {
-            color = Color.BLUE;
-        } else if(signo == 1) {
-            color = Color.RED;
-        } else {
-            color = Color.WHITE;
-        }
-
-        boolean bandera= false;
+        boolean columnaQuemada = false;
+        boolean columnaCambiada = false;
 
         for (Cuadrados c : columna) {
-            if(c.getSigno()==0 ) {
-                // Si el cuadrado está apagado, establecer el nuevo signo y color
-                c.setSigno(signo);
-                c.setFill(color);
-                c.setVoltaje(voltaje);
-            } else if (signo==3) {
-                // Apagar el cuadrado
-                System.out.println("Se apagó");
-                c.setSigno(0);
-                c.setFill(Color.WHITE);
-                c.setVoltaje(voltaje);
-            } else if (signo==0) {
-                // Apagar la columna completa
-                System.out.println("Se apagó la columna");
-                c.setSigno(0);
-                c.setFill(Color.WHITE);
-                c.setVoltaje(voltaje);
-            } else if (c.getSigno() == signo) {
-                // Mantener el mismo signo y color
-                c.setSigno(signo);
-                c.setFill(color);
-                c.setVoltaje(voltaje);
-            } else if (signo==2) {
-                // Indicar que ocurrió una sobrecarga o corto circuito
-                bandera = true;
-                c.setFill(Color.OLIVE);
-                c.setSigno(signo);
-                c.setVoltaje(voltaje);
-            } else {
-                // Indicar que ocurrió una sobrecarga o corto circuito
-                bandera = true;
-                c.setFill(Color.OLIVE);
-                c.setSigno(2);
-                c.setVoltaje(voltaje);
+            if (c.getSigno() != signo) {
+                columnaCambiada = true;
+                if (signo == 3 || signo == 0) {
+                    c.setSigno(0);
+                    c.setFill(Color.WHITE);
+                    c.setVoltaje(0);
+                    System.out.println("Se apagó la columna");
+                } else if (signo == 2) {
+                    columnaQuemada = true;
+                    c.setSigno(2);
+                    c.setFill(Color.OLIVE);
+                    c.setVoltaje(voltaje);
+                } else {
+                    // Actualizar la celda con el nuevo signo y color si no está apagada ni quemada
+                    c.setSigno(signo);
+                    c.setFill(color);
+                    c.setVoltaje(voltaje);
+                }
+                System.out.println("El voltaje de la celda es: " + c.getVoltaje());
             }
-            System.out.println("El voltaje la celda es: "+ c.getVoltaje());
         }
-        if(bandera==true) {
-            // Mostrar una alerta indicando que la columna se quemó
+
+        // Mostrar la alerta si alguna celda de la columna está quemada
+        if (columnaQuemada) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ALERTA");
             alert.setHeaderText(null);
             alert.setContentText("¡OH NO! LA COLUMNA SE QUEMÓ");
-
             alert.showAndWait();
         }
 
-        // Notificar a los componentes conectados en el protoboard
-        Prototipo_Protoboard.notificarComponentesConectados();
+        // Solo notificamos al protoboard si realmente hubo cambios
+        if (columnaCambiada) {
+            protoboard.notificarLEDSConectados();
+            protoboard.notificarChipsConectados();
+        }
+    }
+
+    private Color obtenerColor(int signo) {
+        switch (signo) {
+            case -1: return Color.BLUE;
+            case 1: return Color.RED;
+            case 2: return Color.OLIVE;
+            default: return Color.WHITE;
+        }
     }
 
     // Método para encender o apagar las celdas según el signo y un indicador de color real
@@ -208,7 +196,7 @@ public class Celdas extends Group {
     public double getVoltaje(int fila, int col){
         List<Cuadrados> columna = grid.get(col);
         System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
-        return columna.get(col).getVoltaje();
+        return columna.get(fila).getVoltaje();
     }
     public double getVoltaje2(int col){
         List<Cuadrados> columna = grid.get(col);
@@ -218,5 +206,9 @@ public class Celdas extends Group {
 
     public void setController(Controller_Builder controller){
         this.controller= controller;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
     }
 }

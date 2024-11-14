@@ -1,5 +1,6 @@
 package org.example.prototipo.protoboard;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,6 +14,9 @@ public class Cuadrados extends Rectangle {
     private int ancho, alto;
     private Color color;
     private double posX, posY;
+    private Node celdaConectada;
+    private int previoSignoEntrada1 = 0;
+    private int previoSignoEntrada2 = 0;
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
@@ -37,6 +41,34 @@ public class Cuadrados extends Rectangle {
         setFill(color);
         setStroke(Color.BLACK);
     }
+
+    public int getPrevioSignoEntrada1() {
+        return previoSignoEntrada1;
+    }
+
+    public void setPrevioSignoEntrada1(int previoSignoEntrada1) {
+        this.previoSignoEntrada1 = previoSignoEntrada1;
+    }
+
+    public int getPrevioSignoEntrada2() {
+        return previoSignoEntrada2;
+    }
+
+    public void setPrevioSignoEntrada2(int previoSignoEntrada2) {
+        this.previoSignoEntrada2 = previoSignoEntrada2;
+    }
+
+    public void actualizarSigno(int nuevoSigno, int entrada1, int entrada2) {
+        this.previoSignoEntrada1 = entrada1;
+        this.previoSignoEntrada2 = entrada2;
+        this.signo = nuevoSigno;
+    }
+
+    public void actualizarSigno2(int nuevoSigno, int entrada1) {
+        this.previoSignoEntrada1 = entrada1;
+        this.signo = nuevoSigno;
+    }
+
 
     // Getter para obtener el tamaño
     public int getTamanio() {
@@ -123,5 +155,13 @@ public class Cuadrados extends Rectangle {
     // Setter para establecer la fila
     public void setFila(int fila) {
         this.fila = fila;
+    }
+
+    public void setCeldaConectada(Node celdaConectada) {
+        this.celdaConectada = celdaConectada;
+    }
+
+    public Node getCeldaConectada() {
+        return celdaConectada;
     }
 }

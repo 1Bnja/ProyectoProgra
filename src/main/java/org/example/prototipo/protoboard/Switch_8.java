@@ -205,7 +205,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton2.setOnMouseClicked(event ->{
             if (encendido) {
@@ -244,7 +245,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton3.setOnMouseClicked(event ->{
             if (encendido) {
@@ -283,7 +285,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton4.setOnMouseClicked(event ->{
             if (encendido) {
@@ -322,7 +325,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton5.setOnMouseClicked(event ->{
             if (encendido) {
@@ -361,7 +365,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton6.setOnMouseClicked(event ->{
             if (encendido) {
@@ -400,7 +405,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton7.setOnMouseClicked(event ->{
             if (encendido) {
@@ -439,7 +445,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
         boton8.setOnMouseClicked(event ->{
             if (encendido) {
@@ -478,7 +485,8 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
-            Prototipo_Protoboard.notificarComponentesConectados();
+            protoboard.notificarChipsConectados();
+            protoboard.notificarLEDSConectados();
         });
 
 
