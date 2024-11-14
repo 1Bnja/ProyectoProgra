@@ -93,75 +93,11 @@ public class ChipAnd extends Chip{
         return cambio;
     }
 
-    protected void verificarEncendido(){
-        boolean encendido = false;
-
-        double voltajeFin14 = fin14.getVoltaje();
-        double voltajeFin7 = fin7.getVoltaje();
-        int signoFin14 = fin14.getSigno();
-        int signoFin7 = fin7.getSigno();
-
-        if (voltajeFin14 > 0 && signoFin14 == 1 && voltajeFin7 > 0 && signoFin7 == -1){
-            encendido = true;
-        }
-
-        if (encendido){
-            calcularSalidas();
-        } else {
-            desactivarSalidas();
-        }
-    }
-
     protected void desactivarSalidas(){
         resetearSalida(fin3);
         resetearSalida(fin6);
         resetearSalida(fin8);
         resetearSalida(fin11);
-    }
-
-    @Override
-    protected void checkFinConnections() {
-        updateFinConnection(fin1);
-        updateFinConnection(fin2);
-        updateFinConnection(fin3);
-        updateFinConnection(fin4);
-        updateFinConnection(fin5);
-        updateFinConnection(fin6);
-        updateFinConnection(fin7);
-        updateFinConnection(fin8);
-        updateFinConnection(fin9);
-        updateFinConnection(fin10);
-        updateFinConnection(fin11);
-        updateFinConnection(fin12);
-        updateFinConnection(fin13);
-        updateFinConnection(fin14);
-        verificarEncendido();
-    }
-    private void resetearSalida(Cuadrados salida) {
-        salida.setSigno(0);
-        salida.setFill(Color.WHITE);
-
-        // Actualizar la columna de la protoboard conectada a la salida, si existe
-        if (salida.getCeldaConectada() != null) {
-            Node celdaConectada = salida.getCeldaConectada();
-            GridPane gridPane = (GridPane) celdaConectada.getParent();
-
-            // Obtener los índices de fila y columna
-            Integer colIndex = GridPane.getColumnIndex(celdaConectada);
-            Integer rowIndex = GridPane.getRowIndex(celdaConectada);
-
-            if (colIndex != null && rowIndex != null) {
-                int columna = colIndex - 1;
-                int fila = rowIndex;
-
-                // Actualizar la celda en el protoboard a un estado apagado
-                if (gridPane == protoboard.getCelda1().getGridPane()) {
-                    protoboard.getCelda1().alternarColumna(columna, 0, 0);
-                } else if (gridPane == protoboard.getCelda2().getGridPane()) {
-                    protoboard.getCelda2().alternarColumna(columna, 0, 0);
-                }
-            }
-        }
     }
 
     // Getters y setters para el protoboard

@@ -96,6 +96,15 @@ public class ChipNot extends Chip{
         return cambio;
     }
 
+    protected void desactivarSalidas(){
+        resetearSalida(fin2);
+        resetearSalida(fin4);
+        resetearSalida(fin6);
+        resetearSalida(fin8);
+        resetearSalida(fin10);
+        resetearSalida(fin12);
+    }
+
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }

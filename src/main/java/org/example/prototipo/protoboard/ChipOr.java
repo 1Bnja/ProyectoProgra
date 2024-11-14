@@ -91,6 +91,13 @@ public class ChipOr extends Chip{
         return cambio;
     }
 
+    protected void desactivarSalidas(){
+        resetearSalida(fin3);
+        resetearSalida(fin6);
+        resetearSalida(fin8);
+        resetearSalida(fin11);
+    }
+
     // Getters y setters para el protoboard
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
