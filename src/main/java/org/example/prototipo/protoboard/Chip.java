@@ -70,20 +70,20 @@ public abstract class Chip extends Pane {
         textoChip.setX(centerX);
         textoChip.setY(centerY);
 
-        fin1 = Esquina_Estirable(pata1);
-        fin2 = Esquina_Estirable(pata2);
-        fin3 = Esquina_Estirable(pata3);
-        fin4 = Esquina_Estirable(pata4);
-        fin5 = Esquina_Estirable(pata5);
-        fin6 = Esquina_Estirable(pata6);
-        fin7 = Esquina_Estirable(pata7);
-        fin8 = Esquina_Estirable(pata8);
-        fin9 = Esquina_Estirable(pata9);
-        fin10 = Esquina_Estirable(pata10);
-        fin11 = Esquina_Estirable(pata11);
-        fin12 = Esquina_Estirable(pata12);
-        fin13 = Esquina_Estirable(pata13);
-        fin14 = Esquina_Estirable(pata14);
+        fin1 = Esquina_Estirable(pata1, Color.ORANGE);
+        fin2 = Esquina_Estirable(pata2, Color.ORANGE);
+        fin3 = Esquina_Estirable(pata3, Color.ORANGE);
+        fin4 = Esquina_Estirable(pata4, Color.ORANGE);
+        fin5 = Esquina_Estirable(pata5, Color.ORANGE);
+        fin6 = Esquina_Estirable(pata6, Color.ORANGE);
+        fin7 = Esquina_Estirable(pata7, Color.BLUE);
+        fin8 = Esquina_Estirable(pata8, Color.ORANGE);
+        fin9 = Esquina_Estirable(pata9, Color.ORANGE);
+        fin10 = Esquina_Estirable(pata10, Color.ORANGE);
+        fin11 = Esquina_Estirable(pata11, Color.ORANGE);
+        fin12 = Esquina_Estirable(pata12, Color.ORANGE);
+        fin13 = Esquina_Estirable(pata13, Color.ORANGE);
+        fin14 = Esquina_Estirable(pata14, Color.RED);
 
 
         // Configurar el arrastre para cada pata y su punto estirable
@@ -124,11 +124,11 @@ public abstract class Chip extends Pane {
     }
 
     // Método para crear un punto estirable en la punta de una pata
-    protected Cuadrados Esquina_Estirable(Line pata) {
+    protected Cuadrados Esquina_Estirable(Line pata, Color color) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.ORANGE);
+        point.setFill(color);
         return point;
     }
 
@@ -174,8 +174,6 @@ public abstract class Chip extends Pane {
             GridPane[] gridPanes = {
                     (GridPane) protoboard.getCelda1().getChildren().get(0),
                     (GridPane) protoboard.getCelda2().getChildren().get(0),
-                    (GridPane) protoboard.getBus1().getChildren().get(0),
-                    (GridPane) protoboard.getBus2().getChildren().get(0)
             };
 
             for (GridPane gridPane : gridPanes) {
@@ -191,12 +189,6 @@ public abstract class Chip extends Pane {
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
-                    } else if (gridPane == gridPanes[2]) {
-                        signoCelda = protoboard.getBus1().getSigno(rowIndex, colIndex);
-                        estirable.setVoltaje(protoboard.getBus1().getVoltaje(rowIndex, colIndex));
-                    } else if (gridPane == gridPanes[3]) {
-                        signoCelda = protoboard.getBus2().getSigno(rowIndex, colIndex);
-                        estirable.setVoltaje(protoboard.getBus2().getVoltaje(rowIndex, colIndex));
                     }
 
                     connected = true;
