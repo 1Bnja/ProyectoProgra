@@ -288,31 +288,14 @@ public abstract class Chip extends Pane {
     }
 
     // Método para verificar y actualizar el estado de conexión de todas las patas
-    public void checkFinConnections() {
-        updateFinConnection(fin1);
-        updateFinConnection(fin2);
-        updateFinConnection(fin3);
-        updateFinConnection(fin4);
-        updateFinConnection(fin5);
-        updateFinConnection(fin6);
-        updateFinConnection(fin7);
-        updateFinConnection(fin8);
-        updateFinConnection(fin9);
-        updateFinConnection(fin10);
-        updateFinConnection(fin11);
-        updateFinConnection(fin12);
-        updateFinConnection(fin13);
-        updateFinConnection(fin14);
-        calcularSalidas();
+    protected void checkFinConnections() {
     }
-
-
-
 
     protected abstract void calcularSalidas();
 
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
+
     // Getters y setters para el protoboard
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
