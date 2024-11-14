@@ -80,9 +80,15 @@ public class ChipOr extends Chip{
     }
 
     private boolean entradaHaCambiado(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
-        // Compara el estado actual de las entradas con el almacenado
-        return entrada1.getSigno() != salida.getPrevioSignoEntrada1() ||
-                entrada2.getSigno() != salida.getPrevioSignoEntrada2();
+        boolean cambio = entrada1.getSigno() != entrada1.getPrevioSignoEntrada1() ||
+                entrada2.getSigno() != entrada2.getPrevioSignoEntrada2();
+
+        if (cambio) {
+            entrada1.setPrevioSignoEntrada1(entrada1.getSigno());
+            entrada2.setPrevioSignoEntrada2(entrada2.getSigno());
+        }
+
+        return cambio;
     }
 
     // Getters y setters para el protoboard

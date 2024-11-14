@@ -157,8 +157,13 @@ public abstract class Chip extends Pane {
 
     // Método para actualizar la posición del punto estirable basado en la pata
     protected void actualizarEstirable(Cuadrados esquina, Line pata) {
-        esquina.setX(pata.getEndX() - 5);
-        esquina.setY(pata.getEndY() - 5);
+        double nuevoX = pata.getEndX() - 5;
+        double nuevoY = pata.getEndY() - 5;
+
+        if (esquina.getX() != nuevoX || esquina.getY() != nuevoY) {
+            esquina.setX(nuevoX);
+            esquina.setY(nuevoY);
+        }
     }
 
     // Método para actualizar el estado de conexión de una pata
@@ -204,7 +209,9 @@ public abstract class Chip extends Pane {
             }
 
             estirable.setSigno(signoCelda);
+
         }
+
     }
 
     // Método para verificar si un punto está sobre una celda específica
@@ -298,6 +305,9 @@ public abstract class Chip extends Pane {
         updateFinConnection(fin14);
         calcularSalidas();
     }
+
+
+
 
     protected abstract void calcularSalidas();
 

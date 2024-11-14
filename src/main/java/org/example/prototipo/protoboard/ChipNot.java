@@ -87,7 +87,13 @@ public class ChipNot extends Chip{
     }
 
     private boolean entradaHaCambiado(Cuadrados entrada1, Cuadrados salida) {
-        return entrada1.getSigno() != salida.getPrevioSignoEntrada1();
+        boolean cambio = entrada1.getSigno() != entrada1.getPrevioSignoEntrada1();
+
+        if (cambio) {
+            entrada1.setPrevioSignoEntrada1(entrada1.getSigno());
+        }
+
+        return cambio;
     }
 
     public Prototipo_Protoboard getProtoboard() {
