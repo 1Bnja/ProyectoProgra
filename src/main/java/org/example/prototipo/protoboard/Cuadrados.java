@@ -4,6 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.sql.SQLOutput;
+import java.util.Arrays;
+
 public class Cuadrados extends Rectangle {
     private int tamanio;
     private boolean tipocarga = false;
@@ -17,6 +20,7 @@ public class Cuadrados extends Rectangle {
     private Node celdaConectada;
     private int previoSignoEntrada1 = 0;
     private int previoSignoEntrada2 = 0;
+    private int[] arreglo= new int[8];
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
@@ -164,4 +168,28 @@ public class Cuadrados extends Rectangle {
     public Node getCeldaConectada() {
         return celdaConectada;
     }
+
+    public void setArreglo(int indice, int valor) {
+        if (indice >= 0 && indice < arreglo.length) {
+            arreglo[indice] = valor;
+        }
+    }
+
+    public int getArregloEspecifico(int indice) {
+        if (indice >= 0 && indice < arreglo.length) {
+            return arreglo[indice];
+        }else{
+        return -1;
+    }}
+
+    public int[] getArreglo() {
+        return arreglo;
+    }
+
+    public void printArreglo(){
+        System.out.println(Arrays.toString(arreglo));
+
+    }
 }
+
+
