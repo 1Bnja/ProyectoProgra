@@ -184,7 +184,7 @@ public abstract class Chip extends Pane {
             for (GridPane gridPane : gridPanes) {
                 celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    int colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
                     Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
 
                     // Obtener el signo y voltaje de la celda

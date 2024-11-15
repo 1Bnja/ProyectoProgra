@@ -92,6 +92,14 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
+            <Button fx:id="Boton_Display" mnemonicParsing="false" onAction="#Click_Display" prefHeight="40.0" prefWidth="87.0" text="DISPLAY">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </Button>
             <Separator orientation="VERTICAL" prefHeight="89.0" prefWidth="7.0" style="-fx-background-color: grey;">
                <effect>
                   <Bloom />
@@ -108,7 +116,7 @@
                   <Insets left="15.0" top="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="Boton_Reser" mnemonicParsing="false" onAction="#Click_Reset" prefHeight="40.0" prefWidth="78.0" text="RESET">
+            <Button fx:id="Boton_Reset" mnemonicParsing="false" onAction="#Click_Reset" prefHeight="40.0" prefWidth="78.0" text="RESET">
                <font>
                   <Font size="18.0" />
                </font>

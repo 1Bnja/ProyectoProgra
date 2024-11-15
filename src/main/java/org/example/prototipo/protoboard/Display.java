@@ -1,0 +1,288 @@
+package org.example.prototipo.protoboard;
+
+import javafx.geometry.Bounds;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+
+public class Display extends Pane {
+    private Group nodo = new Group();
+
+    private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10;
+    private Line linea1, linea2, linea3, linea4, linea5, linea6, linea7, linea8, linea9, linea10;
+
+    private Line a, b, c, d, e, f, g;
+
+    private double mouseX;
+    private double mouseY;
+    private boolean line_en_arrastre = false;
+
+    private double origenX = Main.origenX;
+    private double origenY = Main.origenY;
+
+    private Prototipo_Protoboard protoboard;
+
+    public Display(){
+        double posX = origenX - 200;
+        double posY = origenY - 200;
+        int ancho = 110;
+        int alto = 130;
+
+        Cuadrados display = new Cuadrados(ancho, alto, posX, posY, Color.BLACK);
+
+        // Patas del display
+        linea1 = crearLinea(origenX - 193, origenY - 200, origenX - 193, origenY - 216);
+        linea2 = crearLinea(origenX - 169, origenY - 200, origenX - 169, origenY - 216);
+        linea3 = crearLinea(origenX - 145, origenY - 200, origenX - 145, origenY - 216);
+        linea4 = crearLinea(origenX - 121, origenY - 200, origenX - 121, origenY - 216);
+        linea5 = crearLinea(origenX - 97, origenY - 200, origenX - 97, origenY - 216);
+
+        linea6 = crearLinea(origenX - 193, origenY - 70, origenX - 193, origenY - 54);
+        linea7 = crearLinea(origenX - 169, origenY - 70, origenX - 169, origenY - 54);
+        linea8 = crearLinea(origenX - 145, origenY - 70, origenX - 145, origenY - 54);
+        linea9 = crearLinea(origenX - 121, origenY - 70, origenX - 121, origenY - 54);
+        linea10 = crearLinea(origenX - 97, origenY - 70, origenX - 97, origenY - 54);
+
+        //Segmentos del display
+        //Horizontales
+        a = crearLinea(origenX - 172, origenY - 187, origenX - 118, origenY - 187);
+        g = crearLinea(origenX - 172, origenY - 135, origenX - 118, origenY - 135);
+        d = crearLinea(origenX - 172, origenY - 83, origenX - 118, origenY - 83);
+
+        // Verticales
+        b = crearLinea(origenX - 108, origenY - 180, origenX - 108, origenY - 142); // Superior derecha
+        f = crearLinea(origenX - 182, origenY - 180, origenX - 182, origenY - 142); // Superior izquierda
+        c = crearLinea(origenX - 108, origenY - 128, origenX - 108, origenY - 90); // Inferior derecha
+        e = crearLinea(origenX - 182, origenY - 128, origenX - 182, origenY - 90); // Inferior izquierda
+
+        a.setStroke(Color.GRAY);
+        a.setStrokeWidth(7);
+        g.setStroke(Color.GRAY);
+        g.setStrokeWidth(7);
+        d.setStroke(Color.GRAY);
+        d.setStrokeWidth(7);
+
+        b.setStroke(Color.GRAY);
+        b.setStrokeWidth(7);
+        f.setStroke(Color.GRAY);
+        f.setStrokeWidth(7);
+        c.setStroke(Color.GRAY);
+        c.setStrokeWidth(7);
+        e.setStroke(Color.GRAY);
+        e.setStrokeWidth(7);
+
+
+        fin1 = Esquina_Estirable(linea1); // con g
+        fin2 = Esquina_Estirable(linea2); // con f
+        fin3 = Esquina_Estirable(linea3); // Vcc
+        fin4 = Esquina_Estirable(linea4); // con a
+        fin5 = Esquina_Estirable(linea5); // con b
+        fin6 = Esquina_Estirable(linea6); // con e
+        fin7 = Esquina_Estirable(linea7); // con d
+        fin8 = Esquina_Estirable(linea8); // con Vcc
+        fin9 = Esquina_Estirable(linea9); // con c
+        fin10 = Esquina_Estirable(linea10);
+
+        configurarArrastre(fin1, linea1);
+        configurarArrastre(fin2, linea2);
+        configurarArrastre(fin3, linea3);
+        configurarArrastre(fin4, linea4);
+        configurarArrastre(fin5, linea5);
+        configurarArrastre(fin6, linea6);
+        configurarArrastre(fin7, linea7);
+        configurarArrastre(fin8, linea8);
+        configurarArrastre(fin9, linea9);
+        configurarArrastre(fin10, linea10);
+
+
+        configurarArrastreNodo();
+
+        nodo.getChildren().addAll(
+                display, linea1, linea2, linea3, linea4, linea5, linea6, linea7, linea8, linea9, linea10, a, d, g, b, f, c, e,
+                fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10
+        );
+
+        this.getChildren().add(nodo);
+        this.setPickOnBounds(false);
+    }
+
+    protected void configurarArrastreNodo() {
+        nodo.setOnMousePressed(e -> {
+            if (!line_en_arrastre) {
+                nodo.toFront();
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
+            }
+        });
+
+        nodo.setOnMouseDragged(e -> {
+            if (!line_en_arrastre) {
+                double dX = e.getSceneX() - mouseX;
+                double dY = e.getSceneY() - mouseY;
+
+                nodo.setLayoutX(nodo.getLayoutX() + dX);
+                nodo.setLayoutY(nodo.getLayoutY() + dY);
+
+                mouseX = e.getSceneX();
+                mouseY = e.getSceneY();
+
+                actualizarPosiciones();
+
+            }
+        });
+
+        // Actualizar y verificar las conexiones al soltar el nodo
+        nodo.setOnMouseReleased(e -> {
+            checkFinConnections();
+        });
+    }
+
+    protected void actualizarPosiciones() {
+        actualizarEstirable(fin1, linea1);
+        actualizarEstirable(fin2, linea2);
+        actualizarEstirable(fin3, linea3);
+        actualizarEstirable(fin4, linea4);
+        actualizarEstirable(fin5, linea5);
+        actualizarEstirable(fin6, linea6);
+        actualizarEstirable(fin7, linea7);
+        actualizarEstirable(fin8, linea8);
+        actualizarEstirable(fin9, linea9);
+        actualizarEstirable(fin10, linea10);
+    }
+
+    protected void checkFinConnections() {
+        updateFinConnection(fin1);
+        updateFinConnection(fin2);
+        updateFinConnection(fin3);
+        updateFinConnection(fin4);
+        updateFinConnection(fin5);
+        updateFinConnection(fin6);
+        updateFinConnection(fin7);
+        updateFinConnection(fin8);
+        updateFinConnection(fin9);
+        updateFinConnection(fin10);
+    }
+
+    private Line crearLinea(double startX, double startY, double endX, double endY) {
+        Line linea = new Line(startX, startY, endX, endY);
+        linea.setStroke(Color.BLACK);
+        return linea;
+    }
+
+    private Cuadrados Esquina_Estirable(Line pata) {
+        Cuadrados point = new Cuadrados(11, 2);
+        point.setX(pata.getEndX() - 5);
+        point.setY(pata.getEndY() - 5);
+        point.setFill(Color.ORANGE);
+        return point;
+    }
+
+
+    private void empezarArrastre(MouseEvent e) {
+        line_en_arrastre = true;
+        mouseX = e.getSceneX();
+        mouseY = e.getSceneY();
+    }
+
+    private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
+        double offsetX = event.getSceneX() - mouseX;
+        double offsetY = event.getSceneY() - mouseY;
+
+        pata.setEndX(pata.getEndX() + offsetX);
+        pata.setEndY(pata.getEndY() + offsetY);
+
+        actualizarEstirable(estirable, pata);
+
+        mouseX = event.getSceneX();
+        mouseY = event.getSceneY();
+
+        line_en_arrastre = false;
+    }
+
+    protected void updateFinConnection(Cuadrados estirable) {
+        double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
+        double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
+
+        int signoCelda = 0;
+        boolean connected = false;
+
+        if (protoboard != null) {
+            Node celdaEncontrada = null;
+            GridPane[] gridPanes = {
+                    (GridPane) protoboard.getCelda1().getChildren().get(0),
+                    (GridPane) protoboard.getCelda2().getChildren().get(0),
+            };
+
+            for (GridPane gridPane : gridPanes) {
+                celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
+                if (celdaEncontrada != null) {
+                    int colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
+
+                    // Obtener el signo y voltaje de la celda
+                    if (gridPane == gridPanes[0]) {
+                        signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
+                    } else if (gridPane == gridPanes[1]) {
+                        signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
+                        estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
+                    }
+
+                    connected = true;
+                    estirable.setCeldaConectada(celdaEncontrada);
+                    break;
+                }
+            }
+
+            if (!connected) {
+                signoCelda = 0;
+                estirable.setCeldaConectada(null);
+                estirable.setVoltaje(0);
+            }
+
+            estirable.setSigno(signoCelda);
+
+        }
+
+    }
+
+    protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
+            if (boundsInScene.contains(x, y)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    protected void configurarArrastre(Cuadrados estirable, Line pata) {
+        estirable.setOnMousePressed(e -> {
+            empezarArrastre(e);
+            estirable.toFront();
+        });
+        estirable.setOnMouseDragged(e -> arrastrePata(e, pata, estirable));
+
+        estirable.setOnMouseReleased(event -> {
+            updateFinConnection(estirable);
+        });
+    }
+
+    private void actualizarEstirable(Cuadrados esquina, Line pata) {
+        double nuevoX = pata.getEndX() - 5;
+        double nuevoY = pata.getEndY() - 5;
+
+        if (esquina.getX() != nuevoX || esquina.getY() != nuevoY) {
+            esquina.setX(nuevoX);
+            esquina.setY(nuevoY);
+        }
+    }
+
+    public void setProtoboard(Prototipo_Protoboard protoboard) {
+        this.protoboard = protoboard;
+    }
+}
