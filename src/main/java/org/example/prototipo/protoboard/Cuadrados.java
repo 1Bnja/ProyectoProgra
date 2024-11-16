@@ -20,7 +20,7 @@ public class Cuadrados extends Rectangle {
     private Node celdaConectada;
     private int previoSignoEntrada1 = 0;
     private int previoSignoEntrada2 = 0;
-    private int[] arreglo= new int[8];
+    private int[] arreglo= new int[4];
 
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
