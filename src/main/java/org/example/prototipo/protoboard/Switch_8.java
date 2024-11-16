@@ -211,11 +211,13 @@ public class Switch_8 extends Pane {
                 if (prueba == 1) {
                     protoboard.getCelda1().alternarColumna(fin1.getCol(), 0,0); // Cortar energía
                     boton1.setArreglo(0,0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 } else if (prueba== 2) {
                     protoboard.getCelda2().alternarColumna(fin12.getCol(), 0,0);
                     boton1.setArreglo(0,0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton1.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
@@ -235,11 +237,13 @@ public class Switch_8 extends Pane {
                         protoboard.getCelda1().alternarColumna(fin12.getCol(), fin12.getSigno(),fin12.getVoltaje());
                         prueba=1;
                         boton1.setArreglo(0,1);
-                        funcion_display(boton1.getArreglo());
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);
                     }else{protoboard.getCelda2().alternarColumna(fin1.getCol(), fin1.getSigno(),fin1.getVoltaje());
                     prueba=2;
                         boton1.setArreglo(0,1);
-                        funcion_display(boton1.getArreglo());} // Transferir energía
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);} // Transferir energía
 
                 } else if (celda == 2) {
                     volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
@@ -247,7 +251,8 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda1().alternarColumna(fin12.getCol(), fin12.getSigno(),fin12.getVoltaje());
                     prueba=1;
                     boton1.setArreglo(0,1);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton1.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
@@ -265,12 +270,14 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda1().alternarColumna(fin2.getCol(), 0,0);
                     protoboard.getCelda1().asignarLetra(0);
                     boton1.setArreglo(1,0);// Cortar energía
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 } else if (prueba== 2) {
                     protoboard.getCelda2().alternarColumna(fin22.getCol(), 0,0);
                     protoboard.getCelda2().asignarLetra(0);
                     boton1.setArreglo(1,0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton2.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
@@ -291,12 +298,14 @@ public class Switch_8 extends Pane {
                         protoboard.getCelda1().asignarLetra(6);
                         prueba=1;
                         boton1.setArreglo(1,1);
-                        funcion_display(boton1.getArreglo());
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);
                     }else{protoboard.getCelda2().alternarColumna(fin2.getCol(), fin2.getSigno(),fin2.getVoltaje());
                         protoboard.getCelda2().asignarLetra(6);
                         prueba=2;
                         boton1.setArreglo(1,1);
-                        funcion_display(boton1.getArreglo());} // Transferir energía
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);} // Transferir energía
 
                 } else if (celda == 2) {
                     volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
@@ -305,7 +314,8 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda2().asignarLetra(6);
                     prueba=1;
                     boton1.setArreglo(1,1);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton2.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
@@ -466,13 +476,15 @@ public class Switch_8 extends Pane {
                 if (prueba == 1) {
                     protoboard.getCelda1().alternarColumna(fin6.getCol(), 0,0); // Cortar energía
                     boton1.setArreglo(2,0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                     protoboard.getCelda1().asignarLetra(0);
                 } else if (prueba== 2) {
                     protoboard.getCelda2().alternarColumna(fin62.getCol(), 0,0);
                     boton1.setArreglo(2,0);
                     protoboard.getCelda2().asignarLetra(0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton6.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
@@ -493,12 +505,14 @@ public class Switch_8 extends Pane {
                         protoboard.getCelda1().asignarLetra(3);
                         prueba=1;
                         boton1.setArreglo(2,1);
-                        funcion_display(boton1.getArreglo());
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);
                     }else{protoboard.getCelda2().alternarColumna(fin6.getCol(), fin6.getSigno(),fin6.getVoltaje());
                         protoboard.getCelda2().asignarLetra(3);
                         prueba=2;
                         boton1.setArreglo(2,1);
-                        funcion_display(boton1.getArreglo());} // Transferir energía
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);} // Transferir energía
 
 
                 } else if (celda == 2) {
@@ -508,7 +522,8 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda1().asignarLetra(3);
                     prueba=1;
                     boton1.setArreglo(2,1);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton6.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
@@ -526,12 +541,14 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda1().alternarColumna(fin7.getCol(), 0,0); // Cortar energía
                     boton1.setArreglo(3,0);
                     protoboard.getCelda1().asignarLetra(0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 } else if (prueba== 2) {
                     protoboard.getCelda2().alternarColumna(fin72.getCol(), 0,0);
                     protoboard.getCelda2().asignarLetra(0);
                     boton1.setArreglo(3,0);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton7.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
@@ -552,12 +569,14 @@ public class Switch_8 extends Pane {
                         protoboard.getCelda1().asignarLetra(4);
                         prueba=1;
                         boton1.setArreglo(3,1);
-                        funcion_display(boton1.getArreglo());
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);
                     }else{protoboard.getCelda2().alternarColumna(fin7.getCol(), fin7.getSigno(),fin7.getVoltaje());
                         protoboard.getCelda2().asignarLetra(4);
                         prueba=2;
                         boton1.setArreglo(3,1);
-                        funcion_display(boton1.getArreglo());} // Transferir energía
+                        funcion_display(ocho,0);
+                        funcion_display(boton1.getArreglo(),1);} // Transferir energía
                 } else if (celda == 2) {
                     volt1= protoboard.getCelda1().getVoltaje2(columnaEntrada);
                     signoEntrada = protoboard.getCelda2().getSigno(filaEntrada, columnaEntrada);
@@ -565,7 +584,8 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda1().asignarLetra(4);
                     prueba=1;
                     boton1.setArreglo(3,1);
-                    funcion_display(boton1.getArreglo());
+                    funcion_display(ocho,0);
+                    funcion_display(boton1.getArreglo(),1);
                 }
                 boton7.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
@@ -880,66 +900,71 @@ public class Switch_8 extends Pane {
         verificarConexionPata(fin82, pata82, 2);
     }
 
-    public void funcion_display(int[] arreglo){
+    public void funcion_display(int[] arreglo,int numero){
+        Color color= Color.YELLOW;
+        if(numero==0){
+            color= Color.GRAY;
+        }else{color= Color.YELLOW;}
+
         if(display.coneccion()==1){
             if(Arrays.equals(arreglo, cero)){
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
-                display.e.setStroke(Color.BLACK);
-                display.f.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
+                display.d.setStroke(color);
+                display.e.setStroke(color);
+                display.f.setStroke(color);
             } else if(Arrays.equals(arreglo, uno)){
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
             } else if(Arrays.equals(arreglo, dos)) {
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
-                display.e.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.d.setStroke(color);
+                display.e.setStroke(color);
+                display.g.setStroke(color);
             }else if(Arrays.equals(arreglo, tres)){
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.d.setStroke(color);
+                display.c.setStroke(color);
+                display.g.setStroke(color);
             }else if(Arrays.equals(arreglo, cuatro)){
-                display.f.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
+                display.f.setStroke(color);
+                display.g.setStroke(color);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
             }else if(Arrays.equals(arreglo, cinco)){
-                display.a.setStroke(Color.BLACK);
-                display.f.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.f.setStroke(color);
+                display.c.setStroke(color);
+                display.g.setStroke(color);
+                display.d.setStroke(color);
             }else if(Arrays.equals(arreglo,seis)){
-                display.f.setStroke(Color.BLACK);
-                display.e.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
+                display.f.setStroke(color);
+                display.e.setStroke(color);
+                display.c.setStroke(color);
+                display.g.setStroke(color);
+                display.d.setStroke(color);
             }else if(Arrays.equals(arreglo,siete)){
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
+                display.g.setStroke(color);
             }else if(Arrays.equals(arreglo,ocho)){
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.d.setStroke(Color.BLACK);
-                display.e.setStroke(Color.BLACK);
-                display.f.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
+                display.d.setStroke(color);
+                display.e.setStroke(color);
+                display.f.setStroke(color);
+                display.g.setStroke(color);
             } else if(Arrays.equals(arreglo,nueve)){
-                display.a.setStroke(Color.BLACK);
-                display.b.setStroke(Color.BLACK);
-                display.c.setStroke(Color.BLACK);
-                display.f.setStroke(Color.BLACK);
-                display.g.setStroke(Color.BLACK);
+                display.a.setStroke(color);
+                display.b.setStroke(color);
+                display.c.setStroke(color);
+                display.f.setStroke(color);
+                display.g.setStroke(color);
             }
         } else if(display.coneccion()!=1){
             System.out.println("Display no bien conectado al switch o corriente");
