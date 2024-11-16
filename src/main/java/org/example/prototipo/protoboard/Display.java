@@ -15,7 +15,7 @@ public class Display extends Pane {
     private Cuadrados fin1, fin2, fin3, fin4, fin5, fin6, fin7, fin8, fin9, fin10;
     private Line linea1, linea2, linea3, linea4, linea5, linea6, linea7, linea8, linea9, linea10;
 
-    private Line a, b, c, d, e, f, g;
+    public Line a, b, c, d, e, f, g;
 
     private double mouseX;
     private double mouseY;
@@ -25,6 +25,7 @@ public class Display extends Pane {
     private double origenY = Main.origenY;
 
     private Prototipo_Protoboard protoboard;
+    Switch_8 switch8;
 
     public Display(){
         double posX = origenX - 200;
@@ -77,14 +78,22 @@ public class Display extends Pane {
 
 
         fin1 = Esquina_Estirable(linea1); // con g
+        fin1.setLetra(7);
         fin2 = Esquina_Estirable(linea2); // con f
+        fin2.setLetra(6);
         fin3 = Esquina_Estirable(linea3); // Vcc
         fin4 = Esquina_Estirable(linea4); // con a
+        fin4.setLetra(1);
         fin5 = Esquina_Estirable(linea5); // con b
+        fin5.setLetra(2);
         fin6 = Esquina_Estirable(linea6); // con e
+        fin6.setLetra(5);
         fin7 = Esquina_Estirable(linea7); // con d
+        fin7.setLetra(4);
         fin8 = Esquina_Estirable(linea8); // con Vcc
+        fin8.setLetra(5);
         fin9 = Esquina_Estirable(linea9); // con c
+        fin9.setLetra(3);
         fin10 = Esquina_Estirable(linea10);
 
         configurarArrastre(fin1, linea1);
@@ -227,9 +236,11 @@ public class Display extends Pane {
                     if (gridPane == gridPanes[0]) {
                         signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
+                        estirable.setSigno(signoCelda);
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
+                        estirable.setSigno(signoCelda);
                     }
 
                     connected = true;
@@ -245,6 +256,7 @@ public class Display extends Pane {
             }
 
             estirable.setSigno(signoCelda);
+
 
         }
 
@@ -285,4 +297,26 @@ public class Display extends Pane {
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }
+
+    public Switch_8 getSwitch8() {
+        return switch8;
+    }
+
+    public void setSwitch8(Switch_8 switch8) {
+        this.switch8 = switch8;
+    }
+
+    public int coneccion(){
+        if(fin1.getSigno()!=0 && fin2.getSigno()!=0  && fin4.getSigno()!=0 && fin5.getSigno()!=0 && fin6.getSigno()!=0 && fin7.getSigno()!=0 &&fin9.getSigno()!=0 && fin10.getSigno()!=0){
+            if(fin3.getSigno()==1 && fin3.getVoltaje()<=2|| fin8.getSigno()==1 && fin8.getVoltaje()<=2){
+                return 1;
+            } else if(fin3.getSigno()!=1 || fin8.getSigno()!=1){
+                System.out.println("Conector comun debe ser positivo");
+            } else if(fin3.getVoltaje()>2 || fin8.getVoltaje()>2){
+                System.out.println("Sobrecarga de voltaje");
+            }
+        }return 0;
+    }
+
+
 }

@@ -304,6 +304,9 @@ public class Controller_Builder {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
             }
+            if (elemento instanceof Display) {
+                switch8.setDisplay((Display) elemento);
+            }
         }
     }
 
@@ -423,6 +426,9 @@ public class Controller_Builder {
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
                 display.setProtoboard((Prototipo_Protoboard) elemento);
+            }
+            if (elemento instanceof LED) {
+                display.setSwitch8((Switch_8) elemento);
             }
         }
     }
