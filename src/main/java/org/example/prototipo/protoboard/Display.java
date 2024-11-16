@@ -256,7 +256,23 @@ public class Display extends Pane {
             }
 
             estirable.setSigno(signoCelda);
-
+            if(estirable==fin1){
+                fin1.setSigno(signoCelda);
+            }  if(estirable==fin2){
+                fin2.setSigno(signoCelda);
+            } if(estirable==fin3){
+                fin3.setSigno(signoCelda);
+            } if(estirable==fin4){
+                fin4.setSigno(signoCelda);
+            } if(estirable==fin5){
+                fin5.setSigno(signoCelda);
+            } if(estirable==fin6){
+                fin6.setSigno(signoCelda);
+            } if(estirable==fin7){
+                fin7.setSigno(signoCelda);
+            } if(estirable==fin8){
+                fin8.setSigno(signoCelda);
+            }
 
         }
 
