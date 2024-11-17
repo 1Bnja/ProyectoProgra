@@ -60,12 +60,42 @@ public class ChipOr extends Chip{
         }
     }
 
-
     protected void calcularSalidas() {
-        calcularSalida(fin1, fin2, fin3);
-        calcularSalida(fin4, fin5, fin6);
-        calcularSalida(fin9, fin10, fin8);
-        calcularSalida(fin12, fin13, fin11);
+        if (entradaHaCambiado(fin1, fin2, fin3)) {
+            calcularSalida(fin1, fin2, fin3);
+            fin3.actualizarSigno(fin3.getSigno(), fin1.getSigno(), fin2.getSigno());
+        }
+        if (entradaHaCambiado(fin4, fin5, fin6)) {
+            calcularSalida(fin4, fin5, fin6);
+            fin6.actualizarSigno(fin6.getSigno(), fin4.getSigno(), fin5.getSigno());
+        }
+        if (entradaHaCambiado(fin9, fin10, fin8)) {
+            calcularSalida(fin9, fin10, fin8);
+            fin8.actualizarSigno(fin8.getSigno(), fin9.getSigno(), fin10.getSigno());
+        }
+        if (entradaHaCambiado(fin12, fin13, fin11)) {
+            calcularSalida(fin12, fin13, fin11);
+            fin11.actualizarSigno(fin11.getSigno(), fin12.getSigno(), fin13.getSigno());
+        }
+    }
+
+    private boolean entradaHaCambiado(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
+        boolean cambio = entrada1.getSigno() != entrada1.getPrevioSignoEntrada1() ||
+                entrada2.getSigno() != entrada2.getPrevioSignoEntrada2();
+
+        if (cambio) {
+            entrada1.setPrevioSignoEntrada1(entrada1.getSigno());
+            entrada2.setPrevioSignoEntrada2(entrada2.getSigno());
+        }
+
+        return cambio;
+    }
+
+    protected void desactivarSalidas(){
+        resetearSalida(fin3);
+        resetearSalida(fin6);
+        resetearSalida(fin8);
+        resetearSalida(fin11);
     }
 
     // Getters y setters para el protoboard

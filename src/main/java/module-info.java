@@ -2,6 +2,7 @@ module org.example.prototipo {
     requires javafx.controls;
     requires javafx.fxml;
     requires jdk.unsupported.desktop;
+    requires java.sql;
 
 
     opens org.example.prototipo to javafx.fxml;

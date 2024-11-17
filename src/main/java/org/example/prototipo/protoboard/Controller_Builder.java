@@ -304,6 +304,9 @@ public class Controller_Builder {
             if (elemento instanceof Prototipo_Protoboard) {
                 switch8.setProtoboard((Prototipo_Protoboard) elemento);
             }
+            if (elemento instanceof Display) {
+                switch8.setDisplay((Display) elemento);
+            }
         }
     }
 
@@ -412,5 +415,21 @@ public class Controller_Builder {
         TextArea.appendText("El sistema ha sido reiniciado.\n");
     }
 
+    @FXML
+     void Click_Display(ActionEvent actionEvent) {
+        System.out.println("Se ha agregado un display");
+        Display display = new Display();
+        display.toFront();
+        agregar(display);
 
+        // Asignar el protoboard al display si existe
+        for (Node elemento : elementos) {
+            if (elemento instanceof Prototipo_Protoboard) {
+                display.setProtoboard((Prototipo_Protoboard) elemento);
+            }
+            if (elemento instanceof LED) {
+                display.setSwitch8((Switch_8) elemento);
+            }
+        }
+    }
 }
