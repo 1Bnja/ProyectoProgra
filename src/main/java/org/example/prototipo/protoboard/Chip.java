@@ -70,20 +70,20 @@ public abstract class Chip extends Pane {
         textoChip.setX(centerX);
         textoChip.setY(centerY);
 
-        fin1 = Esquina_Estirable(pata1);
-        fin2 = Esquina_Estirable(pata2);
-        fin3 = Esquina_Estirable(pata3);
-        fin4 = Esquina_Estirable(pata4);
-        fin5 = Esquina_Estirable(pata5);
-        fin6 = Esquina_Estirable(pata6);
-        fin7 = Esquina_Estirable(pata7);
-        fin8 = Esquina_Estirable(pata8);
-        fin9 = Esquina_Estirable(pata9);
-        fin10 = Esquina_Estirable(pata10);
-        fin11 = Esquina_Estirable(pata11);
-        fin12 = Esquina_Estirable(pata12);
-        fin13 = Esquina_Estirable(pata13);
-        fin14 = Esquina_Estirable(pata14);
+        fin1 = Esquina_Estirable(pata1, Color.ORANGE);
+        fin2 = Esquina_Estirable(pata2, Color.ORANGE);
+        fin3 = Esquina_Estirable(pata3, Color.ORANGE);
+        fin4 = Esquina_Estirable(pata4, Color.ORANGE);
+        fin5 = Esquina_Estirable(pata5, Color.ORANGE);
+        fin6 = Esquina_Estirable(pata6, Color.ORANGE);
+        fin7 = Esquina_Estirable(pata7, Color.BLUE);
+        fin8 = Esquina_Estirable(pata8, Color.ORANGE);
+        fin9 = Esquina_Estirable(pata9, Color.ORANGE);
+        fin10 = Esquina_Estirable(pata10, Color.ORANGE);
+        fin11 = Esquina_Estirable(pata11, Color.ORANGE);
+        fin12 = Esquina_Estirable(pata12, Color.ORANGE);
+        fin13 = Esquina_Estirable(pata13, Color.ORANGE);
+        fin14 = Esquina_Estirable(pata14, Color.RED);
 
 
         // Configurar el arrastre para cada pata y su punto estirable
@@ -124,11 +124,11 @@ public abstract class Chip extends Pane {
     }
 
     // Método para crear un punto estirable en la punta de una pata
-    protected Cuadrados Esquina_Estirable(Line pata) {
+    protected Cuadrados Esquina_Estirable(Line pata, Color color) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
         point.setY(pata.getEndY() - 5);
-        point.setFill(Color.ORANGE);
+        point.setFill(color);
         return point;
     }
 
@@ -157,8 +157,13 @@ public abstract class Chip extends Pane {
 
     // Método para actualizar la posición del punto estirable basado en la pata
     protected void actualizarEstirable(Cuadrados esquina, Line pata) {
-        esquina.setX(pata.getEndX() - 5);
-        esquina.setY(pata.getEndY() - 5);
+        double nuevoX = pata.getEndX() - 5;
+        double nuevoY = pata.getEndY() - 5;
+
+        if (esquina.getX() != nuevoX || esquina.getY() != nuevoY) {
+            esquina.setX(nuevoX);
+            esquina.setY(nuevoY);
+        }
     }
 
     // Método para actualizar el estado de conexión de una pata
@@ -174,14 +179,12 @@ public abstract class Chip extends Pane {
             GridPane[] gridPanes = {
                     (GridPane) protoboard.getCelda1().getChildren().get(0),
                     (GridPane) protoboard.getCelda2().getChildren().get(0),
-                    (GridPane) protoboard.getBus1().getChildren().get(0),
-                    (GridPane) protoboard.getBus2().getChildren().get(0)
             };
 
             for (GridPane gridPane : gridPanes) {
                 celdaEncontrada = verificarSiEstaEnCelda(sceneX, sceneY, gridPane);
                 if (celdaEncontrada != null) {
-                    Integer colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
+                    int colIndex = GridPane.getColumnIndex(celdaEncontrada) - 1;
                     Integer rowIndex = GridPane.getRowIndex(celdaEncontrada);
 
                     // Obtener el signo y voltaje de la celda
@@ -191,12 +194,6 @@ public abstract class Chip extends Pane {
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
-                    } else if (gridPane == gridPanes[2]) {
-                        signoCelda = protoboard.getBus1().getSigno(rowIndex, colIndex);
-                        estirable.setVoltaje(protoboard.getBus1().getVoltaje(rowIndex, colIndex));
-                    } else if (gridPane == gridPanes[3]) {
-                        signoCelda = protoboard.getBus2().getSigno(rowIndex, colIndex);
-                        estirable.setVoltaje(protoboard.getBus2().getVoltaje(rowIndex, colIndex));
                     }
 
                     connected = true;
@@ -212,7 +209,9 @@ public abstract class Chip extends Pane {
             }
 
             estirable.setSigno(signoCelda);
+
         }
+
     }
 
     // Método para verificar si un punto está sobre una celda específica
@@ -288,8 +287,30 @@ public abstract class Chip extends Pane {
         actualizarEstirable(fin14, pata14);
     }
 
+    protected void verificarEncendido(){
+        boolean encendido = false;
+
+        double voltajeFin14 = fin14.getVoltaje();
+        double voltajeFin7 = fin7.getVoltaje();
+        int signoFin14 = fin14.getSigno();
+        int signoFin7 = fin7.getSigno();
+
+        if (voltajeFin14 > 0 && signoFin14 == 1 && voltajeFin7 > 0 && signoFin7 == -1){
+            encendido = true;
+        }
+
+        if (encendido){
+            calcularSalidas();
+        } else {
+            desactivarSalidas();
+        }
+    }
+
+    protected void desactivarSalidas(){
+    }
+
     // Método para verificar y actualizar el estado de conexión de todas las patas
-    public void checkFinConnections() {
+    protected void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
         updateFinConnection(fin3);
@@ -304,13 +325,41 @@ public abstract class Chip extends Pane {
         updateFinConnection(fin12);
         updateFinConnection(fin13);
         updateFinConnection(fin14);
-        calcularSalidas();
+        verificarEncendido();
+    }
+
+    protected void resetearSalida(Cuadrados salida) {
+        salida.setSigno(0);
+        salida.setFill(Color.WHITE);
+
+        // Actualizar la columna de la protoboard conectada a la salida, si existe
+        if (salida.getCeldaConectada() != null) {
+            Node celdaConectada = salida.getCeldaConectada();
+            GridPane gridPane = (GridPane) celdaConectada.getParent();
+
+            // Obtener los índices de fila y columna
+            Integer colIndex = GridPane.getColumnIndex(celdaConectada);
+            Integer rowIndex = GridPane.getRowIndex(celdaConectada);
+
+            if (colIndex != null && rowIndex != null) {
+                int columna = colIndex - 1;
+                int fila = rowIndex;
+
+                // Actualizar la celda en el protoboard a un estado apagado
+                if (gridPane == protoboard.getCelda1().getGridPane()) {
+                    protoboard.getCelda1().alternarColumna(columna, 0, 0);
+                } else if (gridPane == protoboard.getCelda2().getGridPane()) {
+                    protoboard.getCelda2().alternarColumna(columna, 0, 0);
+                }
+            }
+        }
     }
 
     protected abstract void calcularSalidas();
 
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
+
     // Getters y setters para el protoboard
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;

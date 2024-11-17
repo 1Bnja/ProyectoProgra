@@ -4,6 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.sql.SQLOutput;
+import java.util.Arrays;
+
 public class Cuadrados extends Rectangle {
     private int tamanio;
     private boolean tipocarga = false;
@@ -15,7 +18,10 @@ public class Cuadrados extends Rectangle {
     private Color color;
     private double posX, posY;
     private Node celdaConectada;
-
+    private int previoSignoEntrada1 = 0;
+    private int previoSignoEntrada2 = 0;
+    private int[] arreglo= new int[4];
+    private int letra; //a=1 b=2 c=3 d=4 e=5 f=6 g=7
     // Constructor de la clase Cuadrados
     public Cuadrados(int tamanio, int espacio) {
         this.tamanio = tamanio;
@@ -39,6 +45,34 @@ public class Cuadrados extends Rectangle {
         setFill(color);
         setStroke(Color.BLACK);
     }
+
+    public int getPrevioSignoEntrada1() {
+        return previoSignoEntrada1;
+    }
+
+    public void setPrevioSignoEntrada1(int previoSignoEntrada1) {
+        this.previoSignoEntrada1 = previoSignoEntrada1;
+    }
+
+    public int getPrevioSignoEntrada2() {
+        return previoSignoEntrada2;
+    }
+
+    public void setPrevioSignoEntrada2(int previoSignoEntrada2) {
+        this.previoSignoEntrada2 = previoSignoEntrada2;
+    }
+
+    public void actualizarSigno(int nuevoSigno, int entrada1, int entrada2) {
+        this.previoSignoEntrada1 = entrada1;
+        this.previoSignoEntrada2 = entrada2;
+        this.signo = nuevoSigno;
+    }
+
+    public void actualizarSigno2(int nuevoSigno, int entrada1) {
+        this.previoSignoEntrada1 = entrada1;
+        this.signo = nuevoSigno;
+    }
+
 
     // Getter para obtener el tamaño
     public int getTamanio() {
@@ -134,4 +168,38 @@ public class Cuadrados extends Rectangle {
     public Node getCeldaConectada() {
         return celdaConectada;
     }
+
+    public void setArreglo(int indice, int valor) {
+        if (indice >= 0 && indice < arreglo.length) {
+            arreglo[indice] = valor;
+        }
+    }
+
+    public int getArregloEspecifico(int indice) {
+        if (indice >= 0 && indice < arreglo.length) {
+            return arreglo[indice];
+        }else{
+        return -1;
+    }}
+
+    public int[] getArreglo() {
+        return arreglo;
+    }
+
+    public void printArreglo(){
+        System.out.println(Arrays.toString(arreglo));
+
+    }
+
+    // Getter para obtener la columna
+    public int getLetra() {
+        return this.letra;
+    }
+
+    // Setter para establecer la columna
+    public void setLetra(int letra) {
+        this.letra = letra;
+    }
 }
+
+

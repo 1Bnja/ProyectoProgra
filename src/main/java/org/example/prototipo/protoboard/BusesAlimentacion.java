@@ -125,8 +125,10 @@ public class BusesAlimentacion extends Group {
         System.out.println("Voltaje de es: "+filaBus.get(filaIndex).getVoltaje());
 
         // Notifica a los componentes conectados del cambio.
-        protoboard.notificarLEDSConectados();
-        protoboard.notificarChipsConectados();
+        if (protoboard != null){
+            protoboard.notificarLEDSConectados();
+            protoboard.notificarChipsConectados();
+        }
     }
 
     // Método para obtener el signo de una celda en una fila y columna específica.
