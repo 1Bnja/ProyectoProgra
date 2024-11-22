@@ -97,12 +97,29 @@ public class Celdas extends Group {
         }
     }
 
-    public void asignarLetra(int col, int letra){
+    public void setAsignarLetra(int col, int letra){
         List<Cuadrados> columna = grid.get(col);
         for (Cuadrados cuadrado : columna) {
-            if(letra!=0){
                 cuadrado.setLetra(letra);
-            }
+
+        }
+        if(letra==0){
+            System.out.println("celda desletrada");
+        }
+        if(letra==1){
+            System.out.println("letra en celda es A");
+        } else if (letra==2) {
+            System.out.println("letra en celda es B");
+        }else if (letra==3) {
+            System.out.println("letra en celda es C");
+        }else if (letra==4) {
+            System.out.println("letra en celda es D");
+        }else if (letra==5) {
+            System.out.println("letra en celda es E");
+        }else if (letra==6) {
+            System.out.println("letra en celda es F");
+        }else if (letra==7) {
+            System.out.println("letra en celda es G");
         }
     }
 
@@ -210,29 +227,6 @@ public class Celdas extends Group {
         List<Cuadrados> columna = grid.get(col);
         double voltaje= columna.get(2).getVoltaje();
         return voltaje;
-    }
-
-    public void asignarLetra(int letra){
-        
-        for(List<Cuadrados> c : grid)
-            for (Cuadrados col : c) {
-                col.setSigno(letra);
-                    }
-        if(letra==1){
-            System.out.println("letra en celda es A");
-        } else if (letra==2) {
-            System.out.println("letra en celda es B");
-        }else if (letra==3) {
-            System.out.println("letra en celda es C");
-        }else if (letra==4) {
-            System.out.println("letra en celda es D");
-        }else if (letra==5) {
-            System.out.println("letra en celda es E");
-        }else if (letra==6) {
-            System.out.println("letra en celda es F");
-        }else if (letra==7) {
-            System.out.println("letra en celda es G");
-        }
     }
 
     public int getAsignarLetra(int row, int col){
