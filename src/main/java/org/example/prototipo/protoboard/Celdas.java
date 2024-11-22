@@ -97,6 +97,14 @@ public class Celdas extends Group {
         }
     }
 
+    public void asignarLetra(int col, int letra){
+        List<Cuadrados> columna = grid.get(col);
+        for (Cuadrados cuadrado : columna) {
+            if(letra!=0){
+                cuadrado.setLetra(letra);
+            }
+        }
+    }
 
     // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo, double voltaje) {
@@ -205,6 +213,7 @@ public class Celdas extends Group {
     }
 
     public void asignarLetra(int letra){
+        
         for(List<Cuadrados> c : grid)
             for (Cuadrados col : c) {
                 col.setSigno(letra);
