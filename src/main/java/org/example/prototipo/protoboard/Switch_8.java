@@ -891,7 +891,7 @@ public class Switch_8 extends Pane {
         if(numero==0){
             color= Color.GRAY;
         }else{color= Color.YELLOW;}
-
+    if(display!=null){
         if(display.coneccion()==1){
             if(Arrays.equals(arreglo, cero)){
                 display.a.setStroke(color);
@@ -954,7 +954,9 @@ public class Switch_8 extends Pane {
             }
         } else if(display.coneccion()!=1){
             System.out.println("Display no bien conectado al switch o corriente");
-        }
+        }} else{
+        System.out.println("Display no conectado");
+    }
     }
 
     // Getters y setters para el protoboard y el LED
