@@ -173,6 +173,7 @@ public abstract class Chip extends Pane {
 
         int signoCelda = 0;
         boolean connected = false;
+        Node anteriorCeldaConectada = estirable.getCeldaConectada();
 
         if (protoboard != null) {
             Node celdaEncontrada = null;
@@ -197,6 +198,11 @@ public abstract class Chip extends Pane {
                     }
 
                     connected = true;
+
+                    if (anteriorCeldaConectada != null && anteriorCeldaConectada != celdaEncontrada) {
+                        resetearCelda(anteriorCeldaConectada);
+                    }
+
                     estirable.setCeldaConectada(celdaEncontrada);
                     break;
                 }
@@ -204,8 +210,12 @@ public abstract class Chip extends Pane {
 
             if (!connected) {
                 signoCelda = 0;
-                estirable.setCeldaConectada(null);
                 estirable.setVoltaje(0);
+
+                if (anteriorCeldaConectada != null) {
+                    resetearCelda(anteriorCeldaConectada);
+                    estirable.setCeldaConectada(null);
+                }
             }
 
             estirable.setSigno(signoCelda);
@@ -213,6 +223,26 @@ public abstract class Chip extends Pane {
         }
 
     }
+
+    protected void resetearCelda(Node celdaConectada) {
+        GridPane gridPane = (GridPane) celdaConectada.getParent();
+
+        Integer colIndex = GridPane.getColumnIndex(celdaConectada);
+        Integer rowIndex = GridPane.getRowIndex(celdaConectada);
+
+        if (colIndex != null && rowIndex != null) {
+            int columna = colIndex - 1;
+            int fila = rowIndex;
+
+
+            if (gridPane == protoboard.getCelda1().getGridPane()) {
+                protoboard.getCelda1().alternarColumna(columna, 0, 0);
+            } else if (gridPane == protoboard.getCelda2().getGridPane()) {
+                protoboard.getCelda2().alternarColumna(columna, 0, 0);
+            }
+        }
+    }
+
 
     // Método para verificar si un punto está sobre una celda específica
     protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
@@ -307,6 +337,20 @@ public abstract class Chip extends Pane {
     }
 
     protected void desactivarSalidas(){
+        resetearSalida(fin1);
+        resetearSalida(fin2);
+        resetearSalida(fin3);
+        resetearSalida(fin4);
+        resetearSalida(fin5);
+        resetearSalida(fin6);
+        resetearSalida(fin7);
+        resetearSalida(fin8);
+        resetearSalida(fin9);
+        resetearSalida(fin10);
+        resetearSalida(fin11);
+        resetearSalida(fin12);
+        resetearSalida(fin13);
+        resetearSalida(fin14);
     }
 
     // Método para verificar y actualizar el estado de conexión de todas las patas
@@ -344,8 +388,7 @@ public abstract class Chip extends Pane {
             if (colIndex != null && rowIndex != null) {
                 int columna = colIndex - 1;
                 int fila = rowIndex;
-
-                // Actualizar la celda en el protoboard a un estado apagado
+                
                 if (gridPane == protoboard.getCelda1().getGridPane()) {
                     protoboard.getCelda1().alternarColumna(columna, 0, 0);
                 } else if (gridPane == protoboard.getCelda2().getGridPane()) {
