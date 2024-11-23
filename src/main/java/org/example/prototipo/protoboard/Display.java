@@ -237,10 +237,12 @@ public class Display extends Pane {
                         signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
                         estirable.setSigno(signoCelda);
+                        estirable.setLetra2(protoboard.getCelda1().getAsignarLetra(rowIndex,colIndex));
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
                         estirable.setSigno(signoCelda);
+                        estirable.setLetra2(protoboard.getCelda2().getAsignarLetra(rowIndex,colIndex));
                     }
 
                     connected = true;
@@ -258,20 +260,28 @@ public class Display extends Pane {
             estirable.setSigno(signoCelda);
             if(estirable==fin1){
                 fin1.setSigno(signoCelda);
+                fin1.setLetra2(estirable.getLetra2());
             }  if(estirable==fin2){
                 fin2.setSigno(signoCelda);
+                fin2.setLetra2(estirable.getLetra2());
             } if(estirable==fin3){
                 fin3.setSigno(signoCelda);
+                fin3.setLetra2(estirable.getLetra2());
             } if(estirable==fin4){
                 fin4.setSigno(signoCelda);
+                fin4.setLetra2(estirable.getLetra2());
             } if(estirable==fin5){
                 fin5.setSigno(signoCelda);
+                fin5.setLetra2(estirable.getLetra2());
             } if(estirable==fin6){
                 fin6.setSigno(signoCelda);
+                fin6.setLetra2(estirable.getLetra2());
             } if(estirable==fin7){
                 fin7.setSigno(signoCelda);
+                fin7.setLetra2(estirable.getLetra2());
             } if(estirable==fin8){
                 fin8.setSigno(signoCelda);
+                fin8.setLetra2(estirable.getLetra2());
             }
 
         }
@@ -322,7 +332,7 @@ public class Display extends Pane {
         this.switch8 = switch8;
     }
 
-    public int coneccion(){
+    public int coneccion2(){
         if(fin1.getSigno()!=0 && fin2.getSigno()!=0  && fin4.getSigno()!=0 && fin5.getSigno()!=0 && fin6.getSigno()!=0 && fin7.getSigno()!=0 &&fin9.getSigno()!=0 && fin10.getSigno()!=0){
             if(fin3.getSigno()==1 && fin3.getVoltaje()<=2|| fin8.getSigno()==1 && fin8.getVoltaje()<=2){
                 return 1;
@@ -334,5 +344,27 @@ public class Display extends Pane {
         }return 0;
     }
 
+    public int coneccion(){
+        if(verificacion(fin1) && verificacion(fin2) && verificacion(fin4) && verificacion(fin5) && verificacion(fin6) && verificacion(fin7) && verificacion(fin9)){
+            if(fin3.getSigno()==1 && fin8.getSigno()==1){
+                if(fin3.getVoltaje()<=2 && fin8.getVoltaje()<=2){
+                    return 1;
+                }else{
+                    System.out.println("Mucha corriente");
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public boolean verificacion(Cuadrados fin){
+        if(fin.getLetra() == fin.getLetra2()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
 }
