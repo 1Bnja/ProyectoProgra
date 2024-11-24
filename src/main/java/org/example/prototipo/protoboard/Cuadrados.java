@@ -34,6 +34,7 @@ public class Cuadrados extends Rectangle {
         this.setStroke(Color.BLACK);  // Color de la línea del borde
     }
 
+    // Constructor 2 de la clase Cuadrados
     public Cuadrados(int ancho, int alto, double posX, double posY, Color color) {
         super(ancho, alto);
         setX(posX);
@@ -42,6 +43,7 @@ public class Cuadrados extends Rectangle {
         setStroke(Color.BLACK);
     }
 
+    // Getters y Setters
     public int getPrevioSignoEntrada1() {
         return previoSignoEntrada1;
     }
@@ -58,12 +60,14 @@ public class Cuadrados extends Rectangle {
         this.previoSignoEntrada2 = previoSignoEntrada2;
     }
 
+    // Método para actualizar el signo
     public void actualizarSigno(int nuevoSigno, int entrada1, int entrada2) {
         this.previoSignoEntrada1 = entrada1;
         this.previoSignoEntrada2 = entrada2;
         this.signo = nuevoSigno;
     }
 
+    // Método para actualizar el signo 2
     public void actualizarSigno2(int nuevoSigno, int entrada1) {
         this.previoSignoEntrada1 = entrada1;
         this.signo = nuevoSigno;

@@ -11,6 +11,7 @@ public class ChipNot extends Chip{
         super("Chip NOT");
     }
 
+    // Implementa la lógica de la compuerta NOT para calcular el signo y color de la salida basado en la entrada.
     protected void calcularSalida(Cuadrados entrada1, Cuadrados salida) {
         int signoSalida;
         Color colorSalida;
@@ -34,7 +35,7 @@ public class ChipNot extends Chip{
         }
     }
 
-
+    // Actualiza el estado de una celda conectada a la salida del chip, determinando el GridPane al que pertenece y modificando la columna en el protoboard.
     private void actualizarCeldaSalida(Cuadrados salida) {
         Node celdaConectada = salida.getCeldaConectada();
         if (celdaConectada != null) {
@@ -59,6 +60,7 @@ public class ChipNot extends Chip{
         }
     }
 
+    // Evalúa las entradas del chip para determinar si han cambiado, calcula las salidas correspondientes, y actualiza las señales de salida.
     protected void calcularSalidas() {
         if (entradaHaCambiado(fin1, fin2)) {
             calcularSalida(fin1, fin2);
@@ -86,6 +88,7 @@ public class ChipNot extends Chip{
         }
     }
 
+    // Verifica si la entrada ha cambiado desde la última evaluación, actualizando el valor previo si detecta un cambio.
     private boolean entradaHaCambiado(Cuadrados entrada1, Cuadrados salida) {
         boolean cambio = entrada1.getSigno() != entrada1.getPrevioSignoEntrada1();
 
@@ -96,6 +99,7 @@ public class ChipNot extends Chip{
         return cambio;
     }
 
+    // Resetea los valores y estados de todas las salidas del chip.
     protected void desactivarSalidas(){
         resetearSalida(fin2);
         resetearSalida(fin4);
@@ -105,10 +109,12 @@ public class ChipNot extends Chip{
         resetearSalida(fin12);
     }
 
+    // Devuelve la instancia del Prototipo_Protoboard asociada al chip.
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }
 
+    // Devuelve la instancia del Prototipo_Protoboard asociada al chip.
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }

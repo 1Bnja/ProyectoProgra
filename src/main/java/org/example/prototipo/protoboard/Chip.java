@@ -57,12 +57,9 @@ public abstract class Chip extends Pane {
         pata6 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
         pata7 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
 
-
-        // **Agregar el texto "CHIP" en el centro**
         Text textoChip = new Text(nombre);
         textoChip.setFill(Color.WHITE);
         textoChip.setFont(Font.font("Arial", 15));
-        // Posicionar el texto en el centro del chip
 
         double centerX = chip.getX() + chip.getWidth() / 2 - textoChip.getLayoutBounds().getWidth() / 2;
         double centerY = chip.getY() + chip.getHeight() / 2 + textoChip.getLayoutBounds().getHeight() / 4;
@@ -224,6 +221,7 @@ public abstract class Chip extends Pane {
 
     }
 
+    // Método para resetear una celda de la protoboard
     protected void resetearCelda(Node celdaConectada) {
         GridPane gridPane = (GridPane) celdaConectada.getParent();
 
@@ -317,6 +315,7 @@ public abstract class Chip extends Pane {
         actualizarEstirable(fin14, pata14);
     }
 
+    // Método para verificar si el chip está encendido y calcular las salidas
     protected void verificarEncendido(){
         boolean encendido = false;
 
@@ -336,6 +335,7 @@ public abstract class Chip extends Pane {
         }
     }
 
+    // Método para desactivar todas las salidas
     protected void desactivarSalidas(){
         resetearSalida(fin1);
         resetearSalida(fin2);
@@ -372,6 +372,7 @@ public abstract class Chip extends Pane {
         verificarEncendido();
     }
 
+    // Método para resetear una salida
     protected void resetearSalida(Cuadrados salida) {
         salida.setSigno(0);
         salida.setFill(Color.WHITE);
@@ -398,8 +399,10 @@ public abstract class Chip extends Pane {
         }
     }
 
+    // Método para verificar si las entradas han cambiado
     protected abstract void calcularSalidas();
 
+    // Método para calcular la salida de un chip
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
 
@@ -408,6 +411,7 @@ public abstract class Chip extends Pane {
         return protoboard;
     }
 
+    // Método para establecer el protoboard
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }

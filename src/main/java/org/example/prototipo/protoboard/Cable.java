@@ -500,7 +500,6 @@ public class Cable extends Pane {
     }
 
     // Getters y setters
-
     public Prototipo_Protoboard getProtoboard() {
         return protoboard;
     }
@@ -583,6 +582,7 @@ public class Cable extends Pane {
         return null;
     }
 
+    // Método para pintar el cable
     public void pintar(Cable cable) {
         if(cable.getInicio().getLugar()==1){
             protoboard.getCelda1().alternarColumna(cable.getInicio().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
