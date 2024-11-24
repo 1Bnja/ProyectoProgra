@@ -97,6 +97,31 @@ public class Celdas extends Group {
         }
     }
 
+    public void setAsignarLetra(int col, int letra){
+        List<Cuadrados> columna = grid.get(col);
+        for (Cuadrados cuadrado : columna) {
+                cuadrado.setLetra(letra);
+
+        }
+        if(letra==0){
+            System.out.println("celda desletrada");
+        }
+        if(letra==1){
+            System.out.println("letra en celda es A");
+        } else if (letra==2) {
+            System.out.println("letra en celda es B");
+        }else if (letra==3) {
+            System.out.println("letra en celda es C");
+        }else if (letra==4) {
+            System.out.println("letra en celda es D");
+        }else if (letra==5) {
+            System.out.println("letra en celda es E");
+        }else if (letra==6) {
+            System.out.println("letra en celda es F");
+        }else if (letra==7) {
+            System.out.println("letra en celda es G");
+        }
+    }
 
     // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo, double voltaje) {
@@ -208,6 +233,10 @@ public class Celdas extends Group {
         return voltaje;
     }
 
+    public int getAsignarLetra(int row, int col){
+        List<Cuadrados> columna = grid.get(col);
+        return columna.get(row).getLetra();
+    }
     // Asigna el controlador de la clase.
     public void setController(Controller_Builder controller){
         this.controller= controller;

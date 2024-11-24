@@ -91,8 +91,10 @@ public class Cable extends Pane {
                     row = ((GridPane) protoboard.getCelda1().getChildren().getFirst()).getRowIndex(arriba);
                     if (inicio.getSigno() != 0) {
                         protoboard.getCelda1().alternarColumna(col, inicio.getSigno(),inicio.getVoltaje());
+                        protoboard.getCelda1().setAsignarLetra(col,inicio.getLetra());
                     } else {
                         setSignoColor(row, col, protoboard.getCelda1().getSigno(row, col),protoboard.getCelda1().getVoltaje(row, col));
+                        setLetra(col,protoboard.getCelda1().getAsignarLetra(row,col));
                     }
                     inicio.setLugar(1);
                     inicio.setFila(row);
@@ -105,8 +107,10 @@ public class Cable extends Pane {
                     row = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
                     if (inicio.getSigno() != 0) {
                         protoboard.getCelda2().alternarColumna(col, inicio.getSigno(),inicio.getVoltaje());
+                        protoboard.getCelda2().setAsignarLetra(col,inicio.getLetra());
                     } else {
                         setSignoColor(row, col, protoboard.getCelda2().getSigno(row, col),protoboard.getCelda2().getVoltaje(row, col));
+                        setLetra(col,protoboard.getCelda2().getAsignarLetra(row,col));
                     }
                     inicio.setLugar(2);
                     inicio.setFila(row);
@@ -218,8 +222,10 @@ public class Cable extends Pane {
 
                     if (fin.getSigno() != 0) {
                         protoboard.getCelda1().alternarColumna(col, fin.getSigno(),fin.getVoltaje());
+                        protoboard.getCelda1().setAsignarLetra(col,fin.getLetra());
                     } else {
                         setSignoColor(row, col, protoboard.getCelda1().getSigno(row, col),protoboard.getCelda1().getVoltaje(row, col));
+                        setLetra(col,protoboard.getCelda1().getAsignarLetra(row,col));
                     }
                     fin.setLugar(1);
                     fin.setFila(row);
@@ -231,8 +237,10 @@ public class Cable extends Pane {
                     row = ((GridPane) protoboard.getCelda2().getChildren().getFirst()).getRowIndex(abajo);
                     if (fin.getSigno() != 0) {
                         protoboard.getCelda2().alternarColumna(col, fin.getSigno(),fin.getVoltaje());
+                        protoboard.getCelda2().setAsignarLetra(col,fin.getLetra());
                     } else {
                         setSignoColor(row, col, protoboard.getCelda2().getSigno(row, col),protoboard.getCelda2().getVoltaje(row, col));
+                        setLetra(col,protoboard.getCelda2().getAsignarLetra(row,col));
                     }
                     fin.setLugar(2);
                     fin.setFila(row);
@@ -395,7 +403,13 @@ public class Cable extends Pane {
         fin.setFill(colorCable);
         line.setStroke(colorCable);
     }
+    private void setLetra(int col, int letra){
+        if (letra != 0) {
+            inicio.setLetra(letra);
+            fin.setLetra(letra);
+        }
 
+    }
     // Método para establecer el color del cable dependiendo del signo
     private void setSignoColor(int row, int col, int signo,double voltaje) {
         // Pinta el cable del color del signo, si es -1 es azul (negativo), si es 1 es rojo (positivo)
