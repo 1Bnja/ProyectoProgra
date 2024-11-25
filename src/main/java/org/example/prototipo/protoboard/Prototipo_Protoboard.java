@@ -189,6 +189,7 @@ public class Prototipo_Protoboard extends Pane {
             Prototipo_Protoboard.cablesConctados.add(cable);
     }
 
+    // Métodos para gestionar los chips y LEDs conectados al protoboard
     public void agregarChipConectado(Chip chip) {
        if (!chipsConectados.contains(chip)) {
            chipsConectados.add(chip);

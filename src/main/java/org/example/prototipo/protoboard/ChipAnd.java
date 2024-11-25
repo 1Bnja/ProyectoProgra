@@ -12,7 +12,7 @@ public class ChipAnd extends Chip{
         super("Chip AND");
     }
 
-    // En ChipAnd.java
+    // Implementa la lógica de la compuerta AND para determinar el signo y color de la salida basándose en las entradas.
     @Override
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
         int signoSalida;
@@ -37,7 +37,7 @@ public class ChipAnd extends Chip{
         }
     }
 
-
+    // Actualiza el estado de una celda conectada a la salida del chip, interactuando con el GridPane correspondiente del protoboard.
     private void actualizarCeldaSalida(Cuadrados salida) {
         Node celdaConectada = salida.getCeldaConectada();
         if (celdaConectada != null) {
@@ -62,6 +62,7 @@ public class ChipAnd extends Chip{
         }
     }
 
+    // Evalúa las combinaciones de entradas del chip y calcula las salidas, verificando si las entradas han cambiado antes de realizar el cálculo.
     protected void calcularSalidas() {
 
         if (entradaHaCambiado(fin1, fin2, fin3)) {
@@ -82,6 +83,7 @@ public class ChipAnd extends Chip{
         }
     }
 
+    // Comprueba si las entradas han cambiado desde la última evaluación, actualizando los valores previos si detecta cambios.
     private boolean entradaHaCambiado(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
         boolean cambio = entrada1.getSigno() != entrada1.getPrevioSignoEntrada1() || entrada2.getSigno() != entrada2.getPrevioSignoEntrada2();
 
@@ -93,6 +95,7 @@ public class ChipAnd extends Chip{
         return cambio;
     }
 
+    // Resetea los valores y estados de las salidas del chip.
     protected void desactivarSalidas(){
         resetearSalida(fin3);
         resetearSalida(fin6);

@@ -119,6 +119,7 @@ public class Display extends Pane {
         this.setPickOnBounds(false);
     }
 
+    // Configura el comportamiento del nodo completo (Group) para que pueda ser arrastrado dentro de la interfaz.
     protected void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
@@ -150,6 +151,7 @@ public class Display extends Pane {
         });
     }
 
+    // Actualiza las posiciones de los puntos estirables (Cuadrados) asociados a las patas del display al mover el nodo.
     protected void actualizarPosiciones() {
         actualizarEstirable(fin1, linea1);
         actualizarEstirable(fin2, linea2);
@@ -163,6 +165,7 @@ public class Display extends Pane {
         actualizarEstirable(fin10, linea10);
     }
 
+    // Verifica y actualiza las conexiones de todas las patas del display con el protoboard.
     protected void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
@@ -176,12 +179,14 @@ public class Display extends Pane {
         updateFinConnection(fin10);
     }
 
+    // Crea una línea con las coordenadas especificadas y un color negro predeterminado.
     private Line crearLinea(double startX, double startY, double endX, double endY) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
     }
 
+    // Crea un punto estirable (Cuadrados) asociado al extremo de una línea.
     private Cuadrados Esquina_Estirable(Line pata) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
@@ -190,13 +195,14 @@ public class Display extends Pane {
         return point;
     }
 
-
+    // Inicia el proceso de arrastre para una pata del display.
     private void empezarArrastre(MouseEvent e) {
         line_en_arrastre = true;
         mouseX = e.getSceneX();
         mouseY = e.getSceneY();
     }
 
+    // Permite arrastrar y mover una pata del display, actualizando su posición.
     private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
@@ -212,6 +218,7 @@ public class Display extends Pane {
         line_en_arrastre = false;
     }
 
+    // Verifica si un punto estirable está conectado a una celda del protoboard y actualiza su estado (signo, voltaje, y conexión).
     protected void updateFinConnection(Cuadrados estirable) {
         double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
         double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
@@ -237,10 +244,12 @@ public class Display extends Pane {
                         signoCelda = protoboard.getCelda1().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda1().getVoltaje(rowIndex, colIndex));
                         estirable.setSigno(signoCelda);
+                        estirable.setLetra2(protoboard.getCelda1().getAsignarLetra(rowIndex,colIndex));
                     } else if (gridPane == gridPanes[1]) {
                         signoCelda = protoboard.getCelda2().getSigno(rowIndex, colIndex);
                         estirable.setVoltaje(protoboard.getCelda2().getVoltaje(rowIndex, colIndex));
                         estirable.setSigno(signoCelda);
+                        estirable.setLetra2(protoboard.getCelda2().getAsignarLetra(rowIndex,colIndex));
                     }
 
                     connected = true;
@@ -258,26 +267,35 @@ public class Display extends Pane {
             estirable.setSigno(signoCelda);
             if(estirable==fin1){
                 fin1.setSigno(signoCelda);
+                fin1.setLetra2(estirable.getLetra2());
             }  if(estirable==fin2){
                 fin2.setSigno(signoCelda);
+                fin2.setLetra2(estirable.getLetra2());
             } if(estirable==fin3){
                 fin3.setSigno(signoCelda);
+                fin3.setLetra2(estirable.getLetra2());
             } if(estirable==fin4){
                 fin4.setSigno(signoCelda);
+                fin4.setLetra2(estirable.getLetra2());
             } if(estirable==fin5){
                 fin5.setSigno(signoCelda);
+                fin5.setLetra2(estirable.getLetra2());
             } if(estirable==fin6){
                 fin6.setSigno(signoCelda);
+                fin6.setLetra2(estirable.getLetra2());
             } if(estirable==fin7){
                 fin7.setSigno(signoCelda);
+                fin7.setLetra2(estirable.getLetra2());
             } if(estirable==fin8){
                 fin8.setSigno(signoCelda);
+                fin8.setLetra2(estirable.getLetra2());
             }
 
         }
 
     }
 
+    // Comprueba si un punto dado (coordenadas X e Y) está dentro de los límites de una celda en el GridPane.
     protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
@@ -288,6 +306,7 @@ public class Display extends Pane {
         return null;
     }
 
+    // Configura el comportamiento de arrastre para un punto estirable y su pata asociada.
     protected void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e);
@@ -300,6 +319,7 @@ public class Display extends Pane {
         });
     }
 
+    // Actualiza la posición de un punto estirable en función del extremo de su línea asociada.
     private void actualizarEstirable(Cuadrados esquina, Line pata) {
         double nuevoX = pata.getEndX() - 5;
         double nuevoY = pata.getEndY() - 5;
@@ -310,6 +330,7 @@ public class Display extends Pane {
         }
     }
 
+    // Asigna un protoboard al display, para gestionar sus interacciones y conexiones.
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }
@@ -322,7 +343,7 @@ public class Display extends Pane {
         this.switch8 = switch8;
     }
 
-    public int coneccion(){
+    public int coneccion2(){
         if(fin1.getSigno()!=0 && fin2.getSigno()!=0  && fin4.getSigno()!=0 && fin5.getSigno()!=0 && fin6.getSigno()!=0 && fin7.getSigno()!=0 &&fin9.getSigno()!=0 && fin10.getSigno()!=0){
             if(fin3.getSigno()==1 && fin3.getVoltaje()<=2|| fin8.getSigno()==1 && fin8.getVoltaje()<=2){
                 return 1;
@@ -334,5 +355,27 @@ public class Display extends Pane {
         }return 0;
     }
 
+    public int coneccion(){
+        if(verificacion(fin1) && verificacion(fin2) && verificacion(fin4) && verificacion(fin5) && verificacion(fin6) && verificacion(fin7) && verificacion(fin9)){
+            if(fin3.getSigno()==1 && fin8.getSigno()==1){
+                if(fin3.getVoltaje()<=2 && fin8.getVoltaje()<=2){
+                    return 1;
+                }else{
+                    System.out.println("Mucha corriente");
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public boolean verificacion(Cuadrados fin){
+        if(fin.getLetra() == fin.getLetra2()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
 }

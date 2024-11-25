@@ -145,12 +145,12 @@ public class BusesAlimentacion extends Group {
         }
     }
 
+    // Método para obtener el voltaje de una celda en una fila y columna específica.
     public double getVoltaje(int fila, int col) {
         List<Cuadrados> columna = buses.get(fila);
         System.out.println("Voltaje: "+columna.get(col).getVoltaje());
         return columna.get(col).getVoltaje();
     }
-
 
     // Método para encender/apagar todas las celdas según el signo.
     public void onOff(int signo, boolean trueColor) {
