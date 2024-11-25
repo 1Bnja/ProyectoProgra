@@ -57,12 +57,9 @@ public abstract class Chip extends Pane {
         pata6 = crearLinea(origenX - 445, origenY - 35, origenX - 445, origenY - 15);
         pata7 = crearLinea(origenX - 421, origenY - 35, origenX - 421, origenY - 15);
 
-
-        // **Agregar el texto "CHIP" en el centro**
         Text textoChip = new Text(nombre);
         textoChip.setFill(Color.WHITE);
         textoChip.setFont(Font.font("Arial", 15));
-        // Posicionar el texto en el centro del chip
 
         double centerX = chip.getX() + chip.getWidth() / 2 - textoChip.getLayoutBounds().getWidth() / 2;
         double centerY = chip.getY() + chip.getHeight() / 2 + textoChip.getLayoutBounds().getHeight() / 4;
@@ -173,6 +170,7 @@ public abstract class Chip extends Pane {
 
         int signoCelda = 0;
         boolean connected = false;
+        Node anteriorCeldaConectada = estirable.getCeldaConectada();
 
         if (protoboard != null) {
             Node celdaEncontrada = null;
@@ -197,6 +195,11 @@ public abstract class Chip extends Pane {
                     }
 
                     connected = true;
+
+                    if (anteriorCeldaConectada != null && anteriorCeldaConectada != celdaEncontrada) {
+                        resetearCelda(anteriorCeldaConectada);
+                    }
+
                     estirable.setCeldaConectada(celdaEncontrada);
                     break;
                 }
@@ -204,8 +207,12 @@ public abstract class Chip extends Pane {
 
             if (!connected) {
                 signoCelda = 0;
-                estirable.setCeldaConectada(null);
                 estirable.setVoltaje(0);
+
+                if (anteriorCeldaConectada != null) {
+                    resetearCelda(anteriorCeldaConectada);
+                    estirable.setCeldaConectada(null);
+                }
             }
 
             estirable.setSigno(signoCelda);
@@ -213,6 +220,27 @@ public abstract class Chip extends Pane {
         }
 
     }
+
+    // Método para resetear una celda de la protoboard
+    protected void resetearCelda(Node celdaConectada) {
+        GridPane gridPane = (GridPane) celdaConectada.getParent();
+
+        Integer colIndex = GridPane.getColumnIndex(celdaConectada);
+        Integer rowIndex = GridPane.getRowIndex(celdaConectada);
+
+        if (colIndex != null && rowIndex != null) {
+            int columna = colIndex - 1;
+            int fila = rowIndex;
+
+
+            if (gridPane == protoboard.getCelda1().getGridPane()) {
+                protoboard.getCelda1().alternarColumna(columna, 0, 0);
+            } else if (gridPane == protoboard.getCelda2().getGridPane()) {
+                protoboard.getCelda2().alternarColumna(columna, 0, 0);
+            }
+        }
+    }
+
 
     // Método para verificar si un punto está sobre una celda específica
     protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
@@ -287,6 +315,7 @@ public abstract class Chip extends Pane {
         actualizarEstirable(fin14, pata14);
     }
 
+    // Método para verificar si el chip está encendido y calcular las salidas
     protected void verificarEncendido(){
         boolean encendido = false;
 
@@ -306,7 +335,22 @@ public abstract class Chip extends Pane {
         }
     }
 
+    // Método para desactivar todas las salidas
     protected void desactivarSalidas(){
+        resetearSalida(fin1);
+        resetearSalida(fin2);
+        resetearSalida(fin3);
+        resetearSalida(fin4);
+        resetearSalida(fin5);
+        resetearSalida(fin6);
+        resetearSalida(fin7);
+        resetearSalida(fin8);
+        resetearSalida(fin9);
+        resetearSalida(fin10);
+        resetearSalida(fin11);
+        resetearSalida(fin12);
+        resetearSalida(fin13);
+        resetearSalida(fin14);
     }
 
     // Método para verificar y actualizar el estado de conexión de todas las patas
@@ -328,6 +372,7 @@ public abstract class Chip extends Pane {
         verificarEncendido();
     }
 
+    // Método para resetear una salida
     protected void resetearSalida(Cuadrados salida) {
         salida.setSigno(0);
         salida.setFill(Color.WHITE);
@@ -344,8 +389,7 @@ public abstract class Chip extends Pane {
             if (colIndex != null && rowIndex != null) {
                 int columna = colIndex - 1;
                 int fila = rowIndex;
-
-                // Actualizar la celda en el protoboard a un estado apagado
+                
                 if (gridPane == protoboard.getCelda1().getGridPane()) {
                     protoboard.getCelda1().alternarColumna(columna, 0, 0);
                 } else if (gridPane == protoboard.getCelda2().getGridPane()) {
@@ -355,8 +399,10 @@ public abstract class Chip extends Pane {
         }
     }
 
+    // Método para verificar si las entradas han cambiado
     protected abstract void calcularSalidas();
 
+    // Método para calcular la salida de un chip
     protected void calcularSalida(Cuadrados entrada1, Cuadrados entrada2, Cuadrados salida) {
     }
 
@@ -365,6 +411,7 @@ public abstract class Chip extends Pane {
         return protoboard;
     }
 
+    // Método para establecer el protoboard
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }

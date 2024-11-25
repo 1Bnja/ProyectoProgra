@@ -97,6 +97,31 @@ public class Celdas extends Group {
         }
     }
 
+    public void setAsignarLetra(int col, int letra){
+        List<Cuadrados> columna = grid.get(col);
+        for (Cuadrados cuadrado : columna) {
+                cuadrado.setLetra(letra);
+
+        }
+        if(letra==0){
+            System.out.println("celda desletrada");
+        }
+        if(letra==1){
+            System.out.println("letra en celda es A");
+        } else if (letra==2) {
+            System.out.println("letra en celda es B");
+        }else if (letra==3) {
+            System.out.println("letra en celda es C");
+        }else if (letra==4) {
+            System.out.println("letra en celda es D");
+        }else if (letra==5) {
+            System.out.println("letra en celda es E");
+        }else if (letra==6) {
+            System.out.println("letra en celda es F");
+        }else if (letra==7) {
+            System.out.println("letra en celda es G");
+        }
+    }
 
     // Método para alternar una columna entre diferentes estados según el signo
     public void alternarColumna(int columnaIndex, int signo, double voltaje) {
@@ -145,6 +170,7 @@ public class Celdas extends Group {
         }
     }
 
+    // Método para obtener el color de una celda según el signo
     private Color obtenerColor(int signo) {
         switch (signo) {
             case -1: return Color.BLUE;
@@ -186,54 +212,37 @@ public class Celdas extends Group {
             }
     }
 
-    // Método para obtener el signo de una celda específica
+    // Obtiene el signo de una celda específica según su posición (fila y columna).
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
     }
 
+    // Devuelve el voltaje de una celda específica según su posición.
     public double getVoltaje(int fila, int col){
         List<Cuadrados> columna = grid.get(col);
         System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
         return columna.get(fila).getVoltaje();
     }
+
+    // Obtiene el voltaje de la celda en la posición fija de fila 2 para una columna dada.
     public double getVoltaje2(int col){
         List<Cuadrados> columna = grid.get(col);
         double voltaje= columna.get(2).getVoltaje();
         return voltaje;
     }
 
-    public void asignarLetra(int letra){
-        for(List<Cuadrados> c : grid)
-            for (Cuadrados col : c) {
-                col.setSigno(letra);
-                    }
-        if(letra==1){
-            System.out.println("letra en celda es A");
-        } else if (letra==2) {
-            System.out.println("letra en celda es B");
-        }else if (letra==3) {
-            System.out.println("letra en celda es C");
-        }else if (letra==4) {
-            System.out.println("letra en celda es D");
-        }else if (letra==5) {
-            System.out.println("letra en celda es E");
-        }else if (letra==6) {
-            System.out.println("letra en celda es F");
-        }else if (letra==7) {
-            System.out.println("letra en celda es G");
-        }
-    }
-
     public int getAsignarLetra(int row, int col){
         List<Cuadrados> columna = grid.get(col);
         return columna.get(row).getLetra();
     }
+    // Asigna el controlador de la clase.
     public void setController(Controller_Builder controller){
         this.controller= controller;
     }
 
+    // Devuelve el GridPane de la clase.
     public GridPane getGridPane() {
         return gridPane;
     }
