@@ -177,7 +177,7 @@ public class Display extends Pane {
         updateFinConnection(fin8);
         updateFinConnection(fin9);
         updateFinConnection(fin10);
-        coneccion();
+        onoff();
 
     }
 
@@ -367,6 +367,7 @@ public class Display extends Pane {
                     return 0;
                 }
             }
+
         }
         return 0;
     }
@@ -378,6 +379,20 @@ public class Display extends Pane {
             return false;
         }
 
+    }
+    public void onoff(){
+        if(coneccion()==0){
+            apagado();
+        }
+    }
+    public void apagado(){
+        a.setStroke(Color.GRAY);
+        b.setStroke(Color.GRAY);
+        c.setStroke(Color.GRAY);
+        d.setStroke(Color.GRAY);
+        e.setStroke(Color.GRAY);
+        f.setStroke(Color.GRAY);
+        g.setStroke(Color.GRAY);
     }
 
 }
