@@ -167,6 +167,7 @@ public class Celdas extends Group {
         if (columnaCambiada) {
             protoboard.notificarLEDSConectados();
             protoboard.notificarChipsConectados();
+            protoboard.notificarDisplayConectados();
         }
     }
 

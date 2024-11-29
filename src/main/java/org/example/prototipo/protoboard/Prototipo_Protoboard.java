@@ -25,6 +25,7 @@ public class Prototipo_Protoboard extends Pane {
     // Listas para almacenar LEDs y cables conectados al protoboard
     public List<LED> ledsConectados = new ArrayList<>();
     public static List<Cable> cablesConctados = new ArrayList<>();
+    public static List<Display> displaysConctados = new ArrayList<>();
     public List<Chip> chipsConectados = new ArrayList<>();
     public static List<Resistencia> resistenciasConectadas = new ArrayList<>();
 
@@ -187,6 +188,20 @@ public class Prototipo_Protoboard extends Pane {
     public void addCablesConctados(Cable cable) {
         if(!cablesConctados.contains(cable))
             Prototipo_Protoboard.cablesConctados.add(cable);
+    }
+
+    public List<Display> getDisplaysConctados(){
+        return displaysConctados;
+    }
+
+    public void addDisplaysConctados(Display display) {
+        if(!displaysConctados.contains(display))
+            Prototipo_Protoboard.displaysConctados.add(display);
+    }
+    public void notificarDisplayConectados(){
+        for(Display display : displaysConctados){
+            display.checkFinConnections();
+        }
     }
 
     // Métodos para gestionar los chips y LEDs conectados al protoboard

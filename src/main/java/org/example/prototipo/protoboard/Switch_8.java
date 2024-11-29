@@ -262,6 +262,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton2.setOnMouseClicked(event ->{
             if (encendido) {
@@ -323,6 +324,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton3.setOnMouseClicked(event ->{
             if (encendido) {
@@ -369,6 +371,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton4.setOnMouseClicked(event ->{
             if (encendido) {
@@ -415,6 +418,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton5.setOnMouseClicked(event ->{
             if (encendido) {
@@ -461,6 +465,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton6.setOnMouseClicked(event ->{
             if (encendido) {
@@ -523,6 +528,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton7.setOnMouseClicked(event ->{
             if (encendido) {
@@ -583,6 +589,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton8.setOnMouseClicked(event ->{
             if (encendido) {
@@ -629,6 +636,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
 
 
