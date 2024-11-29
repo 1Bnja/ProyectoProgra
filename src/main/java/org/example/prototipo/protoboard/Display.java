@@ -177,6 +177,8 @@ public class Display extends Pane {
         updateFinConnection(fin8);
         updateFinConnection(fin9);
         updateFinConnection(fin10);
+        coneccion();
+
     }
 
     // Crea una línea con las coordenadas especificadas y un color negro predeterminado.

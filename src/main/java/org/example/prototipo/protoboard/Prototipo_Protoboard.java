@@ -201,6 +201,7 @@ public class Prototipo_Protoboard extends Pane {
     public void notificarDisplayConectados(){
         for(Display display : displaysConctados){
             display.checkFinConnections();
+
         }
     }
 

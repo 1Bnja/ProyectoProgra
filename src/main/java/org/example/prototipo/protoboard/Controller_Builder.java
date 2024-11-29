@@ -424,9 +424,11 @@ public class Controller_Builder {
         // Asignar el protoboard al display si existe
         for (Node elemento : elementos) {
             if (elemento instanceof Prototipo_Protoboard) {
+                ((Prototipo_Protoboard) elemento).addDisplaysConctados(display);
                 display.setProtoboard((Prototipo_Protoboard) elemento);
+
             }
-            if (elemento instanceof LED) {
+            if (elemento instanceof Switch_8) {
                 display.setSwitch8((Switch_8) elemento);
             }
         }
