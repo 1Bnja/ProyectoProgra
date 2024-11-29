@@ -119,6 +119,7 @@ public class Display extends Pane {
         this.setPickOnBounds(false);
     }
 
+    // Configura el comportamiento del nodo completo (Group) para que pueda ser arrastrado dentro de la interfaz.
     protected void configurarArrastreNodo() {
         nodo.setOnMousePressed(e -> {
             if (!line_en_arrastre) {
@@ -150,6 +151,7 @@ public class Display extends Pane {
         });
     }
 
+    // Actualiza las posiciones de los puntos estirables (Cuadrados) asociados a las patas del display al mover el nodo.
     protected void actualizarPosiciones() {
         actualizarEstirable(fin1, linea1);
         actualizarEstirable(fin2, linea2);
@@ -163,6 +165,7 @@ public class Display extends Pane {
         actualizarEstirable(fin10, linea10);
     }
 
+    // Verifica y actualiza las conexiones de todas las patas del display con el protoboard.
     protected void checkFinConnections() {
         updateFinConnection(fin1);
         updateFinConnection(fin2);
@@ -176,12 +179,14 @@ public class Display extends Pane {
         updateFinConnection(fin10);
     }
 
+    // Crea una línea con las coordenadas especificadas y un color negro predeterminado.
     private Line crearLinea(double startX, double startY, double endX, double endY) {
         Line linea = new Line(startX, startY, endX, endY);
         linea.setStroke(Color.BLACK);
         return linea;
     }
 
+    // Crea un punto estirable (Cuadrados) asociado al extremo de una línea.
     private Cuadrados Esquina_Estirable(Line pata) {
         Cuadrados point = new Cuadrados(11, 2);
         point.setX(pata.getEndX() - 5);
@@ -190,13 +195,14 @@ public class Display extends Pane {
         return point;
     }
 
-
+    // Inicia el proceso de arrastre para una pata del display.
     private void empezarArrastre(MouseEvent e) {
         line_en_arrastre = true;
         mouseX = e.getSceneX();
         mouseY = e.getSceneY();
     }
 
+    // Permite arrastrar y mover una pata del display, actualizando su posición.
     private void arrastrePata(MouseEvent event, Line pata, Cuadrados estirable) {
         double offsetX = event.getSceneX() - mouseX;
         double offsetY = event.getSceneY() - mouseY;
@@ -212,6 +218,7 @@ public class Display extends Pane {
         line_en_arrastre = false;
     }
 
+    // Verifica si un punto estirable está conectado a una celda del protoboard y actualiza su estado (signo, voltaje, y conexión).
     protected void updateFinConnection(Cuadrados estirable) {
         double sceneX = estirable.localToScene(estirable.getBoundsInLocal()).getMinX() + estirable.getWidth() / 2;
         double sceneY = estirable.localToScene(estirable.getBoundsInLocal()).getMinY() + estirable.getHeight() / 2;
@@ -288,6 +295,7 @@ public class Display extends Pane {
 
     }
 
+    // Comprueba si un punto dado (coordenadas X e Y) está dentro de los límites de una celda en el GridPane.
     protected Node verificarSiEstaEnCelda(double x, double y, GridPane gridPane) {
         for (Node child : gridPane.getChildren()) {
             Bounds boundsInScene = child.localToScene(child.getBoundsInLocal());
@@ -298,6 +306,7 @@ public class Display extends Pane {
         return null;
     }
 
+    // Configura el comportamiento de arrastre para un punto estirable y su pata asociada.
     protected void configurarArrastre(Cuadrados estirable, Line pata) {
         estirable.setOnMousePressed(e -> {
             empezarArrastre(e);
@@ -310,6 +319,7 @@ public class Display extends Pane {
         });
     }
 
+    // Actualiza la posición de un punto estirable en función del extremo de su línea asociada.
     private void actualizarEstirable(Cuadrados esquina, Line pata) {
         double nuevoX = pata.getEndX() - 5;
         double nuevoY = pata.getEndY() - 5;
@@ -320,6 +330,7 @@ public class Display extends Pane {
         }
     }
 
+    // Asigna un protoboard al display, para gestionar sus interacciones y conexiones.
     public void setProtoboard(Prototipo_Protoboard protoboard) {
         this.protoboard = protoboard;
     }

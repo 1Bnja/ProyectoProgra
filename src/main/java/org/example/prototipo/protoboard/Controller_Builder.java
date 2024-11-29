@@ -38,7 +38,7 @@ public class Controller_Builder {
     double origenY = Main.origenY;
 
 
-
+    // Método para inicializar el controlador
     public void initialize() {
         // Redirigir el System.out al TextArea
         PrintStream ps = new PrintStream(new OutputStream() {
@@ -50,9 +50,6 @@ public class Controller_Builder {
         });
         System.setOut(ps);
     }
-
-
-
 
     // Método para agregar un elemento al panel y a la lista de elementos
     private void agregar(Node elemento) {
@@ -315,6 +312,7 @@ public class Controller_Builder {
     void Click_Bateria(ActionEvent event) {
         boolean existe = elementos.stream().anyMatch(nodo -> nodo instanceof Bateria);
 
+        // Verificar si ya existe una batería en la lista de elementos
         if (existe) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Información");
@@ -326,7 +324,7 @@ public class Controller_Builder {
             dialog.setTitle("Seleccionar Voltaje de la Batería");
             dialog.setHeaderText("Elige el voltaje para la batería");
             dialog.setContentText("Voltajes disponibles (1-9V):");
-
+            // Obtener la selección del usuario y crear la batería correspondiente
             dialog.showAndWait().ifPresent(voltage -> {
                 Bateria bateria = new Bateria();
                 bateria.toFront();
@@ -415,12 +413,13 @@ public class Controller_Builder {
         TextArea.appendText("El sistema ha sido reiniciado.\n");
     }
 
-    @FXML
+    // Acción al hacer clic en el botón para agregar un Display
+     @FXML
      void Click_Display(ActionEvent actionEvent) {
-        System.out.println("Se ha agregado un display");
-        Display display = new Display();
-        display.toFront();
-        agregar(display);
+         System.out.println("Se ha agregado un display");
+         Display display = new Display();
+         display.toFront();
+         agregar(display);
 
         // Asignar el protoboard al display si existe
         for (Node elemento : elementos) {

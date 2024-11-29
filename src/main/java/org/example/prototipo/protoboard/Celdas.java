@@ -170,6 +170,7 @@ public class Celdas extends Group {
         }
     }
 
+    // Método para obtener el color de una celda según el signo
     private Color obtenerColor(int signo) {
         switch (signo) {
             case -1: return Color.BLUE;
@@ -211,18 +212,21 @@ public class Celdas extends Group {
             }
     }
 
-    // Método para obtener el signo de una celda específica
+    // Obtiene el signo de una celda específica según su posición (fila y columna).
     public int getSigno(int fila, int col){
         System.out.println(col +"|"+ fila);
         List<Cuadrados> columna = grid.get(col);
         return columna.get(fila).getSigno();
     }
 
+    // Devuelve el voltaje de una celda específica según su posición.
     public double getVoltaje(int fila, int col){
         List<Cuadrados> columna = grid.get(col);
         System.out.println("Voltaje de "+ fila+"|"+col+" es: "+columna.get(fila).getVoltaje());
         return columna.get(fila).getVoltaje();
     }
+
+    // Obtiene el voltaje de la celda en la posición fija de fila 2 para una columna dada.
     public double getVoltaje2(int col){
         List<Cuadrados> columna = grid.get(col);
         double voltaje= columna.get(2).getVoltaje();
@@ -233,10 +237,12 @@ public class Celdas extends Group {
         List<Cuadrados> columna = grid.get(col);
         return columna.get(row).getLetra();
     }
+    // Asigna el controlador de la clase.
     public void setController(Controller_Builder controller){
         this.controller= controller;
     }
 
+    // Devuelve el GridPane de la clase.
     public GridPane getGridPane() {
         return gridPane;
     }

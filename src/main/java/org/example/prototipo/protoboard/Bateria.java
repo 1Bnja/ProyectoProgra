@@ -121,10 +121,10 @@ public class Bateria extends Pane {
         }
     }
 
+    // Método para cambiar el texto del voltaje
     public void cambiarTxtoVoltaje(int voltaje){
         cantVoltaje.setText(voltaje + "V");
     }
-
 
     // Método para desconectar un cable del conector positivo
     public void desconectarCablePositivo(Cable cable) {
