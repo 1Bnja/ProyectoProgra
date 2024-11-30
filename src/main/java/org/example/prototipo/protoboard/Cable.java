@@ -62,8 +62,10 @@ public class Cable extends Pane {
             // Restablecer la celda o bus anterior
             if (inicio.getLugar() == 1) {
                 protoboard.getCelda1().alternarColumna(inicio.getCol(), 0,inicio.getVoltaje());
+                protoboard.getCelda1().setAsignarLetra(inicio.getCol(),0);
             } else if (inicio.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(inicio.getCol(), 0,inicio.getVoltaje());
+                protoboard.getCelda2().setAsignarLetra(inicio.getCol(),0);
             } else if (inicio.getLugar() == 3) {
                 // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
             } else if (inicio.getLugar() == 0) {
@@ -195,8 +197,10 @@ public class Cable extends Pane {
             // Restablecer la celda o bus anterior
             if (fin.getLugar() == 1) {
                 protoboard.getCelda1().alternarColumna(fin.getCol(), 0,0);
+                protoboard.getCelda1().setAsignarLetra(fin.getCol(),0);
             } else if (fin.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(fin.getCol(), 0,0);
+                protoboard.getCelda2().setAsignarLetra(fin.getCol(),0);
             } else if (fin.getLugar() == 3) {
                 // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
             } else if (fin.getLugar() == 0) {

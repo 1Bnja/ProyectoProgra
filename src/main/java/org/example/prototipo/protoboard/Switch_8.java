@@ -262,6 +262,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton2.setOnMouseClicked(event ->{
             if (encendido) {
@@ -323,6 +324,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton3.setOnMouseClicked(event ->{
             if (encendido) {
@@ -369,6 +371,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton4.setOnMouseClicked(event ->{
             if (encendido) {
@@ -415,6 +418,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton5.setOnMouseClicked(event ->{
             if (encendido) {
@@ -461,6 +465,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton6.setOnMouseClicked(event ->{
             if (encendido) {
@@ -523,6 +528,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton7.setOnMouseClicked(event ->{
             if (encendido) {
@@ -583,6 +589,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
         boton8.setOnMouseClicked(event ->{
             if (encendido) {
@@ -629,6 +636,7 @@ public class Switch_8 extends Pane {
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
+            protoboard.notificarDisplayConectados();
         });
 
 
@@ -982,73 +990,5 @@ public class Switch_8 extends Pane {
         return display;
     }
 
-    // Getters para las esquinas estirables
-    public Cuadrados getFin1() {
-        return fin1;
-    }
-
-    public Cuadrados getFin2() {
-        return fin2;
-    }
-
-    public Cuadrados getFin3() {
-        return fin3;
-    }
-
-    public Cuadrados getFin4() {
-        return fin4;
-    }
-
-    public Cuadrados getFin5() {
-        return fin5;
-    }
-
-    public Cuadrados getFin6() {
-        return fin6;
-    }
-
-    public Cuadrados getFin7() {
-        return fin7;
-    }
-
-    public Cuadrados getFin8() {
-        return fin8;
-    }
-
-    public Cuadrados getFin12() {
-        return fin12;
-    }
-
-    public Cuadrados getFin22() {
-        return fin22;
-    }
-
-    public Cuadrados getFin32() {
-        return fin32;
-    }
-
-    public Cuadrados getFin42() {
-        return fin42;
-    }
-
-    public Cuadrados getFin52() {
-        return fin52;
-    }
-
-    public Cuadrados getFin62() {
-        return fin62;
-    }
-
-    public Cuadrados getFin72() {
-        return fin72;
-    }
-
-    public Cuadrados getFin82() {
-        return fin82;
-    }
-
-    public Cuadrados getBoton1(){
-        return boton1;
-    }
 
 }

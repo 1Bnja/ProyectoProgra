@@ -177,6 +177,8 @@ public class Display extends Pane {
         updateFinConnection(fin8);
         updateFinConnection(fin9);
         updateFinConnection(fin10);
+        onoff();
+
     }
 
     // Crea una línea con las coordenadas especificadas y un color negro predeterminado.
@@ -343,17 +345,6 @@ public class Display extends Pane {
         this.switch8 = switch8;
     }
 
-    public int coneccion2(){
-        if(fin1.getSigno()!=0 && fin2.getSigno()!=0  && fin4.getSigno()!=0 && fin5.getSigno()!=0 && fin6.getSigno()!=0 && fin7.getSigno()!=0 &&fin9.getSigno()!=0 && fin10.getSigno()!=0){
-            if(fin3.getSigno()==1 && fin3.getVoltaje()<=2|| fin8.getSigno()==1 && fin8.getVoltaje()<=2){
-                return 1;
-            } else if(fin3.getSigno()!=1 || fin8.getSigno()!=1){
-                System.out.println("Conector comun debe ser positivo");
-            } else if(fin3.getVoltaje()>2 || fin8.getVoltaje()>2){
-                System.out.println("Sobrecarga de voltaje");
-            }
-        }return 0;
-    }
 
     public int coneccion(){
         if(verificacion(fin1) && verificacion(fin2) && verificacion(fin4) && verificacion(fin5) && verificacion(fin6) && verificacion(fin7) && verificacion(fin9)){
@@ -365,6 +356,7 @@ public class Display extends Pane {
                     return 0;
                 }
             }
+
         }
         return 0;
     }
@@ -376,6 +368,20 @@ public class Display extends Pane {
             return false;
         }
 
+    }
+    public void onoff(){
+        if(coneccion()==0){
+            apagado();
+        }
+    }
+    public void apagado(){
+        a.setStroke(Color.GRAY);
+        b.setStroke(Color.GRAY);
+        c.setStroke(Color.GRAY);
+        d.setStroke(Color.GRAY);
+        e.setStroke(Color.GRAY);
+        f.setStroke(Color.GRAY);
+        g.setStroke(Color.GRAY);
     }
 
 }
