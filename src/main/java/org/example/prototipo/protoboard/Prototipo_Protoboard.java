@@ -244,10 +244,4 @@ public class Prototipo_Protoboard extends Pane {
         if(!resistenciasConectadas.contains(resistencia))
             Prototipo_Protoboard.resistenciasConectadas.add(resistencia);
     }
-
-    public void notificarCables(){
-        for (Cable cable : cablesConctados) {
-            cable.actualizarEstado();
-        }
-    }
 }

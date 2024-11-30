@@ -172,8 +172,6 @@ public class Cable extends Pane {
                     componenteInicio = bateria;
                 }
             }
-
-            actualizarEstado();
         });
 
         // Evento al arrastrar el extremo inicial del cable
@@ -306,8 +304,6 @@ public class Cable extends Pane {
                     bateria.conectarCablePositivo(this);
                 }
             }
-
-            actualizarEstado();
         });
 
         // Evento al arrastrar el extremo final del cable
@@ -519,61 +515,6 @@ public class Cable extends Pane {
 
         fin.setX(line.getEndX() - fin.getWidth() / 2);
         fin.setY(line.getEndY() - fin.getHeight() / 2);
-    }
-
-    public void actualizarEstado() {
-        int signoInicio = 0;
-        double voltajeInicio = 0;
-        int signoFin = 0;
-        double voltajeFin = 0;
-
-        // Obtener el signo y voltaje del inicio
-        if (inicio.getLugar() == 1) {
-            signoInicio = protoboard.getCelda1().getSigno(inicio.getFila(), inicio.getCol());
-            voltajeInicio = protoboard.getCelda1().getVoltaje(inicio.getFila(), inicio.getCol());
-        } else if (inicio.getLugar() == 2) {
-            signoInicio = protoboard.getCelda2().getSigno(inicio.getFila(), inicio.getCol());
-            voltajeInicio = protoboard.getCelda2().getVoltaje(inicio.getFila(), inicio.getCol());
-        }
-        // Agrega más condiciones si es necesario para buses u otros componentes
-
-        // Obtener el signo y voltaje del fin
-        if (fin.getLugar() == 1) {
-            signoFin = protoboard.getCelda1().getSigno(fin.getFila(), fin.getCol());
-            voltajeFin = protoboard.getCelda1().getVoltaje(fin.getFila(), fin.getCol());
-        } else if (fin.getLugar() == 2) {
-            signoFin = protoboard.getCelda2().getSigno(fin.getFila(), fin.getCol());
-            voltajeFin = protoboard.getCelda2().getVoltaje(fin.getFila(), fin.getCol());
-        }
-        // Agrega más condiciones si es necesario
-
-        // Determinar el signo y voltaje del cable basado en las conexiones
-        int signoCable = (signoInicio != 0) ? signoInicio : signoFin;
-        double voltajeCable = (voltajeInicio != 0) ? voltajeInicio : voltajeFin;
-
-        inicio.setSigno(signoCable);
-        fin.setSigno(signoCable);
-        inicio.setVoltaje(voltajeCable);
-        fin.setVoltaje(voltajeCable);
-
-        // Actualizar el color del cable según el signo
-        actualizarColorCable(signoCable);
-    }
-
-    private void actualizarColorCable(int signo) {
-        if (signo == -1) {
-            inicio.setFill(Color.BLUE);
-            fin.setFill(Color.BLUE);
-            line.setStroke(Color.BLUE);
-        } else if (signo == 1) {
-            inicio.setFill(Color.RED);
-            fin.setFill(Color.RED);
-            line.setStroke(Color.RED);
-        } else {
-            inicio.setFill(Color.BLACK);
-            fin.setFill(Color.BLACK);
-            line.setStroke(Color.BLACK);
-        }
     }
 
     // Getters y setters
