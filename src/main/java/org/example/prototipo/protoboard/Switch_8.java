@@ -259,6 +259,7 @@ public class Switch_8 extends Pane {
             }
             encendido = !encendido; // Cambiar estado
 
+            protoboard.notificarCables();
             // Notificar a los componentes conectados para actualizar su estado
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
@@ -322,6 +323,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -369,6 +371,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -416,6 +419,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -463,6 +467,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -526,6 +531,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -587,6 +593,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
@@ -634,6 +641,7 @@ public class Switch_8 extends Pane {
             encendido = !encendido; // Cambiar estado
 
             // Notificar a los componentes conectados para actualizar su estado
+            protoboard.notificarCables();
             protoboard.notificarChipsConectados();
             protoboard.notificarLEDSConectados();
             protoboard.notificarDisplayConectados();
