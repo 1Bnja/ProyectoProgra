@@ -168,6 +168,7 @@ public class Celdas extends Group {
             protoboard.notificarLEDSConectados();
             protoboard.notificarChipsConectados();
             protoboard.notificarDisplayConectados();
+            protoboard.notificarCablesConectados();
         }
     }
 
