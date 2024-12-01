@@ -647,6 +647,24 @@ public class Cable extends Pane {
         } else {
             setSignoColor(inicio.getSigno(), inicio.getVoltaje());
         }
+
+        if (fin.getSigno() == 0) {
+            if (inicio.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(inicio.getCol(), 0, 0);
+            } else if (inicio.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(inicio.getCol(), 0, 0);
+            }
+        }
+
+        if (fin.getSigno() == 1) {
+            if (inicio.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(inicio.getCol(), 1, 1);
+            } else if (inicio.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(inicio.getCol(), 1, 1);
+            }
+        }
+
+
     }
 
 

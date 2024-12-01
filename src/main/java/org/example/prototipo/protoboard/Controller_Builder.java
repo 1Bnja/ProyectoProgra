@@ -304,6 +304,9 @@ public class Controller_Builder {
             if (elemento instanceof Display) {
                 switch8.setDisplay((Display) elemento);
             }
+            if (elemento instanceof Cable) {
+                switch8.setCable((Cable) elemento);
+            }
         }
     }
 

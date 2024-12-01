@@ -35,6 +35,7 @@ public class Switch_8 extends Pane {
     Prototipo_Protoboard protoboard;
     LED led;
     Display display;
+    Cable cable;
     int celda;
     int colum_1, colum_2;
 
@@ -219,6 +220,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton1.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
             } else {
@@ -254,6 +256,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton1.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
             }
@@ -279,6 +282,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton2.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
             } else {
@@ -317,6 +321,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton2.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
             }
@@ -365,6 +370,7 @@ public class Switch_8 extends Pane {
                     prueba=1;
 
                 }
+                cable.actualizarEstado();
                 boton3.setFill(Color.YELLOW); // Cambiar color a encendido
 
             }
@@ -413,6 +419,7 @@ public class Switch_8 extends Pane {
                     prueba=1;
 
                 }
+                cable.actualizarEstado();
                 boton4.setFill(Color.YELLOW); // Cambiar color a encendido
 
             }
@@ -461,6 +468,7 @@ public class Switch_8 extends Pane {
                     prueba=1;
 
                 }
+                cable.actualizarEstado();
                 boton5.setFill(Color.YELLOW); // Cambiar color a encendido
 
             }
@@ -525,6 +533,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton6.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
             }
@@ -550,6 +559,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton7.setFill(Color.web("AD49E1"));
                 boton1.printArreglo();
             } else {
@@ -587,6 +597,7 @@ public class Switch_8 extends Pane {
                     funcion_display(ocho,0);
                     funcion_display(boton1.getArreglo(),1);
                 }
+                cable.actualizarEstado();
                 boton7.setFill(Color.YELLOW); // Cambiar color a encendido
                 boton1.printArreglo();
             }
@@ -635,6 +646,7 @@ public class Switch_8 extends Pane {
                     protoboard.getCelda2().setAsignarLetra(fin82.getCol(),5);
                     prueba=1;
                 }
+                cable.actualizarEstado();
                 boton8.setFill(Color.YELLOW); // Cambiar color a encendido
 
             }
@@ -998,5 +1010,11 @@ public class Switch_8 extends Pane {
         return display;
     }
 
+    public void setCable(Cable cable) {
+        this.cable = cable;
+    }
 
+    public Cable getCable() {
+        return cable;
+    }
 }
