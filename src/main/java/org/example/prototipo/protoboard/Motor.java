@@ -77,6 +77,7 @@ public class Motor extends Pane {
                 actualizarCablesConectados();
                 protoboard.notificarLEDSConectados();
                 protoboard.notificarChipsConectados();
+                protoboard.notificarDisplayConectados();
             } else {
                 System.out.println("Batería Apagada");
                 sobre.setStroke(Color.DARKGREY);
@@ -99,6 +100,7 @@ public class Motor extends Pane {
                 actualizarCablesConectados();
                 protoboard.notificarLEDSConectados();
                 protoboard.notificarChipsConectados();
+                protoboard.notificarDisplayConectados();
             }
             // Cambiar el estado de encendido
             encendido = !encendido;

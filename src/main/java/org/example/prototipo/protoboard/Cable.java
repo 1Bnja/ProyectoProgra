@@ -62,8 +62,10 @@ public class Cable extends Pane {
             // Restablecer la celda o bus anterior
             if (inicio.getLugar() == 1) {
                 protoboard.getCelda1().alternarColumna(inicio.getCol(), 0,inicio.getVoltaje());
+                protoboard.getCelda1().setAsignarLetra(inicio.getCol(),0);
             } else if (inicio.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(inicio.getCol(), 0,inicio.getVoltaje());
+                protoboard.getCelda2().setAsignarLetra(inicio.getCol(),0);
             } else if (inicio.getLugar() == 3) {
                 // protoboard.getBus2().toggleFilaBus(inicio.getFila(), 0);
             } else if (inicio.getLugar() == 0) {
@@ -195,8 +197,10 @@ public class Cable extends Pane {
             // Restablecer la celda o bus anterior
             if (fin.getLugar() == 1) {
                 protoboard.getCelda1().alternarColumna(fin.getCol(), 0,0);
+                protoboard.getCelda1().setAsignarLetra(fin.getCol(),0);
             } else if (fin.getLugar() == 2) {
                 protoboard.getCelda2().alternarColumna(fin.getCol(), 0,0);
+                protoboard.getCelda2().setAsignarLetra(fin.getCol(),0);
             } else if (fin.getLugar() == 3) {
                 // protoboard.getBus2().toggleFilaBus(fin.getFila(), 0);
             } else if (fin.getLugar() == 0) {
@@ -611,4 +615,80 @@ public class Cable extends Pane {
             protoboard.getBus1().toggleFilaBus(cable.getInicio().getCol(),cable.getFin().getSigno(),cable.getFin().getVoltaje());
         }
     }
+
+    public void actualizarEstado() {
+        // Verificar si ambos extremos están conectados a una celda
+        if (inicio.getLugar() == 1) { // Conectado a la celda superior
+            int signo = protoboard.getCelda1().getSigno(inicio.getFila(), inicio.getCol());
+            double voltaje = protoboard.getCelda1().getVoltaje(inicio.getFila(), inicio.getCol());
+            setSignoColor(signo, voltaje); // Actualizar el color basado en el signo
+        } else if (inicio.getLugar() == 2) { // Conectado a la celda inferior
+            int signo = protoboard.getCelda2().getSigno(inicio.getFila(), inicio.getCol());
+            double voltaje = protoboard.getCelda2().getVoltaje(inicio.getFila(), inicio.getCol());
+            setSignoColor(signo, voltaje);
+        }
+
+        // Hacer lo mismo para el otro extremo del cable (fin)
+        if (fin.getLugar() == 1) {
+            int signo = protoboard.getCelda1().getSigno(fin.getFila(), fin.getCol());
+            double voltaje = protoboard.getCelda1().getVoltaje(fin.getFila(), fin.getCol());
+            setSignoColor(signo, voltaje);
+        } else if (fin.getLugar() == 2) {
+            int signo = protoboard.getCelda2().getSigno(fin.getFila(), fin.getCol());
+            double voltaje = protoboard.getCelda2().getVoltaje(fin.getFila(), fin.getCol());
+            setSignoColor(signo, voltaje);
+        }
+
+        // Si ambos extremos tienen signo cero, poner el cable en negro
+        if (inicio.getSigno() == 0 || fin.getSigno() == 0) {
+            line.setStroke(Color.BLACK);
+            inicio.setFill(Color.BLACK);
+            fin.setFill(Color.BLACK);
+        } else {
+            setSignoColor(inicio.getSigno(), inicio.getVoltaje());
+        }
+
+        if (fin.getSigno() == 0) {
+            if (inicio.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(inicio.getCol(), 0, 0);
+            } else if (inicio.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(inicio.getCol(), 0, 0);
+            }
+        }
+
+        if (fin.getSigno() == 1) {
+            if (inicio.getLugar() == 1) {
+                protoboard.getCelda1().alternarColumna(inicio.getCol(), 1, 1);
+            } else if (inicio.getLugar() == 2) {
+                protoboard.getCelda2().alternarColumna(inicio.getCol(), 1, 1);
+            }
+        }
+
+
+    }
+
+
+    private void setSignoColor(int signo, double voltaje) {
+        inicio.setSigno(signo);
+        fin.setSigno(signo);
+        inicio.setVoltaje(voltaje);
+        fin.setVoltaje(voltaje);
+
+        if (signo == -1) {
+            inicio.setFill(Color.BLUE);
+            fin.setFill(Color.BLUE);
+            line.setStroke(Color.BLUE);
+        } else if (signo == 1) {
+            inicio.setFill(Color.RED);
+            fin.setFill(Color.RED);
+            line.setStroke(Color.RED);
+        } else {
+            inicio.setFill(Color.BLACK);
+            fin.setFill(Color.BLACK);
+            line.setStroke(Color.BLACK);
+        }
+    }
+
+
+
 }
