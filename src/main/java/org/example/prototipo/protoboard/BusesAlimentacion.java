@@ -128,6 +128,7 @@ public class BusesAlimentacion extends Group {
         if (protoboard != null){
             protoboard.notificarLEDSConectados();
             protoboard.notificarChipsConectados();
+            protoboard.notificarDisplayConectados();
         }
     }
 
